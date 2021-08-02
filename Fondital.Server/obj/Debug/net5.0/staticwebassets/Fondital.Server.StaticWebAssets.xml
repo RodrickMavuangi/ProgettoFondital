@@ -1,0 +1,5 @@
+﻿<StaticWebAssets Version="1.0">
+  <ContentRoot BasePath="/" Path="C:\Users\DamianoRonca\source\repos\Fondital\Fondital.Client\bin\Debug\net5.0\wwwroot\" />
+  <ContentRoot BasePath="/" Path="C:\Users\DamianoRonca\source\repos\Fondital\Fondital.Client\obj\Debug\net5.0\scopedcss\bundle\" />
+  <ContentRoot BasePath="/" Path="C:\Users\DamianoRonca\source\repos\Fondital\Fondital.Client\wwwroot\" />
+</StaticWebAssets>
