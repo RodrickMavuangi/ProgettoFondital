@@ -2,7 +2,6 @@ C:\Users\DamianoRonca\source\repos\Fondital\Fondital.Shared\bin\Debug\net5.0\Fon
 C:\Users\DamianoRonca\source\repos\Fondital\Fondital.Shared\bin\Debug\net5.0\Fondital.Shared.dll
 C:\Users\DamianoRonca\source\repos\Fondital\Fondital.Shared\bin\Debug\net5.0\ref\Fondital.Shared.dll
 C:\Users\DamianoRonca\source\repos\Fondital\Fondital.Shared\bin\Debug\net5.0\Fondital.Shared.pdb
-C:\Users\DamianoRonca\source\repos\Fondital\Fondital.Shared\obj\Debug\net5.0\Fondital.Shared.csproj.AssemblyReference.cache
 C:\Users\DamianoRonca\source\repos\Fondital\Fondital.Shared\obj\Debug\net5.0\Fondital.Shared.GeneratedMSBuildEditorConfig.editorconfig
 C:\Users\DamianoRonca\source\repos\Fondital\Fondital.Shared\obj\Debug\net5.0\Fondital.Shared.AssemblyInfoInputs.cache
 C:\Users\DamianoRonca\source\repos\Fondital\Fondital.Shared\obj\Debug\net5.0\Fondital.Shared.AssemblyInfo.cs

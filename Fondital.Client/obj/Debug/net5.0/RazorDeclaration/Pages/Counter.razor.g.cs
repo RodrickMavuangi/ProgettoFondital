@@ -82,6 +82,13 @@ using Fondital.Client.Shared;
 #line default
 #line hidden
 #nullable disable
+#nullable restore
+#line 11 "C:\Users\DamianoRonca\source\repos\Fondital\Fondital.Client\_Imports.razor"
+using Fondital.Shared;
+
+#line default
+#line hidden
+#nullable disable
     [Microsoft.AspNetCore.Components.RouteAttribute("/counter")]
     public partial class Counter : Microsoft.AspNetCore.Components.ComponentBase
     {
