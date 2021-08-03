@@ -3,7 +3,20 @@
 
 <h1>Hello, world!</h1>
 
-Welcome to your new app.
+<TelerikButton OnClick="SetViewVar">View</TelerikButton>
+
+<div hidden="@ViewVar">
+    Welcome to your new app.
+</div>
 
 <SurveyPrompt Title="How is Blazor working for you?" />
 
+@code
+{
+    bool ViewVar;
+
+    public void SetViewVar ()
+    {
+        ViewVar = !ViewVar;
+    }
+}

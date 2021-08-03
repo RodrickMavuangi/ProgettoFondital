@@ -1,17 +1,68 @@
-﻿@inherits LayoutComponentBase
+﻿@*
+        @inherits LayoutComponentBase
 
-<div class="page">
-    <div class="sidebar">
-        <NavMenu />
+        <div class="page">
+            <div class="sidebar">
+                <NavMenu />
+            </div>
+
+            <div class="main">
+                <div class="top-row px-4">
+                    <a href="http://blazor.net" target="_blank" class="ml-md-auto">About</a>
+                </div>
+
+                <div class="content px-4">
+                    @Body
+                </div>
+            </div>
+        </div>
+
+    <div class="logo">
+        <img src="" />
     </div>
 
+    <div class="top-row px-4">
+    </div>
+*@
+
+@layout TelerikLayout
+@inherits LayoutComponentBase
+
+<div class="page">
     <div class="main">
-        <div class="top-row px-4">
-            <a href="http://blazor.net" target="_blank" class="ml-md-auto">About</a>
+        <div class="top-row d-flex justify-content-between" style="background-color: dodgerblue; width:100%; padding-left:0!important">
+            <div style="background-color:white; padding:0 !important; height:100%">
+                <img src="/img/logo.svg" style="height:100%; padding: 0 2rem" />
+            </div>
+            <div class="justify-content-end new">
+                <TelerikDropDownList Value="@CurrentLanguage" Data="@Languages"
+                         ValueChanged="@( (string c) => SelectLanguage(c) )" Width="100%"
+                         PopupHeight="auto">
+                </TelerikDropDownList>
+            </div>
         </div>
 
         <div class="content px-4">
             @Body
         </div>
+
     </div>
 </div>
+
+@code
+{
+    string CurrentLanguage = string.Empty;
+    List<string> Languages;
+
+    protected override Task OnInitializedAsync()
+    {
+        Languages = new List<string> { "ITA", "RUS" };
+        CurrentLanguage = "ITA";
+        return base.OnInitializedAsync();
+    }
+
+    public void SelectLanguage(string language)
+    {
+        CurrentLanguage = language;
+    }
+}
