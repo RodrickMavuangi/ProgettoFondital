@@ -25,7 +25,7 @@ namespace Fondital.Client.Clients
             var response = 
             await httpClient.PostAsJsonAsync<Trace>("https://localhost:44331/traces", new Trace
             {
-                tipologia = TraceType.LogInfo,
+                tipologia = TraceType.LoginInfo,
                 descrizione = traceDescription,
                 utente_id = 1
             });
