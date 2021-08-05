@@ -24,7 +24,7 @@ namespace Fondital.Shared
 
     public enum TraceType
     {
-        LogInfo = 0,
+        LoginInfo = 0,
         WorkflowRapportino,
         AzioniDirezione
             //TODO: aggiungere qualora necessario

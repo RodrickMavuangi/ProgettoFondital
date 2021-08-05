@@ -18,14 +18,14 @@ namespace Fondital.Client.Clients
         }
 
         public async Task<IEnumerable<Trace>> GetTraces() =>
-            await httpClient.GetFromJsonAsync<IEnumerable<Trace>>("https://localhost:44331/traces");
+            await httpClient.GetFromJsonAsync<IEnumerable<Trace>>("traces");
 
         public async Task CreateDummyTrace(string traceDescription)
         {
             var response = 
-            await httpClient.PostAsJsonAsync<Trace>("https://localhost:44331/traces", new Trace
+            await httpClient.PostAsJsonAsync<Trace>("traces", new Trace
             {
-                tipologia = TraceType.LogInfo,
+                tipologia = TraceType.LoginInfo,
                 descrizione = traceDescription,
                 utente_id = 1
             });
