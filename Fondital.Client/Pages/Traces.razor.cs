@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Fondital.Client.Pages
 {
-    public partial class FetchData
+    public partial class Traces
     {
         private List<Trace> traces;
 
