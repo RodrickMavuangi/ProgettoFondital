@@ -14,6 +14,8 @@ using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Identity;
+using IdentityServer4.Stores;
 
 namespace Fondital.Server
 {
@@ -29,16 +31,19 @@ namespace Fondital.Server
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<DbContext>(options => options.UseSqlServer(Configuration["Database:ConnectionString"]));
+            services.AddDbContext<FonditalDBContext>(options => options.UseSqlServer(Configuration["Database:ConnectionString"]));
 
             services.AddControllersWithViews();
             services.AddRazorPages();
+            //services.AddIdentityServer().AddInMemoryCaching().AddClientStore<InMemoryClientStore>().AddResourceStore<InMemoryResourcesStore>();
+            services.AddAuthentication();//.AddIdentityServerJwt();
 
             services.AddCors(options =>
             {
                 options.AddPolicy("CorsPolicy",
                     builder => builder
                         .AllowAnyMethod()
+                        //.AllowAnyOrigin()
                         .AllowCredentials()
                         .SetIsOriginAllowed((host) => true)
                         .AllowAnyHeader());
@@ -75,6 +80,7 @@ namespace Fondital.Server
 
             app.UseBlazorFrameworkFiles();
             app.UseStaticFiles();
+            //app.UseIdentityServer();
 
             app.UseEndpoints(endpoints =>
             {

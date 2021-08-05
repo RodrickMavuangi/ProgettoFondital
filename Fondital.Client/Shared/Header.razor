@@ -1,0 +1,103 @@
+﻿@layout TelerikLayout
+@inherits LayoutComponentBase
+
+<div style="background-color:white!important; padding:0; height:100%">
+    <img src="/img/logo.svg" style="height: 70%; padding: 0 2rem; position: relative; top: 50%; transform: translate(0%,-50%)" />
+</div>
+
+<div style="align-items:flex-start;margin-left:3rem">
+    <TelerikDropDownList Data="@Anags" @bind-Value="CurrentAnag" Width="auto"
+                         PopupHeight="auto" DefaultText="@((CurrentAnag==null)?"ANAGRAFICHE":null)">
+    </TelerikDropDownList>
+    <TelerikButton>
+        GESTIONE RAPPORTI
+    </TelerikButton>
+    <TelerikButton>
+        CONFIGURAZIONI GENERALI
+    </TelerikButton>
+</div>
+
+<div class="justify-content-end" style="width:70px; margin-left:auto">
+    <TelerikDropDownList ValueField="@CurrentLanguage" Data="@Languages"
+                         @bind-Value="CurrentLanguage" Width="100%"
+                         PopupHeight="auto">
+    </TelerikDropDownList>
+</div>
+
+<style>
+    .Oval {
+        width: 48px;
+        height: 48px;
+        margin: 0 0 0 24px;
+        padding: 16px 12.5px;
+        background-color: #f4f4f4;
+        border-radius: 50%
+    }
+
+    .AG {
+        width: 23px;
+        height: 16px;
+        font-size: 16px;
+        font-weight: bold;
+        font-stretch: normal;
+        font-style: normal;
+        line-height: 1;
+        letter-spacing: 0.22px;
+        text-align: center;
+        color: #007bff;
+    }
+
+    .Ciao-Armando {
+        width: 93px;
+        height: 21px;
+        margin: 5px 24px 22px 73px;
+        font-size: 14px;
+        font-weight: normal;
+        font-stretch: normal;
+        font-style: normal;
+        line-height: 1.5;
+        letter-spacing: 0.19px;
+        text-align: right;
+        color: white;
+    }
+
+    .direzione {
+        width: 44px;
+        height: 21px;
+        margin: 22px 24px 5px 122px;
+        font-size: 10px;
+        font-weight: normal;
+        font-stretch: normal;
+        font-style: normal;
+        line-height: 2.1;
+        letter-spacing: 0.14px;
+        text-align: right;
+        color: #000;
+    }
+</style>
+<div>
+    <span class="Ciao-Armando d-block">Ciao Armando</span>
+    <span class="direzione d-block">direzione</span>
+</div>
+
+<div class="Oval">
+    <p class="AG">AG</p>
+</div>
+
+@code
+{
+    string CurrentLanguage = string.Empty;
+    List<string> Languages;
+
+    string CurrentAnag = string.Empty;
+    List<string> Anags;
+
+    protected override Task OnInitializedAsync()
+    {
+        Languages = new List<string> { "ITA", "RUS" };
+        CurrentLanguage = "ITA";
+        Anags = new List<string> { "Anagrafiche SP", "Anagrafiche Difetti", "Anagrafiche Lavorazioni", "Anagrafiche Voci di Costo", "Listino" };
+        CurrentAnag = null;
+        return base.OnInitializedAsync();
+    }
+}

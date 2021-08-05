@@ -1,0 +1,35 @@
+﻿@page "/traces"
+@inject TraceClient traceHttp
+
+<h1>Traces</h1>
+
+<p>This component demonstrates fetching data from the server.</p>
+
+@if (traces == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>tipo</th>
+                <th>descrizione</th>
+                <th>creata il</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var trace in traces)
+            {
+                <tr>
+                    <td>@trace.tipologia</td>
+                    <td>@trace.descrizione</td>
+                    <td>@trace.eventDateTime</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+<button class="btn btn-primary" @onclick="chiamaCreazioneTrace">Click me</button>
