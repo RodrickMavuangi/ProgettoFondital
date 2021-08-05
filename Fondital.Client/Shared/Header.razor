@@ -17,7 +17,7 @@
     </TelerikButton>
 </div>
 
-<div class="justify-content-end" style="width:70px; margin-left:auto">
+<div class="justify-content-end" style="width:70px; margin-left:auto; margin-right:5px">
     <TelerikDropDownList ValueField="@CurrentLanguage" Data="@Languages"
                          @bind-Value="CurrentLanguage" Width="100%"
                          PopupHeight="auto">
@@ -50,7 +50,7 @@
     .Ciao-Armando {
         width: 93px;
         height: 21px;
-        margin: 5px 24px 22px 73px;
+        margin: 5px 24px 0px 73px;
         font-size: 14px;
         font-weight: normal;
         font-stretch: normal;
@@ -64,7 +64,7 @@
     .direzione {
         width: 44px;
         height: 21px;
-        margin: 22px 24px 5px 122px;
+        margin: -5px 24px 0px 122px;
         font-size: 10px;
         font-weight: normal;
         font-stretch: normal;
@@ -75,12 +75,20 @@
         color: #000;
     }
 </style>
-<div>
+
+<div style="border-left: 2px solid white; height: 42px">
     <span class="Ciao-Armando d-block">Ciao Armando</span>
     <span class="direzione d-block">direzione</span>
 </div>
 
-<div class="Oval">
+<div hidden="@(!ViewUserMenu)" style="border:2px solid grey; position:absolute; margin-top:140px">
+    @foreach (var Item in UserMenuList)
+    {
+        <br /><a @onclick="ToggleUserMenu" style="margin:auto">@Item</a>
+    }
+</div>
+
+<div class="Oval" @onclick="ToggleUserMenu" style="cursor:pointer">
     <p class="AG">AG</p>
 </div>
 
@@ -92,12 +100,23 @@
     string CurrentAnag = string.Empty;
     List<string> Anags;
 
+    List<string> UserMenuList;
+
+    bool ViewUserMenu = false;
+
     protected override Task OnInitializedAsync()
     {
         Languages = new List<string> { "ITA", "RUS" };
         CurrentLanguage = "ITA";
         Anags = new List<string> { "Anagrafiche SP", "Anagrafiche Difetti", "Anagrafiche Lavorazioni", "Anagrafiche Voci di Costo", "Listino" };
         CurrentAnag = null;
+        UserMenuList = new List<string> { "Cambia Password", "LogOut" };
+        ViewUserMenu = false;
         return base.OnInitializedAsync();
+    }
+
+    public void ToggleUserMenu()
+    {
+        ViewUserMenu = !ViewUserMenu;
     }
 }
