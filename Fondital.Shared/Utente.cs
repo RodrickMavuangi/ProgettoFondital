@@ -6,14 +6,14 @@ namespace Fondital.Shared
     [Table("Utente")]
     public class Utente
     {
-        public int id { get; set; }
-        public int SP_id { get; set; }
-        public bool isAbilitato { get; set; }
-        public string nome { get; set; }
-        public string cognome { get; set; }
-        public string username { get; set; }
-        public byte[] password { get; set; }
-        public DateTime pw_lastChanged { get; set; }
-        public bool pw_mustChange { get; set; }
+        public int Id { get; set; }
+        public int SP_Id { get; set; }
+        public bool IsAbilitato { get; set; }
+        public string Nome { get; set; }
+        public string Cognome { get; set; }
+        public string Username { get; set; }
+        public byte[] Password { get; set; }
+        public DateTime Pw_LastChanged { get; set; }
+        public bool Pw_MustChange { get; set; }
     }
 }

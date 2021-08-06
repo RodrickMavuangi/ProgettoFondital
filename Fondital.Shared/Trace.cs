@@ -10,16 +10,16 @@ namespace Fondital.Shared
     [Table("Trace")]
     public class Trace
     {
-        public int id { get; set; }
+        public int Id { get; set; }
         
         [Column(TypeName = "varchar(255)")]
-        public TraceType tipologia { get; set; }
+        public TraceType Tipologia { get; set; }
 
-        public string descrizione { get; set; }
-        public int utente_id { get; set; }
-        public int rapportino_id { get; set; }
+        public string Descrizione { get; set; }
+        public int Utente_Id { get; set; }
+        public int Rapportino_Id { get; set; }
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public DateTime eventDateTime { get; set; }
+        public DateTime EventDateTime { get; set; }
     }
 
     public enum TraceType

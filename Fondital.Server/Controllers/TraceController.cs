@@ -39,7 +39,7 @@ namespace Fondital.Server.Controllers
                 await _db.Traces.AddAsync(trace);
                 await _db.SaveChangesAsync();
 
-                return trace.id;
+                return trace.Id;
             }
             catch (Exception e)
             {
