@@ -1,4 +1,5 @@
 ﻿using Fondital.Shared;
+using Fondital.Shared.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;

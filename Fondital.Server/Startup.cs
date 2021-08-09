@@ -16,6 +16,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
 using IdentityServer4.Stores;
+using Fondital.Data;
 
 namespace Fondital.Server
 {
@@ -31,7 +32,7 @@ namespace Fondital.Server
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<FonditalDBContext>(options => options.UseSqlServer(Configuration["Database:ConnectionString"]));
+            services.AddDbContext<FonditalDbContext>(options => options.UseSqlServer(Configuration["Database:ConnectionString"]));
 
             services.AddControllersWithViews();
             services.AddRazorPages();

@@ -1,4 +1,6 @@
 ﻿using Fondital.Shared;
+using Fondital.Shared.Models;
+using Fondital.Shared.Models.Auth;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,12 +24,13 @@ namespace Fondital.Client.Clients
 
         public async Task CreateDummyTrace(string traceDescription)
         {
-            var response = 
+            var response =
             await httpClient.PostAsJsonAsync<Trace>("traces", new Trace
             {
                 Tipologia = TraceType.LoginInfo,
                 Descrizione = traceDescription,
-                Utente_Id = 1
+                //Utente = GetUtenteById(1)
+                Utente = new Utente { Id = 1}
             });
 
             response.EnsureSuccessStatusCode();

@@ -1,24 +1,21 @@
-﻿using System;
+﻿using Fondital.Shared.Models.Auth;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Fondital.Shared
+namespace Fondital.Shared.Models
 {
     [Table("Trace")]
     public class Trace
     {
         public int Id { get; set; }
-        
-        [Column(TypeName = "varchar(255)")]
         public TraceType Tipologia { get; set; }
-
         public string Descrizione { get; set; }
-        public int Utente_Id { get; set; }
+        public Utente Utente { get; set; }
         public int Rapportino_Id { get; set; }
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public DateTime EventDateTime { get; set; }
     }
 

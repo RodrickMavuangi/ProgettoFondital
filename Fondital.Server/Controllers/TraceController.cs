@@ -1,4 +1,7 @@
-﻿using Fondital.Shared;
+﻿using Fondital.Data;
+using Fondital.Shared;
+using Fondital.Shared.Models;
+using Fondital.Shared.Models.Auth;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Mvc;
@@ -17,9 +20,9 @@ namespace Fondital.Server.Controllers
     public class TraceController : ControllerBase
     {
         private readonly ILogger<TraceController> _logger;
-        private readonly FonditalDBContext _db;
+        private readonly FonditalDbContext _db;
 
-        public TraceController(ILogger<TraceController> logger, FonditalDBContext db)
+        public TraceController(ILogger<TraceController> logger, FonditalDbContext db)
         {
             _logger = logger;
             _db = db;
