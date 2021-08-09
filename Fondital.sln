@@ -9,7 +9,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Fondital.Shared", "Fondital
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Fondital.Server", "Fondital.Server\Fondital.Server.csproj", "{11F069E3-13DC-4A36-8E42-68ADA07B5F2E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fondital.Data", "Fondital.Data\Fondital.Data.csproj", "{DC9945F1-0232-43EC-B417-8E80B091082E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Fondital.Data", "Fondital.Data\Fondital.Data.csproj", "{DC9945F1-0232-43EC-B417-8E80B091082E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fondital.Services", "Fondital.Services\Fondital.Services.csproj", "{C80754B9-2EED-4E2B-9712-D66F90B93408}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,10 @@ Global
 		{DC9945F1-0232-43EC-B417-8E80B091082E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DC9945F1-0232-43EC-B417-8E80B091082E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DC9945F1-0232-43EC-B417-8E80B091082E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C80754B9-2EED-4E2B-9712-D66F90B93408}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C80754B9-2EED-4E2B-9712-D66F90B93408}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C80754B9-2EED-4E2B-9712-D66F90B93408}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C80754B9-2EED-4E2B-9712-D66F90B93408}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

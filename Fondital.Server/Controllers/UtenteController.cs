@@ -10,26 +10,32 @@ using System.Linq;
 using System.Threading.Tasks;
 using RouteAttribute = Microsoft.AspNetCore.Mvc.RouteAttribute;
 using Fondital.Data;
+using Fondital.Services;
+using Fondital.Shared.Services;
 
 namespace Fondital.Server.Controllers
 {
     [ApiController]
     [Route("utenti")]
+    [Authorize]
     public class UtenteController : ControllerBase
     {
         private readonly ILogger<UtenteController> _logger;
         private readonly FonditalDbContext _db;
+        private readonly IUtenteService _ut;
 
-        public UtenteController(ILogger<UtenteController> logger, FonditalDbContext db)
+        public UtenteController(ILogger<UtenteController> logger, FonditalDbContext db, IUtenteService ut)
         {
+            _ut = ut;
             _logger = logger;
             _db = db;
         }
 
         [HttpGet]
-        public IEnumerable<Utente> GetAllUtenti()
+        public IEnumerable<Utente> GetUtenti()
         {
-            return _db.Utenti;
+            return _ut.GetAllUtenti().Result;
+            
         }
 
         //[HttpGet]

@@ -6,7 +6,7 @@ using Fondital.Shared.Repositories;
 using Fondital.Data;
 using System.Linq;
 
-namespace MyMusic.Data.Repositories
+namespace Fondital.Data.Repositories
 {
     public class TraceRepository : Repository<Trace>, ITraceRepository
     {

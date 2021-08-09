@@ -17,6 +17,11 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
 using IdentityServer4.Stores;
 using Fondital.Data;
+using Fondital.Shared;
+using Fondital.Shared.Services;
+using Fondital.Services;
+using Fondital.Shared.Models.Auth;
+using Fondital.Server.Extensions;
 
 namespace Fondital.Server
 {
@@ -32,12 +37,21 @@ namespace Fondital.Server
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            var jwtSettings = Configuration.GetSection("Jwt").Get<JwtSettings>();
             services.AddDbContext<FonditalDbContext>(options => options.UseSqlServer(Configuration["Database:ConnectionString"]));
+            services.AddIdentity<Utente, Ruolo>(options =>
+               {
+                   options.Password.RequiredLength = 8;
+                   options.Password.RequireNonAlphanumeric = true;
+                   options.Password.RequireUppercase = true;
+               }).AddEntityFrameworkStores<FonditalDbContext>().AddDefaultTokenProviders();
 
-            services.AddControllersWithViews();
+            services.Configure<JwtSettings>(Configuration.GetSection("Jwt"));
+            services.AddAuth(jwtSettings);
+
+            services.AddControllers();
             services.AddRazorPages();
-            //services.AddIdentityServer().AddInMemoryCaching().AddClientStore<InMemoryClientStore>().AddResourceStore<InMemoryResourcesStore>();
-            services.AddAuthentication();//.AddIdentityServerJwt();
+            services.AddAuthentication();
 
             services.AddCors(options =>
             {
@@ -50,9 +64,36 @@ namespace Fondital.Server
                         .AllowAnyHeader());
             });
 
+            services.AddScoped<IUnitOfWork, UnitOfWork>();
+            services.AddTransient<IAuthService, AuthService>();
+            services.AddTransient<IUtenteService, UtenteService>();
+            services.AddTransient<ITraceService, TraceService>();
+
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Fondital.Server", Version = "v1" });
+                c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+                {
+                    Description = "JWT containing userid claim",
+                    Name = "Authorization",
+                    In = ParameterLocation.Header,
+                    Type = SecuritySchemeType.ApiKey,
+                }); var security =
+                     new OpenApiSecurityRequirement
+                     {
+        {
+            new OpenApiSecurityScheme
+            {
+                Reference = new OpenApiReference
+                {
+                    Id = "Bearer",
+                    Type = ReferenceType.SecurityScheme
+                },
+                UnresolvedReference = true
+            },
+            new List<string>()
+        }
+                     }; c.AddSecurityRequirement(security);
             });
         }
 
@@ -81,7 +122,7 @@ namespace Fondital.Server
 
             app.UseBlazorFrameworkFiles();
             app.UseStaticFiles();
-            //app.UseIdentityServer();
+            app.UseAuth();
 
             app.UseEndpoints(endpoints =>
             {

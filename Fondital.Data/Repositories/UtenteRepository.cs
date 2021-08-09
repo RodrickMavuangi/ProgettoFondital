@@ -6,7 +6,7 @@ using Fondital.Shared.Models.Auth;
 using Fondital.Shared.Repositories;
 using Fondital.Data;
 
-namespace MyMusic.Data.Repositories
+namespace Fondital.Data.Repositories
 {
     public class UtenteRepository : Repository<Utente>, IUtenteRepository
     {
