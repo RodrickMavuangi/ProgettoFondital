@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using AutoMapper;
 using Fondital.Server.Resources;
 using Fondital.Shared.Models.Auth;
 using Fondital.Services;
@@ -16,7 +15,7 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace Fondital.Server.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("authentication")]
     [ApiController]
     public class AuthController : ControllerBase
     {
@@ -46,8 +45,9 @@ namespace Fondital.Server.Controllers
                 return BadRequest(x.Errors);
         }
 
-        [HttpPost("SignIn")]
-        public async Task<IActionResult> SignIn(UserLoginResource userLoginResource)
+        [HttpPost("Login")]
+        [AllowAnonymous]
+        public async Task<IActionResult> LogIn(UserLoginResource userLoginResource)
         {
             var user = _userManager.Users.SingleOrDefault(u => u.UserName == userLoginResource.Email);
 
@@ -105,6 +105,7 @@ namespace Fondital.Server.Controllers
             return Problem(result.Errors.First().Description, null, 500);
         }
 
+        [AllowAnonymous]
         private string GenerateJwt(Utente user, IList<string> roles, JwtSettings jwtSettings)
         {
             return _authService.GeneraJwt(user, roles, jwtSettings);

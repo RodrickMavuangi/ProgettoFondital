@@ -15,7 +15,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
-using IdentityServer4.Stores;
 using Fondital.Data;
 using Fondital.Shared;
 using Fondital.Shared.Services;
@@ -44,22 +43,32 @@ namespace Fondital.Server
                    options.Password.RequiredLength = 8;
                    options.Password.RequireNonAlphanumeric = true;
                    options.Password.RequireUppercase = true;
+                   options.SignIn.RequireConfirmedAccount = false;
                }).AddEntityFrameworkStores<FonditalDbContext>().AddDefaultTokenProviders();
 
+            //services.AddDefaultIdentity<Utente>(options =>
+            //    {
+            //        options.Password.RequiredLength = 8;
+            //        options.Password.RequireNonAlphanumeric = true;
+            //        options.Password.RequireUppercase = true;
+            //        options.SignIn.RequireConfirmedAccount = false;
+            //    }).AddEntityFrameworkStores<FonditalDbContext>();
+
             services.Configure<JwtSettings>(Configuration.GetSection("Jwt"));
+            services.AddAuthentication(); 
             services.AddAuth(jwtSettings);
 
             services.AddControllers();
             services.AddRazorPages();
-            services.AddAuthentication();
+            
 
             services.AddCors(options =>
             {
                 options.AddPolicy("CorsPolicy",
                     builder => builder
                         .AllowAnyMethod()
-                        //.AllowAnyOrigin()
-                        .AllowCredentials()
+                        .AllowAnyOrigin()
+                        //.AllowCredentials()
                         .SetIsOriginAllowed((host) => true)
                         .AllowAnyHeader());
             });
@@ -78,22 +87,21 @@ namespace Fondital.Server
                     Name = "Authorization",
                     In = ParameterLocation.Header,
                     Type = SecuritySchemeType.ApiKey,
-                }); var security =
-                     new OpenApiSecurityRequirement
-                     {
-        {
-            new OpenApiSecurityScheme
-            {
-                Reference = new OpenApiReference
-                {
-                    Id = "Bearer",
-                    Type = ReferenceType.SecurityScheme
-                },
-                UnresolvedReference = true
-            },
-            new List<string>()
-        }
-                     }; c.AddSecurityRequirement(security);
+                });
+                var security = new OpenApiSecurityRequirement {
+                    {
+                        new OpenApiSecurityScheme
+                            {
+                                Reference = new OpenApiReference
+                                    {
+                                        Id = "Bearer",
+                                        Type = ReferenceType.SecurityScheme
+                                    },
+                                    UnresolvedReference = true
+                            },
+                            new List<string>()
+                    }
+                }; c.AddSecurityRequirement(security);
             });
         }
 
@@ -113,6 +121,16 @@ namespace Fondital.Server
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
+
+            //app.Use(async (context, next) =>
+            //{
+            //    if (context.Request.Path == "/.well-known/openid-configuration")
+            //    {
+            //        context.Request.Path = "/.well-known/openid-configuration.json";
+            //    }
+
+            //    await next();
+            //});
 
             app.UseHttpsRedirection();
             app.UseRouting();

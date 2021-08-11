@@ -15,12 +15,12 @@ namespace Fondital.Services
         public string GeneraJwt(Utente user, IList<string> roles, JwtSettings jwtSettings)
         {
             var claims = new List<Claim>
-    {
-        new Claim(JwtRegisteredClaimNames.Sub, user.Id.ToString()),
-        new Claim(ClaimTypes.Name, user.UserName),
-        new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
-        new Claim(ClaimTypes.NameIdentifier, user.Id.ToString())
-    };
+            {
+                new Claim(JwtRegisteredClaimNames.Sub, user.Id.ToString()),
+                new Claim(ClaimTypes.Name, user.UserName),
+                new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
+                new Claim(ClaimTypes.NameIdentifier, user.Id.ToString())
+            };
 
             var roleClaims = roles.Select(r => new Claim(ClaimTypes.Role, r));
             claims.AddRange(roleClaims);
@@ -31,7 +31,7 @@ namespace Fondital.Services
 
             var token = new JwtSecurityToken(
                 issuer: jwtSettings.Issuer,
-                audience: jwtSettings.Issuer,
+                audience: jwtSettings.Audience,
                 claims,
                 expires: expires,
                 signingCredentials: creds
