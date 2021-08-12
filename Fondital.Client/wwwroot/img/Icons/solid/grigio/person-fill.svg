@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="20px" height="20px" viewBox="0 0 20 20" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>Icons / solid / disbled / person-fill</title>
+    <defs>
+        <filter id="filter-1">
+            <feColorMatrix in="SourceGraphic" type="matrix" values="0 0 0 0 0.525490 0 0 0 0 0.556863 0 0 0 0 0.588235 0 0 0 1.000000 0"></feColorMatrix>
+        </filter>
+    </defs>
+    <g id="Symbols" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="person-fill" filter="url(#filter-1)">
+            <g transform="translate(4.000000, 4.000000)">
+                <path d="M1,12 C1,12 0,12 0,11 C0,10 1,7 6,7 C11,7 12,10 12,11 C12,12 11,12 11,12 L1,12 Z M6,6 C7.65685425,6 9,4.65685425 9,3 C9,1.34314575 7.65685425,-4.4408921e-16 6,-4.4408921e-16 C4.34314575,-4.4408921e-16 3,1.34314575 3,3 C3,4.65685425 4.34314575,6 6,6 Z" id="Shape" fill="#000000" fill-rule="nonzero"></path>
+            </g>
+        </g>
+    </g>
+</svg>

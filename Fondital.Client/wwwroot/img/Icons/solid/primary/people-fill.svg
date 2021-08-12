@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="20px" height="20px" viewBox="0 0 20 20" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>Icons / solid / primary / people-fill</title>
+    <defs>
+        <filter id="filter-1">
+            <feColorMatrix in="SourceGraphic" type="matrix" values="0 0 0 0 0.000000 0 0 0 0 0.482353 0 0 0 0 1.000000 0 0 0 1.000000 0"></feColorMatrix>
+        </filter>
+    </defs>
+    <g id="Icons-/-solid-/-primary-/-people-fill" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g filter="url(#filter-1)" id="people-fill">
+            <g transform="translate(2.000000, 4.000000)">
+                <path d="M7,12 C7,12 6,12 6,11 C6,10 7,7 11,7 C15,7 16,10 16,11 C16,12 15,12 15,12 L7,12 Z M11,6 C12.6568542,6 14,4.65685425 14,3 C14,1.34314575 12.6568542,0 11,0 C9.34314575,0 8,1.34314575 8,3 C8,4.65685425 9.34314575,6 11,6 Z" id="Shape" fill="#000000" fill-rule="nonzero"></path>
+                <path d="M5.216,12 C5.0677551,11.6878153 4.99382358,11.3455397 5,11 C5,9.645 5.68,8.25 6.936,7.28 C6.30909134,7.08683594 5.65594867,6.99237316 5,7 C1,7 0,10 0,11 C0,12 1,12 1,12 L5.216,12 L5.216,12 Z" id="Path" fill="#000000" fill-rule="nonzero"></path>
+                <path d="M4.5,6 C5.88071187,6 7,4.88071187 7,3.5 C7,2.11928813 5.88071187,1 4.5,1 C3.11928813,1 2,2.11928813 2,3.5 C2,4.88071187 3.11928813,6 4.5,6 Z" id="Path" fill="#000000" fill-rule="nonzero"></path>
+            </g>
+        </g>
+    </g>
+</svg>
