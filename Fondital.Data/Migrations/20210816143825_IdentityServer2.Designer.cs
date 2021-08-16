@@ -7,21 +7,21 @@ using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
-namespace Fondital.Server.Migrations
+namespace Fondital.Data.Migrations
 {
     [DbContext(typeof(FonditalDbContext))]
-    [Migration("20210806110231_AddIdentity")]
-    partial class AddIdentity
+    [Migration("20210816143825_IdentityServer2")]
+    partial class IdentityServer2
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
-                .HasAnnotation("ProductVersion", "5.0.8")
+                .HasAnnotation("ProductVersion", "5.0.9")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-            modelBuilder.Entity("Fondital.Server.Models.Ruolo", b =>
+            modelBuilder.Entity("Fondital.Shared.Models.Auth.Ruolo", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -50,11 +50,13 @@ namespace Fondital.Server.Migrations
                     b.ToTable("AspNetRoles");
                 });
 
-            modelBuilder.Entity("Fondital.Server.Models.Utente", b =>
+            modelBuilder.Entity("Fondital.Shared.Models.Auth.Utente", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
+                        .HasAnnotation("SqlServer:IdentityIncrement", 1)
+                        .HasAnnotation("SqlServer:IdentitySeed", 1)
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<int>("AccessFailedCount")
@@ -84,7 +86,9 @@ namespace Fondital.Server.Migrations
                         .HasColumnType("datetimeoffset");
 
                     b.Property<string>("Nome")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.Property<string>("NormalizedEmail")
                         .HasMaxLength(256)
@@ -129,31 +133,33 @@ namespace Fondital.Server.Migrations
                     b.ToTable("AspNetUsers");
                 });
 
-            modelBuilder.Entity("Fondital.Shared.Trace", b =>
+            modelBuilder.Entity("Fondital.Shared.Models.Trace", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
+                        .HasAnnotation("SqlServer:IdentityIncrement", 1)
+                        .HasAnnotation("SqlServer:IdentitySeed", 1)
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("Descrizione")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("EventDateTime")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2");
 
                     b.Property<int>("Rapportino_Id")
                         .HasColumnType("int");
 
-                    b.Property<string>("Tipologia")
-                        .IsRequired()
-                        .HasColumnType("varchar(255)");
+                    b.Property<int>("Tipologia")
+                        .HasColumnType("int");
 
-                    b.Property<int>("Utente_Id")
+                    b.Property<int?>("UtenteId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("UtenteId");
 
                     b.ToTable("Trace");
                 });
@@ -207,10 +213,12 @@ namespace Fondital.Server.Migrations
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<int>", b =>
                 {
                     b.Property<string>("LoginProvider")
-                        .HasColumnType("nvarchar(450)");
+                        .HasMaxLength(128)
+                        .HasColumnType("nvarchar(128)");
 
                     b.Property<string>("ProviderKey")
-                        .HasColumnType("nvarchar(450)");
+                        .HasMaxLength(128)
+                        .HasColumnType("nvarchar(128)");
 
                     b.Property<string>("ProviderDisplayName")
                         .HasColumnType("nvarchar(max)");
@@ -246,10 +254,12 @@ namespace Fondital.Server.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("LoginProvider")
-                        .HasColumnType("nvarchar(450)");
+                        .HasMaxLength(128)
+                        .HasColumnType("nvarchar(128)");
 
                     b.Property<string>("Name")
-                        .HasColumnType("nvarchar(450)");
+                        .HasMaxLength(128)
+                        .HasColumnType("nvarchar(128)");
 
                     b.Property<string>("Value")
                         .HasColumnType("nvarchar(max)");
@@ -259,9 +269,18 @@ namespace Fondital.Server.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
+            modelBuilder.Entity("Fondital.Shared.Models.Trace", b =>
+                {
+                    b.HasOne("Fondital.Shared.Models.Auth.Utente", "Utente")
+                        .WithMany()
+                        .HasForeignKey("UtenteId");
+
+                    b.Navigation("Utente");
+                });
+
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<int>", b =>
                 {
-                    b.HasOne("Fondital.Server.Models.Ruolo", null)
+                    b.HasOne("Fondital.Shared.Models.Auth.Ruolo", null)
                         .WithMany()
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -270,7 +289,7 @@ namespace Fondital.Server.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<int>", b =>
                 {
-                    b.HasOne("Fondital.Server.Models.Utente", null)
+                    b.HasOne("Fondital.Shared.Models.Auth.Utente", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -279,7 +298,7 @@ namespace Fondital.Server.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<int>", b =>
                 {
-                    b.HasOne("Fondital.Server.Models.Utente", null)
+                    b.HasOne("Fondital.Shared.Models.Auth.Utente", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -288,13 +307,13 @@ namespace Fondital.Server.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<int>", b =>
                 {
-                    b.HasOne("Fondital.Server.Models.Ruolo", null)
+                    b.HasOne("Fondital.Shared.Models.Auth.Ruolo", null)
                         .WithMany()
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Fondital.Server.Models.Utente", null)
+                    b.HasOne("Fondital.Shared.Models.Auth.Utente", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -303,7 +322,7 @@ namespace Fondital.Server.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<int>", b =>
                 {
-                    b.HasOne("Fondital.Server.Models.Utente", null)
+                    b.HasOne("Fondital.Shared.Models.Auth.Utente", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)

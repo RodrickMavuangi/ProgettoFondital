@@ -21,8 +21,9 @@ namespace Fondital.Client
             //builder.Services.AddScoped<AuthenticationState, FonditalAuthenticationState>();
             builder.Services.AddOptions();
             builder.Services.AddAuthorizationCore();
-            //builder.Services.AddApiAuthorization();
+            //builder.Services.AddApiAuthorization(options => options.AuthenticationPaths.LogOutSucceededPath = "");
             //builder.Services.AddApiAuthorization<FonditalAuthenticationState>(options => options.AuthenticationPaths.LogOutSucceededPath = "");
+            //builder.Services.AddApiAuthorization();
             builder.Services.AddOidcAuthentication<FonditalAuthenticationState, RemoteUserAccount>(options =>
             {
                 builder.Configuration.Bind("oidc", options.ProviderOptions);

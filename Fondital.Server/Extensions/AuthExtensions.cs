@@ -5,6 +5,8 @@ using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using System;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.IdentityModel.Protocols.OpenIdConnect;
 
 namespace Fondital.Server.Extensions
 {
@@ -28,6 +30,10 @@ namespace Fondital.Server.Extensions
                 .AddJwtBearer(options =>
                 {
                     options.RequireHttpsMetadata = false;
+                    options.Audience = jwtSettings.Audience;
+                    options.Authority = jwtSettings.Issuer;
+                    options.IncludeErrorDetails = true;
+                    options.SaveToken = true;
                     options.TokenValidationParameters = new TokenValidationParameters
                     {
                         ValidIssuer = jwtSettings.Issuer,
@@ -35,6 +41,7 @@ namespace Fondital.Server.Extensions
                         IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtSettings.Secret)),
                         ClockSkew = TimeSpan.Zero
                     };
+                    options.Configuration = new OpenIdConnectConfiguration();
                 });
 
             return services;
@@ -43,7 +50,6 @@ namespace Fondital.Server.Extensions
         public static IApplicationBuilder UseAuth(this IApplicationBuilder app)
         {
             app.UseAuthentication();
-
             app.UseAuthorization();
 
             return app;

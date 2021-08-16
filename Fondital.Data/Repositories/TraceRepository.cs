@@ -3,7 +3,6 @@ using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Fondital.Shared.Models;
 using Fondital.Shared.Repositories;
-using Fondital.Data;
 using System.Linq;
 
 namespace Fondital.Data.Repositories
@@ -32,7 +31,7 @@ namespace Fondital.Data.Repositories
         {
             return await _db.Traces
                 .Include(m => m.Utente)
-                .Where(m => m.Utente.Id == utenteId)
+                //.Where(m => m.Utente.Id == utenteId)
                 .ToListAsync();
         }
 
