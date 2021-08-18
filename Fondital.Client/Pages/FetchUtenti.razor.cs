@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Fondital.Client.Pages
 {
-    public partial class FetchData
+    public partial class FetchUtenti
     {
         private List<Utente> utenti;
 
@@ -16,12 +16,6 @@ namespace Fondital.Client.Pages
         {
             await RefreshUtenti();
         }
-
-        //protected async void chiamaCreazioneTrace()
-        //{
-        //    await Http.CreateDummyTrace($"Trace del giorno {DateTime.Now.ToShortDateString()} alle ore {DateTime.Now.ToShortTimeString()}");
-        //    await RefreshTraces();
-        //}
 
         protected async Task RefreshUtenti()
         {
