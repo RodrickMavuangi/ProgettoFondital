@@ -16,12 +16,6 @@ namespace Fondital.Server
         {
             var host = CreateHostBuilder(args).Build();
 
-            var scopeFactory = host.Services.GetRequiredService<IServiceScopeFactory>();
-            using (var scope = scopeFactory.CreateScope())
-            {
-                var db = scope.ServiceProvider.GetRequiredService<FonditalDBContext>();
-            }
-
             host.Run();
         }
 

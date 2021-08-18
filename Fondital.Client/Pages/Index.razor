@@ -1,6 +1,16 @@
 ﻿@page "/"
-@using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
+@inject AuthenticationStateProvider authStateProvider
+@inject FonditalAuthenticationState authState
 
-<h1>Hello, world!</h1>
 
-<SurveyPrompt Title="How is Blazor working for you?" />
+
+<h3>Informazioni utente</h3>
+
+<button @onclick="GetClaimsPrincipalData">Ottieni informazioni</button>
+
+<ul>
+    @foreach (var attributo in attributi)
+    {
+        <li>@attributo</li>
+    }
+</ul>

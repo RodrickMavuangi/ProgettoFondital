@@ -1,4 +1,6 @@
 ﻿using Fondital.Shared;
+using Fondital.Shared.Models;
+using Fondital.Shared.Models.Auth;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,22 +20,23 @@ namespace Fondital.Client.Clients
         }
 
         public async Task<IEnumerable<Trace>> GetTraces() =>
-            await httpClient.GetFromJsonAsync<IEnumerable<Trace>>("https://localhost:44331/traces");
+            await httpClient.GetFromJsonAsync<IEnumerable<Trace>>("traces");
 
-        public async Task CreateDummyTrace(string traceDescription)
-        {
-            var response = 
-            await httpClient.PostAsJsonAsync<Trace>("https://localhost:44331/traces", new Trace
-            {
-                tipologia = TraceType.LoginInfo,
-                descrizione = traceDescription,
-                utente_id = 1
-            });
-
-            response.EnsureSuccessStatusCode();
-            if (await response.Content.ReadFromJsonAsync<int>() == 0)
-                throw new Exception("errore nella chiamata al server");
-                
-        }
+        //public async Task CreateDummyTrace(string traceDescription)
+        //{
+        //    var response =
+        //    await httpClient.PostAsJsonAsync<Trace>("traces", new Trace
+        //    {
+        //        Tipologia = TraceType.LoginInfo,
+        //        Descrizione = traceDescription,
+        //        //Utente = GetUtenteById(1)
+        //        Utente = new Utente { Id = 1}
+        //    });
+        //
+        //    response.EnsureSuccessStatusCode();
+        //    if (await response.Content.ReadFromJsonAsync<int>() == 0)
+        //        throw new Exception("errore nella chiamata al server");
+        //        
+        //}
     }
 }

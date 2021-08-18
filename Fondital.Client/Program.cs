@@ -1,13 +1,11 @@
 using Fondital.Client.Clients;
+using Fondital.Shared.Models.Auth;
+using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Components.WebAssembly.Authentication;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
 using System;
-using System.Collections.Generic;
-using System.Net.Http;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Fondital.Client
@@ -20,8 +18,20 @@ namespace Fondital.Client
             builder.RootComponents.Add<App>("#app");
             builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });
 
-            builder.Services.AddHttpClient<UtenteClient>(client => client.BaseAddress = new Uri(builder.HostEnvironment.BaseAddress));
-            builder.Services.AddHttpClient<TraceClient>(client => client.BaseAddress = new Uri(builder.HostEnvironment.BaseAddress));
+            builder.Services.AddHttpClient<UtenteClient>(client => client.BaseAddress = new Uri(builder.Configuration["WebAPI:BaseUrl"]));
+            builder.Services.AddHttpClient<TraceClient>(client => client.BaseAddress = new Uri(builder.Configuration["WebAPI:BaseUrl"]));
+            //builder.Services.AddScoped<RemoteAuthenticationState, FonditalAuthenticationState>();
+            builder.Services.AddScoped<FonditalAuthenticationState>();
+            builder.Services.AddOptions();
+            builder.Services.AddAuthorizationCore();
+            //builder.Services.AddApiAuthorization<FonditalAuthenticationState>(options => options.AuthenticationPaths.LogOutSucceededPath = "");
+            
+            builder.Services.AddOidcAuthentication<FonditalAuthenticationState, RemoteUserAccount>(options =>
+            {
+                builder.Configuration.Bind("oidc", options.ProviderOptions);
+                options.UserOptions.RoleClaim = "role";
+            });
+            
             builder.Services.AddTelerikBlazor();
 
             await builder.Build().RunAsync();

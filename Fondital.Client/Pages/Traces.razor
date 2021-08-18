@@ -1,11 +1,11 @@
-﻿@page "/traces"
-@inject TraceClient traceHttp
+﻿@page "/fetchdata"
+@inject UtenteClient Http
 
-<h1>Traces</h1>
+<h1>Utenti</h1>
 
 <p>This component demonstrates fetching data from the server.</p>
 
-@if (traces == null)
+@if (utenti == null)
 {
     <p><em>Loading...</em></p>
 }
@@ -14,22 +14,22 @@ else
     <table class="table">
         <thead>
             <tr>
-                <th>tipo</th>
-                <th>descrizione</th>
-                <th>creata il</th>
+                <th>nome</th>
+                <th>cognome</th>
+                <th>username</th>
             </tr>
         </thead>
         <tbody>
-            @foreach (var trace in traces)
+            @foreach (var ut in utenti)
             {
                 <tr>
-                    <td>@trace.tipologia</td>
-                    <td>@trace.descrizione</td>
-                    <td>@trace.eventDateTime</td>
+                    <td>@ut.Nome</td>
+                    <td>@ut.Cognome</td>
+                    <td>@ut.UserName</td>
                 </tr>
             }
         </tbody>
     </table>
 }
 
-<button class="btn btn-primary" @onclick="chiamaCreazioneTrace">Click me</button>
+@*<button class="btn btn-primary" @onclick="chiamaCreazioneTrace">Click me</button>*@
