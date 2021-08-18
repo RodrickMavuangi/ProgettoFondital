@@ -11,6 +11,6 @@ namespace Fondital.Client
 {
     public class FonditalAuthenticationState : RemoteAuthenticationState
     {
-        
+        public Utente utente { get; set; }
     }
 }

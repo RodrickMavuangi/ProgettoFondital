@@ -7,6 +7,7 @@ using System;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.IdentityModel.Protocols.OpenIdConnect;
+using Microsoft.AspNetCore.Authentication;
 
 namespace Fondital.Server.Extensions
 {
@@ -26,7 +27,7 @@ namespace Fondital.Server.Extensions
                     options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
                     options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
                     options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-                })
+                }).AddIdentityServerJwt()
                 .AddJwtBearer(options =>
                 {
                     options.RequireHttpsMetadata = false;

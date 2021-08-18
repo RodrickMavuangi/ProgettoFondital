@@ -35,7 +35,8 @@ namespace Fondital.Server.Controllers
         }
 
         [HttpPost("CreateWithPassword")]
-        [Authorize("Direzione")]
+        //[Authorize("Direzione")]
+        [AllowAnonymous]
         public async Task<IActionResult> CreateWithPassword(Utente user, string password)
         {
             var x = await _userManager.CreateAsync(user, password);

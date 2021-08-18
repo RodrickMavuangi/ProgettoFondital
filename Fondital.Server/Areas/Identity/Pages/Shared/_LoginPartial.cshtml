@@ -1,8 +1,9 @@
 ﻿@using Microsoft.AspNetCore.Identity
 @using Fondital.Server
 @using Fondital.Shared.Models.Auth
-@inject SignInManager<UserManager<Utente>> SignInManager
+@inject SignInManager<Utente> SignInManager
 @inject UserManager<Utente> UserManager
+
 @addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
 
 @{

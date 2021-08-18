@@ -21,7 +21,7 @@ namespace Fondital.Client.Clients
         public async Task<IEnumerable<Utente>> GetUtenti() =>
             await httpClient.GetFromJsonAsync<IEnumerable<Utente>>("utenti");
 
-        public async Task<Utente> GetUtente(int id) =>
-            await httpClient.GetFromJsonAsync<Utente>($"utenti/{id}");
+        public async Task<Utente> GetUtente(string username) =>
+            await httpClient.GetFromJsonAsync<Utente>($"utenti/{username}");
     }
 }

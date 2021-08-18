@@ -1,24 +1,7 @@
 ﻿@page "/authentication/{action}"
-@*@inject UserState UserState*@
 @inject NavigationManager NavigationManager
+@inject UtenteClient utenteClient
+@inject AuthenticationStateProvider authStateProvider 
+@inject FonditalAuthenticationState applicationState 
 
-<RemoteAuthenticatorViewCore TAuthenticationState="FonditalAuthenticationState" AuthenticationState="authState" OnLogInSucceeded="RestoreState" Action="@Action" />
-
-@code {
-    [Parameter] public string Action { get; set; }
-
-    public FonditalAuthenticationState authState { get; set; } = new FonditalAuthenticationState();
-
-    protected override void OnInitialized()
-    {
-        if (RemoteAuthenticationActions.IsAction(RemoteAuthenticationActions.LogIn, Action))
-        {
-            //preserve previous state (non dovrebbe servire in quanto il login viene effettuato come prima cosa)
-        }
-    }
-
-    private void RestoreState(FonditalAuthenticationState appState)
-    {
-        //restore state
-    }
-}
+<RemoteAuthenticatorViewCore TAuthenticationState="FonditalAuthenticationState" AuthenticationState="authState" OnLogInSucceeded="RestoreState" OnLogOutSucceeded="RestoreState" Action="@Action" />

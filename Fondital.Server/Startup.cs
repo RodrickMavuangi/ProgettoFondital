@@ -1,30 +1,18 @@
-using Microsoft.AspNetCore.Identity.UI;
+using Fondital.Data;
+using Fondital.Server.Extensions;
+using Fondital.Services;
+using Fondital.Shared;
+using Fondital.Shared.Models.Auth;
+using Fondital.Shared.Services;
+using IdentityServer4.Stores;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Components;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
-using System;
-using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
-using Fondital.Data;
-using Fondital.Shared;
-using Fondital.Shared.Services;
-using Fondital.Services;
-using Fondital.Shared.Models.Auth;
-using Fondital.Server.Extensions;
-using IdentityServer4.Stores;
-using Microsoft.AspNetCore.ApiAuthorization.IdentityServer;
 using System.Reflection;
 
 namespace Fondital.Server
@@ -43,13 +31,6 @@ namespace Fondital.Server
         {
             var jwtSettings = Configuration.GetSection("Jwt").Get<JwtSettings>();
             services.AddDbContext<FonditalDbContext>(options => options.UseSqlServer(Configuration["Database:ConnectionString"]));
-            //services.AddIdentity<Utente, Ruolo>(options =>
-            //   {
-            //       options.Password.RequiredLength = 8;
-            //       options.Password.RequireNonAlphanumeric = true;
-            //       options.Password.RequireUppercase = true;
-            //       options.SignIn.RequireConfirmedAccount = false;
-            //   }).AddEntityFrameworkStores<FonditalDbContext>().AddDefaultTokenProviders();
 
             services.AddDefaultIdentity<Utente>(options =>
                 {
@@ -61,7 +42,8 @@ namespace Fondital.Server
 
             services.Configure<JwtSettings>(Configuration.GetSection("Jwt"));
 
-            services.AddIdentityServer().AddConfigurationStore(options =>
+            services.AddIdentityServer()
+            .AddConfigurationStore(options =>
             {
                 options.ConfigureDbContext = builder =>
                     builder.UseSqlServer(Configuration["Database:ConnectionString"], sql =>
@@ -75,13 +57,15 @@ namespace Fondital.Server
                     // this enables automatic token cleanup. this is optional.
                     options.EnableTokenCleanup = true;
                     options.TokenCleanupInterval = 30;
-                }).AddInMemoryCaching().AddClientStore<InMemoryClientStore>().AddResourceStore<InMemoryResourcesStore>(); //AddApiAuthorization<Utente, FonditalDbContext>();
-    
+                }
+            ).AddInMemoryCaching().AddClientStore<InMemoryClientStore>().AddResourceStore<InMemoryResourcesStore>()
+            .AddApiAuthorization<Utente, FonditalDbContext>();
+
             services.AddAuth(jwtSettings);
 
             services.AddControllers();
             services.AddRazorPages();
-            
+
             services.AddCors(options =>
             {
                 options.AddPolicy("CorsPolicy",
@@ -121,7 +105,8 @@ namespace Fondital.Server
                             },
                             new List<string>()
                     }
-                }; c.AddSecurityRequirement(security);
+                };
+                c.AddSecurityRequirement(security);
             });
         }
 
@@ -131,10 +116,10 @@ namespace Fondital.Server
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
-                //app.UseMigrationsEndPoint();
                 app.UseWebAssemblyDebugging();
-                //app.UseSwagger();
-                //app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Fondital.Server v1"));
+                
+                app.UseSwagger();
+                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Fondital.Server v1"));
             }
             else
             {
@@ -143,18 +128,10 @@ namespace Fondital.Server
                 app.UseHsts();
             }
 
-            //app.Use(async (context, next) =>
-            //{
-            //    if (context.Request.Path == "/.well-known/openid-configuration")
-            //        context.Request.Path = "/.well-known/openid-configuration.json";
-            //
-            //    await next();
-            //});
-            
             app.UseCors("CorsPolicy");
             app.UseHttpsRedirection();
             app.UseRouting();
-            
+
             app.UseBlazorFrameworkFiles();
             app.UseStaticFiles();
             app.UseIdentityServer();

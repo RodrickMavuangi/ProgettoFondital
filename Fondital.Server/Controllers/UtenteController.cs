@@ -17,7 +17,7 @@ namespace Fondital.Server.Controllers
 {
     [ApiController]
     [Route("utenti")]
-    [Authorize]
+    //[Authorize]
     public class UtenteController : ControllerBase
     {
         private readonly ILogger<UtenteController> _logger;
@@ -35,13 +35,14 @@ namespace Fondital.Server.Controllers
         public IEnumerable<Utente> GetUtenti()
         {
             return _ut.GetAllUtenti().Result;
-            
+
         }
 
-        //[HttpGet]
-        //public Utente GetUtenteById(int id)
-        //{
-        //    return _db.Utenti.SingleOrDefault(u => u.Id == id);
-        //}
+        [HttpGet("{username}")]
+        [AllowAnonymous]
+        public Utente GetUtenteByUsername(string username)
+        {
+            return _db.Utenti.SingleOrDefault(u => u.UserName == username);
+        }
     }
 }
