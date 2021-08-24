@@ -12,8 +12,8 @@ namespace Fondital.Client.Pages
 {
 	public class ListServicePartnerBase : ComponentBase
 	{
-		public List<AnagraficaServicePartner> anagraficaServicePartners = new List<AnagraficaServicePartner>();
-		public AnagraficaServicePartner AnagraficaServicePartnerModel { get; set; } = new AnagraficaServicePartner();
+		//public List<AnagraficaServicePartner> anagraficaServicePartners = new List<AnagraficaServicePartner>();
+		//public AnagraficaServicePartner AnagraficaServicePartnerModel { get; set; } = new AnagraficaServicePartner();
 		public bool WindowVisible { get; set; }
 		public bool ValidSubmit { get; set; } = false;
 		public EditContext myEditContext { get; set; }
@@ -23,13 +23,13 @@ namespace Fondital.Client.Pages
 
 		protected override async Task OnInitializedAsync()
 		{
-			myEditContext = new EditContext(AnagraficaServicePartnerModel);
+			//myEditContext = new EditContext(AnagraficaServicePartnerModel);
 			await GetGridData();
 		}
 
 		public void EditHandler(GridCommandEventArgs args)
 		{
-			AnagraficaServicePartner item = (AnagraficaServicePartner)args.Item;
+			//AnagraficaServicePartner item = (AnagraficaServicePartner)args.Item;
 
 			// TODO Logic ....
 
@@ -37,7 +37,7 @@ namespace Fondital.Client.Pages
 
 		public async Task UpdateHandler(GridCommandEventArgs args)
 		{
-			AnagraficaServicePartner item = (AnagraficaServicePartner)args.Item;
+			//AnagraficaServicePartner item = (AnagraficaServicePartner)args.Item;
 
 			//await MyService.Update(item);
 
@@ -48,7 +48,7 @@ namespace Fondital.Client.Pages
 
 		public async Task DeleteHandler(GridCommandEventArgs args)
 		{
-			AnagraficaServicePartner item = (AnagraficaServicePartner)args.Item;
+			//AnagraficaServicePartner item = (AnagraficaServicePartner)args.Item;
 
 			//await MyService.Delete(item);
 
@@ -58,7 +58,7 @@ namespace Fondital.Client.Pages
 
 		public async Task CreateHandler(GridCommandEventArgs args)
 		{
-			AnagraficaServicePartner item = (AnagraficaServicePartner)args.Item;
+			//AnagraficaServicePartner item = (AnagraficaServicePartner)args.Item;
 
 			//await MyService.Create(item);
 
@@ -68,7 +68,7 @@ namespace Fondital.Client.Pages
 
 		public async Task CancelHandler(GridCommandEventArgs args)
 		{
-			AnagraficaServicePartner item = (AnagraficaServicePartner)args.Item;
+			//AnagraficaServicePartner item = (AnagraficaServicePartner)args.Item;
 
 			// if necessary, perform actual data source operation here through your service
 
@@ -79,14 +79,14 @@ namespace Fondital.Client.Pages
 			//MyData = await MyService.Read();
 			for (int i = 0; i < 50; i++)
 			{
-				anagraficaServicePartners.Add(new AnagraficaServicePartner()
-				{
-					ID = Guid.NewGuid().ToString(),
-					CodiceFornitore = "Fornitore123456" + i.ToString(),
-					RagioneSociale = "TechSTORE" + i.ToString(),
-					CodiceCliente = "GD654987" + i.ToString(),
-					NumeroUtenti = 16 + i
-				});
+				//anagraficaServicePartners.Add(new AnagraficaServicePartner()
+				//{
+				//	ID = Guid.NewGuid().ToString(),
+				//	CodiceFornitore = "Fornitore123456" + i.ToString(),
+				//	RagioneSociale = "TechSTORE" + i.ToString(),
+				//	CodiceCliente = "GD654987" + i.ToString(),
+				//	NumeroUtenti = 16 + i
+				//});
 			}
 		}
 
@@ -99,8 +99,8 @@ namespace Fondital.Client.Pages
 
 			if (isFormValid)
 			{
-				AnagraficaServicePartner anagraficaServicePartnerToSave = (AnagraficaServicePartner)editContext.Model;
-				anagraficaServicePartners.Add(anagraficaServicePartnerToSave);
+				//AnagraficaServicePartner anagraficaServicePartnerToSave = (AnagraficaServicePartner)editContext.Model;
+				//anagraficaServicePartners.Add(anagraficaServicePartnerToSave);
 
 			}
 			else

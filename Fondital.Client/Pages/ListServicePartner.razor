@@ -30,14 +30,14 @@
             }
             else
             {
-                <TelerikForm Model="@AnagraficaServicePartnerModel" OnSubmit="OnSubmitHandler" EditContext="myEditContext">
+                <TelerikForm  OnSubmit="OnSubmitHandler" EditContext="myEditContext">
                     <FormValidation>
                         <DataAnnotationsValidator></DataAnnotationsValidator>
                     </FormValidation>
                     <FormItems>
-                        <FormItem Field="@nameof(AnagraficaServicePartner.RagioneSociale)"></FormItem>
+                        @*<FormItem Field="@nameof(AnagraficaServicePartner.RagioneSociale)"></FormItem>
                         <FormItem Field="@nameof(AnagraficaServicePartner.CodiceFornitore)"></FormItem>
-                        <FormItem Field="@nameof(AnagraficaServicePartner.CodiceCliente)"></FormItem>
+                        <FormItem Field="@nameof(AnagraficaServicePartner.CodiceCliente)"></FormItem>*@
                     </FormItems>
                     @*<FormButtons>
                             <TelerikButton  ButtonType="@ButtonType.Submit" Primary="true">SALVA</TelerikButton>
@@ -51,7 +51,7 @@
 
 
 
-<TelerikGrid Data=@anagraficaServicePartners EditMode="@GridEditMode.Popup" Pageable="true" Height="500px"
+@*<TelerikGrid Data="" EditMode="@GridEditMode.Popup" Pageable="true" Height="500px"
              OnUpdate="@UpdateHandler" OnEdit="@EditHandler" OnDelete="@DeleteHandler" OnCreate="@CreateHandler" OnCancel="@CancelHandler" Resizable="true" Sortable="true" >
     <GridToolBar>
         <span class="k-toolbar-spacer"></span>
@@ -68,7 +68,7 @@
             <GridCommandButton Command="Cancel" Icon="cancel" ShowInEdit="true">Cancel</GridCommandButton>
         </GridCommandColumn>
     </GridColumns>
-</TelerikGrid>
+</TelerikGrid>*@
 
 
 
