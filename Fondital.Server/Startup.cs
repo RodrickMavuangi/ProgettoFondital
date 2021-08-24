@@ -81,6 +81,7 @@ namespace Fondital.Server
             services.AddTransient<IAuthService, AuthService>();
             services.AddTransient<IUtenteService, UtenteService>();
             services.AddTransient<ITraceService, TraceService>();
+            services.AddTransient<IServicePartnerService, ServicePartnerService>();
 
             services.AddSwaggerGen(c =>
             {

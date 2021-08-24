@@ -8,8 +8,9 @@ namespace Fondital.Shared.Services
     {
         Task<IEnumerable<Utente>> GetAllUtenti();
         Task<Utente> GetUtenteById(int id);
+        Task<Utente> GetUtenteByUsername(string username);
         Task<Utente> CreateUtente(Utente utente);
-        Task UpdateUtente(Utente utenteToBeUpdated, Utente utente);
+        Task UpdateUtente(string utenteToBeUpdated, Utente utente);
         Task DeleteUtente(Utente utente);
     }
 }

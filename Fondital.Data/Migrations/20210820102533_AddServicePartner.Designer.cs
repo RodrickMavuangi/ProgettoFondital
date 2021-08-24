@@ -4,14 +4,16 @@ using Fondital.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
-namespace Fondital.Server.Migrations
+namespace Fondital.Data.Migrations
 {
     [DbContext(typeof(FonditalDbContext))]
-    partial class FonditalDBContextModelSnapshot : ModelSnapshot
+    [Migration("20210820102533_AddServicePartner")]
+    partial class AddServicePartner
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -114,7 +116,7 @@ namespace Fondital.Server.Migrations
                     b.Property<string>("SecurityStamp")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("ServicePartnerId")
+                    b.Property<int?>("ServicePartnerId")
                         .HasColumnType("int");
 
                     b.Property<bool>("TwoFactorEnabled")
@@ -405,9 +407,7 @@ namespace Fondital.Server.Migrations
                 {
                     b.HasOne("Fondital.Shared.Models.ServicePartner", "ServicePartner")
                         .WithMany("Utenti")
-                        .HasForeignKey("ServicePartnerId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("ServicePartnerId");
 
                     b.Navigation("ServicePartner");
                 });

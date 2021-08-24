@@ -4,14 +4,16 @@ using Fondital.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
-namespace Fondital.Server.Migrations
+namespace Fondital.Data.Migrations
 {
     [DbContext(typeof(FonditalDbContext))]
-    partial class FonditalDBContextModelSnapshot : ModelSnapshot
+    [Migration("20210819135510_PwNameChange")]
+    partial class PwNameChange
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -111,11 +113,11 @@ namespace Fondital.Server.Migrations
                     b.Property<bool>("Pw_MustChange")
                         .HasColumnType("bit");
 
+                    b.Property<int>("SP_Id")
+                        .HasColumnType("int");
+
                     b.Property<string>("SecurityStamp")
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("ServicePartnerId")
-                        .HasColumnType("int");
 
                     b.Property<bool>("TwoFactorEnabled")
                         .HasColumnType("bit");
@@ -134,32 +136,7 @@ namespace Fondital.Server.Migrations
                         .HasDatabaseName("UserNameIndex")
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
-                    b.HasIndex("ServicePartnerId");
-
                     b.ToTable("AspNetUsers");
-                });
-
-            modelBuilder.Entity("Fondital.Shared.Models.ServicePartner", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:IdentityIncrement", 1)
-                        .HasAnnotation("SqlServer:IdentitySeed", 1)
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("CodiceCliente")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("CodiceFornitore")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("RagioneSociale")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("ServicePartner");
                 });
 
             modelBuilder.Entity("Fondital.Shared.Models.Trace", b =>
@@ -401,17 +378,6 @@ namespace Fondital.Server.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
-            modelBuilder.Entity("Fondital.Shared.Models.Auth.Utente", b =>
-                {
-                    b.HasOne("Fondital.Shared.Models.ServicePartner", "ServicePartner")
-                        .WithMany("Utenti")
-                        .HasForeignKey("ServicePartnerId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("ServicePartner");
-                });
-
             modelBuilder.Entity("Fondital.Shared.Models.Trace", b =>
                 {
                     b.HasOne("Fondital.Shared.Models.Auth.Utente", "Utente")
@@ -470,11 +436,6 @@ namespace Fondital.Server.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-                });
-
-            modelBuilder.Entity("Fondital.Shared.Models.ServicePartner", b =>
-                {
-                    b.Navigation("Utenti");
                 });
 #pragma warning restore 612, 618
         }

@@ -2,28 +2,20 @@
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Fondital.Shared.Models;
-using Fondital.Shared.Models.Auth;
 using Fondital.Shared.Repositories;
-using Fondital.Data;
 using System.Linq;
 
 namespace Fondital.Data.Repositories
 {
-    public class UtenteRepository : Repository<Utente>, IUtenteRepository
+    public class ServicePartnerRepository : Repository<ServicePartner>, IServicePartnerRepository
     {
-        public UtenteRepository(FonditalDbContext context)
+        public ServicePartnerRepository(FonditalDbContext context)
             : base(context)
         { }
-        
 
         private FonditalDbContext _db
         {
             get { return Context as FonditalDbContext; }
-        }
-
-        public async Task<Utente> GetByUsernameAsync(string username)
-        {
-            return await _db.Utenti.SingleOrDefaultAsync(u => u.UserName == username);
         }
     }
 }
