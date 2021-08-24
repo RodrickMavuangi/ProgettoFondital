@@ -4,6 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 using Fondital.Shared.Models.Auth;
+using Fondital.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -23,18 +24,18 @@ namespace Fondital.Server.Areas.Identity.Pages.Account.Manage
         private readonly UserManager<Utente> _userManager;
         private readonly SignInManager<Utente> _signInManager;
         private readonly ILogger<ChangePasswordModel> _logger;
-        private readonly UtenteController _utController;
+        private readonly UtenteService _utService;
 
         public ChangePasswordModel(
             UserManager<Utente> userManager,
             SignInManager<Utente> signInManager,
             ILogger<ChangePasswordModel> logger,
-            UtenteController utController)
+            UtenteService utService)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _logger = logger;
-            _utController = utController;
+            _utService = utService;
         }
 
         [BindProperty]
@@ -112,7 +113,9 @@ namespace Fondital.Server.Areas.Identity.Pages.Account.Manage
             }
             else
             {
-                //await _utController.UpdateDataCambioPw(Username);
+                user.Pw_LastChanged = DateTime.Now;
+                user.Pw_MustChange = false;
+                await _utService.UpdateUtente(Username, user);
             }
 
             await _signInManager.RefreshSignInAsync(user);
