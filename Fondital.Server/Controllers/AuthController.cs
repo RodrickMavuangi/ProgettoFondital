@@ -19,7 +19,6 @@ namespace Fondital.Server.Controllers
     [ApiController]
     public class AuthController : ControllerBase
     {
-        //private readonly IMapper _mapper; 
         private readonly UserManager<Utente> _userManager;
         private readonly RoleManager<Ruolo> _roleManager;
         private readonly JwtSettings _jwtSettings;
@@ -27,7 +26,6 @@ namespace Fondital.Server.Controllers
 
         public AuthController(UserManager<Utente> userManager, RoleManager<Ruolo> roleManager, IOptionsSnapshot<JwtSettings> jwtSettings, IAuthService authService)
         {
-            //_mapper = mapper;
             _userManager = userManager;
             _roleManager = roleManager;
             _jwtSettings = jwtSettings.Value;

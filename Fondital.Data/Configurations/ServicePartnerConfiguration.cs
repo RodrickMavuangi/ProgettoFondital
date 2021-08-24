@@ -10,19 +10,15 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Fondital.Data.Configurations
 {
-    public class UtenteConfiguration : IEntityTypeConfiguration<Utente>
+    public class ServicePartnerConfiguration : IEntityTypeConfiguration<ServicePartner>
     {
-        public void Configure(EntityTypeBuilder<Utente> builder )
+        public void Configure(EntityTypeBuilder<ServicePartner> builder)
         {
             builder.HasKey(a => a.Id);
 
             builder.Property(m => m.Id).UseIdentityColumn();
 
-            builder.Property(m => m.Nome).IsRequired().HasMaxLength(50);
-
-            builder.HasOne(m => m.ServicePartner).WithMany(s => s.Utenti).IsRequired();
-
-            builder.ToTable("AspNetUsers");
+            builder.ToTable("ServicePartner");
         }
     }
 }

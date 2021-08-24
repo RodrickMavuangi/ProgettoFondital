@@ -1,4 +1,4 @@
-﻿using Fondital.Shared.Models.Auth;
+﻿using Fondital.Shared.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 namespace Fondital.Shared.Repositories
 {
-    public interface IUtenteRepository : IRepository<Utente>
+    public interface IServicePartnerRepository : IRepository<ServicePartner>
     {
-        Task<Utente> GetByUsernameAsync(string username);
+        
     }
 }

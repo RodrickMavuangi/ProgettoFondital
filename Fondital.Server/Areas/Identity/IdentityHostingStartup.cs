@@ -1,5 +1,6 @@
 ﻿using System;
 using Fondital.Data;
+using Fondital.Services;
 using Fondital.Shared.Models.Auth;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
@@ -16,6 +17,7 @@ namespace Fondital.Server.Areas.Identity
         public void Configure(IWebHostBuilder builder)
         {
             builder.ConfigureServices((context, services) => {
+                services.AddTransient<UtenteService>();
             });
         }
     }
