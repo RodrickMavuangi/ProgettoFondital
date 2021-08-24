@@ -1,0 +1,136 @@
+﻿@inherits ListServicePartnerBase
+@page  "/listservicepartner"
+@attribute [Authorize]
+
+@using System.ComponentModel.DataAnnotations
+@inject NavigationManager NavigationManager
+@using Fondital.Shared.Models
+
+<div class="cont">
+    <div class="tit-pg">
+        <h1><strong>Anagrafiche</strong> Service Partner</h1>
+    </div>
+    <div class="btn-ad">
+        <TelerikButton Class="btn-add" OnClick=@(()=> WindowVisible = true)>Inserisci Anagrafica</TelerikButton>
+    </div>
+</div>
+
+<TelerikWindow Class="modal-app" Width="500px" Height="300px" Centered="true" @bind-Visible=@WindowVisible Modal="true">
+
+    <WindowActions>
+        <WindowAction Name="Close" />
+    </WindowActions>
+    <WindowContent>
+        <div class="demo-section">
+            @if (ValidSubmit)
+            {
+                <div class="demo-alert demo-alert-success" role="alert">
+                    The form was submitted successfully.
+                </div>
+            }
+            else
+            {
+                <TelerikForm Model="@AnagraficaServicePartnerModel" OnSubmit="OnSubmitHandler" EditContext="myEditContext">
+                    <FormValidation>
+                        <DataAnnotationsValidator></DataAnnotationsValidator>
+                    </FormValidation>
+                    <FormItems>
+                        <FormItem Field="@nameof(AnagraficaServicePartner.RagioneSociale)"></FormItem>
+                        <FormItem Field="@nameof(AnagraficaServicePartner.CodiceFornitore)"></FormItem>
+                        <FormItem Field="@nameof(AnagraficaServicePartner.CodiceCliente)"></FormItem>
+                    </FormItems>
+                    @*<FormButtons>
+                            <TelerikButton  ButtonType="@ButtonType.Submit" Primary="true">SALVA</TelerikButton>
+                        </FormButtons>*@
+                </TelerikForm>
+
+            }
+        </div>
+    </WindowContent>
+</TelerikWindow>
+
+
+
+<TelerikGrid Data=@anagraficaServicePartners EditMode="@GridEditMode.Popup" Pageable="true" Height="500px"
+             OnUpdate="@UpdateHandler" OnEdit="@EditHandler" OnDelete="@DeleteHandler" OnCreate="@CreateHandler" OnCancel="@CancelHandler" Resizable="true" Sortable="true" >
+    <GridToolBar>
+        <span class="k-toolbar-spacer"></span>
+        <GridSearchBox Fields="SearchableFields"  DebounceDelay="200"></GridSearchBox>
+    </GridToolBar>
+    <GridColumns>
+        <GridColumn Field=@nameof(AnagraficaServicePartner.CodiceFornitore) Title="CODICE FORNITORE"/>
+        <GridColumn Field=@nameof(AnagraficaServicePartner.RagioneSociale) Title="RAGIONE SOCIALE" />
+        <GridColumn Field=@nameof(AnagraficaServicePartner.CodiceCliente) Title="CODICE UTENTE" />
+        <GridColumn Field=@nameof(AnagraficaServicePartner.NumeroUtenti) Title="N° UTENTI" />
+        <GridCommandColumn Width="50px">
+            <GridCommandButton Command="Save" Icon="save" ShowInEdit="true">Update</GridCommandButton>
+            <GridCommandButton Class="editColor" Command="Edit" Icon="edit" ImageUrl="/img/Icons/setting.svg"></GridCommandButton>
+            <GridCommandButton Command="Cancel" Icon="cancel" ShowInEdit="true">Cancel</GridCommandButton>
+        </GridCommandColumn>
+    </GridColumns>
+</TelerikGrid>
+
+
+
+<style>
+    .myClasse {
+        color: aliceblue;
+        background-color: forestgreen
+    }
+
+    .cont {
+        display: flex;
+        flex-direction: row
+    }
+
+    .editColor {
+        color: aliceblue;
+        background-color: dodgerblue
+    }
+
+    .btn-add {
+        float: right;
+        color: aliceblue;
+        background-color: forestgreen;
+        width:180px
+    }
+
+    .btn-ad {
+        position: absolute;
+        right: 25px;
+    }
+
+    .tit-pg {
+        display: inline-block;
+    }
+
+    .modal-app {
+        width: 350px;
+    }
+
+    div.k-widget.k-window.modal-app {
+        width: 250px;
+        height: 600px;
+        border: 1px solid white
+    }
+
+    .modal-app .k-dialog-titlebar.k-header.k-window-titlebar {
+        background: white;
+        height: 10px;
+        border: none;
+        color: black
+    }
+
+    .modal-app .k-window-content.k-content.k-dialog-content {
+    }
+
+    .modal-app .k-button.telerik-blazor.k-primary.k-form-submit {
+        border: 2px solid dodgerblue;
+        color: aliceblue;
+        background-color: dodgerblue;
+        width: 700px;
+    }
+    .cas-ric{
+        height:auto
+    }
+</style>

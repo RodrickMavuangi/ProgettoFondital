@@ -51,6 +51,7 @@
 
     string CurrentLanguage = string.Empty;
     List<string> Languages;
+    string Scelta ;
 
     string CurrentAnag = string.Empty;
     List<string> Anags;
@@ -81,9 +82,20 @@
 
     public void Navigate()
     {
-        NavigationManager.NavigateTo("/traces");
+        var f = UserFirstName;
+        NavigationManager.NavigateTo(Scelta);
+        //NavigationManager.NavigateTo("/traces");
     }
-}
+
+    private void MyValueChangeHandler(string theUserChoice)
+    {
+        if (theUserChoice == "Anagrafiche SP") Scelta = "/listservicepartner";
+        else Scelta = "/traces";
+        var result = string.Format("The user chose: {0}", theUserChoice);
+
+
+    }
+    }
 
 <style>
     .bd-placeholder-img {
@@ -92,7 +104,7 @@
         -webkit-user-select: none;
         -moz-user-select: none;
         user-select: none
-    }
+}
 
     @@media(min-width: 768px) {
         .bd-placeholder-img-lg {
@@ -116,12 +128,12 @@
                 </div>
 
 
-
+                @*bind-Value="CurrentAnag*@
                 <div class="col-7 condensed-bold">
                     <ul class="nav nav-pills col-12 col-lg-auto ml-40 mb-2 mb-md-0">
                         <li class="nav-item dropdown">
                             <TelerikDropDownList Class="nav-link dropdown-toggle dropdown-custom-toggle active" PopupClass="dropdown-item"
-                                                 Data="@Anags" @bind-Value="CurrentAnag" OnChange="Navigate" DefaultText="@((CurrentAnag==null)?"ANAGRAFICHE":null)">
+                                                 Data="@Anags"  ValueChanged="@( (string v) => MyValueChangeHandler(v) )" OnChange="Navigate" DefaultText="@((CurrentAnag==null)?"ANAGRAFICHE":null)">
                             </TelerikDropDownList>
                         </li>
 
@@ -137,7 +149,7 @@
                             </TelerikButton>
                         </li>
                         <li class="nav-item px-3">
-                            <LoginDisplay/>
+                            <LoginDisplay />
                         </li>
                     </ul>
                 </div>
