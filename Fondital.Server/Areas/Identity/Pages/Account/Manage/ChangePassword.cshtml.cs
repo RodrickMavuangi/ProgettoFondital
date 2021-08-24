@@ -14,7 +14,7 @@ using System.Text.Encodings.Web;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.EntityFrameworkCore;
-using Fondital.Server.Controllers;
+using Fondital.Services;
 
 namespace Fondital.Server.Areas.Identity.Pages.Account.Manage
 {
@@ -54,18 +54,18 @@ namespace Fondital.Server.Areas.Identity.Pages.Account.Manage
         {
             [Required]
             [DataType(DataType.Password)]
-            [Display(Name = "Current password")]
+            [Display(Name = "Password attuale")]
             public string OldPassword { get; set; }
 
             [Required]
-            [StringLength(100, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 6)]
+            [StringLength(40, ErrorMessage = "La {0} deve essere lunga almeno {2} e al più {1} caratteri. Deve contenere maiuscole, minuscole, numeri e simboli.", MinimumLength = 8)]
             [DataType(DataType.Password)]
-            [Display(Name = "New password")]
+            [Display(Name = "Nuova password")]
             public string NewPassword { get; set; }
 
             [DataType(DataType.Password)]
-            [Display(Name = "Confirm new password")]
-            [Compare("NewPassword", ErrorMessage = "The new password and confirmation password do not match.")]
+            [Display(Name = "Conferma nuova password")]
+            [Compare("NewPassword", ErrorMessage = "La nuova password e la conferma nuova password devono coincidere.")]
             public string ConfirmPassword { get; set; }
         }
 
@@ -77,7 +77,7 @@ namespace Fondital.Server.Areas.Identity.Pages.Account.Manage
             
             if (user == null)
             {
-                return NotFound($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
+                return NotFound($"Impossibile caricare un utente con username '{Username}'.");
             }
 
             var hasPassword = await _userManager.HasPasswordAsync(user);
@@ -99,7 +99,7 @@ namespace Fondital.Server.Areas.Identity.Pages.Account.Manage
             var user = await _userManager.FindByNameAsync(Username);
             if (user == null)
             {
-                return NotFound($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
+                return NotFound($"Impossibile caricare un utente con username '{Username}'.");
             }
 
             var changePasswordResult = await _userManager.ChangePasswordAsync(user, Input.OldPassword, Input.NewPassword);
@@ -120,7 +120,7 @@ namespace Fondital.Server.Areas.Identity.Pages.Account.Manage
 
             await _signInManager.RefreshSignInAsync(user);
             _logger.LogInformation("User changed their password successfully.");
-            StatusMessage = "Your password has been changed.";
+            StatusMessage = "La tua password è stata cambiata con successo.";
 
             return LocalRedirect(ReturnUrl);
         }
