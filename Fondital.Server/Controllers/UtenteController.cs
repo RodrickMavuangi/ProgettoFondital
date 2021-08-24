@@ -21,28 +21,42 @@ namespace Fondital.Server.Controllers
     public class UtenteController : ControllerBase
     {
         private readonly ILogger<UtenteController> _logger;
-        private readonly FonditalDbContext _db;
         private readonly IUtenteService _ut;
 
-        public UtenteController(ILogger<UtenteController> logger, FonditalDbContext db, IUtenteService ut)
+        public UtenteController(ILogger<UtenteController> logger, IUtenteService ut)
         {
             _ut = ut;
             _logger = logger;
-            _db = db;
         }
 
         [HttpGet]
         public IEnumerable<Utente> GetUtenti()
         {
             return _ut.GetAllUtenti().Result;
-
         }
 
         [HttpGet("{username}")]
         [AllowAnonymous]
         public Utente GetUtenteByUsername(string username)
         {
-            return _db.Utenti.SingleOrDefault(u => u.UserName == username);
+            return _ut.GetUtenteByUsername(username).Result;
+        }
+
+        [HttpPost("PwUpdated/{username}")]
+        public async Task UpdateDataCambioPw(string username)
+        {
+            try
+            {
+                var utente = this.GetUtenteByUsername(username);
+                utente.Pw_LastChanged = DateTime.Now;
+                utente.Pw_MustChange = false;
+                await _ut.UpdateUtente(utente.UserName, utente);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"Errore nell'aggiornamento dell'ultimo cambio password per l'utente {username}.");
+                throw;
+            }
         }
     }
 }

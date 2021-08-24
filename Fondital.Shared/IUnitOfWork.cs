@@ -8,6 +8,7 @@ namespace Fondital.Shared
     {
         IUtenteRepository Utenti { get; }
         ITraceRepository Traces { get; }
+        IServicePartnerRepository ServicePartners { get; }
         Task<int> CommitAsync();
     }
 }

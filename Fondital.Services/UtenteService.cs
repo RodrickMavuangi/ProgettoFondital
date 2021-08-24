@@ -41,9 +41,16 @@ namespace Fondital.Services
             return await _unitOfWork.Utenti.GetByIdAsync(id);
         }
 
-        public async Task UpdateUtente(Utente utenteToUpdate, Utente utente)
+        public async Task<Utente> GetUtenteByUsername(string username)
         {
-            utenteToUpdate.Nome = utente.Nome;
+            return await _unitOfWork.Utenti.GetByUsernameAsync(username);
+        }
+
+        public async Task UpdateUtente(string username, Utente utente)
+        {
+            var utenteToUpdate = _unitOfWork.Utenti.SingleOrDefaultAsync(u => u.UserName == username).Result;
+
+            utenteToUpdate = utente;
 
             await _unitOfWork.CommitAsync();
         }

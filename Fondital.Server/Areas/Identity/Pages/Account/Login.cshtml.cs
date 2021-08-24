@@ -12,6 +12,7 @@ using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
+using Microsoft.EntityFrameworkCore;
 
 namespace Fondital.Server.Areas.Identity.Pages.Account
 {
@@ -22,7 +23,7 @@ namespace Fondital.Server.Areas.Identity.Pages.Account
         private readonly SignInManager<Utente> _signInManager;
         private readonly ILogger<LoginModel> _logger;
 
-        public LoginModel(SignInManager<Utente> signInManager, 
+        public LoginModel(SignInManager<Utente> signInManager,
             ILogger<LoginModel> logger,
             UserManager<Utente> userManager)
         {
@@ -77,17 +78,27 @@ namespace Fondital.Server.Areas.Identity.Pages.Account
             returnUrl ??= Url.Content("~/");
 
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
-        
+
             if (ModelState.IsValid)
              {
                 // This doesn't count login failures towards account lockout
                 // To enable password failures to trigger account lockout, set lockoutOnFailure: true
                 
                 var result = await _signInManager.PasswordSignInAsync(Input.Email, Input.Password, Input.RememberMe, lockoutOnFailure: false);
+                Utente utenteCorrente = _userManager.FindByNameAsync(Input.Email).Result;
+
                 if (result.Succeeded)
                 {
-                    _logger.LogInformation("User logged in.");
-                    return LocalRedirect(returnUrl);
+                    if (utenteCorrente.Pw_MustChange || utenteCorrente.Pw_LastChanged < DateTime.Now.AddDays(-90))
+                    {
+                        _logger.LogInformation("Password scaduta.");
+                        return RedirectToPage("./Manage/ChangePassword", new { ReturnUrl = returnUrl, Username = Input.Email });
+                    }
+                    else
+                    {
+                        _logger.LogInformation("User logged in.");
+                        return LocalRedirect(returnUrl);
+                    }
                 }
                 if (result.RequiresTwoFactor)
                 {

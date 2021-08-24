@@ -2,6 +2,7 @@
 using Fondital.Shared;
 using Fondital.Shared.Models;
 using Fondital.Shared.Models.Auth;
+using Fondital.Shared.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Mvc;
@@ -20,33 +21,30 @@ namespace Fondital.Server.Controllers
     public class TraceController : ControllerBase
     {
         private readonly ILogger<TraceController> _logger;
-        private readonly FonditalDbContext _db;
+        private readonly ITraceService _traceService;
 
-        public TraceController(ILogger<TraceController> logger, FonditalDbContext db)
+        public TraceController(ILogger<TraceController> logger, ITraceService traceService)
         {
             _logger = logger;
-            _db = db;
+            _traceService = traceService;
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Trace>>> Get()
+        public async Task<IEnumerable<Trace>> Get()
         {
-            return await _db.Traces.ToListAsync();
+            return await _traceService.GetAllTraces();
         }
 
         [HttpPost]
-        public async Task<ActionResult<int>> PostDummy(Trace trace)
+        public async Task<Trace> PostDummy(Trace trace)
         {
             try
             {
-                await _db.Traces.AddAsync(trace);
-                await _db.SaveChangesAsync();
-
-                return trace.Id;
+                return await _traceService.CreateTrace(trace);
             }
             catch (Exception e)
             {
-                return 0;
+                return null;
             }
         }
     }
