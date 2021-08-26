@@ -52,9 +52,9 @@
 </TelerikWindow>
 
 
-
-<TelerikGrid Data="@ServicePartners" EditMode="@GridEditMode.Popup" Pageable="true" Height="500px"
-             OnUpdate="@UpdateHandler" OnEdit="@EditHandler" OnDelete="@DeleteHandler" OnCreate="@CreateHandler" OnCancel="@CancelHandler" Resizable="true" Sortable="true">
+@*OnEdit="@EditHandler"//EditMode="@GridEditMode.Popup"*@
+<TelerikGrid Data="@ServicePartners" Pageable="true" Height="500px"
+             OnUpdate="@UpdateHandler" OnDelete="@DeleteHandler" OnCreate="@CreateHandler" OnCancel="@CancelHandler" Resizable="true" Sortable="true">
     <GridToolBar>
         <span class="k-toolbar-spacer"></span>
         <GridSearchBox Fields="SearchableFields" DebounceDelay="200"></GridSearchBox>
@@ -64,7 +64,7 @@
         <GridColumn Field=@nameof(ServicePartner.RagioneSociale) Title="RAGIONE SOCIALE" />
         <GridColumn Field=@nameof(ServicePartner.CodiceCliente) Title="CODICE UTENTE" />
         <GridColumn Field=@nameof(ServicePartner.Utenti.Count) Title="N° UTENTI" />
-        <GridCommandColumn Width="50px">
+        <GridCommandColumn Width="100px">
             <GridCommandButton Command="Save" Icon="save" ShowInEdit="true">Update</GridCommandButton>
             <GridCommandButton Class="editColor" Command="Edit" Icon="edit" ImageUrl="/img/Icons/setting.svg"></GridCommandButton>
             <GridCommandButton Command="Cancel" Icon="cancel" ShowInEdit="true">Cancel</GridCommandButton>
