@@ -14,7 +14,7 @@ using System.Text.Encodings.Web;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.EntityFrameworkCore;
-using Fondital.Services;
+using Fondital.Shared.Services;
 
 namespace Fondital.Server.Areas.Identity.Pages.Account.Manage
 {
@@ -24,13 +24,13 @@ namespace Fondital.Server.Areas.Identity.Pages.Account.Manage
         private readonly UserManager<Utente> _userManager;
         private readonly SignInManager<Utente> _signInManager;
         private readonly ILogger<ChangePasswordModel> _logger;
-        private readonly UtenteService _utService;
+        private readonly IUtenteService _utService;
 
         public ChangePasswordModel(
             UserManager<Utente> userManager,
             SignInManager<Utente> signInManager,
             ILogger<ChangePasswordModel> logger,
-            UtenteService utService)
+            IUtenteService utService)
         {
             _userManager = userManager;
             _signInManager = signInManager;

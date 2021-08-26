@@ -10,18 +10,16 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Fondital.Data.Configurations
 {
-    public class ServicePartnerConfiguration : IEntityTypeConfiguration<ServicePartner>
+    public class ConfigurazioneConfiguration : IEntityTypeConfiguration<Configurazione>
     {
-        public void Configure(EntityTypeBuilder<ServicePartner> builder)
+        public void Configure(EntityTypeBuilder<Configurazione> builder)
         {
             builder.HasKey(a => a.Id);
             builder.Property(m => m.Id).UseIdentityColumn();
 
-            builder.Property(m => m.CodiceCliente).IsRequired();
-            builder.Property(m => m.CodiceFornitore).IsRequired();
-            builder.Property(m => m.RagioneSociale).IsRequired();
+            builder.Property(m => m.Chiave).IsRequired();
 
-            builder.ToTable("ServicePartner");
+            builder.ToTable("Configurazioni");
         }
     }
 }
