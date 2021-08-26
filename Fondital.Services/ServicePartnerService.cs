@@ -49,5 +49,13 @@ namespace Fondital.Services
 
             await _unitOfWork.CommitAsync();
         }
+
+        public async Task<ServicePartner> UpdateServicePartner(ServicePartner spToUpdate)
+		{
+            await _unitOfWork.ServicePartners.UpdateAsync(spToUpdate);
+            await _unitOfWork.CommitAsync();
+
+            return spToUpdate;
+		}
     }
 }

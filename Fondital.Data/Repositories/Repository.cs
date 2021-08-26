@@ -55,5 +55,10 @@ namespace Fondital.Data.Repositories
         {
             return Context.Set<TEntity>().SingleOrDefaultAsync(predicate);
         }
+
+        public async Task UpdateAsync(TEntity entity)
+		{
+            Context.Set<TEntity>().Update(entity);
+		}
     }
 }

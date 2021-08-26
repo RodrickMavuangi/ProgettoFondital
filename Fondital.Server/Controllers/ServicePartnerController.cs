@@ -3,6 +3,7 @@ using Fondital.Services;
 using Fondital.Shared;
 using Fondital.Shared.Models;
 using Fondital.Shared.Models.Auth;
+using Fondital.Shared.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Mvc;
@@ -22,9 +23,9 @@ namespace Fondital.Server.Controllers
     {
         private readonly ILogger<ServicePartnerController> _logger;
         private readonly FonditalDbContext _db;
-        private readonly ServicePartnerService _spService;
+        private readonly IServicePartnerService _spService;
 
-        public ServicePartnerController(ILogger<ServicePartnerController> logger, FonditalDbContext db, ServicePartnerService spService)
+        public ServicePartnerController(ILogger<ServicePartnerController> logger, FonditalDbContext db, IServicePartnerService spService)
         {
             _logger = logger;
             _db = db;
@@ -36,5 +37,64 @@ namespace Fondital.Server.Controllers
         {
             return await _spService.GetAllServicePartners();
         }
-    }
+
+
+        [HttpPost]
+        public async Task<ServicePartner> CreateServicePartner([FromBody] ServicePartner servicePartner)
+        {
+            ServicePartner _servicePartner = new ServicePartner();
+			try
+			{
+                if (servicePartner == null)
+                {
+                    _logger.LogError("L'oggetto servicePartner inviato dal Client è null.");
+                }
+				else
+				{
+                    _servicePartner = await _spService.CreateServicePartner(servicePartner);
+				}
+            }
+			catch (Exception e) 
+            {
+                _logger.LogError($"C'è stato un problema : {e.Message}");
+            }
+            return _servicePartner;
+        }
+
+
+        [HttpPut("{id}")]
+        public async Task<ServicePartner> UpdateServicePartner(int id,[FromBody]ServicePartner spToUpdate)
+		{
+            ServicePartner _servicePartner = new ServicePartner();
+            try
+            {
+                if(spToUpdate == null)
+				{
+                    _logger.LogError("L'oggetto servicePartner inviato dal Client è null.");
+				}
+				else
+				{
+                    _servicePartner = await _spService.GetServicePartnerById(id);
+
+                    if(_servicePartner == null)
+					{
+                        _logger.LogError($"il service partner con l'id:{spToUpdate.Id} non è stato trovato");
+					}
+					else
+					{
+                        _servicePartner.CodiceFornitore = spToUpdate.CodiceFornitore;
+                        _servicePartner.CodiceCliente = spToUpdate.CodiceCliente;
+                        _servicePartner.RagioneSociale = spToUpdate.RagioneSociale;
+
+                        _servicePartner = await _spService.UpdateServicePartner(_servicePartner);
+					}
+                }
+			}
+            catch(Exception e)
+			{
+                _logger.LogError($"C'è stato un problema : {e.Message}");
+            }
+            return _servicePartner;
+		}
+	}
 }

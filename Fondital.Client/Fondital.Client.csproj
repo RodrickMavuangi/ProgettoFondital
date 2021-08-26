@@ -5,6 +5,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Data\**" />
+    <Content Remove="Data\**" />
+    <EmbeddedResource Remove="Data\**" />
+    <None Remove="Data\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Content Remove="wwwroot\appsettings.Development.json" />
     <Content Remove="wwwroot\appsettings.json" />
   </ItemGroup>
@@ -36,6 +43,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Fondital.Services\Fondital.Services.csproj" />
     <ProjectReference Include="..\Fondital.Shared\Fondital.Shared.csproj" />
   </ItemGroup>
 

@@ -1,10 +1,12 @@
-﻿@inherits ListServicePartnerBase
-@page  "/listservicepartner"
-@attribute [Authorize]
+﻿@page  "/listservicepartner"
+@*@attribute [Authorize]*@
 
 @using System.ComponentModel.DataAnnotations
 @inject NavigationManager NavigationManager
 @using Fondital.Shared.Models
+@inject ServicePartnerClient servicePartnerClient
+
+@inherits ListServicePartnerBase
 
 <div class="cont">
     <div class="tit-pg">
@@ -30,14 +32,14 @@
             }
             else
             {
-                <TelerikForm  OnSubmit="OnSubmitHandler" EditContext="myEditContext">
+                <TelerikForm Model="@ServicePartnerModel" OnSubmit="OnSubmitHandlerAsync" EditContext="myEditContext">
                     <FormValidation>
                         <DataAnnotationsValidator></DataAnnotationsValidator>
                     </FormValidation>
                     <FormItems>
-                        @*<FormItem Field="@nameof(AnagraficaServicePartner.RagioneSociale)"></FormItem>
-                        <FormItem Field="@nameof(AnagraficaServicePartner.CodiceFornitore)"></FormItem>
-                        <FormItem Field="@nameof(AnagraficaServicePartner.CodiceCliente)"></FormItem>*@
+                        <FormItem Field="@nameof(ServicePartner.RagioneSociale)"></FormItem>
+                        <FormItem Field="@nameof(ServicePartner.CodiceFornitore)"></FormItem>
+                        <FormItem Field="@nameof(ServicePartner.CodiceCliente)"></FormItem>
                     </FormItems>
                     @*<FormButtons>
                             <TelerikButton  ButtonType="@ButtonType.Submit" Primary="true">SALVA</TelerikButton>
@@ -51,24 +53,24 @@
 
 
 
-@*<TelerikGrid Data="" EditMode="@GridEditMode.Popup" Pageable="true" Height="500px"
-             OnUpdate="@UpdateHandler" OnEdit="@EditHandler" OnDelete="@DeleteHandler" OnCreate="@CreateHandler" OnCancel="@CancelHandler" Resizable="true" Sortable="true" >
+<TelerikGrid Data="@ServicePartners" EditMode="@GridEditMode.Popup" Pageable="true" Height="500px"
+             OnUpdate="@UpdateHandler" OnEdit="@EditHandler" OnDelete="@DeleteHandler" OnCreate="@CreateHandler" OnCancel="@CancelHandler" Resizable="true" Sortable="true">
     <GridToolBar>
         <span class="k-toolbar-spacer"></span>
-        <GridSearchBox Fields="SearchableFields"  DebounceDelay="200"></GridSearchBox>
+        <GridSearchBox Fields="SearchableFields" DebounceDelay="200"></GridSearchBox>
     </GridToolBar>
     <GridColumns>
-        <GridColumn Field=@nameof(AnagraficaServicePartner.CodiceFornitore) Title="CODICE FORNITORE"/>
-        <GridColumn Field=@nameof(AnagraficaServicePartner.RagioneSociale) Title="RAGIONE SOCIALE" />
-        <GridColumn Field=@nameof(AnagraficaServicePartner.CodiceCliente) Title="CODICE UTENTE" />
-        <GridColumn Field=@nameof(AnagraficaServicePartner.NumeroUtenti) Title="N° UTENTI" />
+        <GridColumn Field=@nameof(ServicePartner.CodiceFornitore) Title="CODICE FORNITORE" />
+        <GridColumn Field=@nameof(ServicePartner.RagioneSociale) Title="RAGIONE SOCIALE" />
+        <GridColumn Field=@nameof(ServicePartner.CodiceCliente) Title="CODICE UTENTE" />
+        <GridColumn Field=@nameof(ServicePartner.Utenti.Count) Title="N° UTENTI" />
         <GridCommandColumn Width="50px">
             <GridCommandButton Command="Save" Icon="save" ShowInEdit="true">Update</GridCommandButton>
             <GridCommandButton Class="editColor" Command="Edit" Icon="edit" ImageUrl="/img/Icons/setting.svg"></GridCommandButton>
             <GridCommandButton Command="Cancel" Icon="cancel" ShowInEdit="true">Cancel</GridCommandButton>
         </GridCommandColumn>
     </GridColumns>
-</TelerikGrid>*@
+</TelerikGrid>
 
 
 
@@ -92,7 +94,7 @@
         float: right;
         color: aliceblue;
         background-color: forestgreen;
-        width:180px
+        width: 180px
     }
 
     .btn-ad {
@@ -130,7 +132,8 @@
         background-color: dodgerblue;
         width: 700px;
     }
-    .cas-ric{
-        height:auto
+
+    .cas-ric {
+        height: auto
     }
 </style>

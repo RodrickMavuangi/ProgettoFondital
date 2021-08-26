@@ -11,5 +11,6 @@ namespace Fondital.Shared.Services
         Task<ServicePartner> CreateServicePartner(ServicePartner sp);
         Task UpdateServicePartner(ServicePartner spToBeUpdated, ServicePartner sp);
         Task DeleteServicePartner(ServicePartner sp);
+        Task<ServicePartner> UpdateServicePartner(ServicePartner sp);
     }
 }

@@ -7,101 +7,103 @@ using System.ComponentModel.DataAnnotations;
 using Telerik.Blazor.Components;
 using Fondital.Shared.Models;
 using Microsoft.AspNetCore.Components.Forms;
+using Fondital.Shared.Services;
+using Fondital.Shared;
+using Fondital.Services;
+using Fondital.Shared.Models.Auth;
+using Fondital.Client.Clients;
 
 namespace Fondital.Client.Pages
 {
 	public class ListServicePartnerBase : ComponentBase
 	{
-		//public List<AnagraficaServicePartner> anagraficaServicePartners = new List<AnagraficaServicePartner>();
-		//public AnagraficaServicePartner AnagraficaServicePartnerModel { get; set; } = new AnagraficaServicePartner();
+		public List<ServicePartner> ServicePartners = new List<ServicePartner>();
+		public ServicePartner ServicePartnerModel { get; set; } = new ServicePartner();
 		public bool WindowVisible { get; set; }
 		public bool ValidSubmit { get; set; } = false;
 		public EditContext myEditContext { get; set; }
 
 		public List<string> SearchableFields = new List<string> { "RagioneSociale" };
-
-
+		[Inject] public ServicePartnerClient servicePartnerClient { get; set; }
 		protected override async Task OnInitializedAsync()
 		{
-			//myEditContext = new EditContext(AnagraficaServicePartnerModel);
-			await GetGridData();
+			myEditContext = new EditContext(ServicePartnerModel);
+			ServicePartners = (List<ServicePartner>)await servicePartnerClient.GetAllServicePartners();
 		}
 
-		public void EditHandler(GridCommandEventArgs args)
+        public async Task EditHandler(GridCommandEventArgs args)
 		{
-			//AnagraficaServicePartner item = (AnagraficaServicePartner)args.Item;
-
-			// TODO Logic ....
-
+			ServicePartner item = (ServicePartner)args.Item;
+			//TODO Logic ....
 		}
 
 		public async Task UpdateHandler(GridCommandEventArgs args)
 		{
-			//AnagraficaServicePartner item = (AnagraficaServicePartner)args.Item;
-
-			//await MyService.Update(item);
-
+			ServicePartner item = (ServicePartner)args.Item;
+			await servicePartnerClient.UpdateServicePartner(item.Id,item);
+			await Refresh();
+			
 			// TODO Logic.....
-			await GetGridData();
 
 		}
 
 		public async Task DeleteHandler(GridCommandEventArgs args)
 		{
-			//AnagraficaServicePartner item = (AnagraficaServicePartner)args.Item;
-
-			//await MyService.Delete(item);
-
-			await GetGridData();
+			ServicePartner item = (ServicePartner)args.Item;
 
 		}
 
 		public async Task CreateHandler(GridCommandEventArgs args)
 		{
-			//AnagraficaServicePartner item = (AnagraficaServicePartner)args.Item;
-
-			//await MyService.Create(item);
-
-			await GetGridData();
+			ServicePartner item = (ServicePartner)args.Item;
 
 		}
 
 		public async Task CancelHandler(GridCommandEventArgs args)
 		{
-			//AnagraficaServicePartner item = (AnagraficaServicePartner)args.Item;
+			ServicePartner item = (ServicePartner)args.Item;
 
 			// if necessary, perform actual data source operation here through your service
 
 		}
 
-		public async Task GetGridData()
+		async Task Refresh() 
 		{
-			//MyData = await MyService.Read();
-			for (int i = 0; i < 50; i++)
-			{
-				//anagraficaServicePartners.Add(new AnagraficaServicePartner()
-				//{
-				//	ID = Guid.NewGuid().ToString(),
-				//	CodiceFornitore = "Fornitore123456" + i.ToString(),
-				//	RagioneSociale = "TechSTORE" + i.ToString(),
-				//	CodiceCliente = "GD654987" + i.ToString(),
-				//	NumeroUtenti = 16 + i
-				//});
-			}
+			WindowVisible = false;
+			await OnInitializedAsync();
 		}
 
-
-
-
-		public void OnSubmitHandler(EditContext editContext)
+		public async Task OnSubmitHandlerAsync(EditContext editContext)
 		{
 			bool isFormValid = editContext.Validate();
 
 			if (isFormValid)
 			{
-				//AnagraficaServicePartner anagraficaServicePartnerToSave = (AnagraficaServicePartner)editContext.Model;
+				ServicePartner ServicePartnerToSave = (ServicePartner)editContext.Model;
+
+				//ServicePartnerToSave.Id = Int32.Parse(Guid.NewGuid().ToString());
+
+				//Utente utente1 = new Utente() {
+				//	ServicePartner = ServicePartnerToSave,
+				//	IsAbilitato = true,
+				//	Cognome = "Utente1",
+				//	Pw_LastChanged = new DateTime(2021, 08, 24),
+				//	Pw_MustChange = false
+				//};
+
+				//Utente utente2 = new Utente()
+				//{
+				//	ServicePartner = ServicePartnerToSave,
+				//	IsAbilitato = false,
+				//	Cognome = "Utente2",
+				//	Pw_LastChanged = new DateTime(2021, 01, 20),
+				//	Pw_MustChange = false
+				//};
 				//anagraficaServicePartners.Add(anagraficaServicePartnerToSave);
 
+				//ServicePartnerToSave.Utenti = new List<Utente>() { utente1, utente2 };
+				await servicePartnerClient.CreateServicePartner(ServicePartnerToSave);
+				await Refresh();
 			}
 			else
 			{

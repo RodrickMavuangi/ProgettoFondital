@@ -1,5 +1,9 @@
 using Fondital.Client.Clients;
+//using Fondital.Data;
+using Fondital.Services;
+using Fondital.Shared;
 using Fondital.Shared.Models.Auth;
+using Fondital.Shared.Services;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Components.WebAssembly.Authentication;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
@@ -26,9 +30,11 @@ namespace Fondital.Client
             builder.Services.AddScoped<FonditalAuthenticationState>();
             builder.Services.AddOptions();
             builder.Services.AddAuthorizationCore();
-            //builder.Services.AddApiAuthorization<FonditalAuthenticationState>(options => options.AuthenticationPaths.LogOutSucceededPath = "");
-            
-            builder.Services.AddOidcAuthentication<FonditalAuthenticationState, RemoteUserAccount>(options =>
+			//builder.Services.AddApiAuthorization<FonditalAuthenticationState>(options => options.AuthenticationPaths.LogOutSucceededPath = "");
+
+			//builder.Services.AddScoped<IServicePartnerService, ServicePartnerService>();
+			//builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
+			builder.Services.AddOidcAuthentication<FonditalAuthenticationState, RemoteUserAccount>(options =>
             {
                 builder.Configuration.Bind("oidc", options.ProviderOptions);
                 options.UserOptions.RoleClaim = "role";
