@@ -18,24 +18,30 @@ using RouteAttribute = Microsoft.AspNetCore.Mvc.RouteAttribute;
 namespace Fondital.Server.Controllers
 {
     [ApiController]
-    [Route("servicePartners")]
-    public class ServicePartnerController : ControllerBase
+    [Route("configurazioni")]
+    public class ConfigurazioneController : ControllerBase
     {
-        private readonly ILogger<ServicePartnerController> _logger;
+        private readonly ILogger<ConfigurazioneController> _logger;
         private readonly FonditalDbContext _db;
-        private readonly IServicePartnerService _spService;
+        private readonly IConfigurazioneService _confService;
 
-        public ServicePartnerController(ILogger<ServicePartnerController> logger, FonditalDbContext db, IServicePartnerService spService)
+        public ConfigurazioneController(ILogger<ConfigurazioneController> logger, FonditalDbContext db, IConfigurazioneService confService)
         {
             _logger = logger;
             _db = db;
-            _spService = spService;
+            _confService = confService;
         }
 
         [HttpGet]
-        public async Task<IEnumerable<ServicePartner>> Get()
+        public async Task<IEnumerable<Configurazione>> Get()
         {
-            return await _spService.GetAllServicePartners();
+            return await _confService.GetAllConfigurazioni();
+        }
+
+        [HttpPost("update")]
+        public async Task UpdateConfigurazione([FromBody] Configurazione config)
+        {
+            await _confService.UpdateValore(config);
         }
     }
 }
