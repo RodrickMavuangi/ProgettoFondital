@@ -117,7 +117,67 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="HelloWorld" xml:space="preserve">
-    <value>Привет, мир</value>
+  <data name="Accedi" xml:space="preserve">
+    <value>Accedi RU</value>
+  </data>
+  <data name="Anagrafiche" xml:space="preserve">
+    <value>Anagrafiche RU</value>
+  </data>
+  <data name="AnagraficheDifetti" xml:space="preserve">
+    <value>Anagrafiche Difetti RU</value>
+  </data>
+  <data name="AnagraficheLavorazioni" xml:space="preserve">
+    <value>Anagrafiche Lavorazioni RU</value>
+  </data>
+  <data name="AnagraficheSP" xml:space="preserve">
+    <value>Anagrafiche SP RU</value>
+  </data>
+  <data name="AnagraficheVociDiCosto" xml:space="preserve">
+    <value>Anagrafiche Voci di Costo RU</value>
+  </data>
+  <data name="Autenticato" xml:space="preserve">
+    <value>Autenticato RU</value>
+  </data>
+  <data name="CambiaPassword" xml:space="preserve">
+    <value>Cambia Password RU</value>
+  </data>
+  <data name="Ciao" xml:space="preserve">
+    <value>Ciao RU</value>
+  </data>
+  <data name="Cognome" xml:space="preserve">
+    <value>Cognome RU</value>
+  </data>
+  <data name="ConfigurazioniGenerali" xml:space="preserve">
+    <value>Configurazioni Generali RU</value>
+  </data>
+  <data name="Esci" xml:space="preserve">
+    <value>Esci RU</value>
+  </data>
+  <data name="GestioneRapporti" xml:space="preserve">
+    <value>Gestione Rapporti RU</value>
+  </data>
+  <data name="Impostazioni" xml:space="preserve">
+    <value>Impostazioni RU</value>
+  </data>
+  <data name="InformazioniUtente" xml:space="preserve">
+    <value>Informazioni Utente RU</value>
+  </data>
+  <data name="Listino" xml:space="preserve">
+    <value>Listino RU</value>
+  </data>
+  <data name="NoLoginEffettuato" xml:space="preserve">
+    <value>Non hai effettuato il login RU</value>
+  </data>
+  <data name="Nome" xml:space="preserve">
+    <value>Nome RU</value>
+  </data>
+  <data name="OttieniInformazioni" xml:space="preserve">
+    <value>Ottieni Informazioni RU</value>
+  </data>
+  <data name="PasswordDimenticata" xml:space="preserve">
+    <value>Password Dimenticata RU?</value>
+  </data>
+  <data name="RuoloDirezione" xml:space="preserve">
+    <value>Direzione RU</value>
   </data>
 </root>
