@@ -1,8 +1,9 @@
 ﻿@page "/"
 @inject AuthenticationStateProvider authStateProvider
 @inject FonditalAuthenticationState authState
+@inject IStringLocalizer<App> localizer
 
-
+<b>@localizer["HelloWorld"]</b>
 
 <h3>Informazioni utente</h3>
 
