@@ -13,6 +13,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
 using Microsoft.EntityFrameworkCore;
+using Fondital.Shared.Services;
+using Fondital.Shared.Models;
 
 namespace Fondital.Server.Areas.Identity.Pages.Account
 {
@@ -22,14 +24,17 @@ namespace Fondital.Server.Areas.Identity.Pages.Account
         private readonly UserManager<Utente> _userManager;
         private readonly SignInManager<Utente> _signInManager;
         private readonly ILogger<LoginModel> _logger;
+        private readonly IConfigurazioneService _confService;
 
         public LoginModel(SignInManager<Utente> signInManager,
             ILogger<LoginModel> logger,
-            UserManager<Utente> userManager)
+            UserManager<Utente> userManager,
+            IConfigurazioneService confService)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _logger = logger;
+            _confService = confService;
         }
 
         [BindProperty]
@@ -88,7 +93,8 @@ namespace Fondital.Server.Areas.Identity.Pages.Account
 
                 if (result.Succeeded)
                 {
-                    if (utenteCorrente.Pw_MustChange || utenteCorrente.Pw_LastChanged < DateTime.Now.AddDays(-90))
+                    int durataPassword = (int)_confService.GetValoreByChiave("DurataPassword").Result.ToEnum<DurataValidita>();
+                    if (utenteCorrente.Pw_MustChange || utenteCorrente.Pw_LastChanged < DateTime.Now.AddMonths(-durataPassword))
                     {
                         _logger.LogInformation("Password scaduta.");
                         return RedirectToPage("./Manage/ChangePassword", new { ReturnUrl = returnUrl, Username = Input.Email });

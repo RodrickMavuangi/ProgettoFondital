@@ -2,7 +2,8 @@
 @inject AuthenticationStateProvider authStateProvider
 @inject FonditalAuthenticationState authState
 @inject IStringLocalizer<App> localizer
-
+@inject ServicePartnerClient spClient
+  
 <h3>@localizer["InformazioniUtente"]</h3>
 
 <button @onclick="GetClaimsPrincipalData">@localizer["OttieniInformazioni"]</button>

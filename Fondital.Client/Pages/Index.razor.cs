@@ -1,4 +1,6 @@
-﻿using Fondital.Shared.Models.Auth;
+﻿using Fondital.Client.Clients;
+using Fondital.Shared.Models;
+using Fondital.Shared.Models.Auth;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,6 +16,7 @@ namespace Fondital.Client.Pages
         private async Task GetClaimsPrincipalData()
         {
             attributi.Clear();
+            List<ServicePartner> a = (List<ServicePartner>) await spClient.GetAllServicePartners();
 
             if (utente != null)
             {
