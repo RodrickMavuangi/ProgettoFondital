@@ -97,32 +97,3 @@
     </div>
 </header>
 
-@code
-{
-    string CurrentAnag = string.Empty;
-    List<string> Anags;
-
-    List<string> UserMenuList;
-
-    bool ViewUserMenu = false;
-
-    protected override Task OnInitializedAsync()
-    {
-        Anags = new List<string> { localizer["AnagraficheSP"], localizer["AnagraficheDifetti"], localizer["AnagraficheLavorazioni"], localizer["AnagraficheVociDiCosto"], localizer["Listino"] };
-        CurrentAnag = null;
-        UserMenuList = new List<string> { localizer["CambiaPassword"], localizer["Esci"] };
-        ViewUserMenu = false;
-
-        return base.OnInitializedAsync();
-    }
-
-    public void ToggleUserMenu()
-    {
-        ViewUserMenu = !ViewUserMenu;
-    }
-
-    public void Navigate()
-    {
-        NavigationManager.NavigateTo("/traces");
-    }
-}
