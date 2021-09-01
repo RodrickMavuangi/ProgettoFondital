@@ -11,7 +11,7 @@ namespace Fondital.Client.Pages
     public partial class Index
     {
         private List<string> attributi = new List<string>();
-        Utente utente => authState.utente;
+        Utente utente => authState.UtenteCorrente;
         
 
         private async Task GetClaimsPrincipalData()

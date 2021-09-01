@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Fondital.Shared.Enums;
 
 namespace Fondital.Client.Shared
 {
@@ -9,21 +10,17 @@ namespace Fondital.Client.Shared
     {
         string UserFirstName = string.Empty;
         string UserLastName = string.Empty;
-        string CurrentLanguage = string.Empty;
-        List<string> Languages;
+        
         string CurrentAnag = string.Empty;
+        List<Lingua> Langs;
         List<string> Anags;
         List<string> UserMenuList;
         bool ViewUserMenu = false;
 
         protected override Task OnInitializedAsync()
         {
-            Languages = new List<string>
-            {
-                "ITA", "RUS"
-            };
-
-            CurrentLanguage = "ITA";
+            Langs = Enum.GetValues(typeof(Lingua)).Cast<Lingua>().ToList();
+            
             Anags = new List<string>
                 {
                     "Anagrafiche SP", "Anagrafiche Difetti", "Anagrafiche Lavorazioni", "Anagrafiche Voci di Costo", "Listino"
@@ -36,8 +33,8 @@ namespace Fondital.Client.Shared
                         };
 
             ViewUserMenu = false;
-            UserFirstName = "Lupo";
-            UserLastName = "Lucio";
+            UserFirstName = authState.UtenteCorrente?.Nome ?? "Lupo";
+            UserLastName = authState.UtenteCorrente?.Cognome ?? "Lucio";
 
             return base.OnInitializedAsync();
         }

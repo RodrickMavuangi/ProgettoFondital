@@ -19,6 +19,6 @@ namespace Fondital.Client.Clients
         }
 
         public async Task<IEnumerable<ServicePartner>> GetAllServicePartners() =>
-            await httpClient.GetFromJsonAsync<IEnumerable<ServicePartner>>("servicePartners");
+            await httpClient.GetFromJsonAsync<IEnumerable<ServicePartner>>("servicePartnersControl");
     }
 }

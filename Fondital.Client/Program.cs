@@ -23,6 +23,7 @@ namespace Fondital.Client
             builder.Services.AddHttpClient<TraceClient>(client => client.BaseAddress = new Uri(builder.Configuration["WebAPI:BaseUrl"]));
             builder.Services.AddHttpClient<ServicePartnerClient>(client => client.BaseAddress = new Uri(builder.Configuration["WebAPI:BaseUrl"]));
             builder.Services.AddHttpClient<ConfigurazioneClient>(client => client.BaseAddress = new Uri(builder.Configuration["WebAPI:BaseUrl"]));
+            builder.Services.AddHttpClient<DifettoClient>(client => client.BaseAddress = new Uri(builder.Configuration["WebAPI:BaseUrl"]));
             //builder.Services.AddScoped<RemoteAuthenticationState, FonditalAuthenticationState>();
             builder.Services.AddScoped<FonditalAuthenticationState>();
             builder.Services.AddOptions();

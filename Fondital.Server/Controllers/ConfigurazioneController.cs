@@ -18,7 +18,7 @@ using RouteAttribute = Microsoft.AspNetCore.Mvc.RouteAttribute;
 namespace Fondital.Server.Controllers
 {
     [ApiController]
-    [Route("configurazioni")]
+    [Route("configurazioniControl")]
     public class ConfigurazioneController : ControllerBase
     {
         private readonly ILogger<ConfigurazioneController> _logger;

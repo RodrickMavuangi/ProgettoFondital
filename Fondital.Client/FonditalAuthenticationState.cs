@@ -1,4 +1,5 @@
-﻿using Fondital.Shared.Models.Auth;
+﻿using Fondital.Shared.Enums;
+using Fondital.Shared.Models.Auth;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Components.WebAssembly.Authentication;
 using System;
@@ -11,6 +12,7 @@ namespace Fondital.Client
 {
     public class FonditalAuthenticationState : RemoteAuthenticationState
     {
-        public Utente utente { get; set; }
+        public Utente UtenteCorrente { get; set; }
+        public Lingua CurrentLang { get; set; } = Lingua.ITA;
     }
 }

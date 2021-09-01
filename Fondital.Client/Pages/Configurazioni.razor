@@ -3,14 +3,19 @@
 
 <h1><b>Configurazioni</b> Generali</h1>
 
-
-<div class="main">
-    <EditForm Model="Input" OnValidSubmit="SalvaConfigurazioni">
+@if (ListaConfigurazioni == null)
+{
+    <p><em>Caricamento in corso...</em></p>
+}
+else
+{
+    <div class="main">
+        <EditForm Model="Input" OnValidSubmit="SalvaConfigurazioni">
             <div class="form-field">
                 <label>Periodo Validità Garanzia</label>
                 <div>
                     <InputSelect @bind-Value="Input.Garanzia" @oninput="ResetSubmitTrigger">
-                        @foreach (DurataValidita durata in Enum.GetValues(typeof(DurataValidita)))
+                        @foreach (DurataValiditaConfigurazione durata in Enum.GetValues(typeof(DurataValiditaConfigurazione)))
                         {
                             <option value="@durata">@durata.Description()</option>
                         }
@@ -23,7 +28,7 @@
                 <label>Periodo Validità Password</label>
                 <div>
                     <InputSelect @bind-Value="Input.Password" @oninput="ResetSubmitTrigger">
-                        @foreach (DurataValidita durata in Enum.GetValues(typeof(DurataValidita)))
+                        @foreach (DurataValiditaConfigurazione durata in Enum.GetValues(typeof(DurataValiditaConfigurazione)))
                         {
                             <option value="@durata">@durata.Description()</option>
                         }
@@ -31,27 +36,22 @@
                     <ValidationMessage For="@(() => Input.Password)" />
                 </div>
             </div>
-        
 
-        <button type="submit" class="checkout-button btn btn-warning" disabled="@isSubmitting">
-            Salva
-        </button>
-        <DataAnnotationsValidator />
-    </EditForm>
 
-    @if (submitSucceded == true)
-    {
-        <div>Modifiche effettuate con successo.</div>
-    }
-    else if (submitSucceded == false)
-    {
-        <div>Le modifiche sono andate in errore, si prega di riprovare.</div>
-    }
+            <button type="submit" class="checkout-button btn btn-warning" disabled="@isSubmitting">
+                Salva
+            </button>
+            <DataAnnotationsValidator />
+        </EditForm>
 
-</div>
+        @if (submitSucceded == true)
+        {
+            <div>Modifiche effettuate con successo.</div>
+        }
+        else if (submitSucceded == false)
+        {
+            <div>Le modifiche sono andate in errore, si prega di riprovare.</div>
+        }
 
-@*<p>Periodo Validità Garanzia: @currentCount</p>
-<p>Periodo Validità Password: @currentCount</p>*@
-
-@*<button class="btn btn-primary" @onclick="IncrementCount">Click me</button>*@
-
+    </div>
+}

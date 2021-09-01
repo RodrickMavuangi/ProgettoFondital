@@ -16,7 +16,7 @@ using Fondital.Shared.Services;
 namespace Fondital.Server.Controllers
 {
     [ApiController]
-    [Route("utenti")]
+    [Route("utentiControl")]
     //[Authorize]
     public class UtenteController : ControllerBase
     {

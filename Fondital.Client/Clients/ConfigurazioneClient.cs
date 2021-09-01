@@ -19,9 +19,9 @@ namespace Fondital.Client.Clients
         }
 
         public async Task<IEnumerable<Configurazione>> GetAllConfigurazioni() =>
-            await httpClient.GetFromJsonAsync<IEnumerable<Configurazione>>("configurazioni");
+            await httpClient.GetFromJsonAsync<IEnumerable<Configurazione>>("configurazioniControl");
 
         public async Task UpdateConfigurazione(Configurazione configurazione) =>
-            await httpClient.PostAsJsonAsync("configurazioni/update", configurazione);
+            await httpClient.PostAsJsonAsync("configurazioniControl/update", configurazione);
     }
 }
