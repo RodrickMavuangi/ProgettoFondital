@@ -5,9 +5,11 @@ using Microsoft.AspNetCore.Components.WebAssembly.Authentication;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.JSInterop;
 using System;
 using System.Net.Http;
 using System.Threading.Tasks;
+using System.Globalization;
 
 namespace Fondital.Client
 {
@@ -37,7 +39,28 @@ namespace Fondital.Client
             
             builder.Services.AddTelerikBlazor();
 
-            await builder.Build().RunAsync();
+            builder.Services.AddLocalization(option => option.ResourcesPath = "LanguageResources");
+
+            var host = builder.Build();
+
+            CultureInfo culture;
+            var js = host.Services.GetRequiredService<IJSRuntime>();
+            var result = await js.InvokeAsync<string>("blazorCulture.get");
+
+            if (result != null)
+            {
+                culture = new CultureInfo(result);
+            }
+            else
+            {
+                culture = new CultureInfo("it-IT");
+                await js.InvokeVoidAsync("blazorCulture.set", "it-IT");
+            }
+
+            CultureInfo.DefaultThreadCurrentCulture = culture;
+            CultureInfo.DefaultThreadCurrentUICulture = culture;
+
+            await host.RunAsync();
         }
     }
 }

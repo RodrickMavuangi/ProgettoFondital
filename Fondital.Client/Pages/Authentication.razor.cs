@@ -27,9 +27,9 @@ namespace Fondital.Client.Pages
             //restore state
             var _authState = await authStateProvider.GetAuthenticationStateAsync();
             if (_authState.User.Identity.Name != null)
-                applicationState.utente = await utenteClient.GetUtente(_authState.User.Identity.Name);
+                applicationState.UtenteCorrente = await utenteClient.GetUtente(_authState.User.Identity.Name);
             else
-                applicationState.utente = new Utente();
+                applicationState.UtenteCorrente = new Utente();
         }
     }
 }
