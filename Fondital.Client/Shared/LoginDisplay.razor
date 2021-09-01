@@ -1,5 +1,6 @@
 ﻿@inject NavigationManager Navigation
 @inject SignOutSessionStateManager SignOutManager
+@inject IStringLocalizer<App> localizer
 
 <div class="user-info">
     <AuthorizeView>
@@ -7,10 +8,10 @@
             <text>...</text>
         </Authorizing>
         <Authorized>
-            <button class="nav-link" @onclick="BeginSignOut">Log Out</button>
+            <button class="nav-link" @onclick="BeginSignOut">@localizer["Esci"]</button>
         </Authorized>
         <NotAuthorized>
-            <a class="nav-link" href="authentication/login">Log In</a>
+            <a class="nav-link" href="authentication/login">@localizer["Accedi"]</a>
         </NotAuthorized>
     </AuthorizeView>
 </div>

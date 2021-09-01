@@ -12,7 +12,6 @@ namespace Fondital.Client.Pages
     {
         private List<string> attributi = new List<string>();
         Utente utente => authState.UtenteCorrente;
-        
 
         private async Task GetClaimsPrincipalData()
         {
@@ -21,13 +20,21 @@ namespace Fondital.Client.Pages
 
             if (utente != null)
             {
+                attributi.Add(utente.UserName + " " + localizer["Autenticato"] + ".");
+                attributi.Add(localizer["Nome"] + ": " + utente.Nome);
+                attributi.Add(localizer["Cognome"] + ": " + utente.Cognome);
+
+                /*
                 attributi.Add($"{utente.UserName} è autenticato.");
                 attributi.Add($"Nome: {utente.Nome}");
                 attributi.Add($"Cognome: {utente.Cognome}");
+                */
             }
             else
             {
-                attributi.Add("Non hai effettuato il login.");
+                attributi.Add(localizer["NoLoginEffettuato"] + ".");
+
+                //attributi.Add("Non hai effettuato il login.");
             }
         }
     }

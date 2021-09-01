@@ -8,9 +8,6 @@ namespace Fondital.Client.Shared
 {
     public partial class Header
     {
-        string UserFirstName = string.Empty;
-        string UserLastName = string.Empty;
-        
         string CurrentAnag = string.Empty;
         List<Lingua> Langs;
         List<string> Anags;
@@ -19,22 +16,18 @@ namespace Fondital.Client.Shared
 
         protected override Task OnInitializedAsync()
         {
-            Langs = Enum.GetValues(typeof(Lingua)).Cast<Lingua>().ToList();
-            
             Anags = new List<string>
-                {
-                    "Anagrafiche SP", "Anagrafiche Difetti", "Anagrafiche Lavorazioni", "Anagrafiche Voci di Costo", "Listino"
-                };
+            {
+                localizer["AnagraficheSP"], localizer["AnagraficheDifetti"], localizer["AnagraficheLavorazioni"], localizer["AnagraficheVociDiCosto"], localizer["Listino"]
+            };
 
             CurrentAnag = null;
             UserMenuList = new List<string>
-                    {
-                        "Cambia Password", "LogOut"
-                        };
+            {
+                localizer["CambiaPassword"], localizer["Esci"]
+            };
 
             ViewUserMenu = false;
-            UserFirstName = authState.UtenteCorrente?.Nome ?? "Lupo";
-            UserLastName = authState.UtenteCorrente?.Cognome ?? "Lucio";
 
             return base.OnInitializedAsync();
         }

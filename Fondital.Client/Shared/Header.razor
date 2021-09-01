@@ -45,6 +45,9 @@
     </div>
 *@
 
+@inject IJSRuntime JSRuntime
+@inject FonditalAuthenticationState authState
+@inject IStringLocalizer<App> localizer
 
 <style>
     .bd-placeholder-img {
@@ -65,8 +68,6 @@
 <!-- Custom styles for this template -->
 <link href="css/bootstrap-child.css" rel="stylesheet">
 
-
-
 <header class="bgBlu mb-5 sticky-top">
     <div class="container-fluid">
         <div class="flex-wrap">
@@ -76,25 +77,23 @@
                     <div class="logo text-center"><img src="img/fondital-logo.svg" alt="logo" /></div>
                 </div>
 
-
-
                 <div class="col-7 condensed-bold">
                     <ul class="nav nav-pills col-12 col-lg-auto ml-40 mb-2 mb-md-0">
                         <li class="nav-item dropdown">
                             <TelerikDropDownList Class="nav-link dropdown-toggle dropdown-custom-toggle active" PopupClass="dropdown-item"
-                                                 Data="Anags" @bind-Value="CurrentAnag" OnChange="@(() => Navigate(CurrentAnag.Replace("Anagrafiche ", "").ToLower()))" DefaultText="@((CurrentAnag == null) ? "ANAGRAFICHE" : null)">
+                                                 Data="@Anags" @bind-Value="CurrentAnag" OnChange="@(() => Navigate(CurrentAnag.Replace("Anagrafiche ", "").ToLower()))" DefaultText="@((CurrentAnag==null)?localizer["Anagrafiche"]:null)">
                             </TelerikDropDownList>
                         </li>
 
                         <li class="nav-item">
                             <TelerikButton Class="nav-link" OnClick="@(() => Navigate(""))">
-                                GESTIONE RAPPORTI
+                                @localizer["GestioneRapporti"]
                             </TelerikButton>
                         </li>
 
                         <li class="nav-item">
                             <TelerikButton Class="nav-link" OnClick="@(() => Navigate("configurazioni"))">
-                                CONFIGURAZIONI GENERALI
+                                @localizer["ConfigurazioniGenerali"]
                             </TelerikButton>
                         </li>
                         <li class="nav-item px-3">
@@ -105,20 +104,16 @@
 
                 <div class="col-1 text-right">
                     <div class="lingua float-lg-left border-bottom">
-                        <TelerikDropDownList  Data="@Langs"
-                                             @bind-Value="@authState.CurrentLang" Width="100%" OnChange="@(() => NavigationManager.NavigateTo(NavigationManager.Uri))"
-                                             PopupHeight="auto">
-                        </TelerikDropDownList>
+                        <CultureSelector />
                     </div>
                 </div>
 
                 <div class="col-2">
                     <div class="float-lg-right">
-
                         <div class="float-lg-left link-light">
                             <ul class="mb-0 profilo">
-                                <li class="nomeUtente">Ciao Armando</li>
-                                <li class="ruoloUtente">direzione</li>
+                                <li class="nomeUtente">@localizer["Ciao"]</li>
+                                <li class="ruoloUtente">@localizer["RuoloDirezione"]</li>
                             </ul>
                         </div>
 
@@ -129,13 +124,13 @@
 
                             <ul class="dropdown-menu text-small" aria-labelledby="dropdownUser1">
                                 <li>
-                                    <a class="dropdown-item" href="">Settings</a>
+                                    <a class="dropdown-item" href="">@localizer["Impostazioni"]</a>
                                 </li>
                                 <li>
                                     <hr class="dropdown-divider" />
                                 </li>
                                 <li>
-                                    <a class="dropdown-item" href="">Sign out</a>
+                                    <a class="dropdown-item" href="">@localizer["Esci"]</a>
                                 </li>
                             </ul>
                         </div>
@@ -145,3 +140,4 @@
         </div>
     </div>
 </header>
+

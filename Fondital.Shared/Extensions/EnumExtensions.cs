@@ -1,4 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Linq;
 using System.ComponentModel;
 
 public static class EnumExtensions
@@ -29,4 +32,10 @@ public static class EnumExtensions
     {
         return (T)Enum.Parse(typeof(T), value, true);
     }
+
+    public static IEnumerable<T> GetEnumValues<T>()
+      => Enum.GetValues(typeof(T)).Cast<T>();
+
+    public static IEnumerable<string> GetEnumNames<T>()
+      => Enum.GetNames(typeof(T));
 }
