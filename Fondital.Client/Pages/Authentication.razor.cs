@@ -12,8 +12,6 @@ namespace Fondital.Client.Pages
     {
         [Parameter] public string Action { get; set; }
 
-        public FonditalAuthenticationState authState { get; set; } = new FonditalAuthenticationState();
-
         protected override void OnInitialized()
         {
             if (RemoteAuthenticationActions.IsAction(RemoteAuthenticationActions.LogIn, Action))
@@ -27,9 +25,9 @@ namespace Fondital.Client.Pages
             //restore state
             var _authState = await authStateProvider.GetAuthenticationStateAsync();
             if (_authState.User.Identity.Name != null)
-                applicationState.UtenteCorrente = await utenteClient.GetUtente(_authState.User.Identity.Name);
+                authState.UtenteCorrente = await utenteClient.GetUtente(_authState.User.Identity.Name);
             else
-                applicationState.UtenteCorrente = new Utente();
+                authState.UtenteCorrente = new Utente();
         }
     }
 }

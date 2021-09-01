@@ -43,7 +43,7 @@ namespace Fondital.Services
 
         public async Task UpdateTrace(Trace traceToUpdate, Trace trace)
         {
-            traceToUpdate.Descrizione = trace.Descrizione;
+            _unitOfWork.Update(traceToUpdate, trace);
 
             await _unitOfWork.CommitAsync();
         }

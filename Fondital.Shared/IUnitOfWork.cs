@@ -10,6 +10,8 @@ namespace Fondital.Shared
         ITraceRepository Traces { get; }
         IServicePartnerRepository ServicePartners { get; }
         IConfigurazioneRepository Configurazioni { get; }
+        IDifettoRepository Difetti { get; }
         Task<int> CommitAsync();
+        void Update<T>(T Old, T New) where T : class;
     }
 }

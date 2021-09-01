@@ -13,6 +13,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
 using Microsoft.EntityFrameworkCore;
+using Fondital.Shared.Enums;
 using Fondital.Shared.Services;
 using Fondital.Shared.Models;
 
@@ -93,7 +94,7 @@ namespace Fondital.Server.Areas.Identity.Pages.Account
 
                 if (result.Succeeded)
                 {
-                    int durataPassword = (int)_confService.GetValoreByChiave("DurataPassword").Result.ToEnum<DurataValidita>();
+                    int durataPassword = (int)_confService.GetValoreByChiave("DurataPassword").Result.ToEnum<DurataValiditaConfigurazione>();
                     if (utenteCorrente.Pw_MustChange || utenteCorrente.Pw_LastChanged < DateTime.Now.AddMonths(-durataPassword))
                     {
                         _logger.LogInformation("Password scaduta.");
