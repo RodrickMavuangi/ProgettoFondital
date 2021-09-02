@@ -47,10 +47,5 @@ namespace Fondital.Services
 
             await _unitOfWork.CommitAsync();
         }
-
-        public async Task<ServicePartner> GetServicePartnerByIdWithUtenti(int id)
-        {
-            return await _unitOfWork.ServicePartners.GetByIdWithUtenti(id);
-        }
     }
 }

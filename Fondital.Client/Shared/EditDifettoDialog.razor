@@ -2,14 +2,14 @@
 
 <EditForm Model="DifettoToUpdate" OnValidSubmit="SalvaDifetto">
     <div class="form-field">
-        <label>Nuovo Difetto</label>
+        <label>Nome Italiano</label>
         <div>
             <InputText @bind-Value="DifettoToUpdate.NomeItaliano"></InputText>
             <ValidationMessage For="@(() => DifettoToUpdate.NomeItaliano)" />
         </div>
     </div>
     <div class="form-field">
-        <label>Недостаток</label>
+        <label>Nome Russo</label>
         <div>
             <InputText @bind-Value="DifettoToUpdate.NomeRusso"></InputText>
             <ValidationMessage For="@(() => DifettoToUpdate.NomeRusso)" />

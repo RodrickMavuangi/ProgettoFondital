@@ -22,8 +22,5 @@ namespace Fondital.Client.Clients
 
         public async Task<IEnumerable<ServicePartner>> GetAllServicePartners() =>
             await httpClient.GetFromJsonAsync<IEnumerable<ServicePartner>>("servicePartnersControl", JsonSerializerOpts.JsonOpts);
-
-        public async Task<ServicePartner> GetByIdWithUtenti(int id) =>
-            await httpClient.GetFromJsonAsync<ServicePartner>($"servicePartnersControl/{id}", JsonSerializerOpts.JsonOpts);
     }
 }
