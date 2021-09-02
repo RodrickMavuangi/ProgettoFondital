@@ -8,6 +8,6 @@ namespace Fondital.Shared.Repositories
 {
     public interface IServicePartnerRepository : IRepository<ServicePartner>
     {
-        
+
     }
 }

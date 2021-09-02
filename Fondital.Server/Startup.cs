@@ -14,6 +14,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using System.Collections.Generic;
 using System.Reflection;
+using System.Text.Json.Serialization;
 
 namespace Fondital.Server
 {
@@ -63,7 +64,11 @@ namespace Fondital.Server
 
             services.AddAuth(jwtSettings);
 
-            services.AddControllers();
+            services.AddControllers().AddJsonOptions(opts =>
+                {
+                    opts.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.Preserve;
+                    opts.JsonSerializerOptions.PropertyNamingPolicy = null; // prevent camel case
+                });
             services.AddRazorPages();
 
             services.AddCors(options =>

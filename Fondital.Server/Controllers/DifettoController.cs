@@ -39,17 +39,16 @@ namespace Fondital.Server.Controllers
             return await _difettoService.GetAllDifetti(isEnabled);
         }
 
-        //[HttpGet("{page}")]
-        //public async Task<IEnumerable<Difetto>> GetByPage(int page, [FromQuery]bool? isEnabled)
-        //{
-        //    int pageSize = Convert.ToInt32(_configuration["PageSize"]);
-        //    return await _difettoService.GetDifettiByPage(page, pageSize, isEnabled);
-        //}
-
         [HttpPost("update/{difettoId}")]
         public async Task UpdateDifetto([FromBody] Difetto difetto, int difettoId)
         {
             await _difettoService.UpdateDifetto(difettoId, difetto);
+        }
+
+        [HttpPost]
+        public async Task CreateDifetto([FromBody] Difetto difetto)
+        {
+            await _difettoService.AddDifetto(difetto);
         }
     }
 }

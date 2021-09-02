@@ -10,5 +10,6 @@ namespace Fondital.Shared.Services
         //Task<IEnumerable<Difetto>> GetDifettiByPage(int page, int pageSize, bool? isAbilitato = null);
         Task<Difetto> GetDifettoById(int id);
         Task UpdateDifetto(int difettoId, Difetto difetto);
+        Task AddDifetto(Difetto difetto);
     }
 }

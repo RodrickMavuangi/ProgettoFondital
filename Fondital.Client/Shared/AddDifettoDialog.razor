@@ -1,0 +1,22 @@
+﻿@inject DifettoClient httpClient 
+
+<EditForm Model="NuovoDifetto" OnValidSubmit="SalvaDifetto">
+    <div class="form-field">
+        <label>Nome Italiano</label>
+        <div>
+            <InputText @bind-Value="NuovoDifetto.NomeItaliano"></InputText>
+            <ValidationMessage For="@(() => NuovoDifetto.NomeItaliano)" />
+        </div>
+    </div>
+    <div class="form-field">
+        <label>Nome Russo</label>
+        <div>
+            <InputText @bind-Value="NuovoDifetto.NomeRusso"></InputText>
+            <ValidationMessage For="@(() => NuovoDifetto.NomeRusso)" />
+        </div>
+    </div>
+
+    <button class="btn btn-secondary mr-auto" @onclick="OnClose">Cancella</button>
+    <button type="submit" class="btn btn-success ml-auto" disabled="@isSubmitting">Salva</button>
+    <DataAnnotationsValidator />
+</EditForm>

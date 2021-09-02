@@ -20,7 +20,7 @@ namespace Fondital.Client.Clients
         }
 
         public async Task<IEnumerable<Trace>> GetTraces() =>
-            await httpClient.GetFromJsonAsync<IEnumerable<Trace>>("tracesControl");
+            await httpClient.GetFromJsonAsync<IEnumerable<Trace>>("tracesControl", JsonSerializerOpts.JsonOpts);
 
     }
 }
