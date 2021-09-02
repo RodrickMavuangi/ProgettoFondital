@@ -35,5 +35,11 @@ namespace Fondital.Server.Controllers
         {
             return await _spService.GetAllServicePartners();
         }
+
+        [HttpGet("{id}")]
+        public async Task<ActionResult<ServicePartner>> GetByIdWithUtenti(int id)
+        {
+            return await _spService.GetServicePartnerByIdWithUtenti(id);
+        }
     }
 }

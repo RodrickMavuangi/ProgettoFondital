@@ -17,8 +17,10 @@ namespace Fondital.Client.Pages
         [CascadingParameter]
         public DialogFactory Dialogs { get; set; }
         private List<Difetto> ListaDifetti;
-//        private int Page { get; set; } = 1; // the page indexes are 1-based
         private int PageSize { get; set; }
+        protected bool ShowAddDialog { get; set; } = false;
+        protected bool ShowEditDialog { get; set; } = false;
+        protected Difetto DifettoSelected { get; set; }
 
         protected override async Task OnInitializedAsync()
         {
@@ -30,6 +32,19 @@ namespace Fondital.Client.Pages
         {
             ListaDifetti = (List<Difetto>)await httpClient.GetAllDifetti();
             StateHasChanged();
+        }
+
+        protected async Task CloseAndRefresh()
+        {
+            ShowAddDialog = false;
+            ShowEditDialog = false;
+            await RefreshDifetti();
+        }
+
+        protected void EditDifetto(int difettoId)
+        {
+            DifettoSelected = ListaDifetti.Single(x => x.Id == difettoId);
+            ShowEditDialog = true;
         }
 
         protected async Task UpdateEnableDifetto(int Id)

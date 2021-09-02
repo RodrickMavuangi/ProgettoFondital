@@ -13,6 +13,7 @@ namespace Fondital.Client.Pages
         protected bool isSubmitting = false;
         protected bool? submitSucceded = null;
         protected List<Configurazione> ListaConfigurazioni;
+        protected ServicePartner sp;
 
         protected InputModel Input { get; set; } = new InputModel();
 

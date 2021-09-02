@@ -8,6 +8,7 @@ namespace Fondital.Shared.Services
     {
         Task<IEnumerable<ServicePartner>> GetAllServicePartners();
         Task<ServicePartner> GetServicePartnerById(int id);
+        Task<ServicePartner> GetServicePartnerByIdWithUtenti(int id);
         Task<ServicePartner> CreateServicePartner(ServicePartner sp);
         Task UpdateServicePartner(ServicePartner spToBeUpdated, ServicePartner sp);
         Task DeleteServicePartner(ServicePartner sp);

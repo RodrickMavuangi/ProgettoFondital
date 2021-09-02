@@ -30,6 +30,19 @@ a, .btn-link {
     color: red;
 }
 
+
+.mr-0 {
+    margin-right: 0;
+}
+
+.ml-auto {
+    margin-left: auto;
+}
+
+.d-block {
+    display: block;
+}
+
 #blazor-error-ui {
     background: lightyellow;
     bottom: 0;
@@ -42,9 +55,9 @@ a, .btn-link {
     z-index: 1000;
 }
 
-    #blazor-error-ui .dismiss {
+#blazor-error-ui .dismiss {
         cursor: pointer;
         position: absolute;
         right: 0.75rem;
         top: 0.5rem;
-    }
+}

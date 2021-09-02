@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
@@ -13,7 +14,9 @@ namespace Fondital.Shared.Models
     public class Difetto
     {
         public int Id { get; set; }
+        [Required(ErrorMessage = "Il campo è obbligatorio.")]
         public string NomeItaliano { get; set; }
+        [Required(ErrorMessage = "Il campo è obbligatorio.")]
         public string NomeRusso { get; set; }
         public bool IsAbilitato { get; set; }
     }

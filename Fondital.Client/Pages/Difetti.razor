@@ -3,7 +3,10 @@
 @inject FonditalAuthenticationState authState
 @inject Microsoft.Extensions.Configuration.IConfiguration config
 
-<h1><b>Anagrafiche</b> Difetti</h1>
+<div style="display: flex;">
+    <h1><b>Anagrafiche</b> Difetti</h1>
+    <button class="d-block mr-0 ml-auto" @onclick="(() => ShowAddDialog = true)">Nuovo Difetto</button>
+</div>
 
 @if (ListaDifetti == null)
 {
@@ -20,8 +23,11 @@ else
             <GridColumn Field=@nameof(Difetto.Id) Title="#" />
             <GridColumn Field=@nameof(Difetto.NomeItaliano) Title="Descrizione" Visible="@(authState.CurrentLang == Lingua.ITA)" />
             <GridColumn Field=@nameof(Difetto.NomeRusso) Title="Descrizione" Visible="@(authState.CurrentLang == Lingua.RUS)" />
-            <GridCommandColumn>
-                <GridCommandButton Command="Edit" Icon="edit" />
+            <GridCommandColumn Context="dif">
+                @{
+                        var difetto = dif as Difetto;
+                    <GridCommandButton Command="EditDifetto" Icon="edit" OnClick="@(() => EditDifetto(difetto.Id))" />
+                }
             </GridCommandColumn>
             <GridCommandColumn Context="dif">
                 @{
@@ -31,34 +37,22 @@ else
             </GridCommandColumn>
         </GridColumns>
     </TelerikGrid>
-    @*var pageData = ListaDifetti.Skip((Page - 1) * PageSize).Take(PageSize).ToList();
-
-        <table class="table">
-            <thead>
-                <tr>
-                    <th>#</th>
-                    <th>Descrizione</th>
-                    <th></th>
-                    <th></th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (var difetto in pageData)
-                {
-                    <tr>
-                        <td>@difetto.Id</td>
-                        <td>
-                            @if (authState.CurrentLang == Lingua.IT)
-                                {@difetto.NomeItaliano}
-                            else //Lingua.RU
-                                {@difetto.NomeRusso}
-                        </td>
-                        <td><button class="btn btn-link">Edit</button></td>
-                        <td><TelerikSwitch OffLabel=" " OnLabel=" " OnChange="@(() => UpdateEnableDifetto(difetto.Id))" @bind-Value="@difetto.IsAbilitato"></TelerikSwitch></td>
-                    </tr>
-                }
-            </tbody>
-        </table>
-
-        <TelerikPager Total="@ListaDifetti.Count" PageSize="@PageSize" @bind-Page="@Page"></TelerikPager>*@
 }
+
+<TelerikWindow Modal="true" @bind-Visible="ShowAddDialog">
+    <WindowTitle>
+        <strong>Aggiungi Difetto</strong>
+    </WindowTitle>
+    <WindowContent>
+        <AddDifettoDialog OnClose="@(() => ShowAddDialog = false)" OnSave="CloseAndRefresh" />
+    </WindowContent>
+</TelerikWindow>
+
+<TelerikWindow Modal="true" @bind-Visible="ShowEditDialog">
+    <WindowTitle>
+        <strong>Modifica Difetto # @DifettoSelected.Id</strong>
+    </WindowTitle>
+    <WindowContent>
+        <EditDifettoDialog DifettoToUpdate="DifettoSelected" OnClose="@(() => ShowEditDialog = false)" OnSave="CloseAndRefresh" />
+    </WindowContent>
+</TelerikWindow>

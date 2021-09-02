@@ -13,6 +13,11 @@ namespace Fondital.Data.Repositories
             : base(context)
         { }
 
+        public async Task<ServicePartner> GetByIdWithUtenti(int id)
+        {
+            return await _db.ServicePartners.Include(sp => sp.Utenti).SingleOrDefaultAsync(sp => sp.Id == id);
+        }
+
         private FonditalDbContext _db
         {
             get { return Context as FonditalDbContext; }

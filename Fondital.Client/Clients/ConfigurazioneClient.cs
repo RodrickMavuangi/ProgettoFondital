@@ -5,6 +5,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Json;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 namespace Fondital.Client.Clients
@@ -19,9 +21,9 @@ namespace Fondital.Client.Clients
         }
 
         public async Task<IEnumerable<Configurazione>> GetAllConfigurazioni() =>
-            await httpClient.GetFromJsonAsync<IEnumerable<Configurazione>>("configurazioniControl");
+            await httpClient.GetFromJsonAsync<IEnumerable<Configurazione>>("configurazioniControl", JsonSerializerOpts.JsonOpts);
 
         public async Task UpdateConfigurazione(Configurazione configurazione) =>
-            await httpClient.PostAsJsonAsync("configurazioniControl/update", configurazione);
+            await httpClient.PostAsJsonAsync("configurazioniControl/update", configurazione, JsonSerializerOpts.JsonOpts);
     }
 }
