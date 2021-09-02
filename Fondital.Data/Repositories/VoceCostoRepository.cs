@@ -7,9 +7,9 @@ using System.Linq;
 
 namespace Fondital.Data.Repositories
 {
-    public class DifettoRepository : Repository<Difetto>, IDifettoRepository
+    public class VoceCostoRepository : Repository<VoceCosto>, IVoceCostoRepository
     {
-        public DifettoRepository(FonditalDbContext context)
+        public VoceCostoRepository(FonditalDbContext context)
             : base(context)
         { }
 
@@ -18,12 +18,12 @@ namespace Fondital.Data.Repositories
             get { return Context as FonditalDbContext; }
         }
 
-        public async Task<IEnumerable<Difetto>> GetAllAsync(bool? isAbilitato)
+        public async Task<IEnumerable<VoceCosto>> GetAllAsync(bool? isAbilitato)
         {
             if (isAbilitato != null)
-                return await _db.Difetti.Where(x => x.IsAbilitato == isAbilitato).ToListAsync();
+                return await _db.VociCosto.Where(x => x.IsAbilitato == isAbilitato).ToListAsync();
             else
-                return await _db.Difetti.ToListAsync();
+                return await _db.VociCosto.ToListAsync();
         }
     }
 }

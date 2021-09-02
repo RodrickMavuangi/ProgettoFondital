@@ -81,7 +81,7 @@
                     <ul class="nav nav-pills col-12 col-lg-auto ml-40 mb-2 mb-md-0">
                         <li class="nav-item dropdown">
                             <TelerikDropDownList Class="nav-link dropdown-toggle dropdown-custom-toggle active" PopupClass="dropdown-item"
-                                                 Data="@Anags" @bind-Value="CurrentAnag" OnChange="@(() => Navigate(CurrentAnag.Replace("Anagrafiche ", "").ToLower()))" DefaultText="@((CurrentAnag==null)?localizer["Anagrafiche"]:null)">
+                                                 Data="@Anags" @bind-Value="CurrentAnag" OnChange="NavigateAnagrafica" DefaultText="@((CurrentAnag==null)?localizer["Anagrafiche"]:null)">
                             </TelerikDropDownList>
                         </li>
 

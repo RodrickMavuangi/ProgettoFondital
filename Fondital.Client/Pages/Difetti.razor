@@ -1,6 +1,8 @@
 ﻿@page "/difetti"
 @inject DifettoClient httpClient
 @inject FonditalAuthenticationState authState
+@inject IJSRuntime JSRuntime
+@inject IStringLocalizer<App> localizer
 @inject Microsoft.Extensions.Configuration.IConfiguration config
 
 <div style="display: flex;">
@@ -21,8 +23,8 @@ else
         </GridToolBar>
         <GridColumns>
             <GridColumn Field=@nameof(Difetto.Id) Title="#" />
-            <GridColumn Field=@nameof(Difetto.NomeItaliano) Title="Descrizione" Visible="@(authState.CurrentLang == Lingua.IT)" />
-            <GridColumn Field=@nameof(Difetto.NomeRusso) Title="Descrizione" Visible="@(authState.CurrentLang == Lingua.RU)" />
+            <GridColumn Field=@nameof(Difetto.NomeItaliano) Title="DESCRIZIONE" Visible="@(CurrentCulture == "it-IT")" />
+            <GridColumn Field=@nameof(Difetto.NomeRusso) Title="DESCRIZIONE" Visible="@(CurrentCulture == "ru-RU")" />
             <GridCommandColumn Context="dif">
                 @{
                         var difetto = dif as Difetto;

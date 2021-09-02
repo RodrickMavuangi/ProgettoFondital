@@ -153,6 +153,9 @@
   <data name="Esci" xml:space="preserve">
     <value>Esci</value>
   </data>
+  <data name="Forfettario" xml:space="preserve">
+    <value>Forfettario</value>
+  </data>
   <data name="GestioneRapporti" xml:space="preserve">
     <value>Gestione Rapporti</value>
   </data>
@@ -176,6 +179,9 @@
   </data>
   <data name="PasswordDimenticata" xml:space="preserve">
     <value>Password dimenticata?</value>
+  </data>
+  <data name="Quantita" xml:space="preserve">
+    <value>Quantità</value>
   </data>
   <data name="RuoloDirezione" xml:space="preserve">
     <value>Direzione</value>

@@ -1,0 +1,33 @@
+﻿@inject VoceCostoClient httpClient
+
+<EditForm Model="NuovaVoceCosto" OnValidSubmit="SalvaVoceCosto">
+    <div class="form-field">
+        <label>Nome Italiano</label>
+        <div>
+            <InputText @bind-Value="NuovaVoceCosto.NomeItaliano"></InputText>
+            <ValidationMessage For="@(() => NuovaVoceCosto.NomeItaliano)" />
+        </div>
+    </div>
+    <div class="form-field">
+        <label>Nome Russo</label>
+        <div>
+            <InputText @bind-Value="NuovaVoceCosto.NomeRusso"></InputText>
+            <ValidationMessage For="@(() => NuovaVoceCosto.NomeRusso)" />
+        </div>
+    </div>
+    <div class="form-field">
+        <label>Tipologia</label>
+        <div>
+            <InputRadioGroup TValue="TipologiaVoceCosto" @bind-Value="NuovaVoceCosto.Tipologia">
+                <InputRadio Value="TipologiaVoceCosto.Forfettario" /> FORFETTARIO
+                <br />
+                <InputRadio Value="TipologiaVoceCosto.Quantita" /> QUANTITÀ
+            </InputRadioGroup>
+            <ValidationMessage For="@(() => NuovaVoceCosto.Tipologia)" />
+        </div>
+    </div>
+
+    <button class="btn btn-secondary mr-auto" @onclick="OnClose">Cancella</button>
+    <button type="submit" class="btn btn-success ml-auto" disabled="@isSubmitting">Salva</button>
+    <DataAnnotationsValidator />
+</EditForm>

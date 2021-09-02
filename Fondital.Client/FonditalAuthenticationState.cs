@@ -8,6 +8,5 @@ namespace Fondital.Client
     public class FonditalAuthenticationState : RemoteAuthenticationState
     {
         public Utente UtenteCorrente { get; set; }
-        public Lingua CurrentLang { get; set; } = Lingua.IT;
     }
 }

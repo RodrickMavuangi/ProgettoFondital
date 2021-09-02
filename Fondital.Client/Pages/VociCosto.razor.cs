@@ -1,4 +1,5 @@
 ﻿using Fondital.Client.Clients;
+using Fondital.Shared.Enums;
 using Fondital.Shared.Models;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
@@ -10,19 +11,20 @@ using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
 using Telerik.Blazor;
+using Telerik.Blazor.Components;
 
 namespace Fondital.Client.Pages
 {
-    public partial class Difetti
+    public partial class VociCosto
     {
         [CascadingParameter]
         public DialogFactory Dialogs { get; set; }
-        private List<Difetto> ListaDifetti;
+        private List<VoceCosto> ListaVociCosto;
         private int PageSize { get; set; }
         private string CurrentCulture { get; set; }
         protected bool ShowAddDialog { get; set; } = false;
         protected bool ShowEditDialog { get; set; } = false;
-        protected Difetto DifettoSelected { get; set; }
+        protected VoceCosto VoceCostoSelected { get; set; }
 
         protected override async Task OnInitializedAsync()
         {
@@ -30,12 +32,12 @@ namespace Fondital.Client.Pages
             CurrentCulture = await js.InvokeAsync<string>("blazorCulture.get");
             PageSize = Convert.ToInt32(config["PageSize"]);
 
-            await RefreshDifetti();
+            await RefreshVociCosto();
         }
 
-        protected async Task RefreshDifetti()
+        protected async Task RefreshVociCosto()
         {
-            ListaDifetti = (List<Difetto>)await httpClient.GetAllDifetti();
+            ListaVociCosto = (List<VoceCosto>)await httpClient.GetAllVociCosto();
             StateHasChanged();
         }
 
@@ -43,24 +45,24 @@ namespace Fondital.Client.Pages
         {
             ShowAddDialog = false;
             ShowEditDialog = false;
-            await RefreshDifetti();
+            await RefreshVociCosto();
         }
 
-        protected void EditDifetto(int difettoId)
+        protected void EditVoceCosto(int voceCostoId)
         {
-            DifettoSelected = ListaDifetti.Single(x => x.Id == difettoId);
+            VoceCostoSelected = ListaVociCosto.Single(x => x.Id == voceCostoId);
             ShowEditDialog = true;
         }
 
-        protected async Task UpdateEnableDifetto(int Id)
+        protected async Task UpdateEnableVoceCosto(int Id)
         {
-            bool isConfirmed = await Dialogs.ConfirmAsync($"Si è sicuri di voler modificare il difetto # {Id}?", "Modifica difetto");
+            bool isConfirmed = await Dialogs.ConfirmAsync($"Si è sicuri di voler modificare la voce di costo # {Id}?", "Modifica voce di costo");
 
             if (isConfirmed)
             {
                 try
                 {
-                    await httpClient.UpdateDifetto(Id, ListaDifetti.Single(x => x.Id == Id));
+                    await httpClient.UpdateVoceCosto(Id, ListaVociCosto.Single(x => x.Id == Id));
                 }
                 catch (Exception e)
                 {
@@ -72,7 +74,7 @@ namespace Fondital.Client.Pages
                 //fai revert: ^ restituisce lo XOR dei due valori
                 //true XOR true = false
                 //false XOR true = true
-                ListaDifetti.Single(x => x.Id == Id).IsAbilitato ^= true;
+                ListaVociCosto.Single(x => x.Id == Id).IsAbilitato ^= true;
             }
         }
     }
