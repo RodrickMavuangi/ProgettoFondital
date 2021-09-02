@@ -1,4 +1,5 @@
-﻿using Fondital.Shared.Models;
+﻿using Fondital.Shared.Enums;
+using Fondital.Shared.Models;
 using Microsoft.AspNetCore.Components;
 using System;
 using System.Collections.Generic;
@@ -7,20 +8,25 @@ using System.Threading.Tasks;
 
 namespace Fondital.Client.Shared
 {
-    public partial class EditDifettoDialog
+    public partial class AddVoceCostoDialog
     {
         [Parameter] public EventCallback OnClose { get; set; }
         [Parameter] public EventCallback OnSave { get; set; }
-        [Parameter] public Difetto DifettoToUpdate { get; set; }
+        protected VoceCosto NuovaVoceCosto { get; set; }
         protected bool isSubmitting = false;
 
-        protected async Task SalvaDifetto()
+        protected async override Task OnInitializedAsync()
+        {
+            NuovaVoceCosto = new VoceCosto() { IsAbilitato = true, Tipologia = TipologiaVoceCosto.Forfettario };
+        }
+
+        protected async Task SalvaVoceCosto()
         {
             isSubmitting = true;
 
             try
             {
-                await httpClient.UpdateDifetto(DifettoToUpdate.Id, DifettoToUpdate);
+                await httpClient.CreateVoceCosto(NuovaVoceCosto);
                 isSubmitting = false;
                 await OnSave.InvokeAsync();
             }

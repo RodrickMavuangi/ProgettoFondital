@@ -27,10 +27,10 @@ namespace Fondital.Data
         }
 
         public DbSet<Utente> Utenti { get; set; }
-        public DbSet<Trace> Traces { get; set; }
         public DbSet<ServicePartner> ServicePartners { get; set; }
         public DbSet<Configurazione> Configurazioni { get; set; }
         public DbSet<Difetto> Difetti { get; set; }
+        public DbSet<VoceCosto> VociCosto { get; set; }
 
         public DbSet<PersistedGrant> PersistedGrants { get; set; }
         public DbSet<DeviceFlowCodes> DeviceFlowCodes { get; set; }
@@ -40,10 +40,10 @@ namespace Fondital.Data
             base.OnModelCreating(builder);
 
             builder.ApplyConfiguration(new UtenteConfiguration());
-            builder.ApplyConfiguration(new TraceConfiguration());
             builder.ApplyConfiguration(new ServicePartnerConfiguration());
             builder.ApplyConfiguration(new ConfigurazioneConfiguration());
             builder.ApplyConfiguration(new DifettoConfiguration());
+            builder.ApplyConfiguration(new VoceCostoConfiguration());
 
             builder.ConfigurePersistedGrantContext(_operationalStoreOptions.Value);
         }

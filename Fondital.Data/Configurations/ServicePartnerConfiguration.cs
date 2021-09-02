@@ -18,8 +18,11 @@ namespace Fondital.Data.Configurations
             builder.Property(m => m.Id).UseIdentityColumn();
 
             builder.Property(m => m.CodiceCliente).IsRequired();
+            builder.HasIndex(m => m.CodiceCliente).IsUnique();
             builder.Property(m => m.CodiceFornitore).IsRequired();
+            builder.HasIndex(m => m.CodiceFornitore).IsUnique();
             builder.Property(m => m.RagioneSociale).IsRequired();
+            builder.HasIndex(m => m.RagioneSociale).IsUnique();
 
             builder.ToTable("ServicePartner");
         }

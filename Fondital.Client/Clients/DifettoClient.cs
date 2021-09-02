@@ -22,9 +22,6 @@ namespace Fondital.Client.Clients
         public async Task<IEnumerable<Difetto>> GetAllDifetti(bool? isAbilitato = null) =>
             await httpClient.GetFromJsonAsync<IEnumerable<Difetto>>($"difettiControl?isEnabled={isAbilitato}", JsonSerializerOpts.JsonOpts);
 
-        //public async Task<IEnumerable<Difetto>> GetDifettiByPage(int page, bool? isAbilitato = null) =>
-        //    await httpClient.GetFromJsonAsync<IEnumerable<Difetto>>($"difettiControl/{page}?isEnabled={isAbilitato}", JsonSerializerOpts.JsonOpts);
-
         public async Task UpdateDifetto(int difettoId, Difetto difetto) =>
             await httpClient.PostAsJsonAsync($"difettiControl/update/{difettoId}", difetto, JsonSerializerOpts.JsonOpts);
 

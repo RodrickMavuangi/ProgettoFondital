@@ -7,20 +7,20 @@ using System.Threading.Tasks;
 
 namespace Fondital.Client.Shared
 {
-    public partial class EditDifettoDialog
+    public partial class EditVoceCostoDialog
     {
         [Parameter] public EventCallback OnClose { get; set; }
         [Parameter] public EventCallback OnSave { get; set; }
-        [Parameter] public Difetto DifettoToUpdate { get; set; }
+        [Parameter] public VoceCosto VoceCostoToUpdate { get; set; }
         protected bool isSubmitting = false;
 
-        protected async Task SalvaDifetto()
+        protected async Task SalvaVoceCosto()
         {
             isSubmitting = true;
 
             try
             {
-                await httpClient.UpdateDifetto(DifettoToUpdate.Id, DifettoToUpdate);
+                await httpClient.UpdateVoceCosto(VoceCostoToUpdate.Id, VoceCostoToUpdate);
                 isSubmitting = false;
                 await OnSave.InvokeAsync();
             }

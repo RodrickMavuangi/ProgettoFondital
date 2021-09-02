@@ -22,15 +22,14 @@ namespace Fondital.Client
             builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });
 
             builder.Services.AddHttpClient<UtenteClient>(client => client.BaseAddress = new Uri(builder.Configuration["WebAPI:BaseUrl"]));
-            builder.Services.AddHttpClient<TraceClient>(client => client.BaseAddress = new Uri(builder.Configuration["WebAPI:BaseUrl"]));
             builder.Services.AddHttpClient<ServicePartnerClient>(client => client.BaseAddress = new Uri(builder.Configuration["WebAPI:BaseUrl"]));
             builder.Services.AddHttpClient<ConfigurazioneClient>(client => client.BaseAddress = new Uri(builder.Configuration["WebAPI:BaseUrl"]));
             builder.Services.AddHttpClient<DifettoClient>(client => client.BaseAddress = new Uri(builder.Configuration["WebAPI:BaseUrl"]));
-            //builder.Services.AddScoped<RemoteAuthenticationState, FonditalAuthenticationState>();
+            builder.Services.AddHttpClient<VoceCostoClient>(client => client.BaseAddress = new Uri(builder.Configuration["WebAPI:BaseUrl"]));
+            
             builder.Services.AddScoped<FonditalAuthenticationState>();
             builder.Services.AddOptions();
             builder.Services.AddAuthorizationCore();
-            //builder.Services.AddApiAuthorization<FonditalAuthenticationState>(options => options.AuthenticationPaths.LogOutSucceededPath = "");
             
             builder.Services.AddOidcAuthentication<FonditalAuthenticationState, RemoteUserAccount>(options =>
             {

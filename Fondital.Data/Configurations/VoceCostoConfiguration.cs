@@ -10,9 +10,9 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Fondital.Data.Configurations
 {
-    public class DifettoConfiguration : IEntityTypeConfiguration<Difetto>
+    public class VoceCostoConfiguration : IEntityTypeConfiguration<VoceCosto>
     {
-        public void Configure(EntityTypeBuilder<Difetto> builder)
+        public void Configure(EntityTypeBuilder<VoceCosto> builder)
         {
             builder.HasKey(a => a.Id);
             builder.Property(m => m.Id).UseIdentityColumn();
@@ -21,8 +21,9 @@ namespace Fondital.Data.Configurations
             builder.HasIndex(m => m.NomeItaliano).IsUnique();
             builder.Property(m => m.NomeRusso).IsRequired();
             builder.HasIndex(m => m.NomeRusso).IsUnique();
+            builder.Property(m => m.Tipologia).IsRequired();
 
-            builder.ToTable("Difetti");
+            builder.ToTable("VociCosto");
         }
     }
 }

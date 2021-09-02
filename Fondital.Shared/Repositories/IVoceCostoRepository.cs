@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 namespace Fondital.Shared.Repositories
 {
-    public interface IDifettoRepository : IRepository<Difetto>
+    public interface IVoceCostoRepository : IRepository<VoceCosto>
     {
-        Task<IEnumerable<Difetto>> GetAllAsync(bool? isAbilitato);
+        Task<IEnumerable<VoceCosto>> GetAllAsync(bool? isAbilitato);
     }
 }

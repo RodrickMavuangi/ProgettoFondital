@@ -85,10 +85,10 @@ namespace Fondital.Server
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddTransient<IAuthService, AuthService>();
             services.AddTransient<IUtenteService, UtenteService>();
-            services.AddTransient<ITraceService, TraceService>();
             services.AddTransient<IServicePartnerService, ServicePartnerService>();
             services.AddTransient<IConfigurazioneService, ConfigurazioneService>();
             services.AddTransient<IDifettoService, DifettoService>();
+            services.AddTransient<IVoceCostoService, VoceCostoService>();
 
             services.AddSwaggerGen(c =>
             {

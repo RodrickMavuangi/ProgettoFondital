@@ -18,9 +18,9 @@ namespace Fondital.Data.Configurations
             builder.Property(m => m.Id).UseIdentityColumn();
 
             builder.Property(m => m.UserName).IsRequired();
+            builder.HasIndex(m => m.UserName).IsUnique();
             builder.Property(m => m.Nome).IsRequired();
             builder.Property(m => m.Cognome).IsRequired();
-            builder.Property(m => m.Email).IsRequired();
 
             builder.HasOne(m => m.ServicePartner).WithMany(s => s.Utenti).IsRequired();
 
