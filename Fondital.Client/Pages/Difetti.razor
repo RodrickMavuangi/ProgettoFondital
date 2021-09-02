@@ -21,8 +21,8 @@ else
         </GridToolBar>
         <GridColumns>
             <GridColumn Field=@nameof(Difetto.Id) Title="#" />
-            <GridColumn Field=@nameof(Difetto.NomeItaliano) Title="Descrizione" Visible="@(authState.CurrentLang == Lingua.ITA)" />
-            <GridColumn Field=@nameof(Difetto.NomeRusso) Title="Descrizione" Visible="@(authState.CurrentLang == Lingua.RUS)" />
+            <GridColumn Field=@nameof(Difetto.NomeItaliano) Title="Descrizione" Visible="@(authState.CurrentLang == Lingua.IT)" />
+            <GridColumn Field=@nameof(Difetto.NomeRusso) Title="Descrizione" Visible="@(authState.CurrentLang == Lingua.RU)" />
             <GridCommandColumn Context="dif">
                 @{
                         var difetto = dif as Difetto;
