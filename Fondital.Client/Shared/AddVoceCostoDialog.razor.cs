@@ -17,7 +17,7 @@ namespace Fondital.Client.Shared
 
         protected async override Task OnInitializedAsync()
         {
-            NuovaVoceCosto = new VoceCosto() { IsAbilitato = true, Tipologia = TipologiaVoceCosto.Forfettario };
+            NuovaVoceCosto = new VoceCosto() { NomeItaliano = "", NomeRusso = "", IsAbilitato = true, Tipologia = TipologiaVoceCosto.Forfettario };
         }
 
         protected async Task SalvaVoceCosto()

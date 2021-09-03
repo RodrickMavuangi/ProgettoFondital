@@ -3,16 +3,16 @@
 @inject FonditalAuthenticationState authState
 @inject IJSRuntime JSRuntime
 @inject IStringLocalizer<App> localizer
-@inject Microsoft.Extensions.Configuration.IConfiguration config
+@inject IConfiguration config
 
 <div style="display: flex;">
-    <h1><b>Anagrafiche</b> Difetti</h1>
-    <button class="d-block mr-0 ml-auto" @onclick="(() => ShowAddDialog = true)">Nuovo Difetto</button>
+    <h1><b>@localizer["Anagrafiche"]</b> @localizer["Difetti"]</h1>
+    <button class="d-block mr-0 ml-auto" @onclick="(() => ShowAddDialog = true)">@localizer["Nuovo"] @localizer["Difetto"]</button>
 </div>
 
 @if (ListaDifetti == null)
 {
-    <p><em>Caricamento in corso...</em></p>
+    <p><em>@localizer["Caricamento"]...</em></p>
 }
 else
 {
@@ -23,8 +23,8 @@ else
         </GridToolBar>
         <GridColumns>
             <GridColumn Field=@nameof(Difetto.Id) Title="#" />
-            <GridColumn Field=@nameof(Difetto.NomeItaliano) Title="DESCRIZIONE" Visible="@(CurrentCulture == "it-IT")" />
-            <GridColumn Field=@nameof(Difetto.NomeRusso) Title="DESCRIZIONE" Visible="@(CurrentCulture == "ru-RU")" />
+            <GridColumn Field=@nameof(Difetto.NomeItaliano) Title=@localizer["Descrizione"].Value.ToUpper() Visible="@(CurrentCulture == "it-IT")" />
+            <GridColumn Field=@nameof(Difetto.NomeRusso) Title=@localizer["Descrizione"].Value.ToUpper() Visible="@(CurrentCulture == "ru-RU")" />
             <GridCommandColumn Context="dif">
                 @{
                         var difetto = dif as Difetto;
@@ -43,7 +43,7 @@ else
 
 <TelerikWindow Modal="true" @bind-Visible="ShowAddDialog">
     <WindowTitle>
-        <strong>Aggiungi Difetto</strong>
+        <strong>@localizer["Aggiungi"] @localizer["Difetto"]</strong>
     </WindowTitle>
     <WindowContent>
         <AddDifettoDialog OnClose="@(() => ShowAddDialog = false)" OnSave="CloseAndRefresh" />
@@ -52,7 +52,7 @@ else
 
 <TelerikWindow Modal="true" @bind-Visible="ShowEditDialog">
     <WindowTitle>
-        <strong>Modifica Difetto # @DifettoSelected.Id</strong>
+        <strong>@localizer["Modifica"] @localizer["Difetto"] # @DifettoSelected.Id</strong>
     </WindowTitle>
     <WindowContent>
         <EditDifettoDialog DifettoToUpdate="DifettoSelected" OnClose="@(() => ShowEditDialog = false)" OnSave="CloseAndRefresh" />

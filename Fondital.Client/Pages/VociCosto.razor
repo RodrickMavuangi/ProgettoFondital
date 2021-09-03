@@ -3,16 +3,16 @@
 @inject FonditalAuthenticationState authState
 @inject IJSRuntime JSRuntime
 @inject IStringLocalizer<App> localizer
-@inject Microsoft.Extensions.Configuration.IConfiguration config
+@inject IConfiguration config
 
 <div style="display: flex;">
-    <h1><b>Anagrafiche</b> Voci di Costo</h1>
-    <button class="d-block mr-0 ml-auto" @onclick="(() => ShowAddDialog = true)">Nuova Voce di Costo</button>
+    <h1><b>@localizer["Anagrafiche"]</b> @localizer["VociCosto"]</h1>
+    <button class="d-block mr-0 ml-auto" @onclick="(() => ShowAddDialog = true)">@localizer["Nuova"] @localizer["VoceCosto"]</button>
 </div>
 
 @if (ListaVociCosto == null)
 {
-    <p><em>Caricamento in corso...</em></p>
+    <p><em>@localizer["Caricamento"]...</em></p>
 }
 else
 {
@@ -23,9 +23,9 @@ else
         </GridToolBar>
         <GridColumns>
             <GridColumn Field=@nameof(VoceCosto.Id) Title="#" />
-            <GridColumn Field=@nameof(VoceCosto.NomeItaliano) Title="DESCRIZIONE" Visible="@(CurrentCulture == "it-IT")" />
-            <GridColumn Field=@nameof(VoceCosto.NomeRusso) Title="DESCRIZIONE" Visible="@(CurrentCulture == "ru-RU")" />
-            <GridCommandColumn Title="TIPOLOGIA" Context="vc">
+            <GridColumn Field=@nameof(VoceCosto.NomeItaliano) Title=@localizer["Descrizione"].Value.ToUpper() Visible="@(CurrentCulture == "it-IT")" />
+            <GridColumn Field=@nameof(VoceCosto.NomeRusso) Title=@localizer["Descrizione"].Value.ToUpper() Visible="@(CurrentCulture == "ru-RU")" />
+            <GridCommandColumn Title=@localizer["Tipologia"].Value.ToUpper() Context="vc">
                 @{ 
                     var voceCosto = vc as VoceCosto;
                     var traduzioneTipologia = localizer[voceCosto.Tipologia.ToString()];
@@ -50,7 +50,7 @@ else
 
 <TelerikWindow Modal="true" @bind-Visible="ShowAddDialog">
     <WindowTitle>
-        <strong>Aggiungi Voce di Costo</strong>
+        <strong>@localizer["Aggiungi"] @localizer["VoceCosto"]</strong>
     </WindowTitle>
     <WindowContent>
         <AddVoceCostoDialog OnClose="@(() => ShowAddDialog = false)" OnSave="CloseAndRefresh" />
@@ -59,7 +59,7 @@ else
 
 <TelerikWindow Modal="true" @bind-Visible="ShowEditDialog">
     <WindowTitle>
-        <strong>Modifica Voce di Costo # @VoceCostoSelected.Id</strong>
+        <strong>@localizer["Modifica"] @localizer["VoceCosto"] # @VoceCostoSelected.Id</strong>
     </WindowTitle>
     <WindowContent>
         <EditVoceCostoDialog VoceCostoToUpdate="VoceCostoSelected" OnClose="@(() => ShowEditDialog = false)" OnSave="CloseAndRefresh" />

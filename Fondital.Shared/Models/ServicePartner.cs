@@ -16,5 +16,6 @@ namespace Fondital.Shared.Models
         public string RagioneSociale { get; set; }
         public string CodiceCliente { get; set; }
         public List<Utente> Utenti { get; set; }
+        public List<Listino> Listini { get; set; }
     }
 }

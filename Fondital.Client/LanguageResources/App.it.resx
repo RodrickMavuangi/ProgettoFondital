@@ -120,6 +120,9 @@
   <data name="Accedi" xml:space="preserve">
     <value>Accedi</value>
   </data>
+  <data name="Aggiungi" xml:space="preserve">
+    <value>Aggiungi</value>
+  </data>
   <data name="Anagrafiche" xml:space="preserve">
     <value>Anagrafiche</value>
   </data>
@@ -141,20 +144,47 @@
   <data name="CambiaPassword" xml:space="preserve">
     <value>Cambia Password</value>
   </data>
+  <data name="CampoObbligatorio" xml:space="preserve">
+    <value>Il campo è obbligatorio</value>
+  </data>
+  <data name="Cancella" xml:space="preserve">
+    <value>Cancella</value>
+  </data>
+  <data name="Caricamento" xml:space="preserve">
+    <value>Caricamento in corso</value>
+  </data>
   <data name="Ciao" xml:space="preserve">
     <value>Ciao</value>
   </data>
   <data name="Cognome" xml:space="preserve">
     <value>Cognome</value>
   </data>
+  <data name="Configurazioni" xml:space="preserve">
+    <value>Configurazioni</value>
+  </data>
   <data name="ConfigurazioniGenerali" xml:space="preserve">
     <value>Configurazioni Generali</value>
+  </data>
+  <data name="DESCRIZIONE" xml:space="preserve">
+    <value>DESCRIZIONE</value>
+  </data>
+  <data name="Difetti" xml:space="preserve">
+    <value>Difetti</value>
+  </data>
+  <data name="Difetto" xml:space="preserve">
+    <value>Difetto</value>
   </data>
   <data name="Esci" xml:space="preserve">
     <value>Esci</value>
   </data>
   <data name="Forfettario" xml:space="preserve">
     <value>Forfettario</value>
+  </data>
+  <data name="Garanzia" xml:space="preserve">
+    <value>Garanzia</value>
+  </data>
+  <data name="Generali" xml:space="preserve">
+    <value>Generali</value>
   </data>
   <data name="GestioneRapporti" xml:space="preserve">
     <value>Gestione Rapporti</value>
@@ -168,22 +198,61 @@
   <data name="Listino" xml:space="preserve">
     <value>Listino</value>
   </data>
+  <data name="Modifica" xml:space="preserve">
+    <value>Modifica</value>
+  </data>
+  <data name="ModificheErrore" xml:space="preserve">
+    <value>Le modifiche sono andate in errore, si prega di riprovare.</value>
+  </data>
+  <data name="ModificheSuccesso" xml:space="preserve">
+    <value>Modifiche effettuate con successo.</value>
+  </data>
   <data name="NoLoginEffettuato" xml:space="preserve">
     <value>Non hai effettuato il login</value>
   </data>
   <data name="Nome" xml:space="preserve">
     <value>Nome</value>
   </data>
+  <data name="NomeItaliano" xml:space="preserve">
+    <value>Nome Italiano</value>
+  </data>
+  <data name="NomeRusso" xml:space="preserve">
+    <value>Nome Russo</value>
+  </data>
+  <data name="Nuova" xml:space="preserve">
+    <value>Nuova</value>
+  </data>
+  <data name="Nuovo" xml:space="preserve">
+    <value>Nuovo</value>
+  </data>
   <data name="OttieniInformazioni" xml:space="preserve">
     <value>Ottieni Informazioni</value>
   </data>
+  <data name="Password" xml:space="preserve">
+    <value>Password</value>
+  </data>
   <data name="PasswordDimenticata" xml:space="preserve">
     <value>Password dimenticata?</value>
+  </data>
+  <data name="PeriodoValidita" xml:space="preserve">
+    <value>Periodo Validità</value>
   </data>
   <data name="Quantita" xml:space="preserve">
     <value>Quantità</value>
   </data>
   <data name="RuoloDirezione" xml:space="preserve">
     <value>Direzione</value>
+  </data>
+  <data name="Salva" xml:space="preserve">
+    <value>Salva</value>
+  </data>
+  <data name="TIPOLOGIA" xml:space="preserve">
+    <value>TIPOLOGIA</value>
+  </data>
+  <data name="VoceCosto" xml:space="preserve">
+    <value>Voce di Costo</value>
+  </data>
+  <data name="VociCosto" xml:space="preserve">
+    <value>Voci di Costo</value>
   </data>
 </root>
