@@ -11,6 +11,7 @@ namespace Fondital.Shared
         IConfigurazioneRepository Configurazioni { get; }
         IDifettoRepository Difetti { get; }
         IVoceCostoRepository VociCosto { get; }
+        IListinoRepository Listini { get; }
         Task<int> CommitAsync();
         void Update<T>(T Old, T New) where T : class;
     }

@@ -1,7 +1,9 @@
 ﻿using Fondital.Shared.Models;
 using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Components.Forms;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -16,7 +18,7 @@ namespace Fondital.Client.Shared
 
         protected async override Task OnInitializedAsync()
         {
-            NuovoDifetto = new Difetto() { IsAbilitato = true };
+            NuovoDifetto = new Difetto() { NomeItaliano = "", NomeRusso = "", IsAbilitato = true };
         }
 
         protected async Task SalvaDifetto()

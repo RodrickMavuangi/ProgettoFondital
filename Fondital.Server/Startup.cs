@@ -89,6 +89,7 @@ namespace Fondital.Server
             services.AddTransient<IConfigurazioneService, ConfigurazioneService>();
             services.AddTransient<IDifettoService, DifettoService>();
             services.AddTransient<IVoceCostoService, VoceCostoService>();
+            services.AddTransient<IListinoService, ListinoService>();
 
             services.AddSwaggerGen(c =>
             {

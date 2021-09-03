@@ -15,12 +15,12 @@ namespace Fondital.Shared.Models
     public class VoceCosto
     {
         public int Id { get; set; }
-        [Required(ErrorMessage = "Il campo è obbligatorio.")]
+        [Required]
         public string NomeItaliano { get; set; }
-        [Required(ErrorMessage = "Il campo è obbligatorio.")]
+        [Required]
         public string NomeRusso { get; set; }
-        [Required(ErrorMessage = "Il campo è obbligatorio.")] 
         public TipologiaVoceCosto Tipologia { get; set; }
         public bool IsAbilitato { get; set; }
+        public List<Listino> Listini { get; set; }
     }
 }

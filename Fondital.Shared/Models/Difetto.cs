@@ -14,9 +14,9 @@ namespace Fondital.Shared.Models
     public class Difetto
     {
         public int Id { get; set; }
-        [Required(ErrorMessage = "Il campo è obbligatorio.")]
+        [Required]
         public string NomeItaliano { get; set; }
-        [Required(ErrorMessage = "Il campo è obbligatorio.")]
+        [Required]
         public string NomeRusso { get; set; }
         public bool IsAbilitato { get; set; }
     }

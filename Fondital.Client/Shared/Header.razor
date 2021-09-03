@@ -2,49 +2,6 @@
 @inherits LayoutComponentBase
 @inject NavigationManager NavigationManager
 @inject FonditalAuthenticationState authState
-@*
-    <div style="background-color:white!important; padding:0; height:100%">
-        <img src="/img/logo.svg" style="height: 70%; padding: 0 2rem; position: relative; top: 50%; transform: translate(0%,-50%)" />
-    </div>
-
-    <div style="margin-left:3rem">
-        <TelerikDropDownList Data="@Anags" @bind-Value="CurrentAnag" Width="auto"
-                             PopupHeight="auto" DefaultText="@((CurrentAnag==null)?"ANAGRAFICHE":null)" PopupWidth="auto" OnChange="Navigate">
-        </TelerikDropDownList>
-        <TelerikButton OnClick="Navigate">
-            GESTIONE RAPPORTI
-        </TelerikButton>
-        <TelerikButton OnClick="Navigate">
-            CONFIGURAZIONI GENERALI
-        </TelerikButton>
-    </div>
-
-    <div style="width:70px; margin-left:auto">
-        <TelerikDropDownList ValueField="@CurrentLanguage" Data="@Languages"
-                             @bind-Value="CurrentLanguage" Width="100%"
-                             PopupHeight="auto">
-        </TelerikDropDownList>
-    </div>
-
-    <div style="border-left: 2px solid white; height: 42px">
-        <span class="Ciao-Armando d-block">Ciao @(UserFirstName)</span>
-        <span class="direzione d-block">direzione</span>
-    </div>
-
-    <div hidden="@(!ViewUserMenu)" style="border:2px solid grey; top:64px; position:absolute; right:0px">
-        <ul class="p-0 my-2" style="list-style: none">
-            @foreach (var Item in UserMenuList)
-            {
-            <li> <a @onclick="ToggleUserMenu" style="margin:auto; cursor:pointer">@Item</a> </li>
-            }
-        </ul>
-    </div>
-
-    <div class="Oval ml-0" @onclick="ToggleUserMenu" style="cursor:pointer">
-        <p class="AG">@(UserFirstName.ToUpper().First())@(UserLastName.ToUpper().First())</p>
-    </div>
-*@
-
 @inject IJSRuntime JSRuntime
 @inject FonditalAuthenticationState authState
 @inject IStringLocalizer<App> localizer
