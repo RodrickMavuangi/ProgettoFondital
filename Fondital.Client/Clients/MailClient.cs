@@ -22,15 +22,11 @@ namespace Fondital.Client.Clients
 		{
 			try
 			{
-
 				var response = await httpClient.PostAsJsonAsync<MailRequest>("sendMail", mailRequest);
 				response.EnsureSuccessStatusCode();
 				var result = await response.Content.ReadFromJsonAsync<ServicePartner>();
-				
 			}
-			catch(Exception e) { var tu = e.Message; }
-			
+			catch(Exception e) { var tu = e.Message; }			
 		}
-		
 	}
 }

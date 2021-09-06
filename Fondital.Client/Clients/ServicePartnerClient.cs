@@ -25,42 +25,27 @@ namespace Fondital.Client.Clients
             List<ServicePartner> servicePartners = new List<ServicePartner>();
 			try
 			{
-				var options = new JsonSerializerOptions()
-				{
-					ReferenceHandler = ReferenceHandler.Preserve
-				};
-                servicePartners = (List<ServicePartner>)await httpClient.GetFromJsonAsync<IEnumerable<ServicePartner>>("servicePartners",options);
+                servicePartners = (List<ServicePartner>)await httpClient.GetFromJsonAsync<IEnumerable<ServicePartner>>("servicePartnersControl", JsonSerializerOpts.JsonOpts);
 			}
             catch(Exception e) { }
             return servicePartners;   
-        }
-            
+        }   
 
         public async Task<ServicePartner> CreateServicePartner(ServicePartner servicePartner)
         {
-            var response = await httpClient.PostAsJsonAsync($"servicePartners", servicePartner);
+            var response = await httpClient.PostAsJsonAsync($"servicePartnersControl", servicePartner, JsonSerializerOpts.JsonOpts);
             response.EnsureSuccessStatusCode();
             var result = await response.Content.ReadFromJsonAsync<ServicePartner>();
             return result;
         }
 
-        public async Task UpdateServicePartner(int id, ServicePartner servicePartner)
-        {
-            await httpClient.PutAsJsonAsync($"servicePartners/{id}", servicePartner);
-        }
+        public async Task UpdateServicePartner(int id, ServicePartner servicePartner) =>
+            await httpClient.PutAsJsonAsync($"servicePartnersControl/{id}", servicePartner, JsonSerializerOpts.JsonOpts);
 
-        public async Task<ServicePartner> GetServicePartnerById(int id)
-        {
-            return await httpClient.GetFromJsonAsync<ServicePartner>($"servicePartners/{id}");
-        }
-
-		public async Task<ServicePartner> GetServicePartnerWithUtenti(int id)
-		{
-            var options = new JsonSerializerOptions()
-            {
-                ReferenceHandler = ReferenceHandler.Preserve
-            };
-			return await httpClient.GetFromJsonAsync<ServicePartner>($"servicePartners/utenti/{id}", options);
-		}
+        public async Task<ServicePartner> GetServicePartnerById(int id) =>
+            await httpClient.GetFromJsonAsync<ServicePartner>($"servicePartnersControl/{id}", JsonSerializerOpts.JsonOpts);
+        
+		public async Task<ServicePartner> GetServicePartnerWithUtenti(int id) =>
+		    await httpClient.GetFromJsonAsync<ServicePartner>($"servicePartnersControl/utenti/{id}", JsonSerializerOpts.JsonOpts);
 	}
 }

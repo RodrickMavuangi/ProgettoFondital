@@ -1,5 +1,6 @@
 ﻿using Fondital.Shared.Models;
 using Microsoft.AspNetCore.Components;
+using Microsoft.JSInterop;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,13 +15,17 @@ namespace Fondital.Client.Pages
         public DialogFactory Dialogs { get; set; }
         private List<Lavorazione> ListaLavorazioni;
         private int PageSize { get; set; }
+        private string CurrentCulture { get; set; }
         protected bool ShowAddDialog { get; set; } = false;
         protected bool ShowEditDialog { get; set; } = false;
         protected Lavorazione LavorazioneSelected { get; set; }
 
         protected override async Task OnInitializedAsync()
         {
+            var js = (IJSInProcessRuntime)JSRuntime;
+            CurrentCulture = await js.InvokeAsync<string>("blazorCulture.get");
             PageSize = Convert.ToInt32(config["PageSize"]);
+
             await RefreshLavorazioni();
         }
 
