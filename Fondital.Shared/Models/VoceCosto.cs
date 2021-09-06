@@ -11,16 +11,15 @@ using System.Threading.Tasks;
 
 namespace Fondital.Shared.Models
 {
-    [Table("VociCosto")]
     public class VoceCosto
     {
         public int Id { get; set; }
         [Required]
-        public string NomeItaliano { get; set; }
+        public string NomeItaliano { get; set; } = "";
         [Required]
-        public string NomeRusso { get; set; }
-        public TipologiaVoceCosto Tipologia { get; set; }
-        public bool IsAbilitato { get; set; }
-        public List<Listino> Listini { get; set; }
+        public string NomeRusso { get; set; } = "";
+        public TipologiaVoceCosto Tipologia { get; set; } = TipologiaVoceCosto.Forfettario;
+        public bool IsAbilitato { get; set; } = true;
+        public List<Listino> Listini { get; set; } = new List<Listino>();
     }
 }

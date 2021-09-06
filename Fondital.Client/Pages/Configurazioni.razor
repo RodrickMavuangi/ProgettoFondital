@@ -1,6 +1,7 @@
 ﻿@page "/configurazioni"
 @inject ConfigurazioneClient confClient
 @inject IStringLocalizer<App> localizer
+@attribute [Authorize]
 
 <h1><b>@localizer["Configurazioni"]</b> @localizer["Generali"]</h1>
 

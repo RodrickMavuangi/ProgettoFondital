@@ -141,6 +141,9 @@
   <data name="Autenticato" xml:space="preserve">
     <value>è autenticato</value>
   </data>
+  <data name="Benvenuto" xml:space="preserve">
+    <value>Benvenuto</value>
+  </data>
   <data name="CambiaPassword" xml:space="preserve">
     <value>Cambia Password</value>
   </data>
@@ -174,6 +177,15 @@
   <data name="Difetto" xml:space="preserve">
     <value>Difetto</value>
   </data>
+  <data name="ErroreGenerico" xml:space="preserve">
+    <value>Errore durante il salvataggio dei dati, si prega di riprovare.</value>
+  </data>
+  <data name="ErroreNomeItaliano" xml:space="preserve">
+    <value>Errore nell'immissione dei dati: il Nome Italiano inserito esiste già.</value>
+  </data>
+  <data name="ErroreNomeRusso" xml:space="preserve">
+    <value>Errore nell'immissione dei dati: il Nome Russo inserito esiste già.</value>
+  </data>
   <data name="Esci" xml:space="preserve">
     <value>Esci</value>
   </data>
@@ -191,9 +203,6 @@
   </data>
   <data name="Impostazioni" xml:space="preserve">
     <value>Impostazioni</value>
-  </data>
-  <data name="InformazioniUtente" xml:space="preserve">
-    <value>Informazioni Utente</value>
   </data>
   <data name="Listino" xml:space="preserve">
     <value>Listino</value>

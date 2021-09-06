@@ -13,17 +13,14 @@ namespace Fondital.Client.Shared
     {
         [Parameter] public EventCallback OnClose { get; set; }
         [Parameter] public EventCallback OnSave { get; set; }
-        protected Difetto NuovoDifetto { get; set; }
+        protected Difetto NuovoDifetto { get; set; } = new Difetto();
         protected bool isSubmitting = false;
-
-        protected async override Task OnInitializedAsync()
-        {
-            NuovoDifetto = new Difetto() { NomeItaliano = "", NomeRusso = "", IsAbilitato = true };
-        }
+        protected string ErrorMessage = "";
 
         protected async Task SalvaDifetto()
         {
             isSubmitting = true;
+            ErrorMessage = "";
 
             try
             {
@@ -34,7 +31,7 @@ namespace Fondital.Client.Shared
             catch (Exception ex)
             {
                 isSubmitting = false;
-                throw;
+                ErrorMessage = localizer[ex.Message];
             }
         }
     }

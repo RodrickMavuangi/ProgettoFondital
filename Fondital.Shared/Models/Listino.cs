@@ -8,7 +8,6 @@ using System.Threading.Tasks;
 
 namespace Fondital.Shared.Models
 {
-    [Table("Listini")]
     public class Listino
     {
         public int Id { get; set; }
@@ -17,9 +16,9 @@ namespace Fondital.Shared.Models
         [Required]
         public VoceCosto VoceCosto { get; set; }
         [Required]
-        public string Raggruppamento { get; set; }
+        public string Raggruppamento { get; set; } = "";
         [Required]
         [Range(0, Int32.MaxValue)]
-        public int Valore { get; set; }
+        public int Valore { get; set; } = 0;
     }
 }
