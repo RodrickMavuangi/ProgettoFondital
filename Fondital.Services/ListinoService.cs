@@ -1,0 +1,42 @@
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
+using Fondital.Shared;
+using Fondital.Shared.Models;
+using Fondital.Shared.Models.Auth;
+using Fondital.Shared.Services;
+
+namespace Fondital.Services
+{
+    public class ListinoService : IListinoService
+    {
+        private readonly IUnitOfWork _unitOfWork;
+        public ListinoService(IUnitOfWork unitOfWork)
+        {
+            this._unitOfWork = unitOfWork;
+        }
+
+        public async Task<IEnumerable<Listino>> GetAllListini()
+        {
+            return await _unitOfWork.Listini.GetAllAsync();
+        }
+
+        public async Task<Listino> GetListinoById(int id)
+        {
+            return await _unitOfWork.Listini.GetByIdAsync(id);
+        }
+
+        public async Task UpdateListino(int listinoId, Listino listino)
+        {
+            var listinoToUpdate = await _unitOfWork.Listini.GetByIdAsync(listinoId);
+            _unitOfWork.Update(listinoToUpdate, listino);
+            
+            await _unitOfWork.CommitAsync();
+        }
+
+        public async Task AddListino(Listino listino)
+        {
+            await _unitOfWork.Listini.AddAsync(listino);
+            await _unitOfWork.CommitAsync();
+        }
+    }
+}

@@ -1,0 +1,68 @@
+﻿@page "/vocicosto"
+@inject VoceCostoClient httpClient
+@inject FonditalAuthenticationState authState
+@inject IJSRuntime JSRuntime
+@inject IStringLocalizer<App> localizer
+@inject IConfiguration config
+@attribute [Authorize]
+
+<div style="display: flex;">
+    <h1><b>@localizer["Anagrafiche"]</b> @localizer["VociCosto"]</h1>
+    <button class="d-block mr-0 ml-auto" @onclick="(() => ShowAddDialog = true)">@localizer["Nuova"] @localizer["VoceCosto"]</button>
+</div>
+
+@if (ListaVociCosto == null)
+{
+    <p><em>@localizer["Caricamento"]...</em></p>
+}
+else
+{
+    <TelerikGrid Data=@ListaVociCosto Pageable="true" PageSize="@PageSize">
+        <GridToolBar>
+            <span class="k-toolbar-spacer"></span> @* add this spacer to keep the searchbox on the right *@
+            <GridSearchBox />
+        </GridToolBar>
+        <GridColumns>
+            <GridColumn Field=@nameof(VoceCosto.Id) Title="#" />
+            <GridColumn Field=@nameof(VoceCosto.NomeItaliano) Title=@localizer["Descrizione"].Value.ToUpper() Visible="@(CurrentCulture == "it-IT")" />
+            <GridColumn Field=@nameof(VoceCosto.NomeRusso) Title=@localizer["Descrizione"].Value.ToUpper() Visible="@(CurrentCulture == "ru-RU")" />
+            <GridCommandColumn Title=@localizer["Tipologia"].Value.ToUpper() Context="vc">
+                @{
+                        var voceCosto = vc as VoceCosto;
+                        var traduzioneTipologia = localizer[voceCosto.Tipologia.ToString()];
+                    <div>@traduzioneTipologia</div>
+                }
+            </GridCommandColumn>
+            <GridCommandColumn Context="vc">
+                @{
+                        var voceCosto = vc as VoceCosto;
+                    <GridCommandButton Command="EditVoceCosto" Icon="edit" OnClick="@(() => EditVoceCosto(voceCosto.Id))" />
+                }
+            </GridCommandColumn>
+            <GridCommandColumn Context="vc">
+                @{
+                        var voceCosto = vc as VoceCosto;
+                    <TelerikSwitch OffLabel=" " OnLabel=" " OnChange="@(() => UpdateEnableVoceCosto(voceCosto.Id))" @bind-Value="@voceCosto.IsAbilitato"></TelerikSwitch>
+                }
+            </GridCommandColumn>
+        </GridColumns>
+    </TelerikGrid>
+}
+
+<TelerikWindow Modal="true" @bind-Visible="ShowAddDialog">
+    <WindowTitle>
+        <strong>@localizer["Aggiungi"] @localizer["VoceCosto"]</strong>
+    </WindowTitle>
+    <WindowContent>
+        <AddVoceCostoDialog OnClose="@(() => ShowAddDialog = false)" OnSave="CloseAndRefresh" />
+    </WindowContent>
+</TelerikWindow>
+
+<TelerikWindow Modal="true" @bind-Visible="ShowEditDialog">
+    <WindowTitle>
+        <strong>@localizer["Modifica"] @localizer["VoceCosto"] # @VoceCostoSelected.Id</strong>
+    </WindowTitle>
+    <WindowContent>
+        <EditVoceCostoDialog VoceCostoToUpdate="VoceCostoSelected" OnClose="@(() => ShowEditDialog = false)" OnSave="CloseAndRefresh" />
+    </WindowContent>
+</TelerikWindow>

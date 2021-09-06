@@ -25,13 +25,5 @@ namespace Fondital.Data.Repositories
             else
                 return await _db.Difetti.ToListAsync();
         }
-
-        //public async Task<IEnumerable<Difetto>> GetByPage(int page, int pageSize, bool? isAbilitato)
-        //{
-        //    if (isAbilitato != null)
-        //        return await _db.Difetti.Where(x => x.IsAbilitato == isAbilitato).Skip(page * pageSize).Take(pageSize).ToListAsync();
-        //    else
-        //        return await _db.Difetti.Skip(page * pageSize).Take(pageSize).ToListAsync();
-        //}
     }
 }

@@ -7,6 +7,5 @@ namespace Fondital.Shared.Repositories
     public interface IDifettoRepository : IRepository<Difetto>
     {
         Task<IEnumerable<Difetto>> GetAllAsync(bool? isAbilitato);
-        //Task<IEnumerable<Difetto>> GetByPage(int page, int pageSize, bool? isAbilitato);
     }
 }

@@ -123,6 +123,9 @@
   <data name="AggiungiLavorazione" xml:space="preserve">
     <value>Aggiungi Lavorazione RU</value>
   </data>
+  <data name="Aggiungi" xml:space="preserve">
+    <value>Aggiungi RU</value>
+  </data>
   <data name="Anagrafiche" xml:space="preserve">
     <value>Anagrafiche RU</value>
   </data>
@@ -141,14 +144,20 @@
   <data name="Autenticato" xml:space="preserve">
     <value>Autenticato RU</value>
   </data>
+  <data name="Benvenuto" xml:space="preserve">
+    <value>Benvenuto RU</value>
+  </data>
   <data name="CambiaPassword" xml:space="preserve">
     <value>Cambia Password RU</value>
+  </data>
+  <data name="CampoObbligatorio" xml:space="preserve">
+    <value>Il campo è obbligatorio RU</value>
   </data>
   <data name="Cancella" xml:space="preserve">
     <value>Cancella RU</value>
   </data>
   <data name="Caricamento" xml:space="preserve">
-    <value>Caricamento in corso... RU</value>
+    <value>Caricamento in corso RU</value>
   </data>
   <data name="Ciao" xml:space="preserve">
     <value>Ciao RU</value>
@@ -156,14 +165,44 @@
   <data name="Cognome" xml:space="preserve">
     <value>Cognome RU</value>
   </data>
+  <data name="Configurazioni" xml:space="preserve">
+    <value>Configurazioni RU</value>
+  </data>
   <data name="ConfermaModificaLavorazione" xml:space="preserve">
     <value>Sicuri di voler modificare la lavorazione # RU</value>
   </data>
   <data name="ConfigurazioniGenerali" xml:space="preserve">
     <value>Configurazioni Generali RU</value>
   </data>
+  <data name="Descrizione" xml:space="preserve">
+    <value>Descrizione RU</value>
+  </data>
+  <data name="Difetti" xml:space="preserve">
+    <value>Difetti RU</value>
+  </data>
+  <data name="Difetto" xml:space="preserve">
+    <value>Difetto RU</value>
+  </data>
+  <data name="ErroreGenerico" xml:space="preserve">
+    <value>Errore durante il salvataggio dei dati, si prega di riprovare. RU</value>
+  </data>
+  <data name="ErroreNomeItaliano" xml:space="preserve">
+    <value>Errore nell'immissione dei dati: il Nome Italiano inserito esiste già. RU</value>
+  </data>
+  <data name="ErroreNomeRusso" xml:space="preserve">
+    <value>Errore nell'immissione dei dati: il Nome Russo inserito esiste già. RU</value>
+  </data>
   <data name="Esci" xml:space="preserve">
     <value>Esci RU</value>
+  </data>
+  <data name="Forfettario" xml:space="preserve">
+    <value>Forfettario RU</value>
+  </data>
+  <data name="Garanzia" xml:space="preserve">
+    <value>Garanzia RU</value>
+  </data>
+  <data name="Generali" xml:space="preserve">
+    <value>Generali RU</value>
   </data>
   <data name="GestioneRapporti" xml:space="preserve">
     <value>Gestione Rapporti RU</value>
@@ -180,6 +219,15 @@
   <data name="Listino" xml:space="preserve">
     <value>Listino RU</value>
   </data>
+  <data name="Modifica" xml:space="preserve">
+    <value>Modifica RU</value>
+  </data>
+  <data name="ModificheErrore" xml:space="preserve">
+    <value>Le modifiche sono andate in errore, si prega di riprovare. RU</value>
+  </data>
+  <data name="ModificheSuccesso" xml:space="preserve">
+    <value>Modifiche effettuate con successo. RU</value>
+  </data>
   <data name="ModificaLavorazione" xml:space="preserve">
     <value>Modifica Lavorazione # RU</value>
   </data>
@@ -188,6 +236,12 @@
   </data>
   <data name="Nome" xml:space="preserve">
     <value>Nome RU</value>
+  </data>
+  <data name="Nuova" xml:space="preserve">
+    <value>Nuova RU</value>
+  </data>
+  <data name="Nuovo" xml:space="preserve">
+    <value>Nuovo RU</value>
   </data>
   <data name="NomeItaliano" xml:space="preserve">
     <value>Nome Italiano RU</value>
@@ -204,13 +258,31 @@
   <data name="OttieniInformazioni" xml:space="preserve">
     <value>Ottieni Informazioni RU</value>
   </data>
+  <data name="Password" xml:space="preserve">
+    <value>Password RU</value>
+  </data>
   <data name="PasswordDimenticata" xml:space="preserve">
     <value>Password Dimenticata RU?</value>
+  </data>
+  <data name="PeriodoValidita" xml:space="preserve">
+    <value>Periodo Validità RU</value>
+  </data>
+  <data name="Quantita" xml:space="preserve">
+    <value>Quantità RU</value>
   </data>
   <data name="RuoloDirezione" xml:space="preserve">
     <value>Direzione RU</value>
   </data>
   <data name="Salva" xml:space="preserve">
     <value>Salva RU</value>
+  </data>
+  <data name="Tipologia" xml:space="preserve">
+    <value>Tipologia RU</value>
+  </data>
+  <data name="VoceCosto" xml:space="preserve">
+    <value>Voce di Costo RU</value>
+  </data>
+  <data name="VociCosto" xml:space="preserve">
+    <value>Voci di Costo RU</value>
   </data>
 </root>

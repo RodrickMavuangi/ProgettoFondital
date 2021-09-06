@@ -12,11 +12,6 @@ namespace Fondital.Client.Shared
         [Parameter] public Difetto DifettoToUpdate { get; set; }
         protected bool isSubmitting = false;
 
-        //protected async override Task OnInitializedAsync()
-        //{
-        //    NuovoDifetto = new Difetto() { IsAbilitato = true };
-        //}
-
         protected async Task SalvaDifetto()
         {
             isSubmitting = true;

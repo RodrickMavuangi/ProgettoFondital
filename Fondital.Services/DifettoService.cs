@@ -19,11 +19,6 @@ namespace Fondital.Services
             return await _unitOfWork.Difetti.GetAllAsync(isAbilitato);
         }
 
-        //public async Task<IEnumerable<Difetto>> GetDifettiByPage(int page, int pageSize, bool? isAbilitato = null)
-        //{
-        //    return await _unitOfWork.Difetti.GetByPage(page, pageSize, isAbilitato);
-        //}
-
         public async Task<Difetto> GetDifettoById(int id)
         {
             return await _unitOfWork.Difetti.SingleOrDefaultAsync(c => c.Id == id);

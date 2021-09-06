@@ -12,7 +12,9 @@ namespace Fondital.Data.Configurations
             builder.Property(m => m.Id).UseIdentityColumn();
 
             builder.Property(m => m.NomeItaliano).IsRequired();
+            builder.HasIndex(m => m.NomeItaliano).IsUnique();
             builder.Property(m => m.NomeRusso).IsRequired();
+            builder.HasIndex(m => m.NomeRusso).IsUnique();
 
             builder.ToTable("Difetti");
         }

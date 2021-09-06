@@ -38,9 +38,29 @@ namespace Fondital.Server.Controllers
         }
 
         [HttpPost]
-        public async Task CreateDifetto([FromBody] Difetto difetto)
+        public async Task<IActionResult> CreateDifetto([FromBody] Difetto difetto)
         {
-            await _difettoService.AddDifetto(difetto);
+            try
+            {
+                await _difettoService.AddDifetto(difetto);
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                if (ex.InnerException != null)
+                    _logger.LogError($"{ex.Message} - INNER EXCEPTION: {ex.InnerException.Message}");
+                else
+                    _logger.LogError(ex.Message);
+
+                List<Difetto> lista = (List<Difetto>)await _difettoService.GetAllDifetti();
+
+                if (lista.Any(x => x.NomeItaliano == difetto.NomeItaliano))
+                    return BadRequest("ErroreNomeItaliano");
+                else if (lista.Any(x => x.NomeRusso == difetto.NomeRusso))
+                    return BadRequest("ErroreNomeRusso");
+                else
+                    return BadRequest("ErroreGenerico");
+            }
         }
     }
 }
