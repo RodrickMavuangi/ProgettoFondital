@@ -54,5 +54,13 @@ namespace Fondital.Services
 
             await _unitOfWork.CommitAsync();
         }
+
+        public async Task UpdateUtente(Utente utToUpdate, Utente utFromDB)
+		{
+            utFromDB.Cognome = utToUpdate.Cognome;
+            utFromDB.Nome = utToUpdate.Nome;
+            utFromDB.IsAbilitato = utToUpdate.IsAbilitato;
+            await _unitOfWork.CommitAsync();
+		}
     }
 }

@@ -38,8 +38,13 @@ namespace Fondital.Server.Controllers
             return await _spService.GetAllServicePartners();
         }
 
+		[HttpGet("utenti/{id}")]
+		public async Task<ServicePartner> getWithUtentiFor(int id)
+		{
+			return await _spService.GetServicePartnerWithUtentiAsync(id);
+		}
 
-        [HttpPost]
+		[HttpPost]
         public async Task<ServicePartner> CreateServicePartner([FromBody] ServicePartner servicePartner)
         {
             ServicePartner _servicePartner = new ServicePartner();
@@ -63,7 +68,7 @@ namespace Fondital.Server.Controllers
 
 
         [HttpPut("{id}")]
-        public async Task<ServicePartner> UpdateServicePartner(int id,[FromBody]ServicePartner spToUpdate)
+        public async Task UpdateServicePartner(int id,[FromBody]ServicePartner spToUpdate)
 		{
             ServicePartner _servicePartner = new ServicePartner();
             try
@@ -82,11 +87,7 @@ namespace Fondital.Server.Controllers
 					}
 					else
 					{
-                        _servicePartner.CodiceFornitore = spToUpdate.CodiceFornitore;
-                        _servicePartner.CodiceCliente = spToUpdate.CodiceCliente;
-                        _servicePartner.RagioneSociale = spToUpdate.RagioneSociale;
-
-                        _servicePartner = await _spService.UpdateServicePartner(_servicePartner);
+                         await _spService.UpdateServicePartner(_servicePartner,spToUpdate);
 					}
                 }
 			}
@@ -94,7 +95,22 @@ namespace Fondital.Server.Controllers
 			{
                 _logger.LogError($"C'è stato un problema : {e.Message}");
             }
-            return _servicePartner;
+		}
+
+         
+        [HttpGet("{id}")]
+        public async Task<ServicePartner> GetServicePArtnerById(int id)
+		{
+            ServicePartner servicePartner = new ServicePartner();
+			try
+			{
+                servicePartner = await _spService.GetServicePartnerById(id);
+			}
+            catch(Exception e)
+			{
+                _logger.LogError($"C'è stato un problema : {e.Message}");
+            }
+            return servicePartner;
 		}
 	}
 }

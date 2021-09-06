@@ -5,15 +5,20 @@
 @inject NavigationManager NavigationManager
 @using Fondital.Shared.Models
 @inject ServicePartnerClient servicePartnerClient
-
 @inherits ListServicePartnerBase
 
 <div class="cont">
-    <div class="tit-pg">
-        <h1><strong>Anagrafiche</strong> Service Partner</h1>
+    <div class="cont-child">
+        <div class="tit-pg">
+            <h1><strong>Anagrafiche</strong> Service Partner</h1>
+        </div>
+        <div class="btn-ad">
+            <TelerikButton Class="btn-add" OnClick=@(()=> WindowVisible = true)>Inserisci Anagrafica</TelerikButton>
+        </div>
     </div>
-    <div class="btn-ad">
-        <TelerikButton Class="btn-add" OnClick=@(()=> WindowVisible = true)>Inserisci Anagrafica</TelerikButton>
+    <hr class="hr"/>
+    <div class="cerc-sp">
+        <input class="border-rod" @bind-value="SearchText" @bind-value:event="oninput" placeholder="Cerca SP ..." />
     </div>
 </div>
 
@@ -52,18 +57,19 @@
 </TelerikWindow>
 
 
-@*OnEdit="@EditHandler"//EditMode="@GridEditMode.Popup"*@
-<TelerikGrid Data="@ServicePartners" Pageable="true" Height="500px"
-             OnUpdate="@UpdateHandler" OnDelete="@DeleteHandler" OnCreate="@CreateHandler" OnCancel="@CancelHandler" Resizable="true" Sortable="true">
-    <GridToolBar>
-        <span class="k-toolbar-spacer"></span>
-        <GridSearchBox Fields="SearchableFields" DebounceDelay="200"></GridSearchBox>
-    </GridToolBar>
-    <GridColumns>
+@*OnEdit="@EditHandler"//*@
+<TelerikGrid  Data="@ServicePartners_filtered" EditMode="@GridEditMode.Popup" Pageable="true" Height="500px"
+             OnUpdate="@UpdateHandler" OnDelete="@DeleteHandler" OnCreate="@CreateHandler" OnCancel="@CancelHandler" Resizable="true" Sortable="true" >
+   <GridColumns>
         <GridColumn Field=@nameof(ServicePartner.CodiceFornitore) Title="CODICE FORNITORE" />
         <GridColumn Field=@nameof(ServicePartner.RagioneSociale) Title="RAGIONE SOCIALE" />
         <GridColumn Field=@nameof(ServicePartner.CodiceCliente) Title="CODICE UTENTE" />
-        <GridColumn Field=@nameof(ServicePartner.Utenti.Count) Title="N° UTENTI" />
+        <GridColumn Field="N° UTENTI" Title="N° UTENTI">
+            <Template>
+                @((context as ServicePartner).Utenti.Count())
+            </Template>
+        </GridColumn>
+            
         <GridCommandColumn Width="100px">
             <GridCommandButton Command="Save" Icon="save" ShowInEdit="true">Update</GridCommandButton>
             <GridCommandButton Class="editColor" Command="Edit" Icon="edit" ImageUrl="/img/Icons/setting.svg"></GridCommandButton>
@@ -81,10 +87,13 @@
     }
 
     .cont {
-        display: flex;
-        flex-direction: row
+        height:115px
     }
-
+    .cont-child{
+        display:flex;
+        flex-direction:row;
+        height:40px;
+    }
     .editColor {
         color: aliceblue;
         background-color: dodgerblue
@@ -136,4 +145,8 @@
     .cas-ric {
         height: auto
     }
+    .cerc-sp{
+        position:absolute;
+        right:25px;
+     }
 </style>

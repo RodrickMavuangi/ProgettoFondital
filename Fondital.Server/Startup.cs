@@ -3,6 +3,7 @@ using Fondital.Server.Extensions;
 using Fondital.Services;
 using Fondital.Shared;
 using Fondital.Shared.Models.Auth;
+using Fondital.Shared.Models.Settings;
 using Fondital.Shared.Services;
 using IdentityServer4.Stores;
 using Microsoft.AspNetCore.Builder;
@@ -14,6 +15,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using System.Collections.Generic;
 using System.Reflection;
+using System.Text.Json.Serialization;
 
 namespace Fondital.Server
 {
@@ -42,6 +44,8 @@ namespace Fondital.Server
 
             services.Configure<JwtSettings>(Configuration.GetSection("Jwt"));
 
+            services.Configure<MailSettings>(Configuration.GetSection("MailSettings"));
+
             services.AddIdentityServer()
             .AddConfigurationStore(options =>
             {
@@ -61,9 +65,15 @@ namespace Fondital.Server
             ).AddInMemoryCaching().AddClientStore<InMemoryClientStore>().AddResourceStore<InMemoryResourcesStore>()
             .AddApiAuthorization<Utente, FonditalDbContext>();
 
+            services.AddControllers().AddJsonOptions(opts =>
+            {
+                opts.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.Preserve;
+                opts.JsonSerializerOptions.PropertyNamingPolicy = null; // prevent camel case
+            });
             services.AddAuth(jwtSettings);
 
-            services.AddControllers();
+
+            services.AddControllers().AddJsonOptions( o => o.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.Preserve);
             services.AddRazorPages();
 
             services.AddCors(options =>
@@ -82,6 +92,8 @@ namespace Fondital.Server
             services.AddTransient<IUtenteService, UtenteService>();
             services.AddTransient<ITraceService, TraceService>();
             services.AddTransient<IServicePartnerService, ServicePartnerService>();
+
+            services.AddTransient<IMailService, MailService>();
 
             services.AddSwaggerGen(c =>
             {

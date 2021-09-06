@@ -12,12 +12,13 @@ using Fondital.Shared;
 using Fondital.Services;
 using Fondital.Shared.Models.Auth;
 using Fondital.Client.Clients;
+using Microsoft.AspNetCore.Mvc;
 
 namespace Fondital.Client.Pages
 {
 	public class ListServicePartnerBase : ComponentBase
 	{
-		public List<ServicePartner> ServicePartners = new List<ServicePartner>();
+		public List<ServicePartner> ServicePartners { get; set; } = new List<ServicePartner>();
 		public ServicePartner ServicePartnerModel { get; set; } = new ServicePartner();
 		public bool WindowVisible { get; set; }
 		public bool ValidSubmit { get; set; } = false;
@@ -25,13 +26,17 @@ namespace Fondital.Client.Pages
 
 		public List<string> SearchableFields = new List<string> { "RagioneSociale" };
 		[Inject] public ServicePartnerClient servicePartnerClient { get; set; }
+
+		public string SearchText = "";
 		protected override async Task OnInitializedAsync()
 		{
 			myEditContext = new EditContext(ServicePartnerModel);
 			ServicePartners = (List<ServicePartner>)await servicePartnerClient.GetAllServicePartners();
 		}
+		public List<ServicePartner> ServicePartners_filtered => ServicePartners.Where<ServicePartner>(x => x.RagioneSociale.Contains(SearchText)).ToList();
 
-        public async Task EditHandler(GridCommandEventArgs args)
+
+		public async Task EditHandler(GridCommandEventArgs args)
 		{
 			ServicePartner item = (ServicePartner)args.Item;
 			//TODO Logic ....
@@ -80,28 +85,6 @@ namespace Fondital.Client.Pages
 			if (isFormValid)
 			{
 				ServicePartner ServicePartnerToSave = (ServicePartner)editContext.Model;
-
-				//ServicePartnerToSave.Id = Int32.Parse(Guid.NewGuid().ToString());
-
-				//Utente utente1 = new Utente() {
-				//	ServicePartner = ServicePartnerToSave,
-				//	IsAbilitato = true,
-				//	Cognome = "Utente1",
-				//	Pw_LastChanged = new DateTime(2021, 08, 24),
-				//	Pw_MustChange = false
-				//};
-
-				//Utente utente2 = new Utente()
-				//{
-				//	ServicePartner = ServicePartnerToSave,
-				//	IsAbilitato = false,
-				//	Cognome = "Utente2",
-				//	Pw_LastChanged = new DateTime(2021, 01, 20),
-				//	Pw_MustChange = false
-				//};
-				//anagraficaServicePartners.Add(anagraficaServicePartnerToSave);
-
-				//ServicePartnerToSave.Utenti = new List<Utente>() { utente1, utente2 };
 				await servicePartnerClient.CreateServicePartner(ServicePartnerToSave);
 				await Refresh();
 			}

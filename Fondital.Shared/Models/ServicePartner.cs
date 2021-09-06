@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
+using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -20,5 +21,6 @@ namespace Fondital.Shared.Models
         [Required]
         public string CodiceCliente { get; set; }
         public List<Utente> Utenti { get; set; }
+        //public double NumeroUtenti { get; set; }
     }
 }

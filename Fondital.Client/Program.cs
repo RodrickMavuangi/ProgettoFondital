@@ -1,3 +1,4 @@
+using Blazored.Modal;
 using Fondital.Client.Clients;
 //using Fondital.Data;
 using Fondital.Services;
@@ -26,15 +27,17 @@ namespace Fondital.Client
             builder.Services.AddHttpClient<UtenteClient>(client => client.BaseAddress = new Uri(builder.Configuration["WebAPI:BaseUrl"]));
             builder.Services.AddHttpClient<TraceClient>(client => client.BaseAddress = new Uri(builder.Configuration["WebAPI:BaseUrl"]));
             builder.Services.AddHttpClient<ServicePartnerClient>(client => client.BaseAddress = new Uri(builder.Configuration["WebAPI:BaseUrl"]));
+            builder.Services.AddHttpClient<MailClient>(client => client.BaseAddress = new Uri(builder.Configuration["WebAPI:BaseUrl"]));
             //builder.Services.AddScoped<RemoteAuthenticationState, FonditalAuthenticationState>();
             builder.Services.AddScoped<FonditalAuthenticationState>();
             builder.Services.AddOptions();
             builder.Services.AddAuthorizationCore();
-			//builder.Services.AddApiAuthorization<FonditalAuthenticationState>(options => options.AuthenticationPaths.LogOutSucceededPath = "");
+            builder.Services.AddBlazoredModal();
+            //builder.Services.AddApiAuthorization<FonditalAuthenticationState>(options => options.AuthenticationPaths.LogOutSucceededPath = "");
 
-			//builder.Services.AddScoped<IServicePartnerService, ServicePartnerService>();
-			//builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
-			builder.Services.AddOidcAuthentication<FonditalAuthenticationState, RemoteUserAccount>(options =>
+            //builder.Services.AddScoped<IServicePartnerService, ServicePartnerService>();
+            //builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
+            builder.Services.AddOidcAuthentication<FonditalAuthenticationState, RemoteUserAccount>(options =>
             {
                 builder.Configuration.Bind("oidc", options.ProviderOptions);
                 options.UserOptions.RoleClaim = "role";
