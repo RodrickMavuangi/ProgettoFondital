@@ -1,5 +1,8 @@
 using Fondital.Client.Clients;
+//using Fondital.Data;
+using Fondital.Shared;
 using Fondital.Shared.Models.Auth;
+using Fondital.Shared.Services;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Components.WebAssembly.Authentication;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
@@ -27,6 +30,7 @@ namespace Fondital.Client
             builder.Services.AddHttpClient<DifettoClient>(client => client.BaseAddress = new Uri(builder.Configuration["WebAPI:BaseUrl"]));
             builder.Services.AddHttpClient<VoceCostoClient>(client => client.BaseAddress = new Uri(builder.Configuration["WebAPI:BaseUrl"]));
             builder.Services.AddHttpClient<ListinoClient>(client => client.BaseAddress = new Uri(builder.Configuration["WebAPI:BaseUrl"]));
+            builder.Services.AddHttpClient<MailClient>(client => client.BaseAddress = new Uri(builder.Configuration["WebAPI:BaseUrl"]));          
 
             builder.Services.AddScoped<FonditalAuthenticationState>();
             builder.Services.AddOptions();
