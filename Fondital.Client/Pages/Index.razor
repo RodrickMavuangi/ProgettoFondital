@@ -1,12 +1,12 @@
 ﻿@page "/"
 @inject AuthenticationStateProvider authStateProvider
 @inject FonditalAuthenticationState authState
+@inject IStringLocalizer<App> localizer
+@inject ServicePartnerClient spClient
+  
+<h3>@localizer["InformazioniUtente"]</h3>
 
-
-
-<h3>Informazioni utente</h3>
-
-<button @onclick="GetClaimsPrincipalData">Ottieni informazioni</button>
+<button @onclick="GetClaimsPrincipalData">@localizer["OttieniInformazioni"]</button>
 
 <ul>
     @foreach (var attributo in attributi)

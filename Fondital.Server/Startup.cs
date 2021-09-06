@@ -65,15 +65,13 @@ namespace Fondital.Server
             ).AddInMemoryCaching().AddClientStore<InMemoryClientStore>().AddResourceStore<InMemoryResourcesStore>()
             .AddApiAuthorization<Utente, FonditalDbContext>();
 
-            services.AddControllers().AddJsonOptions(opts =>
-            {
-                opts.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.Preserve;
-                opts.JsonSerializerOptions.PropertyNamingPolicy = null; // prevent camel case
-            });
             services.AddAuth(jwtSettings);
 
-
-            services.AddControllers().AddJsonOptions( o => o.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.Preserve);
+            services.AddControllers().AddJsonOptions(opts =>
+                {
+                    opts.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.Preserve;
+                    opts.JsonSerializerOptions.PropertyNamingPolicy = null; // prevent camel case
+                });
             services.AddRazorPages();
 
             services.AddCors(options =>
@@ -90,8 +88,11 @@ namespace Fondital.Server
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddTransient<IAuthService, AuthService>();
             services.AddTransient<IUtenteService, UtenteService>();
-            services.AddTransient<ITraceService, TraceService>();
             services.AddTransient<IServicePartnerService, ServicePartnerService>();
+            services.AddTransient<IConfigurazioneService, ConfigurazioneService>();
+            services.AddTransient<IDifettoService, DifettoService>();
+            services.AddTransient<IVoceCostoService, VoceCostoService>();
+            services.AddTransient<IListinoService, ListinoService>();
 
             services.AddTransient<IMailService, MailService>();
 

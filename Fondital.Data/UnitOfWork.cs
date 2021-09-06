@@ -9,8 +9,11 @@ namespace Fondital.Data
     {
         private readonly FonditalDbContext _context;
         private UtenteRepository _utenteRepository;
-        private TraceRepository _traceRepository;
         private ServicePartnerRepository _servicePartnerRepository;
+        private ConfigurazioneRepository _configurazioneRepository;
+        private DifettoRepository _difettoRepository;
+        private VoceCostoRepository _voceCostoRepository;
+        private ListinoRepository _listinoRepository;
 
         public UnitOfWork(FonditalDbContext context)
         {
@@ -18,10 +21,16 @@ namespace Fondital.Data
         }
 
         public IUtenteRepository Utenti => _utenteRepository ??= new UtenteRepository(_context);
-
-        public ITraceRepository Traces => _traceRepository ??= new TraceRepository(_context);
-
         public IServicePartnerRepository ServicePartners => _servicePartnerRepository ??= new ServicePartnerRepository(_context);
+        public IConfigurazioneRepository Configurazioni => _configurazioneRepository ??= new ConfigurazioneRepository(_context);
+        public IDifettoRepository Difetti => _difettoRepository ??= new DifettoRepository(_context);
+        public IVoceCostoRepository VociCosto => _voceCostoRepository ??= new VoceCostoRepository(_context);
+        public IListinoRepository Listini => _listinoRepository ??= new ListinoRepository(_context);
+
+        public void Update<T>(T oldItem, T newItem) where T : class
+        {
+            this._context.Entry(oldItem).CurrentValues.SetValues(newItem);
+        }
 
         public async Task<int> CommitAsync()
         {

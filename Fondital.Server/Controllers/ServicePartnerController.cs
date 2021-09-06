@@ -18,17 +18,15 @@ using RouteAttribute = Microsoft.AspNetCore.Mvc.RouteAttribute;
 namespace Fondital.Server.Controllers
 {
     [ApiController]
-    [Route("servicePartners")]
+    [Route("servicePartnersControl")]
     public class ServicePartnerController : ControllerBase
     {
         private readonly ILogger<ServicePartnerController> _logger;
-        private readonly FonditalDbContext _db;
         private readonly IServicePartnerService _spService;
 
-        public ServicePartnerController(ILogger<ServicePartnerController> logger, FonditalDbContext db, IServicePartnerService spService)
+        public ServicePartnerController(ILogger<ServicePartnerController> logger, IServicePartnerService spService)
         {
             _logger = logger;
-            _db = db;
             _spService = spService;
         }
 

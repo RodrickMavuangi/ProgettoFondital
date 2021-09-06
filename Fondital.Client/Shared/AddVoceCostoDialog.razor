@@ -1,0 +1,36 @@
+﻿@inject VoceCostoClient httpClient
+@inject IStringLocalizer<App> localizer
+
+<EditForm Model="NuovaVoceCosto" OnValidSubmit="SalvaVoceCosto">
+    <div class="form-field">
+        <label>@localizer["NomeItaliano"]</label>
+        <div>
+            <InputText @bind-Value="NuovaVoceCosto.NomeItaliano"></InputText>
+            @if (NuovaVoceCosto.NomeItaliano == "")
+            {<div> @localizer["CampoObbligatorio"]</div>}
+        </div>
+    </div>
+    <div class="form-field">
+        <label>@localizer["NomeRusso"]</label>
+        <div>
+            <InputText @bind-Value="NuovaVoceCosto.NomeRusso"></InputText>
+            @if (NuovaVoceCosto.NomeRusso == "")
+            {<div> @localizer["CampoObbligatorio"]</div>}
+        </div>
+    </div>
+    <div class="form-field">
+        <label>@localizer["Tipologia"]</label>
+        <div>
+            <InputRadioGroup TValue="TipologiaVoceCosto" @bind-Value="NuovaVoceCosto.Tipologia">
+                <InputRadio Value="TipologiaVoceCosto.Forfettario" /> @localizer["Forfettario"].Value.ToUpper()
+                <br />
+                <InputRadio Value="TipologiaVoceCosto.Quantita" /> @localizer["Quantita"].Value.ToUpper()
+            </InputRadioGroup>
+            <ValidationMessage For="@(() => NuovaVoceCosto.Tipologia)" />
+        </div>
+    </div>
+
+    <button class="btn btn-secondary mr-auto" @onclick="OnClose">@localizer["Cancella"]</button>
+    <button type="submit" class="btn btn-success ml-auto" disabled="@isSubmitting">@localizer["Salva"]</button>
+    <DataAnnotationsValidator />
+</EditForm>

@@ -21,6 +21,6 @@ namespace Fondital.Shared.Models
         [Required]
         public string CodiceCliente { get; set; }
         public List<Utente> Utenti { get; set; }
-        //public double NumeroUtenti { get; set; }
+        public List<Listino> Listini { get; set; }
     }
 }

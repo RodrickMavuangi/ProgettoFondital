@@ -50,9 +50,7 @@ namespace Fondital.Services
 
         public async Task UpdateServicePartner(ServicePartner spToUpdate, ServicePartner sp)
         {
-            spToUpdate.CodiceFornitore = sp.CodiceFornitore;
-            spToUpdate.RagioneSociale = sp.RagioneSociale;
-            spToUpdate.CodiceCliente = sp.CodiceCliente;
+            _unitOfWork.Update(spToUpdate, sp);
 
             if(spToUpdate.Utenti != null && sp.Utenti != null)
 			{

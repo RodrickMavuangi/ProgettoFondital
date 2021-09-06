@@ -23,8 +23,13 @@
         <a class="dismiss">🗙</a>
     </div>
     <script src="_content/Microsoft.AspNetCore.Components.WebAssembly.Authentication/AuthenticationService.js"></script>
-    <script src="_framework/blazor.webassembly.js"></script>
-    <scriptsrc ="_content/Blazored.Modal/blazored.modal.js"></script>
+    <script src="_framework/blazor.webassembly.js"></script>   
+    <script>
+        window.blazorCulture = {
+            get: () => window.localStorage['BlazorCulture'],
+            set: (value) => window.localStorage['BlazorCulture'] = value
+        };
+    </script>
 </body>
 
 </html>

@@ -1,0 +1,58 @@
+﻿@page "/configurazioni"
+@inject ConfigurazioneClient confClient
+@inject IStringLocalizer<App> localizer
+
+<h1><b>@localizer["Configurazioni"]</b> @localizer["Generali"]</h1>
+
+@if (ListaConfigurazioni == null)
+{
+    <p><em>@localizer["Caricamento"]...</em></p>
+}
+else
+{
+    <div class="main">
+        <EditForm Model="Input" OnValidSubmit="SalvaConfigurazioni">
+            <div class="form-field">
+                <label>@localizer["PeriodoValidita"] @localizer["Garanzia"]</label>
+                <div>
+                    <InputSelect @bind-Value="Input.Garanzia" @oninput="ResetSubmitTrigger">
+                        @foreach (DurataValiditaConfigurazione durata in Enum.GetValues(typeof(DurataValiditaConfigurazione)))
+                            {
+                            <option value="@durata">@durata.Description()</option>
+                            }
+                    </InputSelect>
+                    <ValidationMessage For="@(() => Input.Garanzia)" />
+                </div>
+            </div>
+
+            <div class="form-field">
+                <label>@localizer["PeriodoValidita"] @localizer["Password"]</label>
+                <div>
+                    <InputSelect @bind-Value="Input.Password" @oninput="ResetSubmitTrigger">
+                        @foreach (DurataValiditaConfigurazione durata in Enum.GetValues(typeof(DurataValiditaConfigurazione)))
+                            {
+                            <option value="@durata">@durata.Description()</option>
+                            }
+                    </InputSelect>
+                    <ValidationMessage For="@(() => Input.Password)" />
+                </div>
+            </div>
+
+
+            <button type="submit" class="checkout-button btn btn-warning" disabled="@isSubmitting">
+                @localizer["Salva"]
+            </button>
+            <DataAnnotationsValidator />
+        </EditForm>
+
+        @if (submitSucceded == true)
+        {
+            <div>@localizer["ModificheSuccesso"]</div>
+        }
+        else if (submitSucceded == false)
+        {
+            <div>@localizer["ModificheErrore"]</div>
+        }
+
+    </div>
+}
