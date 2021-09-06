@@ -12,13 +12,8 @@ namespace Fondital.Client.Shared
     {
         [Parameter] public EventCallback OnClose { get; set; }
         [Parameter] public EventCallback OnSave { get; set; }
-        protected VoceCosto NuovaVoceCosto { get; set; }
+        protected VoceCosto NuovaVoceCosto { get; set; } = new VoceCosto();
         protected bool isSubmitting = false;
-
-        protected async override Task OnInitializedAsync()
-        {
-            NuovaVoceCosto = new VoceCosto() { NomeItaliano = "", NomeRusso = "", IsAbilitato = true, Tipologia = TipologiaVoceCosto.Forfettario };
-        }
 
         protected async Task SalvaVoceCosto()
         {

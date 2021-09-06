@@ -2,6 +2,7 @@
 @inject IStringLocalizer<App> localizer
 
 <EditForm Model="NuovoDifetto" OnValidSubmit="SalvaDifetto">
+    <div>@ErrorMessage</div>
     <div class="form-field">
         <label>@localizer["NomeItaliano"]</label>
         <div>

@@ -3,14 +3,15 @@
 @inject FonditalAuthenticationState authState
 @inject IStringLocalizer<App> localizer
 @inject ServicePartnerClient spClient
+@attribute [Authorize]
   
-<h3>@localizer["InformazioniUtente"]</h3>
+<h3>@localizer["Benvenuto"] @utente.Nome.</h3>
 
-<button @onclick="GetClaimsPrincipalData">@localizer["OttieniInformazioni"]</button>
+@*<button @onclick="GetClaimsPrincipalData">@localizer["OttieniInformazioni"]</button>
 
 <ul>
     @foreach (var attributo in attributi)
     {
         <li>@attributo</li>
     }
-</ul>
+</ul>*@

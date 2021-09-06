@@ -4,6 +4,7 @@
 @inject IJSRuntime JSRuntime
 @inject IStringLocalizer<App> localizer
 @inject IConfiguration config
+@attribute [Authorize]
 
 <div style="display: flex;">
     <h1><b>@localizer["Anagrafiche"]</b> @localizer["VociCosto"]</h1>
@@ -26,9 +27,9 @@ else
             <GridColumn Field=@nameof(VoceCosto.NomeItaliano) Title=@localizer["Descrizione"].Value.ToUpper() Visible="@(CurrentCulture == "it-IT")" />
             <GridColumn Field=@nameof(VoceCosto.NomeRusso) Title=@localizer["Descrizione"].Value.ToUpper() Visible="@(CurrentCulture == "ru-RU")" />
             <GridCommandColumn Title=@localizer["Tipologia"].Value.ToUpper() Context="vc">
-                @{ 
-                    var voceCosto = vc as VoceCosto;
-                    var traduzioneTipologia = localizer[voceCosto.Tipologia.ToString()];
+                @{
+                        var voceCosto = vc as VoceCosto;
+                        var traduzioneTipologia = localizer[voceCosto.Tipologia.ToString()];
                     <div>@traduzioneTipologia</div>
                 }
             </GridCommandColumn>

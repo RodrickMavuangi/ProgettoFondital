@@ -4,14 +4,14 @@
 
 <div class="user-info">
     <AuthorizeView>
-        <Authorizing>
+        @*<Authorizing>
             <text>...</text>
-        </Authorizing>
+        </Authorizing>*@
         <Authorized>
             <button class="nav-link" @onclick="BeginSignOut">@localizer["Esci"]</button>
         </Authorized>
-        <NotAuthorized>
+        @*<NotAuthorized>
             <a class="nav-link" href="authentication/login">@localizer["Accedi"]</a>
-        </NotAuthorized>
+        </NotAuthorized>*@
     </AuthorizeView>
 </div>

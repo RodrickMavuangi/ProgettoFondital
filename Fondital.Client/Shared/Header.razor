@@ -32,30 +32,34 @@
                 <div class="col-2  p-0 bgBianco">
                     <div class="logo text-center"><img src="img/fondital-logo.svg" alt="logo" /></div>
                 </div>
-                <div class="col-7 condensed-bold">
-                    <ul class="nav nav-pills col-12 col-lg-auto ml-40 mb-2 mb-md-0">
-                        <li class="nav-item dropdown">
-                            <TelerikDropDownList Class="nav-link dropdown-toggle dropdown-custom-toggle active" PopupClass="dropdown-item"
-                                                 Data="@Anags" @bind-Value="CurrentAnag" OnChange="NavigateAnagrafica" DefaultText="@((CurrentAnag==null)?localizer["Anagrafiche"]:null)">
-                            </TelerikDropDownList>
-                        </li>
+                <AuthorizeView>
+                    <Authorized>
+                        <div class="col-7 condensed-bold">
+                            <ul class="nav nav-pills col-12 col-lg-auto ml-40 mb-2 mb-md-0">
+                                <li class="nav-item dropdown">
+                                    <TelerikDropDownList Class="nav-link dropdown-toggle dropdown-custom-toggle active" PopupClass="dropdown-item"
+                                                         Data="@Anags" @bind-Value="CurrentAnag" OnChange="NavigateAnagrafica" DefaultText="@((CurrentAnag==null)?localizer["Anagrafiche"]:null)">
+                                    </TelerikDropDownList>
+                                </li>
 
-                        <li class="nav-item">
-                            <TelerikButton Class="nav-link" OnClick="@(() => Navigate(""))">
-                                @localizer["GestioneRapporti"]
-                            </TelerikButton>
-                        </li>
+                                <li class="nav-item">
+                                    <TelerikButton Class="nav-link" OnClick="@(() => Navigate(""))">
+                                        @localizer["GestioneRapporti"]
+                                    </TelerikButton>
+                                </li>
 
-                        <li class="nav-item">
-                            <TelerikButton Class="nav-link" OnClick="@(() => Navigate("configurazioni"))">
-                                @localizer["ConfigurazioniGenerali"]
-                            </TelerikButton>
-                        </li>
-                        <li class="nav-item px-3">
-                            <LoginDisplay />
-                        </li>
-                    </ul>
-                </div>
+                                <li class="nav-item">
+                                    <TelerikButton Class="nav-link" OnClick="@(() => Navigate("configurazioni"))">
+                                        @localizer["ConfigurazioniGenerali"]
+                                    </TelerikButton>
+                                </li>
+                                <li class="nav-item px-3">
+                                    <LoginDisplay />
+                                </li>
+                            </ul>
+                        </div>
+                    </Authorized>
+                </AuthorizeView>
 
                 <div class="col-1 text-right">
                     <div class="lingua float-lg-left border-bottom">
@@ -65,12 +69,16 @@
 
                 <div class="col-2">
                     <div class="float-lg-right">
-                        <div class="float-lg-left link-light">
-                            <ul class="mb-0 profilo">
-                                <li class="nomeUtente">@localizer["Ciao"]</li>
-                                <li class="ruoloUtente">@localizer["RuoloDirezione"]</li>
-                            </ul>
-                        </div>
+                        <AuthorizeView>
+                            <Authorized>
+                                <div class="float-lg-left link-light">
+                                    <ul class="mb-0 profilo">
+                                        <li class="nomeUtente">@localizer["Ciao"]</li>
+                                        <li class="ruoloUtente">@localizer["RuoloDirezione"]</li>
+                                    </ul>
+                                </div>
+                            </Authorized>
+                        </AuthorizeView>
 
                         <div class="float-lg-left align-items-center">
                             <a class="d-block link-light text-decoration-none dropdown-toggle" id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">

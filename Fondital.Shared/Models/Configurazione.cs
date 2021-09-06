@@ -9,7 +9,6 @@ using System.Threading.Tasks;
 
 namespace Fondital.Shared.Models
 {
-    [Table("Configurazioni")]
     public class Configurazione
     {
         public int Id { get; set; }
