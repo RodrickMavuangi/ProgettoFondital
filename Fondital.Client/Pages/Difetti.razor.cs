@@ -1,5 +1,4 @@
-﻿using Fondital.Client.Clients;
-using Fondital.Shared.Models;
+﻿using Fondital.Shared.Models;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -7,7 +6,6 @@ using Microsoft.JSInterop;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net.Http;
 using System.Threading.Tasks;
 using Telerik.Blazor;
 

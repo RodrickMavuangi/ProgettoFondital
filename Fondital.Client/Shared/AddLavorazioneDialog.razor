@@ -1,0 +1,29 @@
+﻿@inject LavorazioneClient httpClient
+@inject IStringLocalizer<App> localizer
+
+<EditForm Model="NuovaLavorazione" OnValidSubmit="SalvaLavorazione">
+    <div class="form-field">
+        <label>@localizer["NomeItaliano"]</label>
+        <div>
+            <InputText @bind-Value="NuovaLavorazione.NomeItaliano"></InputText>
+            @if (NuovaLavorazione.NomeItaliano == "")
+                {
+                    <div>@localizer["CampoObbligatorio"]</div>
+                }
+        </div>
+    </div>
+    <div class="form-field">
+        <label>@localizer["NomeRusso"]</label>
+        <div>
+            <InputText @bind-Value="NuovaLavorazione.NomeRusso"></InputText>
+            @if (NuovaLavorazione.NomeRusso == "")
+            {
+                <div>@localizer["CampoObbligatorio"]</div>
+            }
+        </div>
+    </div>
+
+    <button class="btn btn-secondary mr-auto" @onclick="OnClose">@localizer["Cancella"]</button>
+    <button type="submit" class="btn btn-success ml-auto" disabled="@isSubmitting">@localizer["Salva"]</button>
+    <DataAnnotationsValidator />
+</EditForm>

@@ -120,6 +120,9 @@
   <data name="Accedi" xml:space="preserve">
     <value>Accedi RU</value>
   </data>
+  <data name="AggiungiLavorazione" xml:space="preserve">
+    <value>Aggiungi Lavorazione RU</value>
+  </data>
   <data name="Aggiungi" xml:space="preserve">
     <value>Aggiungi RU</value>
   </data>
@@ -165,6 +168,9 @@
   <data name="Configurazioni" xml:space="preserve">
     <value>Configurazioni RU</value>
   </data>
+  <data name="ConfermaModificaLavorazione" xml:space="preserve">
+    <value>Sicuri di voler modificare la lavorazione # RU</value>
+  </data>
   <data name="ConfigurazioniGenerali" xml:space="preserve">
     <value>Configurazioni Generali RU</value>
   </data>
@@ -204,6 +210,12 @@
   <data name="Impostazioni" xml:space="preserve">
     <value>Impostazioni RU</value>
   </data>
+  <data name="InformazioniUtente" xml:space="preserve">
+    <value>Informazioni Utente RU</value>
+  </data>
+  <data name="Lavorazioni" xml:space="preserve">
+    <value>Lavorazioni RU</value>
+  </data>
   <data name="Listino" xml:space="preserve">
     <value>Listino RU</value>
   </data>
@@ -216,11 +228,20 @@
   <data name="ModificheSuccesso" xml:space="preserve">
     <value>Modifiche effettuate con successo. RU</value>
   </data>
+  <data name="ModificaLavorazione" xml:space="preserve">
+    <value>Modifica Lavorazione # RU</value>
+  </data>
   <data name="NoLoginEffettuato" xml:space="preserve">
     <value>Non hai effettuato il login RU</value>
   </data>
   <data name="Nome" xml:space="preserve">
     <value>Nome RU</value>
+  </data>
+  <data name="Nuova" xml:space="preserve">
+    <value>Nuova RU</value>
+  </data>
+  <data name="Nuovo" xml:space="preserve">
+    <value>Nuovo RU</value>
   </data>
   <data name="NomeItaliano" xml:space="preserve">
     <value>Nome Italiano RU</value>
@@ -228,11 +249,11 @@
   <data name="NomeRusso" xml:space="preserve">
     <value>Nome Russo RU</value>
   </data>
-  <data name="Nuova" xml:space="preserve">
-    <value>Nuova RU</value>
+  <data name="NuovaLavorazione" xml:space="preserve">
+    <value>Nuova Lavorazione RU</value>
   </data>
-  <data name="Nuovo" xml:space="preserve">
-    <value>Nuovo RU</value>
+  <data name="NuovoDifetto" xml:space="preserve">
+    <value>Nuovo Difetto RU</value>
   </data>
   <data name="OttieniInformazioni" xml:space="preserve">
     <value>Ottieni Informazioni RU</value>

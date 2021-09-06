@@ -1,0 +1,16 @@
+﻿@inject IJSRuntime JSRuntime
+@inject IStringLocalizer<App> localizer
+
+<TelerikMenu Data="@MenuItems"
+             Class="nav nav-pills col-12 col-lg-auto  ml-40 mb-2 mb-md-0"
+             OnClick="@((MenuItem item) => OnClickHandler(item))">
+    <ItemTemplate Context="item">
+        <NavLink href="@item.Url"
+                 target="@(IsInternalPage(item.Url) ? "" : "_blank")"
+                 class="navLink"
+                 ActiveClass="active"
+                 Match="@(item.Url == "/" ? NavLinkMatch.All : NavLinkMatch.Prefix)">
+            @item.Text
+        </NavLink>
+    </ItemTemplate>
+</TelerikMenu>

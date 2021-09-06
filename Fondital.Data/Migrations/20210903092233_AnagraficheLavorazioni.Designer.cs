@@ -4,14 +4,16 @@ using Fondital.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
-namespace Fondital.Server.Migrations
+namespace Fondital.Data.Migrations
 {
     [DbContext(typeof(FonditalDbContext))]
-    partial class FonditalDBContextModelSnapshot : ModelSnapshot
+    [Migration("20210903092233_AnagraficheLavorazioni")]
+    partial class AnagraficheLavorazioni
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -69,6 +71,7 @@ namespace Fondital.Server.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Email")
+                        .IsRequired()
                         .HasMaxLength(256)
                         .HasColumnType("nvarchar(256)");
 
@@ -137,9 +140,6 @@ namespace Fondital.Server.Migrations
 
                     b.HasIndex("ServicePartnerId");
 
-                    b.HasIndex("UserName")
-                        .IsUnique();
-
                     b.ToTable("AspNetUsers");
                 });
 
@@ -178,52 +178,15 @@ namespace Fondital.Server.Migrations
 
                     b.Property<string>("NomeItaliano")
                         .IsRequired()
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("NomeRusso")
                         .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("NomeItaliano")
-                        .IsUnique();
-
-                    b.HasIndex("NomeRusso")
-                        .IsUnique();
-
-                    b.ToTable("Difetti");
-                });
-
-            modelBuilder.Entity("Fondital.Shared.Models.Listino", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:IdentityIncrement", 1)
-                        .HasAnnotation("SqlServer:IdentitySeed", 1)
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("Raggruppamento")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("ServicePartnerId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Valore")
-                        .HasColumnType("int");
-
-                    b.Property<int>("VoceCostoId")
-                        .HasColumnType("int");
-
                     b.HasKey("Id");
 
-                    b.HasIndex("ServicePartnerId");
-
-                    b.HasIndex("VoceCostoId");
-
-                    b.ToTable("Listini");
+                    b.ToTable("Difetti");
                 });
 
             modelBuilder.Entity("Fondital.Shared.Models.Lavorazione", b =>
@@ -262,31 +225,22 @@ namespace Fondital.Server.Migrations
 
                     b.Property<string>("CodiceCliente")
                         .IsRequired()
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("CodiceFornitore")
                         .IsRequired()
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("RagioneSociale")
                         .IsRequired()
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("CodiceCliente")
-                        .IsUnique();
-
-                    b.HasIndex("CodiceFornitore")
-                        .IsUnique();
-
-                    b.HasIndex("RagioneSociale")
-                        .IsUnique();
 
                     b.ToTable("ServicePartner");
                 });
 
-            modelBuilder.Entity("Fondital.Shared.Models.VoceCosto", b =>
+            modelBuilder.Entity("Fondital.Shared.Models.Trace", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -295,29 +249,26 @@ namespace Fondital.Server.Migrations
                         .HasAnnotation("SqlServer:IdentitySeed", 1)
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<bool>("IsAbilitato")
-                        .HasColumnType("bit");
+                    b.Property<string>("Descrizione")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("NomeItaliano")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<DateTime>("EventDateTime")
+                        .HasColumnType("datetime2");
 
-                    b.Property<string>("NomeRusso")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<int>("Rapportino_Id")
+                        .HasColumnType("int");
 
                     b.Property<int>("Tipologia")
                         .HasColumnType("int");
 
+                    b.Property<int?>("UtenteId")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
 
-                    b.HasIndex("NomeItaliano")
-                        .IsUnique();
+                    b.HasIndex("UtenteId");
 
-                    b.HasIndex("NomeRusso")
-                        .IsUnique();
-
-                    b.ToTable("VociCosto");
+                    b.ToTable("Trace");
                 });
 
             modelBuilder.Entity("IdentityServer4.EntityFramework.Entities.DeviceFlowCodes", b =>
@@ -539,23 +490,13 @@ namespace Fondital.Server.Migrations
                     b.Navigation("ServicePartner");
                 });
 
-            modelBuilder.Entity("Fondital.Shared.Models.Listino", b =>
+            modelBuilder.Entity("Fondital.Shared.Models.Trace", b =>
                 {
-                    b.HasOne("Fondital.Shared.Models.ServicePartner", "ServicePartner")
-                        .WithMany("Listini")
-                        .HasForeignKey("ServicePartnerId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                    b.HasOne("Fondital.Shared.Models.Auth.Utente", "Utente")
+                        .WithMany()
+                        .HasForeignKey("UtenteId");
 
-                    b.HasOne("Fondital.Shared.Models.VoceCosto", "VoceCosto")
-                        .WithMany("Listini")
-                        .HasForeignKey("VoceCostoId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("ServicePartner");
-
-                    b.Navigation("VoceCosto");
+                    b.Navigation("Utente");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<int>", b =>
@@ -611,14 +552,7 @@ namespace Fondital.Server.Migrations
 
             modelBuilder.Entity("Fondital.Shared.Models.ServicePartner", b =>
                 {
-                    b.Navigation("Listini");
-
                     b.Navigation("Utenti");
-                });
-
-            modelBuilder.Entity("Fondital.Shared.Models.VoceCosto", b =>
-                {
-                    b.Navigation("Listini");
                 });
 #pragma warning restore 612, 618
         }

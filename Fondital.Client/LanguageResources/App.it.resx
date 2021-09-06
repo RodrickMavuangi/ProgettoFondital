@@ -123,6 +123,9 @@
   <data name="Aggiungi" xml:space="preserve">
     <value>Aggiungi</value>
   </data>
+  <data name="AggiungiLavorazione" xml:space="preserve">
+    <value>Aggiungi Lavorazione</value>
+  </data>
   <data name="Anagrafiche" xml:space="preserve">
     <value>Anagrafiche</value>
   </data>
@@ -165,6 +168,9 @@
   <data name="Configurazioni" xml:space="preserve">
     <value>Configurazioni</value>
   </data>
+  <data name="ConfermaModificaLavorazione" xml:space="preserve">
+    <value>Sicuri di voler modificare la lavorazione #</value>
+  </data>
   <data name="ConfigurazioniGenerali" xml:space="preserve">
     <value>Configurazioni Generali</value>
   </data>
@@ -204,6 +210,12 @@
   <data name="Impostazioni" xml:space="preserve">
     <value>Impostazioni</value>
   </data>
+  <data name="InformazioniUtente" xml:space="preserve">
+    <value>Informazioni Utente</value>
+  </data>
+  <data name="Lavorazioni" xml:space="preserve">
+    <value>Lavorazioni</value>
+  </data>
   <data name="Listino" xml:space="preserve">
     <value>Listino</value>
   </data>
@@ -215,6 +227,9 @@
   </data>
   <data name="ModificheSuccesso" xml:space="preserve">
     <value>Modifiche effettuate con successo.</value>
+  </data>
+  <data name="ModificaLavorazione" xml:space="preserve">
+    <value>Modifica Lavorazione #</value>
   </data>
   <data name="NoLoginEffettuato" xml:space="preserve">
     <value>Non hai effettuato il login</value>
@@ -233,6 +248,18 @@
   </data>
   <data name="Nuovo" xml:space="preserve">
     <value>Nuovo</value>
+  </data>
+  <data name="NomeItaliano" xml:space="preserve">
+    <value>Nome Italiano</value>
+  </data>
+  <data name="NomeRusso" xml:space="preserve">
+    <value>Nome Russo</value>
+  </data>
+  <data name="NuovaLavorazione" xml:space="preserve">
+    <value>Nuova Lavorazione</value>
+  </data>
+  <data name="NuovoDifetto" xml:space="preserve">
+    <value>Nuovo Difetto</value>
   </data>
   <data name="OttieniInformazioni" xml:space="preserve">
     <value>Ottieni Informazioni</value>

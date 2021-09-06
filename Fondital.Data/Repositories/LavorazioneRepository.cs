@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 
 namespace Fondital.Data.Repositories
 {
-    public class DifettoRepository : Repository<Difetto>, IDifettoRepository
+    public class LavorazioneRepository : Repository<Lavorazione>, ILavorazioneRepository
     {
-        public DifettoRepository(FonditalDbContext context)
+        public LavorazioneRepository(FonditalDbContext context)
             : base(context)
         { }
 
@@ -18,12 +18,12 @@ namespace Fondital.Data.Repositories
             get { return Context as FonditalDbContext; }
         }
 
-        public async Task<IEnumerable<Difetto>> GetAllAsync(bool? isAbilitato)
+        public async Task<IEnumerable<Lavorazione>> GetAllAsync(bool? isAbilitato)
         {
             if (isAbilitato != null)
-                return await _db.Difetti.Where(x => x.IsAbilitato == isAbilitato).ToListAsync();
+                return await _db.Lavorazioni.Where(x => x.IsAbilitato == isAbilitato).ToListAsync();
             else
-                return await _db.Difetti.ToListAsync();
+                return await _db.Lavorazioni.ToListAsync();
         }
     }
 }

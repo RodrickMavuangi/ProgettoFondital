@@ -32,6 +32,8 @@ namespace Fondital.Client
             builder.Services.AddHttpClient<ListinoClient>(client => client.BaseAddress = new Uri(builder.Configuration["WebAPI:BaseUrl"]));
             builder.Services.AddHttpClient<MailClient>(client => client.BaseAddress = new Uri(builder.Configuration["WebAPI:BaseUrl"]));          
 
+            builder.Services.AddHttpClient<LavorazioneClient>(client => client.BaseAddress = new Uri(builder.Configuration["WebAPI:BaseUrl"]));
+            //builder.Services.AddScoped<RemoteAuthenticationState, FonditalAuthenticationState>();
             builder.Services.AddScoped<FonditalAuthenticationState>();
             builder.Services.AddOptions();
             builder.Services.AddAuthorizationCore();

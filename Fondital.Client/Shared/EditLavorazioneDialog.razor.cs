@@ -5,24 +5,24 @@ using System.Threading.Tasks;
 
 namespace Fondital.Client.Shared
 {
-    public partial class EditDifettoDialog
+    public partial class EditLavorazioneDialog
     {
         [Parameter] public EventCallback OnClose { get; set; }
         [Parameter] public EventCallback OnSave { get; set; }
-        [Parameter] public Difetto DifettoToUpdate { get; set; }
+        [Parameter] public Lavorazione LavorazioneToUpdate { get; set; }
         protected bool isSubmitting = false;
 
-        protected async Task SalvaDifetto()
+        protected async Task SalvaLavorazione()
         {
             isSubmitting = true;
 
             try
             {
-                await httpClient.UpdateDifetto(DifettoToUpdate.Id, DifettoToUpdate);
+                await httpClient.UpdateLavorazione(LavorazioneToUpdate.Id, LavorazioneToUpdate);
                 isSubmitting = false;
                 await OnSave.InvokeAsync();
             }
-            catch (Exception ex)
+            catch (Exception e)
             {
                 isSubmitting = false;
                 throw;

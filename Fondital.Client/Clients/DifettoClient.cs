@@ -1,9 +1,5 @@
-﻿using Fondital.Shared;
-using Fondital.Shared.Enums;
-using Fondital.Shared.Models;
-using System;
+﻿using Fondital.Shared.Models;
 using System.Collections.Generic;
-using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Json;
 using System.Threading.Tasks;
