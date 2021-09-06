@@ -1,8 +1,7 @@
 ﻿@page "/detailservicepartner"
 @inherits DetailServicePartnerBase
 @using Fondital.Shared.Models
-@inject IModalService modal
-
+@attribute [Authorize]
 
 @if (ServicePartnerModel_UpdateSP.Id == default)
 {

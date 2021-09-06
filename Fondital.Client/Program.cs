@@ -1,7 +1,5 @@
-using Blazored.Modal;
 using Fondital.Client.Clients;
 //using Fondital.Data;
-using Fondital.Services;
 using Fondital.Shared;
 using Fondital.Shared.Models.Auth;
 using Fondital.Shared.Services;
@@ -32,11 +30,8 @@ namespace Fondital.Client
             builder.Services.AddScoped<FonditalAuthenticationState>();
             builder.Services.AddOptions();
             builder.Services.AddAuthorizationCore();
-            builder.Services.AddBlazoredModal();
             //builder.Services.AddApiAuthorization<FonditalAuthenticationState>(options => options.AuthenticationPaths.LogOutSucceededPath = "");
 
-            //builder.Services.AddScoped<IServicePartnerService, ServicePartnerService>();
-            //builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
             builder.Services.AddOidcAuthentication<FonditalAuthenticationState, RemoteUserAccount>(options =>
             {
                 builder.Configuration.Bind("oidc", options.ProviderOptions);

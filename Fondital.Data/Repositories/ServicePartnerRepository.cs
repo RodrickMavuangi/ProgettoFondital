@@ -30,19 +30,8 @@ namespace Fondital.Data.Repositories
             List<ServicePartner> servicePartnersRet = new List<ServicePartner>();
 			try
 			{
-               List<ServicePartner> servicePartners =  await _db.ServicePartners.ToListAsync();
-               if(servicePartners != null)
-				{
-                    foreach (var item in servicePartners)
-			        {
-                        servicePartnersRet.Add(await GetWithUtenteAsync(item.Id));
-			        }
-				}
-				else
-				{
-
-				}
-			}
+               return await _db.ServicePartners.Include(m => m.Utenti).ToListAsync();
+    		}
             catch(Exception e) { }
 
             return servicePartnersRet;

@@ -187,14 +187,14 @@ namespace Fondital.Client.Pages
 			bool isConfirmed = await Dialogs.ConfirmAsync($"Vuoi mandare una mail all'utente {utente.Nome} {utente.Cognome} per il reset della password ? ");
 			if (isConfirmed)
 			{
-				//MailRequest mailRequest = new MailRequest()
-				//{
-				//	ToEmail = "mavelec@libero.it",
-				//	Subject = "Hello world",
-				//	Body = "<h1>Hello world<h1>"
-				//};
+				MailRequest mailRequest = new MailRequest()
+				{
+					ToEmail = "mavelec@libero.it",
+					Subject = "Hello world",
+					Body = "<h1>Hello world<h1>"
+				};
 
-				//await mailClient.sendMail(mailRequest);
+				await mailClient.sendMail(mailRequest);
 			}
 			
 		} 
