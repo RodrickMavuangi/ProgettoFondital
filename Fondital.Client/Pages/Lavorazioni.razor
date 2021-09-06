@@ -1,0 +1,59 @@
+﻿@page "/processings"
+@inject LavorazioneClient httpClient
+@inject FonditalAuthenticationState authState
+@inject IConfiguration config
+@inject IStringLocalizer<App> localizer
+
+<div style="display:flex">
+    <h1><b>@localizer["Anagrafiche"]</b> @localizer["Lavorazioni"]</h1>
+    <button class="d-block mr-0 ml-auto" @onclick="(() => ShowAddDialog = true)">@localizer["NuovaLavorazione"]</button>
+</div>
+
+@if (ListaLavorazioni == null)
+{
+    <p><em>@localizer["Caricamento"]</em></p>
+}
+else
+{
+    <TelerikGrid Data="@ListaLavorazioni" Pageable="true" PageSize="@PageSize">
+        <GridToolBar>
+            <span class="k-toolbar-space"></span>
+            <GridSearchBox />
+        </GridToolBar>
+        <GridColumns>
+            <GridColumn Field=@nameof(Lavorazione.Id) Title="#" />
+            <GridColumn Field=@nameof(Lavorazione.NomeItaliano) Title="@localizer["Descrizione"].Value.ToUpper()" Visible="@(authState.CurrentLang == Lingua.IT)" />
+            <GridColumn Field=@nameof(Lavorazione.NomeRusso) Title="@localizer["Descrizione"].Value.ToUpper()" Visible="@(authState.CurrentLang == Lingua.RU)" />
+            <GridCommandColumn Context="lav">
+                @{
+                    var lavorazione = lav as Lavorazione;
+                    <GridCommandButton Command="EditLavorazione" Icon="edit" OnClick="@(() => EditLavorazione(lavorazione.Id))" />
+                }
+            </GridCommandColumn>
+            <GridCommandColumn Context="lav">
+                @{ 
+                    var lavorazione = lav as Lavorazione;
+                    <TelerikSwitch OffLabel=" " OnLabel=" " OnChange="@(() => UpdateEnableLavorazione(lavorazione.Id))" @bind-Value="@lavorazione.IsAbilitato"></TelerikSwitch>
+                }
+            </GridCommandColumn>
+        </GridColumns>
+    </TelerikGrid>
+}
+
+<TelerikWindow Modal="true" @bind-Visible="ShowAddDialog">
+    <WindowTitle>
+        <strong>@localizer["AggiungiLavorazione"]</strong>
+    </WindowTitle>
+    <WindowContent>
+        <AddLavorazioneDialog OnClose="@(() => ShowAddDialog = false)" OnSave="CloseAndRefresh"></AddLavorazioneDialog>
+    </WindowContent>
+</TelerikWindow>
+
+<TelerikWindow Modal="true" @bind-Visible="ShowEditDialog">
+    <WindowTitle>
+        <strong>@localizer["ModificaLavorazione"] @LavorazioneSelected.Id</strong>
+    </WindowTitle>
+    <WindowContent>
+        <EditLavorazioneDialog LavorazioneToUpdate="LavorazioneSelected" OnClose="@(() => ShowEditDialog = false)" OnSave="CloseAndRefresh"></EditLavorazioneDialog>
+    </WindowContent>
+</TelerikWindow>

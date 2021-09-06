@@ -1,72 +1,9 @@
 ﻿@layout TelerikLayout
 @inherits LayoutComponentBase
 @inject NavigationManager NavigationManager
-@inject FonditalAuthenticationState authState
-@*
-    <div style="background-color:white!important; padding:0; height:100%">
-        <img src="/img/logo.svg" style="height: 70%; padding: 0 2rem; position: relative; top: 50%; transform: translate(0%,-50%)" />
-    </div>
-
-    <div style="margin-left:3rem">
-        <TelerikDropDownList Data="@Anags" @bind-Value="CurrentAnag" Width="auto"
-                             PopupHeight="auto" DefaultText="@((CurrentAnag==null)?"ANAGRAFICHE":null)" PopupWidth="auto" OnChange="Navigate">
-        </TelerikDropDownList>
-        <TelerikButton OnClick="Navigate">
-            GESTIONE RAPPORTI
-        </TelerikButton>
-        <TelerikButton OnClick="Navigate">
-            CONFIGURAZIONI GENERALI
-        </TelerikButton>
-    </div>
-
-    <div style="width:70px; margin-left:auto">
-        <TelerikDropDownList ValueField="@CurrentLanguage" Data="@Languages"
-                             @bind-Value="CurrentLanguage" Width="100%"
-                             PopupHeight="auto">
-        </TelerikDropDownList>
-    </div>
-
-    <div style="border-left: 2px solid white; height: 42px">
-        <span class="Ciao-Armando d-block">Ciao @(UserFirstName)</span>
-        <span class="direzione d-block">direzione</span>
-    </div>
-
-    <div hidden="@(!ViewUserMenu)" style="border:2px solid grey; top:64px; position:absolute; right:0px">
-        <ul class="p-0 my-2" style="list-style: none">
-            @foreach (var Item in UserMenuList)
-            {
-            <li> <a @onclick="ToggleUserMenu" style="margin:auto; cursor:pointer">@Item</a> </li>
-            }
-        </ul>
-    </div>
-
-    <div class="Oval ml-0" @onclick="ToggleUserMenu" style="cursor:pointer">
-        <p class="AG">@(UserFirstName.ToUpper().First())@(UserLastName.ToUpper().First())</p>
-    </div>
-*@
-
-@inject IJSRuntime JSRuntime
-@inject FonditalAuthenticationState authState
+@inject FonditalAuthenticationState AuthState
+@inject IJSRuntime JS
 @inject IStringLocalizer<App> localizer
-
-<style>
-    .bd-placeholder-img {
-        font-size: 1.125rem;
-        text-anchor: middle;
-        -webkit-user-select: none;
-        -moz-user-select: none;
-        user-select: none
-    }
-
-    @@media(min-width: 768px) {
-        .bd-placeholder-img-lg {
-            font-size: 3.5rem
-        }
-    }
-</style>
-
-<!-- Custom styles for this template -->
-<link href="css/bootstrap-child.css" rel="stylesheet">
 
 <header class="bgBlu mb-5 sticky-top">
     <div class="container-fluid">
@@ -74,37 +11,16 @@
             <div class="row align-items-center pr-4">
 
                 <div class="col-2  p-0 bgBianco">
-                    <div class="logo text-center"><img src="img/fondital-logo.svg" alt="logo" /></div>
+                    <div class="logo text-center"><img src="img/fondital-logo.svg" alt="logo"></div>
                 </div>
 
                 <div class="col-7 condensed-bold">
-                    <ul class="nav nav-pills col-12 col-lg-auto ml-40 mb-2 mb-md-0">
-                        <li class="nav-item dropdown">
-                            <TelerikDropDownList Class="nav-link dropdown-toggle dropdown-custom-toggle active" PopupClass="dropdown-item"
-                                                 Data="@Anags" @bind-Value="CurrentAnag" OnChange="@(() => Navigate(CurrentAnag.Replace("Anagrafiche ", "").ToLower()))" DefaultText="@((CurrentAnag==null)?localizer["Anagrafiche"]:null)">
-                            </TelerikDropDownList>
-                        </li>
-
-                        <li class="nav-item">
-                            <TelerikButton Class="nav-link" OnClick="@(() => Navigate(""))">
-                                @localizer["GestioneRapporti"]
-                            </TelerikButton>
-                        </li>
-
-                        <li class="nav-item">
-                            <TelerikButton Class="nav-link" OnClick="@(() => Navigate("configurazioni"))">
-                                @localizer["ConfigurazioniGenerali"]
-                            </TelerikButton>
-                        </li>
-                        <li class="nav-item px-3">
-                            <LoginDisplay />
-                        </li>
-                    </ul>
+                    <NavMenu></NavMenu>
                 </div>
 
                 <div class="col-1 text-right">
-                    <div class="lingua float-lg-left border-bottom">
-                        <CultureSelector />
+                    <div class="lingua float-lg-left">
+                        <CultureSelector></CultureSelector>
                     </div>
                 </div>
 
@@ -112,26 +28,18 @@
                     <div class="float-lg-right">
                         <div class="float-lg-left link-light">
                             <ul class="mb-0 profilo">
-                                <li class="nomeUtente">@localizer["Ciao"]</li>
+                                <li class="nomeUtente">@localizer["Ciao"] @AuthState.UtenteCorrente.Nome</li>
                                 <li class="ruoloUtente">@localizer["RuoloDirezione"]</li>
                             </ul>
                         </div>
-
                         <div class="float-lg-left align-items-center">
-                            <a class="d-block link-light text-decoration-none dropdown-toggle" id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
-                                <img src="https://github.com/mdo.png" alt="mdo" width="32" height="32" class="rounded-circle" />
-                            </a>
-
+                            <a class="d-block link-light text-decoration-none dropdown-toggle" id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false"><img src="https://github.com/mdo.png" alt="mdo" width="32" height="32" class="rounded-circle"></a>
                             <ul class="dropdown-menu text-small" aria-labelledby="dropdownUser1">
+                                <li><a class="dropdown-item" href="">@localizer["Impostazioni"]</a></li>
                                 <li>
-                                    <a class="dropdown-item" href="">@localizer["Impostazioni"]</a>
+                                    <hr class="dropdown-divider">
                                 </li>
-                                <li>
-                                    <hr class="dropdown-divider" />
-                                </li>
-                                <li>
-                                    <a class="dropdown-item" href="">@localizer["Esci"]</a>
-                                </li>
+                                <li><a class="dropdown-item" href="">@localizer["Esci"]</a></li>
                             </ul>
                         </div>
                     </div>
@@ -140,4 +48,3 @@
         </div>
     </div>
 </header>
-

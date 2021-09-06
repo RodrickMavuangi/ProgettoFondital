@@ -8,25 +8,25 @@ using Telerik.Blazor;
 
 namespace Fondital.Client.Pages
 {
-    public partial class Difetti
+    public partial class Lavorazioni
     {
         [CascadingParameter]
         public DialogFactory Dialogs { get; set; }
-        private List<Difetto> ListaDifetti;
+        private List<Lavorazione> ListaLavorazioni;
         private int PageSize { get; set; }
         protected bool ShowAddDialog { get; set; } = false;
         protected bool ShowEditDialog { get; set; } = false;
-        protected Difetto DifettoSelected { get; set; }
+        protected Lavorazione LavorazioneSelected { get; set; }
 
         protected override async Task OnInitializedAsync()
         {
             PageSize = Convert.ToInt32(config["PageSize"]);
-            await RefreshDifetti();
+            await RefreshLavorazioni();
         }
 
-        protected async Task RefreshDifetti()
+        protected async Task RefreshLavorazioni()
         {
-            ListaDifetti = (List<Difetto>)await httpClient.GetAllDifetti();
+            ListaLavorazioni = (List<Lavorazione>)await httpClient.GetAllLavorazioni();
             StateHasChanged();
         }
 
@@ -34,24 +34,24 @@ namespace Fondital.Client.Pages
         {
             ShowAddDialog = false;
             ShowEditDialog = false;
-            await RefreshDifetti();
+            await RefreshLavorazioni();
         }
 
-        protected void EditDifetto(int difettoId)
+        protected void EditLavorazione(int lavorazioneId)
         {
-            DifettoSelected = ListaDifetti.Single(x => x.Id == difettoId);
+            LavorazioneSelected = ListaLavorazioni.Single(x => x.Id == lavorazioneId);
             ShowEditDialog = true;
         }
 
-        protected async Task UpdateEnableDifetto(int Id)
+        protected async Task UpdateEnableLavorazione(int Id)
         {
-            bool isConfirmed = await Dialogs.ConfirmAsync($"Sicuri di voler modificare il difetto # {Id}?", "Modifica difetto");
+            bool isConfirmed = await Dialogs.ConfirmAsync($"{localizer["ConfermaModificaLavorazione"]} {Id}", localizer["ModificaLavorazione"]);
 
             if (isConfirmed)
             {
                 try
                 {
-                    await httpClient.UpdateDifetto(Id, ListaDifetti.Single(x => x.Id == Id));
+                    await httpClient.UpdateLavorazione(Id, ListaLavorazioni.Single(x => x.Id == Id));
                 }
                 catch (Exception e)
                 {
@@ -60,10 +60,7 @@ namespace Fondital.Client.Pages
             }
             else
             {
-                //fai revert: ^ restituisce lo XOR dei due valori
-                //true XOR true = false
-                //false XOR true = true
-                ListaDifetti.Single(x => x.Id == Id).IsAbilitato ^= true;
+                ListaLavorazioni.Single(x => x.Id == Id).IsAbilitato ^= true;
             }
         }
     }

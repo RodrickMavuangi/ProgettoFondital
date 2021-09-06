@@ -1,19 +1,14 @@
-﻿using Microsoft.EntityFrameworkCore;
-using System.Collections.Generic;
-using System;
-using Fondital.Shared;
-using Microsoft.Extensions.Configuration;
-using Microsoft.AspNetCore.Components;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+﻿using Fondital.Data.Configurations;
 using Fondital.Shared.Models;
 using Fondital.Shared.Models.Auth;
-using Fondital.Data.Configurations;
-using IdentityServer4.EntityFramework.Interfaces;
 using IdentityServer4.EntityFramework.Entities;
-using System.Threading.Tasks;
 using IdentityServer4.EntityFramework.Extensions;
+using IdentityServer4.EntityFramework.Interfaces;
 using IdentityServer4.EntityFramework.Options;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
+using System.Threading.Tasks;
 
 namespace Fondital.Data
 {
@@ -31,6 +26,7 @@ namespace Fondital.Data
         public DbSet<ServicePartner> ServicePartners { get; set; }
         public DbSet<Configurazione> Configurazioni { get; set; }
         public DbSet<Difetto> Difetti { get; set; }
+        public DbSet<Lavorazione> Lavorazioni { get; set; }
 
         public DbSet<PersistedGrant> PersistedGrants { get; set; }
         public DbSet<DeviceFlowCodes> DeviceFlowCodes { get; set; }
@@ -44,6 +40,7 @@ namespace Fondital.Data
             builder.ApplyConfiguration(new ServicePartnerConfiguration());
             builder.ApplyConfiguration(new ConfigurazioneConfiguration());
             builder.ApplyConfiguration(new DifettoConfiguration());
+            builder.ApplyConfiguration(new LavorazioneConfiguration());
 
             builder.ConfigurePersistedGrantContext(_operationalStoreOptions.Value);
         }

@@ -1,33 +1,37 @@
 ﻿using Fondital.Shared.Models;
 using Microsoft.AspNetCore.Components;
-using System;
 using System.Threading.Tasks;
 
 namespace Fondital.Client.Shared
 {
-    public partial class AddDifettoDialog
+    public partial class AddLavorazioneDialog
     {
         [Parameter] public EventCallback OnClose { get; set; }
         [Parameter] public EventCallback OnSave { get; set; }
-        protected Difetto NuovoDifetto { get; set; }
-        protected bool isSubmitting = false;
+        protected Lavorazione NuovaLavorazione { get; set; }
+        protected bool isSubmitting { get; set; }
 
         protected async override Task OnInitializedAsync()
         {
-            NuovoDifetto = new Difetto() { IsAbilitato = true };
+            NuovaLavorazione = new Lavorazione()
+            {
+                NomeItaliano = "",
+                NomeRusso = "",
+                IsAbilitato = true
+            };
         }
 
-        protected async Task SalvaDifetto()
+        protected async Task SalvaLavorazione()
         {
             isSubmitting = true;
 
             try
             {
-                await httpClient.CreateDifetto(NuovoDifetto);
+                await httpClient.CreateLavorazione(NuovaLavorazione);
                 isSubmitting = false;
                 await OnSave.InvokeAsync();
             }
-            catch (Exception ex)
+            catch
             {
                 isSubmitting = false;
                 throw;

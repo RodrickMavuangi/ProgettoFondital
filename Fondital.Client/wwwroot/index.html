@@ -7,6 +7,7 @@
     <title>Fondital.Client</title>
     <base href="/" />
     <link href="css/bootstrap/bootstrap.min.css" rel="stylesheet" />
+    <link href="css/bootstrap-child.css" rel="stylesheet" />
     <link href="css/app.css" rel="stylesheet" />
     <link href="Fondital.Client.styles.css" rel="stylesheet" />
     <script src="_content/Telerik.UI.for.Blazor.Trial/js/telerik-blazor.js" defer></script>
@@ -14,6 +15,8 @@
 </head>
 
 <body>
+
+    
     <div id="app">Loading...</div>
 
     <div id="blazor-error-ui">
@@ -23,13 +26,14 @@
     </div>
     <script src="_content/Microsoft.AspNetCore.Components.WebAssembly.Authentication/AuthenticationService.js"></script>
     <script src="_framework/blazor.webassembly.js"></script>
-    
+
     <script>
         window.blazorCulture = {
             get: () => window.localStorage['BlazorCulture'],
             set: (value) => window.localStorage['BlazorCulture'] = value
         };
     </script>
+    <script src="js/menu.js" defer></script>
 </body>
 
 </html>

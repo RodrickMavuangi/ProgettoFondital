@@ -120,6 +120,9 @@
   <data name="Accedi" xml:space="preserve">
     <value>Accedi</value>
   </data>
+  <data name="AggiungiLavorazione" xml:space="preserve">
+    <value>Aggiungi Lavorazione</value>
+  </data>
   <data name="Anagrafiche" xml:space="preserve">
     <value>Anagrafiche</value>
   </data>
@@ -141,11 +144,20 @@
   <data name="CambiaPassword" xml:space="preserve">
     <value>Cambia Password</value>
   </data>
+  <data name="Cancella" xml:space="preserve">
+    <value>Cancella</value>
+  </data>
+  <data name="Caricamento" xml:space="preserve">
+    <value>Caricamento in corso...</value>
+  </data>
   <data name="Ciao" xml:space="preserve">
     <value>Ciao</value>
   </data>
   <data name="Cognome" xml:space="preserve">
     <value>Cognome</value>
+  </data>
+  <data name="ConfermaModificaLavorazione" xml:space="preserve">
+    <value>Sicuri di voler modificare la lavorazione #</value>
   </data>
   <data name="ConfigurazioniGenerali" xml:space="preserve">
     <value>Configurazioni Generali</value>
@@ -162,14 +174,32 @@
   <data name="InformazioniUtente" xml:space="preserve">
     <value>Informazioni Utente</value>
   </data>
+  <data name="Lavorazioni" xml:space="preserve">
+    <value>Lavorazioni</value>
+  </data>
   <data name="Listino" xml:space="preserve">
     <value>Listino</value>
+  </data>
+  <data name="ModificaLavorazione" xml:space="preserve">
+    <value>Modifica Lavorazione #</value>
   </data>
   <data name="NoLoginEffettuato" xml:space="preserve">
     <value>Non hai effettuato il login</value>
   </data>
   <data name="Nome" xml:space="preserve">
     <value>Nome</value>
+  </data>
+  <data name="NomeItaliano" xml:space="preserve">
+    <value>Nome Italiano</value>
+  </data>
+  <data name="NomeRusso" xml:space="preserve">
+    <value>Nome Russo</value>
+  </data>
+  <data name="NuovaLavorazione" xml:space="preserve">
+    <value>Nuova Lavorazione</value>
+  </data>
+  <data name="NuovoDifetto" xml:space="preserve">
+    <value>Nuovo Difetto</value>
   </data>
   <data name="OttieniInformazioni" xml:space="preserve">
     <value>Ottieni Informazioni</value>
@@ -179,5 +209,8 @@
   </data>
   <data name="RuoloDirezione" xml:space="preserve">
     <value>Direzione</value>
+  </data>
+  <data name="Salva" xml:space="preserve">
+    <value>Salva</value>
   </data>
 </root>

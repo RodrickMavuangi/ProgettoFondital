@@ -1,7 +1,7 @@
-﻿using System.Threading.Tasks;
+﻿using Fondital.Data.Repositories;
 using Fondital.Shared;
 using Fondital.Shared.Repositories;
-using Fondital.Data.Repositories;
+using System.Threading.Tasks;
 
 namespace Fondital.Data
 {
@@ -13,6 +13,7 @@ namespace Fondital.Data
         private ServicePartnerRepository _servicePartnerRepository;
         private ConfigurazioneRepository _configurazioneRepository;
         private DifettoRepository _difettoRepository;
+        private LavorazioneRepository _lavorazioneRepository;
 
         public UnitOfWork(FonditalDbContext context)
         {
@@ -24,6 +25,7 @@ namespace Fondital.Data
         public IServicePartnerRepository ServicePartners => _servicePartnerRepository ??= new ServicePartnerRepository(_context);
         public IConfigurazioneRepository Configurazioni => _configurazioneRepository ??= new ConfigurazioneRepository(_context);
         public IDifettoRepository Difetti => _difettoRepository ??= new DifettoRepository(_context);
+        public ILavorazioneRepository Lavorazioni => _lavorazioneRepository ??= new LavorazioneRepository(_context);
 
         public void Update<T>(T oldItem, T newItem) where T : class
         {

@@ -3,8 +3,8 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Fondital.Shared.Models
 {
-    [Table("Difetti")]
-    public class Difetto
+    [Table("Lavorazioni")]
+    public class Lavorazione
     {
         public int Id { get; set; }
         [Required(ErrorMessage = "Il campo è obbligatorio.")]

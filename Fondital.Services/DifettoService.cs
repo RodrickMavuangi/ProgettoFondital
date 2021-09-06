@@ -1,9 +1,8 @@
-﻿using System.Collections.Generic;
-using System.Threading.Tasks;
-using Fondital.Shared;
+﻿using Fondital.Shared;
 using Fondital.Shared.Models;
-using Fondital.Shared.Models.Auth;
 using Fondital.Shared.Services;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Fondital.Services
 {

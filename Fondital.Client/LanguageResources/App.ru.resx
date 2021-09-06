@@ -120,6 +120,9 @@
   <data name="Accedi" xml:space="preserve">
     <value>Accedi RU</value>
   </data>
+  <data name="AggiungiLavorazione" xml:space="preserve">
+    <value>Aggiungi Lavorazione RU</value>
+  </data>
   <data name="Anagrafiche" xml:space="preserve">
     <value>Anagrafiche RU</value>
   </data>
@@ -141,11 +144,20 @@
   <data name="CambiaPassword" xml:space="preserve">
     <value>Cambia Password RU</value>
   </data>
+  <data name="Cancella" xml:space="preserve">
+    <value>Cancella RU</value>
+  </data>
+  <data name="Caricamento" xml:space="preserve">
+    <value>Caricamento in corso... RU</value>
+  </data>
   <data name="Ciao" xml:space="preserve">
     <value>Ciao RU</value>
   </data>
   <data name="Cognome" xml:space="preserve">
     <value>Cognome RU</value>
+  </data>
+  <data name="ConfermaModificaLavorazione" xml:space="preserve">
+    <value>Sicuri di voler modificare la lavorazione # RU</value>
   </data>
   <data name="ConfigurazioniGenerali" xml:space="preserve">
     <value>Configurazioni Generali RU</value>
@@ -162,14 +174,32 @@
   <data name="InformazioniUtente" xml:space="preserve">
     <value>Informazioni Utente RU</value>
   </data>
+  <data name="Lavorazioni" xml:space="preserve">
+    <value>Lavorazioni RU</value>
+  </data>
   <data name="Listino" xml:space="preserve">
     <value>Listino RU</value>
+  </data>
+  <data name="ModificaLavorazione" xml:space="preserve">
+    <value>Modifica Lavorazione # RU</value>
   </data>
   <data name="NoLoginEffettuato" xml:space="preserve">
     <value>Non hai effettuato il login RU</value>
   </data>
   <data name="Nome" xml:space="preserve">
     <value>Nome RU</value>
+  </data>
+  <data name="NomeItaliano" xml:space="preserve">
+    <value>Nome Italiano RU</value>
+  </data>
+  <data name="NomeRusso" xml:space="preserve">
+    <value>Nome Russo RU</value>
+  </data>
+  <data name="NuovaLavorazione" xml:space="preserve">
+    <value>Nuova Lavorazione RU</value>
+  </data>
+  <data name="NuovoDifetto" xml:space="preserve">
+    <value>Nuovo Difetto RU</value>
   </data>
   <data name="OttieniInformazioni" xml:space="preserve">
     <value>Ottieni Informazioni RU</value>
@@ -179,5 +209,8 @@
   </data>
   <data name="RuoloDirezione" xml:space="preserve">
     <value>Direzione RU</value>
+  </data>
+  <data name="Salva" xml:space="preserve">
+    <value>Salva RU</value>
   </data>
 </root>
