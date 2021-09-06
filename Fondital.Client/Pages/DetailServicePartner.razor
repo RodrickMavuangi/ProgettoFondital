@@ -1,0 +1,316 @@
+﻿@page "/detailservicepartner"
+@inherits DetailServicePartnerBase
+@using Fondital.Shared.Models
+@attribute [Authorize]
+
+@if (ServicePartnerModel_UpdateSP.Id == default)
+{
+    <p>Loading Service Partner data ....</p>
+}
+else
+{
+    <div class="under-Header">
+        <div class="u-h-left">
+            <div class="top">
+                <div class="TechSt"><strong>@ServicePartnerModel_UpdateSP.RagioneSociale</strong></div>
+                <div class="butt"><TelerikButton OnClick="@( _ => isModalVisible = true )">Modifica SP</TelerikButton></div>
+            </div>
+            <hr />
+            <div class="middle">
+                <div class="Forn"><span class="span">Codice Fornitore : </span><strong>@ServicePartnerModel_UpdateSP.CodiceFornitore</strong> </div>
+                <div class="CClient"><span class="span">Codice Cliente : </span><strong>@ServicePartnerModel_UpdateSP.CodiceCliente</strong></div>
+            </div>
+            <hr />
+            <div class="bottom"></div>
+        </div>
+
+        <div class="u-h-right">
+            <div class="btn-ad">
+                <div class="bloc-sin-a-Add">
+                    <span class="utent">Utenti</span>
+                    <span class="ut-Abil">Abilitati / @UtentiAbilitati</span>
+                    <span class="ut-Disab">Disabilitati / @UtentiDisabilitati</span>
+                </div>
+                <div>
+                    <TelerikButton Class="btn-add" OnClick=@(()=> WindowVisible = true)>Aggiungi Utente</TelerikButton>
+                </div>
+
+            </div>
+            <div class="Cerca">
+                <div>
+                    <input class="border-rod-first" @bind-value="SearchText" @bind-value:event="oninput" placeholder="Cerca Utenti ..." />
+                </div>
+                <div class="border-rod">
+                    <TelerikDropDownList Width="180px" Class="border-rod" PopupClass="dropdown-ite"
+                                         Data="@ListaScelta" ValueChanged="@( (string v) => MyValueChangeHandler(v) )"  DefaultText="@((SceltaCorrente==null)?"STATO DELL'UTENTE":null)">
+                    </TelerikDropDownList>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+@*Modal per la modofoca del service partner*@
+<TelerikWindow Class="modal-app" Width="400px" Height="300px" Centered="true" @bind-Visible="isModalVisible" Modal="true">
+    <WindowActions>
+        <WindowAction Name="Close" />
+    </WindowActions>
+    <WindowContent>
+        @if (ValidSubmit)
+        {
+            <div class="demo-alert demo-alert-success" role="alert">
+                The form was submitted successfully.
+            </div>
+        }
+        else
+        {
+            <TelerikForm Model="ServicePartnerModel_UpdateSP" OnSubmit="OnSubmit_updateService_HandlerAsync" EditContext="myEditContext_UpdateSP">
+                <FormValidation>
+                    <DataAnnotationsValidator></DataAnnotationsValidator>
+                </FormValidation>
+                <FormItems>
+                    <FormItem Field="@nameof(ServicePartner.CodiceCliente)"></FormItem>
+                    <FormItem Field="@nameof(ServicePartner.CodiceFornitore)"></FormItem>
+                    <FormItem Field="@nameof(ServicePartner.RagioneSociale)"></FormItem>
+                </FormItems>
+            </TelerikForm>
+        }
+    </WindowContent>
+</TelerikWindow>
+
+
+@*Modal per la modifica dell'utente*@
+<TelerikWindow Class="modal-app" Width="400px" Height="300px" Centered="true" @bind-Visible="myEditTemplate" Modal="true">
+    <WindowActions>
+        <WindowAction Name="Close" />
+    </WindowActions>
+    <WindowContent>
+        @if (ValidSubmit)
+        {
+            <div class="demo-alert demo-alert-success" role="alert">
+                The form was submitted successfully.
+            </div>
+        }
+        else
+        {
+            <TelerikForm Model="@UtenteModel_EditUtente" OnSubmit="@EditUtente_UpdateHandler" EditContext="myEditContext_UpdateUtente">
+                <FormValidation>
+                    <DataAnnotationsValidator></DataAnnotationsValidator>
+                </FormValidation>
+                <FormItems>
+                    <FormItem Field="@nameof(Utente.Email)" Enabled="false"></FormItem>
+                    <FormItem Field="@nameof(Utente.Nome)"></FormItem>
+                    <FormItem Field="@nameof(Utente.Cognome)"></FormItem>
+                </FormItems>
+            </TelerikForm>
+        }
+    </WindowContent>
+</TelerikWindow>
+
+
+@*Modal per l'aggiunta dell'utente*@
+<TelerikWindow Class="modal-app" Width="400px" Height="300px" Centered="true" @bind-Visible=@WindowVisible Modal="true">
+
+    <WindowActions>
+        <WindowAction Name="Close" />
+    </WindowActions>
+    <WindowContent>
+        <div class="demo-section">
+            @if (ValidSubmit)
+            {
+                <div class="demo-alert demo-alert-success" role="alert">
+                    The form was submitted successfully.
+                </div>
+            }
+            else
+            {
+                <TelerikForm Model="@ServicePartnerModel_AddUtente" OnSubmit="OnSubmitHandlerAsync" EditContext="myEditContext_AddUTente">
+                    <FormValidation>
+                        <DataAnnotationsValidator></DataAnnotationsValidator>
+                    </FormValidation>
+                    <FormItems>
+                        <FormItem Field="@nameof(Utente.UserName)"></FormItem>
+                        <FormItem Field="@nameof(Utente.Nome)"></FormItem>
+                        <FormItem Field="@nameof(Utente.Cognome)"></FormItem>
+                    </FormItems>
+                    @*<FormButtons>
+                            <TelerikButton  ButtonType="@ButtonType.Submit" Primary="true">SALVA</TelerikButton>
+                        </FormButtons>*@
+                </TelerikForm>
+
+            }
+        </div>
+    </WindowContent>
+
+
+</TelerikWindow>
+@*@if (!FilteredUtenti.Any())
+    {
+        <p>Loading some images...</p>
+    }
+    else
+    {*@
+    @*Griglia per la visualizzazione degli utenti*@
+    <TelerikGrid Data="@((ConStato.Abilitati == true)? FilterdUtenti_Abilitati :(ConStato.Disabilitati == true)?FilterdUtenti_Disabilitati: FilteredUtenti)" 
+                 EditMode="@GridEditMode.Popup" 
+                 Pageable="true" 
+                 Height="500px" 
+                 Resizable="true" 
+                 Sortable="true">
+        <GridColumns>
+            <GridColumn Field=@nameof(Utente.UserName) Title="UTENTI" />
+            <GridColumn Field=@nameof(Utente.Nome) Title="NOME" />
+            <GridColumn Field=@nameof(Utente.Cognome) Title="COGNOME" />
+            <GridCommandColumn Width="75px">
+                <GridCommandButton Class="bt-cmd" Command="MyOwnCommand" Icon="" ShowInEdit="false" ImageUrl="/img/Icons/setting.svg" OnClick="@EditHandler"></GridCommandButton>
+            </GridCommandColumn>
+            <GridCommandColumn Width="75px">
+                <GridCommandButton Class="bt-cmd" Command="MyOwnCommand" Icon="" ShowInEdit="false" ImageUrl="/img/keyLogo.jpg" OnClick="@SendMail"></GridCommandButton>
+            </GridCommandColumn>
+            <GridCommandColumn Width="75px" Context="dif">
+                @{ var utente = dif as Utente;
+                    <TelerikSwitch OffLabel=" " OnLabel=" " OnChange="@(() => UpdateEnableUtente(utente.Id))" @bind-Value="@utente.IsAbilitato"></TelerikSwitch> }
+            </GridCommandColumn>
+        </GridColumns>
+    </TelerikGrid>
+
+    @*}*@
+
+    <style>
+        .large-button {
+            border: none;
+        }
+
+        .under-Header {
+            height: 145px
+        }
+
+        .u-h-left {
+            position: absolute;
+            left: 24px;
+            width: 630px;
+        }
+
+        .u-h-right {
+            position: absolute;
+            right: 24px;
+            width: 840px;
+            height: 130px;
+            display: flex;
+        }
+
+        .top {
+            display: flex;
+            flex-direction: row;
+        }
+
+        .butt {
+            margin-left: 425px;
+        }
+
+        .border-rod {
+            width : 30px;
+            position: absolute;
+            right: 0px
+        }
+        .border-rod-first{
+            margin-right: 190px;
+        }
+        .dropdown-ite{
+            height:130px;
+        }
+        .Cerca {
+            display: flex;
+            flex-direction: row;
+            height: 60px;
+            /*width: 60px;*/
+            position: absolute;
+            right: 8px;
+            bottom: 0px
+        }
+
+        .btn-add {
+            color: aliceblue;
+            background-color: forestgreen;
+            width: 180px;
+            position: absolute;
+            right: 8px;
+            top: 0px;
+        }
+
+        div.k-widget.k-window.modal-app {
+            width: 250px;
+            height: 600px;
+            border: 1px solid white
+        }
+
+        .modal-app .k-dialog-titlebar.k-header.k-window-titlebar {
+            background: white;
+            height: 10px;
+            border: none;
+            color: black
+        }
+
+        .modal-app .k-window-content.k-content.k-dialog-content {
+        }
+
+        .modal-app .k-button.telerik-blazor.k-primary.k-form-submit {
+            border: 2px solid dodgerblue;
+            color: aliceblue;
+            background-color: dodgerblue;
+            width: 700px;
+        }
+
+        .CClient {
+            margin-left: 350px;
+        }
+
+        .Forn {
+            float: left;
+        }
+
+        .span {
+            font-size: 10px;
+            padding-bottom: 20px;
+        }
+
+        .bloc-sin-a-Add {
+            border-left: 1px solid #DCDCDC;
+            display: flex;
+            flex-direction: row;
+        }
+
+        .ut-Abil {
+            width: 100px;
+            height: 15px;
+            color: forestgreen;
+            margin-left: 15px
+        }
+
+        .ut-Disab {
+            width: 100px;
+            height: 15px;
+            color: red;
+            margin-left: 30px
+        }
+
+        .utent {
+            margin-left: 8px;
+            font-size: 10px;
+            padding-top: 3.5px;
+        }
+
+        .TechSt {
+            height: 30px
+        }
+        .k-dialog-titlebar.k-header{
+            background:white
+        }
+        GridCommandColumn {
+            color: aliceblue;
+            background-color: dodgerblue;
+            width : 75px
+        }
+    </style>
+
+
+

@@ -3,6 +3,7 @@ using Fondital.Server.Extensions;
 using Fondital.Services;
 using Fondital.Shared;
 using Fondital.Shared.Models.Auth;
+using Fondital.Shared.Models.Settings;
 using Fondital.Shared.Services;
 using IdentityServer4.Stores;
 using Microsoft.AspNetCore.Builder;
@@ -42,6 +43,8 @@ namespace Fondital.Server
                 }).AddRoles<Ruolo>().AddEntityFrameworkStores<FonditalDbContext>();
 
             services.Configure<JwtSettings>(Configuration.GetSection("Jwt"));
+
+            services.Configure<MailSettings>(Configuration.GetSection("MailSettings"));
 
             services.AddIdentityServer()
             .AddConfigurationStore(options =>
@@ -90,6 +93,8 @@ namespace Fondital.Server
             services.AddTransient<IDifettoService, DifettoService>();
             services.AddTransient<IVoceCostoService, VoceCostoService>();
             services.AddTransient<IListinoService, ListinoService>();
+
+            services.AddTransient<IMailService, MailService>();
 
             services.AddSwaggerGen(c =>
             {

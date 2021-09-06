@@ -7,6 +7,7 @@ namespace Fondital.Shared.Services
     public interface IServicePartnerService
     {
         Task<IEnumerable<ServicePartner>> GetAllServicePartners();
+        Task<ServicePartner> GetServicePartnerWithUtentiAsync(int ServicePartnerID);
         Task<ServicePartner> GetServicePartnerById(int id);
         Task<ServicePartner> CreateServicePartner(ServicePartner sp);
         Task UpdateServicePartner(ServicePartner spToBeUpdated, ServicePartner sp);

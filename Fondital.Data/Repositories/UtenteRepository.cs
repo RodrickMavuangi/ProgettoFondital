@@ -2,10 +2,10 @@
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Fondital.Shared.Models;
-using Fondital.Shared.Models.Auth;
 using Fondital.Shared.Repositories;
 using Fondital.Data;
 using System.Linq;
+using Fondital.Shared.Models.Auth;
 
 namespace Fondital.Data.Repositories
 {
@@ -25,5 +25,6 @@ namespace Fondital.Data.Repositories
         {
             return await _db.Utenti.SingleOrDefaultAsync(u => u.UserName == username);
         }
+
     }
 }

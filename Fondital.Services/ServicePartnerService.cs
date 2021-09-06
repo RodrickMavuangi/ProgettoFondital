@@ -31,11 +31,18 @@ namespace Fondital.Services
             await _unitOfWork.CommitAsync();
         }
 
+        public async Task<ServicePartner> GetServicePartnerWithUtentiAsync(int ServicePartnerID)
+		{
+            return await _unitOfWork.ServicePartners.GetWithUtenteAsync(ServicePartnerID);
+		}
+
         public async Task<IEnumerable<ServicePartner>> GetAllServicePartners()
         {
-            return await _unitOfWork.ServicePartners.GetAllAsync();
+           // return await _unitOfWork.ServicePartners.GetAllAsync();
+            return await _unitOfWork.ServicePartners.GetAllServicePartner();
         }
 
+        
         public async Task<ServicePartner> GetServicePartnerById(int id)
         {
             return await _unitOfWork.ServicePartners.GetByIdAsync(id);
@@ -45,7 +52,22 @@ namespace Fondital.Services
         {
             _unitOfWork.Update(spToUpdate, sp);
 
+            if(spToUpdate.Utenti != null && sp.Utenti != null)
+			{
+                foreach (var item in sp.Utenti)
+				{
+                    spToUpdate.Utenti.Add(item);
+				}
+			}
+            if(spToUpdate.Utenti == null && sp.Utenti != null)
+			{
+                spToUpdate.Utenti = new List<Utente>();
+                foreach (var item in sp.Utenti)
+                {
+                    spToUpdate.Utenti.Add(item);
+                }
+            }
             await _unitOfWork.CommitAsync();
-        }
+        }                                       
     }
 }
