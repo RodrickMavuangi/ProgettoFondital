@@ -22,6 +22,36 @@
     </div>
 </div>
 
+@*Modale per l'Edervice partner*@
+<TelerikWindow Class="modal-app" Width="400px" Height="300px" Centered="true" @bind-Visible="myEditTemplate" Modal="true">
+    <WindowActions>
+        <WindowAction Name="Close" />
+    </WindowActions>
+    <WindowContent>
+        @if (ValidSubmit)
+        {
+            <div class="demo-alert demo-alert-success" role="alert">
+                The form was submitted successfully.
+            </div>
+        }
+        else
+        {
+            <TelerikForm Model="@ServicePartnerModel_UpdateSP" OnSubmit="@EditSP_UpdateHandler" EditContext="myEditContext_UpdateSP">
+                <FormValidation>
+                    <DataAnnotationsValidator></DataAnnotationsValidator>
+                </FormValidation>
+                <FormItems>
+                    <FormItem Field="@nameof(ServicePartner.RagioneSociale)" ></FormItem>
+                    <FormItem Field="@nameof(ServicePartner.CodiceFornitore)"></FormItem>
+                    <FormItem Field="@nameof(ServicePartner.CodiceCliente)"></FormItem>
+                </FormItems>
+            </TelerikForm>
+        }
+    </WindowContent>
+</TelerikWindow>
+
+
+@*Modale per l'aggiunta dell'anagrafica*@
 <TelerikWindow Class="modal-app" Width="500px" Height="300px" Centered="true" @bind-Visible=@WindowVisible Modal="true">
 
     <WindowActions>
@@ -69,12 +99,14 @@
                 @((context as ServicePartner).Utenti.Count())
             </Template>
         </GridColumn>
-            
-        <GridCommandColumn Width="100px">
+        <GridCommandColumn Width="75px">
+            <GridCommandButton Class="bt-cmd" Command="MyOwnCommand" Icon="" ShowInEdit="false" ImageUrl="/img/Icons/setting.svg" OnClick="@EditHandler"></GridCommandButton>
+        </GridCommandColumn>    
+        @*<GridCommandColumn Width="100px">
             <GridCommandButton Command="Save" Icon="save" ShowInEdit="true">Update</GridCommandButton>
             <GridCommandButton Class="editColor" Command="Edit" Icon="edit" ImageUrl="/img/Icons/setting.svg"></GridCommandButton>
             <GridCommandButton Command="Cancel" Icon="cancel" ShowInEdit="true">Cancel</GridCommandButton>
-        </GridCommandColumn>
+        </GridCommandColumn>*@
     </GridColumns>
 </TelerikGrid>
 

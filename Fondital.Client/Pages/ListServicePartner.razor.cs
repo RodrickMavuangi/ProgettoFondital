@@ -23,24 +23,53 @@ namespace Fondital.Client.Pages
 		public bool WindowVisible { get; set; }
 		public bool ValidSubmit { get; set; } = false;
 		public EditContext myEditContext { get; set; }
+		public EditContext myEditContext_UpdateSP { get; set; }
+		public ServicePartner ServicePartnerModel_UpdateSP { get; set; } = new ServicePartner() { CodiceCliente = "", CodiceFornitore = "", RagioneSociale = "" };
 
 		public List<string> SearchableFields = new List<string> { "RagioneSociale" };
 		[Inject] public ServicePartnerClient servicePartnerClient { get; set; }
 
 		public string SearchText = "";
+		public bool myEditTemplate { get; set; } = false;
+		ServicePartner DatiSP = new ServicePartner();
 		protected override async Task OnInitializedAsync()
 		{
 			myEditContext = new EditContext(ServicePartnerModel);
 			ServicePartners = (List<ServicePartner>)await servicePartnerClient.GetAllServicePartners();
+
+			myEditContext_UpdateSP = new EditContext(ServicePartnerModel_UpdateSP);
 		}
 		public List<ServicePartner> ServicePartners_filtered => ServicePartners.Where<ServicePartner>(x => x.RagioneSociale.Contains(SearchText)).ToList();
 
+		
 
 		public async Task EditHandler(GridCommandEventArgs args)
 		{
-			ServicePartner item = (ServicePartner)args.Item;
-			//TODO Logic ....
+			myEditTemplate = true;
+			DatiSP = (ServicePartner)args.Item;
+			ServicePartnerModel_UpdateSP = await servicePartnerClient.GetServicePartnerWithUtenti(DatiSP.Id);
+			ServicePartnerModel_UpdateSP.RagioneSociale = DatiSP.RagioneSociale;
+			ServicePartnerModel_UpdateSP.CodiceCliente = DatiSP.CodiceCliente;
+			ServicePartnerModel_UpdateSP.CodiceFornitore = DatiSP.CodiceFornitore;
 		}
+
+		public async Task EditSP_UpdateHandler(EditContext editContext)
+		{
+			bool isFormValid = editContext.Validate();
+			if (isFormValid)
+			{
+				ServicePartner ServicePartnerToSave = (ServicePartner)editContext.Model;
+
+				await servicePartnerClient.UpdateServicePartner(DatiSP.Id, ServicePartnerToSave);
+				await Refresh();
+				DatiSP = new ServicePartner();
+			}
+			else
+			{
+
+			}	
+		}
+
 
 		public async Task UpdateHandler(GridCommandEventArgs args)
 		{
