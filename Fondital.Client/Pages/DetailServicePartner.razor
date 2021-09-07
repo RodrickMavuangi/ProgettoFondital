@@ -131,7 +131,7 @@ else
             }
             else
             {
-                <TelerikForm Model="@ServicePartnerModel_AddUtente" OnSubmit="OnSubmitHandlerAsync" EditContext="myEditContext_AddUTente">
+                <TelerikForm Model="@ServicePartnerModel_AddUtente" OnSubmit="OnSubmitHandlerAsync" EditContext="myEditContext_AddUTente" ValidationMessageType="@FormValidationMessageType.Inline">
                     <FormValidation>
                         <DataAnnotationsValidator></DataAnnotationsValidator>
                     </FormValidation>
