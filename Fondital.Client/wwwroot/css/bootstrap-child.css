@@ -168,10 +168,13 @@ a {
     a:hover {
         text-decoration: underline !important;
     }
-
-
+.linksottolieato a {
+    text-decoration: underline !important;
+}
+    .linksottolieato a:hover {
+        text-decoration: none !important;
+    }
 /*************** SPAZI & ALLINEAMENTI ******************/
-
 .float-lg-left {
     float: left !important;
 }
@@ -213,6 +216,13 @@ a {
     margin-bottom: 2.5rem;
 }
 
+.mb-32 {
+    margin-bottom: 32px !important;
+}
+.mb-56 {
+    margin-bottom: 56px !important;
+}
+
 .mb-64, .my-64 {
     margin-bottom: 4rem !important;
 }
@@ -231,6 +241,9 @@ a {
     top: 2px;
 }
 
+
+
+
 /*************** BORDI ******************/
 
 .border-bottom {
@@ -246,8 +259,15 @@ a {
 }
 
 
-/*************** SELECT LINGUA ******************/
 
+
+
+.notifica {
+}
+    .notifica .alert {
+        padding: 14px 16px 15px 16px;
+    }
+/*************** SELECT LINGUA ******************/
 .lingua {
     width: 100%;
     text-align: right;
