@@ -10,13 +10,52 @@
     <title>@ViewData["Title"] - Fondital.Server</title>
     <link rel="stylesheet" href="~/Identity/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/Identity/css/site.css" />
+
+    <link href="../../css/bootstrap-child.css" rel="stylesheet">
+
 </head>
 <body>
-    <!--<header>
+
+
+
+    <header class="bgBlu mb-5 sticky-top">
+        <div class="container-fluid">
+            <div class="flex-wrap">
+                <div class="row align-items-center pr-4">
+                    <!--!--><div class="col-2  p-0 bgBianco"><div class="logo text-center"><img src="../../img/fondital-logo.svg" alt="logo"></div></div>
+
+                    <div class="col-7 condensed-bold">
+                        
+                    </div><!--!-->
+
+                    <div class="col-1 text-right">
+                        <div class="lingua float-lg-left border-right-2">
+                            <!--!--><!--!--><!--!--><!--!-->
+
+                            <span aria-disabled="false" aria-haspopup="listbox" aria-activedescendant="9bf0c0df-a218-4e6d-8f84-728a21018a0b" role="listbox" aria-describedby="c6e3eb70-c096-47dd-b105-42c97712fdc9 " class="k-widget k-dropdown k-header telerik-blazor" data-id="9644b43d-db68-4878-b732-5136b2ed5de4" style=" width: 100%;" tabindex="0" aria-expanded="false">
+                                <span class="k-dropdown-wrap k-state-default "><span class="k-input" id="c6e3eb70-c096-47dd-b105-42c97712fdc9">IT</span><span class="k-select"><span class="k-icon k-i-arrow-60-down"></span></span></span><!--!-->
+
+                                <select tabindex="-1" data-focusable="false" style="opacity: 0; width: 0px; border: 0px; z-index: -1; position: absolute;"></select>
+                            </span><!--!-->
+                            <!--!--><!--!-->
+                        </div>
+                    </div><!--!-->
+
+                    <div class="col-2">
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+
+
+    @*<header>
         <nav class="navbar navbar-expand-sm navbar-light navbar-toggleable-sm bg-white border-bottom box-shadow mb-3">
-            <div class="container">-->
-                @*<a class="navbar-brand" href="~/">Fondital.Server</a>*@
-                <!--<button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+            <div class="container">
+                <a class="navbar-brand" href="~/">Fondital.Server</a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
@@ -37,18 +76,19 @@
                 </div>
             </div>
         </nav>
-    </header>-->
-
+    </header>*@
+<div class="container-fluid">
     <div class="container">
-        <main role="main" class="pb-3">
+        <main role="main">
             @RenderBody()
         </main>
     </div>
-    <!--<footer class="footer border-top text-muted">
+</div>
+    <footer class="footer border-top text-muted">
         <div class="container">
-            &copy;--> <!--@*2021 - Fondital.Server - <a asp-area="" asp-page="Privacy">Privacy</a>*@
+            &copy; 2021 - Fondital.Server - <a asp-area="" asp-page="Privacy">Privacy</a>
         </div>
-    </footer>-->
+    </footer>
     <script src="~/Identity/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/Identity/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/Identity/js/site.js" asp-append-version="true"></script>
