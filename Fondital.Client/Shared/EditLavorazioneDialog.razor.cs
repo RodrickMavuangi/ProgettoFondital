@@ -22,7 +22,7 @@ namespace Fondital.Client.Shared
                 isSubmitting = false;
                 await OnSave.InvokeAsync();
             }
-            catch (Exception e)
+            catch (Exception ex)
             {
                 isSubmitting = false;
                 throw;
