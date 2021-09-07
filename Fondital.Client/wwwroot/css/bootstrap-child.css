@@ -187,7 +187,9 @@ a {
 .text-right {
     text-align: right;
 }
-
+.pt-48 {
+    padding-top: 48px !important;
+}
 .pr-4 {
     padding-right: 1.5rem !important;
 }
@@ -196,12 +198,23 @@ a {
     padding-right: 2.5rem !important;
 }
 
+.mt-36 {
+    margin-top: 36px;
+}
+.mt-48 {
+    margin-top: 48px;
+}
+
 .mt-160 {
     margin-top: 10rem;
 }
 
 .mb-025 {
     margin-bottom: 2.5rem;
+}
+
+.mb-64, .my-64 {
+    margin-bottom: 4rem !important;
 }
 
 .ml-40 {
@@ -288,7 +301,7 @@ a {
 
 .form-control, .form-select, .input-group {
     width: auto !important;
-    padding: .7rem 1rem !important;
+/*    padding: .7rem 1rem !important;*/
     border-radius: .125rem !important;
     font-size: 14px;
     line-height: 2 !important;
@@ -305,8 +318,12 @@ a {
         font-size: 14px;
         line-height: 2 !important;
         color: #5F5F5F !important;
+        height:48px;
     }
-
+.form-label {
+/*    margin-bottom: .7rem !important;*/
+    color: #5F5F5F;
+}
 
 ::-webkit-input-placeholder { /* Chrome/Opera/Safari */
     color: #5F5F5F !important;
@@ -344,9 +361,7 @@ a {
     background-image: url('../img/Icons/solid/grigio/calendar-date.svg');
 }
 
-.form-label {
-    color: #5F5F5F;
-}
+
 
 .w100 {
     width: 100% !important;
@@ -386,6 +401,7 @@ a {
     transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,-webkit-box-shadow .15s ease-in-out;
     transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;
     transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out,-webkit-box-shadow .15s ease-in-out;
+    height:48px!important;
 }
 
 .form-check-mod {
@@ -773,16 +789,19 @@ a:not([href]):not([tabindex]) {
     .btn-primary:hover {
         background-color: #0b5ed7 !important;
         border-color: #0a58ca !important;
+        color: #fff !important;
     }
 
 .btn-verde {
     background-color: #4C8B32 !important;
     border-color: #4C8B32 !important;
+
 }
 
     .btn-verde:hover {
         background-color: #395D2A !important;
         border-color: #395D2A !important;
+        color: #fff !important;
     }
 
 .btn-link.nav-link:focus {
