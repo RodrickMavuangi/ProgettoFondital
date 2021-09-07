@@ -228,9 +228,6 @@
   <data name="ModificheSuccesso" xml:space="preserve">
     <value>Modifiche effettuate con successo.</value>
   </data>
-  <data name="ModificaLavorazione" xml:space="preserve">
-    <value>Modifica Lavorazione #</value>
-  </data>
   <data name="NoLoginEffettuato" xml:space="preserve">
     <value>Non hai effettuato il login</value>
   </data>
@@ -248,12 +245,6 @@
   </data>
   <data name="Nuovo" xml:space="preserve">
     <value>Nuovo</value>
-  </data>
-  <data name="NomeItaliano" xml:space="preserve">
-    <value>Nome Italiano</value>
-  </data>
-  <data name="NomeRusso" xml:space="preserve">
-    <value>Nome Russo</value>
   </data>
   <data name="NuovaLavorazione" xml:space="preserve">
     <value>Nuova Lavorazione</value>
@@ -290,5 +281,8 @@
   </data>
   <data name="VociCosto" xml:space="preserve">
     <value>Voci di Costo</value>
+  </data>
+  <data name="Lavorazione" xml:space="preserve">
+    <value>Lavorazione</value>
   </data>
 </root>
