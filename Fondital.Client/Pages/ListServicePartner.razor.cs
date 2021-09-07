@@ -27,10 +27,12 @@ namespace Fondital.Client.Pages
 
 		public List<string> SearchableFields = new List<string> { "RagioneSociale" };
 		[Inject] public ServicePartnerClient servicePartnerClient { get; set; }
+		[Parameter] public EventCallback OnClose { get; set; }
 
 		public string SearchText = "";
 		public bool myEditTemplate { get; set; } = false;
 		ServicePartner DatiSP = new ServicePartner();
+		public ServicePartner ServicePartnerToSave { get; set; } = new ServicePartner(); 
 		protected override async Task OnInitializedAsync()
 		{
 			myEditContext = new EditContext(ServicePartnerModel);
@@ -75,31 +77,7 @@ namespace Fondital.Client.Pages
 			ServicePartner item = (ServicePartner)args.Item;
 			await servicePartnerClient.UpdateServicePartner(item.Id,item);
 			await Refresh();
-			
-			// TODO Logic.....
-
 		}
-
-		public async Task DeleteHandler(GridCommandEventArgs args)
-		{
-			ServicePartner item = (ServicePartner)args.Item;
-
-		}
-
-		public async Task CreateHandler(GridCommandEventArgs args)
-		{
-			ServicePartner item = (ServicePartner)args.Item;
-
-		}
-
-		public async Task CancelHandler(GridCommandEventArgs args)
-		{
-			ServicePartner item = (ServicePartner)args.Item;
-
-			// if necessary, perform actual data source operation here through your service
-
-		}
-
 		async Task Refresh() 
 		{
 			WindowVisible = false;
@@ -112,14 +90,22 @@ namespace Fondital.Client.Pages
 
 			if (isFormValid)
 			{
-				ServicePartner ServicePartnerToSave = (ServicePartner)editContext.Model;
+				ServicePartnerToSave = (ServicePartner)editContext.Model;
 				await servicePartnerClient.CreateServicePartner(ServicePartnerToSave);
+				ServicePartnerModel = new ServicePartner();
+				ServicePartnerToSave = new ServicePartner();
 				await Refresh();
 			}
 			else
 			{
 				//apply some custom logic when the form is not valid
 			}
+		}
+
+		public void Navigate(GridRowClickEventArgs args)
+		{
+			ServicePartner utente = (ServicePartner)args.Item;
+			//NavigationManager.NavigateTo("/detailservicepartner");
 		}
 	}
 }

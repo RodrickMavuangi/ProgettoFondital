@@ -2,6 +2,7 @@
 @inherits DetailServicePartnerBase
 @using Fondital.Shared.Models
 @attribute [Authorize]
+@inject IStringLocalizer<App> localizer
 
 @if (ServicePartnerModel_UpdateSP.Id == default)
 {
@@ -42,18 +43,18 @@ else
                 </div>
                 <div class="border-rod">
                     <TelerikDropDownList Width="180px" Class="border-rod" PopupClass="dropdown-ite"
-                                         Data="@ListaScelta" ValueChanged="@( (string v) => MyValueChangeHandler(v) )"  DefaultText="@((SceltaCorrente==null)?"STATO DELL'UTENTE":null)">
+                                         Data="@ListaScelta" ValueChanged="@( (string v) => MyValueChangeHandler(v) )" DefaultText="@((SceltaCorrente==null)?"STATO DELL'UTENTE":null)">
                     </TelerikDropDownList>
                 </div>
             </div>
         </div>
     </div>
 }
-@*Modal per la modofoca del service partner*@
-<TelerikWindow Class="modal-app" Width="400px" Height="300px" Centered="true" @bind-Visible="isModalVisible" Modal="true">
-    <WindowActions>
-        <WindowAction Name="Close" />
-    </WindowActions>
+@*Modal per la modifica del service partner*@
+<TelerikWindow Class="modal-app" Width="360px" Height="330px" Centered="true" @bind-Visible="isModalVisible" Modal="true">
+    <WindowTitle>
+        <strong>@localizer["Modifica"] @localizer["Service Partner"]</strong>
+    </WindowTitle>
     <WindowContent>
         @if (ValidSubmit)
         {
@@ -72,6 +73,10 @@ else
                     <FormItem Field="@nameof(ServicePartner.CodiceFornitore)"></FormItem>
                     <FormItem Field="@nameof(ServicePartner.RagioneSociale)"></FormItem>
                 </FormItems>
+                <FormButtons>
+                    <TelerikButton Class="btn btn-secondary mr-auto" @onclick="() => isModalVisible = false" ButtonType="@ButtonType.Button">@localizer["Cancella"]</TelerikButton>
+                    <TelerikButton Class="btn btn-success ml-auto" ButtonType="@ButtonType.Submit">@localizer["Modifica"]</TelerikButton>
+                </FormButtons>
             </TelerikForm>
         }
     </WindowContent>
@@ -79,10 +84,10 @@ else
 
 
 @*Modal per la modifica dell'utente*@
-<TelerikWindow Class="modal-app" Width="400px" Height="300px" Centered="true" @bind-Visible="myEditTemplate" Modal="true">
-    <WindowActions>
-        <WindowAction Name="Close" />
-    </WindowActions>
+<TelerikWindow Class="modal-app" Width="360px" Height="330px" Centered="true" @bind-Visible="myEditTemplate" Modal="true">
+    <WindowTitle>
+        <strong>@localizer["Modifica"] @localizer["Utente"]</strong>
+    </WindowTitle>
     <WindowContent>
         @if (ValidSubmit)
         {
@@ -101,6 +106,10 @@ else
                     <FormItem Field="@nameof(Utente.Nome)"></FormItem>
                     <FormItem Field="@nameof(Utente.Cognome)"></FormItem>
                 </FormItems>
+                <FormButtons>
+                    <TelerikButton Class="btn btn-secondary mr-auto" @onclick="() => myEditTemplate = false" ButtonType="@ButtonType.Button">@localizer["Cancella"]</TelerikButton>
+                    <TelerikButton Class="btn btn-success ml-auto" ButtonType="@ButtonType.Submit">@localizer["Modifica"]</TelerikButton>
+                </FormButtons>
             </TelerikForm>
         }
     </WindowContent>
@@ -108,11 +117,10 @@ else
 
 
 @*Modal per l'aggiunta dell'utente*@
-<TelerikWindow Class="modal-app" Width="400px" Height="300px" Centered="true" @bind-Visible=@WindowVisible Modal="true">
-
-    <WindowActions>
-        <WindowAction Name="Close" />
-    </WindowActions>
+<TelerikWindow Class="modal-app" Width="350px" Height="330px" Centered="true" @bind-Visible=@WindowVisible Modal="true">
+    <WindowTitle>
+        <strong>@localizer["Aggiungi"] @localizer["Utente"]</strong>
+    </WindowTitle>
     <WindowContent>
         <div class="demo-section">
             @if (ValidSubmit)
@@ -132,9 +140,10 @@ else
                         <FormItem Field="@nameof(Utente.Nome)"></FormItem>
                         <FormItem Field="@nameof(Utente.Cognome)"></FormItem>
                     </FormItems>
-                    @*<FormButtons>
-                            <TelerikButton  ButtonType="@ButtonType.Submit" Primary="true">SALVA</TelerikButton>
-                        </FormButtons>*@
+                    <FormButtons>
+                        <TelerikButton Class="btn btn-secondary mr-auto" @onclick="() => WindowVisible = false" ButtonType="@ButtonType.Button">@localizer["Cancella"]</TelerikButton>
+                        <TelerikButton Class="btn btn-success ml-auto" ButtonType="@ButtonType.Submit">@localizer["Salva"]</TelerikButton>
+                    </FormButtons>
                 </TelerikForm>
 
             }
@@ -143,174 +152,165 @@ else
 
 
 </TelerikWindow>
-@*@if (!FilteredUtenti.Any())
-    {
-        <p>Loading some images...</p>
+<TelerikGrid Data="@((ConStato.Abilitati == true)? FilterdUtenti_Abilitati :(ConStato.Disabilitati == true)?FilterdUtenti_Disabilitati: FilteredUtenti)"
+             EditMode="@GridEditMode.Popup"
+             Pageable="true"
+             Height="500px"
+             Resizable="true"
+             Sortable="true">
+    <GridColumns>
+        <GridColumn Field=@nameof(Utente.UserName) Title="UTENTI" />
+        <GridColumn Field=@nameof(Utente.Nome) Title="NOME" />
+        <GridColumn Field=@nameof(Utente.Cognome) Title="COGNOME" />
+        <GridCommandColumn Width="75px">
+            <GridCommandButton Class="bt-cmd" Command="MyOwnCommand" Icon="" ShowInEdit="false" ImageUrl="/img/Icons/setting.svg" OnClick="@EditHandler"></GridCommandButton>
+        </GridCommandColumn>
+        <GridCommandColumn Width="75px">
+            <GridCommandButton Class="bt-cmd" Command="MyOwnCommand" Icon="" ShowInEdit="false" ImageUrl="/img/keyLogo.jpg" OnClick="@SendMail"></GridCommandButton>
+        </GridCommandColumn>
+        <GridCommandColumn Width="75px" Context="dif">
+            @{ var utente = dif as Utente;
+                <TelerikSwitch OffLabel=" " OnLabel=" " OnChange="@(() => UpdateEnableUtente(utente.Id))" @bind-Value="@utente.IsAbilitato"></TelerikSwitch> }
+        </GridCommandColumn>
+    </GridColumns>
+</TelerikGrid>
+
+@*}*@
+
+<style>
+    .large-button {
+        border: none;
     }
-    else
-    {*@
-    @*Griglia per la visualizzazione degli utenti*@
-    <TelerikGrid Data="@((ConStato.Abilitati == true)? FilterdUtenti_Abilitati :(ConStato.Disabilitati == true)?FilterdUtenti_Disabilitati: FilteredUtenti)" 
-                 EditMode="@GridEditMode.Popup" 
-                 Pageable="true" 
-                 Height="500px" 
-                 Resizable="true" 
-                 Sortable="true">
-        <GridColumns>
-            <GridColumn Field=@nameof(Utente.UserName) Title="UTENTI" />
-            <GridColumn Field=@nameof(Utente.Nome) Title="NOME" />
-            <GridColumn Field=@nameof(Utente.Cognome) Title="COGNOME" />
-            <GridCommandColumn Width="75px">
-                <GridCommandButton Class="bt-cmd" Command="MyOwnCommand" Icon="" ShowInEdit="false" ImageUrl="/img/Icons/setting.svg" OnClick="@EditHandler"></GridCommandButton>
-            </GridCommandColumn>
-            <GridCommandColumn Width="75px">
-                <GridCommandButton Class="bt-cmd" Command="MyOwnCommand" Icon="" ShowInEdit="false" ImageUrl="/img/keyLogo.jpg" OnClick="@SendMail"></GridCommandButton>
-            </GridCommandColumn>
-            <GridCommandColumn Width="75px" Context="dif">
-                @{ var utente = dif as Utente;
-                    <TelerikSwitch OffLabel=" " OnLabel=" " OnChange="@(() => UpdateEnableUtente(utente.Id))" @bind-Value="@utente.IsAbilitato"></TelerikSwitch> }
-            </GridCommandColumn>
-        </GridColumns>
-    </TelerikGrid>
 
-    @*}*@
+    .under-Header {
+        height: 145px
+    }
 
-    <style>
-        .large-button {
-            border: none;
-        }
+    .u-h-left {
+        position: absolute;
+        left: 24px;
+        width: 630px;
+    }
 
-        .under-Header {
-            height: 145px
-        }
+    .u-h-right {
+        position: absolute;
+        right: 24px;
+        width: 840px;
+        height: 130px;
+        display: flex;
+    }
 
-        .u-h-left {
-            position: absolute;
-            left: 24px;
-            width: 630px;
-        }
+    .top {
+        display: flex;
+        flex-direction: row;
+    }
 
-        .u-h-right {
-            position: absolute;
-            right: 24px;
-            width: 840px;
-            height: 130px;
-            display: flex;
-        }
+    .butt {
+        margin-left: 425px;
+    }
 
-        .top {
-            display: flex;
-            flex-direction: row;
-        }
+    .border-rod {
+        width: 30px;
+        position: absolute;
+        right: 0px
+    }
 
-        .butt {
-            margin-left: 425px;
-        }
+    .border-rod-first {
+        margin-right: 190px;
+    }
 
-        .border-rod {
-            width : 30px;
-            position: absolute;
-            right: 0px
-        }
-        .border-rod-first{
-            margin-right: 190px;
-        }
-        .dropdown-ite{
-            height:130px;
-        }
-        .Cerca {
-            display: flex;
-            flex-direction: row;
-            height: 60px;
-            /*width: 60px;*/
-            position: absolute;
-            right: 8px;
-            bottom: 0px
-        }
+    .dropdown-ite {
+        height: 130px;
+    }
 
-        .btn-add {
-            color: aliceblue;
-            background-color: forestgreen;
-            width: 180px;
-            position: absolute;
-            right: 8px;
-            top: 0px;
-        }
+    .Cerca {
+        display: flex;
+        flex-direction: row;
+        height: 60px;
+        /*width: 60px;*/
+        position: absolute;
+        right: 8px;
+        bottom: 0px
+    }
 
-        div.k-widget.k-window.modal-app {
-            width: 250px;
-            height: 600px;
-            border: 1px solid white
-        }
+    .btn-add {
+        color: aliceblue;
+        background-color: forestgreen;
+        width: 180px;
+        position: absolute;
+        right: 8px;
+        top: 0px;
+    }
 
-        .modal-app .k-dialog-titlebar.k-header.k-window-titlebar {
-            background: white;
-            height: 10px;
-            border: none;
-            color: black
-        }
+    div.k-widget.k-window.modal-app {
+        width: 250px;
+        height: 600px;
+        border: 1px solid white
+    }
 
-        .modal-app .k-window-content.k-content.k-dialog-content {
-        }
+    .modal-app .k-window-content.k-content.k-dialog-content {
+    }
 
-        .modal-app .k-button.telerik-blazor.k-primary.k-form-submit {
-            border: 2px solid dodgerblue;
-            color: aliceblue;
-            background-color: dodgerblue;
-            width: 700px;
-        }
+    .modal-app .k-button.telerik-blazor.k-primary.k-form-submit {
+        border: 2px solid dodgerblue;
+        color: aliceblue;
+        background-color: dodgerblue;
+        width: 700px;
+    }
 
-        .CClient {
-            margin-left: 350px;
-        }
+    .CClient {
+        margin-left: 350px;
+    }
 
-        .Forn {
-            float: left;
-        }
+    .Forn {
+        float: left;
+    }
 
-        .span {
-            font-size: 10px;
-            padding-bottom: 20px;
-        }
+    .span {
+        font-size: 10px;
+        padding-bottom: 20px;
+    }
 
-        .bloc-sin-a-Add {
-            border-left: 1px solid #DCDCDC;
-            display: flex;
-            flex-direction: row;
-        }
+    .bloc-sin-a-Add {
+        border-left: 1px solid #DCDCDC;
+        display: flex;
+        flex-direction: row;
+    }
 
-        .ut-Abil {
-            width: 100px;
-            height: 15px;
-            color: forestgreen;
-            margin-left: 15px
-        }
+    .ut-Abil {
+        width: 100px;
+        height: 15px;
+        color: forestgreen;
+        margin-left: 15px
+    }
 
-        .ut-Disab {
-            width: 100px;
-            height: 15px;
-            color: red;
-            margin-left: 30px
-        }
+    .ut-Disab {
+        width: 100px;
+        height: 15px;
+        color: red;
+        margin-left: 30px
+    }
 
-        .utent {
-            margin-left: 8px;
-            font-size: 10px;
-            padding-top: 3.5px;
-        }
+    .utent {
+        margin-left: 8px;
+        font-size: 10px;
+        padding-top: 3.5px;
+    }
 
-        .TechSt {
-            height: 30px
-        }
-        .k-dialog-titlebar.k-header{
-            background:white
-        }
-        GridCommandColumn {
-            color: aliceblue;
-            background-color: dodgerblue;
-            width : 75px
-        }
-    </style>
+    .TechSt {
+        height: 30px
+    }
+
+/*    .k-dialog-titlebar.k-header {
+        background: white
+    }*/
+
+    GridCommandColumn {
+        color: aliceblue;
+        background-color: dodgerblue;
+        width: 75px
+    }
+</style>
 
 
 

@@ -76,10 +76,12 @@ namespace Fondital.Client.Pages
 			if (isFormValid)
 			{
 				Utente UtenteToSave = (Utente)editContext.Model;
+				UtenteToSave.IsAbilitato = false;
 				UtenteToSave.Email = UtenteToSave.UserName;
 				if (ServicePartnerModel_UpdateSP.Utenti == null) ServicePartnerModel_UpdateSP.Utenti = new List<Utente>();
 				ServicePartnerModel_UpdateSP.Utenti.Add(UtenteToSave);
 				await servicePartnerClient.UpdateServicePartner(ServicePartnerModel_UpdateSP.Id, ServicePartnerModel_UpdateSP);
+				ServicePartnerModel_AddUtente = new Utente();
 				await Refresh();
 
 			}
