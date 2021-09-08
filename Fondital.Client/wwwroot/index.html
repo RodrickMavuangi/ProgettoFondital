@@ -7,18 +7,38 @@
     <title>Fondital.Client</title>
     <base href="/" />
     <link href="css/bootstrap/bootstrap.min.css" rel="stylesheet" />
+
+    <!-- css custom -->
     <link href="css/bootstrap-child.css" rel="stylesheet" />
+    <!-- Icons font -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
+
     <link href="css/app.css" rel="stylesheet" />
     <link href="Fondital.Client.styles.css" rel="stylesheet" />
     <script src="_content/Telerik.UI.for.Blazor.Trial/js/telerik-blazor.js" defer></script>
-    <link rel="stylesheet" href="_content/Telerik.UI.for.Blazor.Trial/css/kendo-theme-default/all.css"/>
+    <link rel="stylesheet" href="_content/Telerik.UI.for.Blazor.Trial/css/kendo-theme-default/all.css" />
     <linkhref ="_content/Blazored.Modal/blazored-modal.css" rel="stylesheet" />
 </head>
 
 <body>
 
     
-    <div id="app">Loading...</div>
+    <div id="app">
+
+        <div class="k-loader-container k-loader-container-md k-loader-top " style="" data-id="7d13dd9e-e016-4aec-8e1b-5253cd5131d5">
+            <div class="k-loader-container-overlay k-overlay-light"></div>
+        <div class="k-loader-container-inner ">
+            <div class="k-loader k-loader-spinner-3 k-loader-lg k-loader-primary">
+                <div class="k-loader-canvas">
+                    <span class="k-loader-segment"></span>
+                    <span class="k-loader-segment"></span>
+                    <span class="k-loader-segment"></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
 
     <div id="blazor-error-ui">
         An unhandled error has occurred.

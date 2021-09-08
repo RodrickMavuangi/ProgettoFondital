@@ -6,26 +6,25 @@
 @using Fondital.Shared.Models
 @inject ServicePartnerClient servicePartnerClient
 @inherits ListServicePartnerBase
-
 @*<div class="cont">
-    <div class="cont-child">
-        <div class="tit-pg">
-            <h1><strong>Anagrafiche</strong> Service Partner</h1>
+        <div class="cont-child">
+            <div class="tit-pg">
+                <h1><strong>Anagrafiche</strong> Service Partner</h1>
+            </div>
+            <div class="btn-ad">
+                <TelerikButton Class="btn-add" OnClick=@(()=> WindowVisible = true)>Inserisci Anagrafica</TelerikButton>
+            </div>
         </div>
-        <div class="btn-ad">
-            <TelerikButton Class="btn-add" OnClick=@(()=> WindowVisible = true)>Inserisci Anagrafica</TelerikButton>
+        <hr class="hr" />
+        <div class="cerc-sp">
+            <input class="border-rod" @bind-value="SearchText" @bind-value:event="oninput" placeholder="Cerca SP ..." />
         </div>
-    </div>
-    <hr class="hr" />
-    <div class="cerc-sp">
-        <input class="border-rod" @bind-value="SearchText" @bind-value:event="oninput" placeholder="Cerca SP ..." />
-    </div>
-</div>*@
+    </div>*@
 
 
 
 
-<div class="row-1 d-flex justify-content-between flex-wrap flex-md-nowrap  pt-0 mb-64">
+<div class="row-1 d-flex justify-content-between flex-wrap flex-md-nowrap  pt-0">
     <!--TITOLO PAGINA-->
     <div class="col-md-5  text-left pb-4 border-bottom">
         <div class="col  text-left d-inline-block ">
@@ -36,10 +35,10 @@
     </div>
     <!--FINE TITLE PAGE-->
     <!--ROW BOTTONI-->
-    <div class="col-md-7 pb-4 border-bottom">
+    <div class="col-md-7 pb-4 border-bottom pr-0">
 
         <div class="col  text-left d-none barraStrumenti "> </div>
-        <div class="col  text-right d-inline-block float-lg-right">
+        <div class="col  text-right d-inline-block float-lg-right p-0">
             <TelerikButton Class="btn btn-primary btn-verde btn-lg mx-1" OnClick=@(()=> WindowVisible = true)>Inserisci Anagrafica</TelerikButton>
         </div>
     </div>
@@ -48,21 +47,16 @@
 <!--FINE ROW 1 . TITOLI + BUTTON DX-->
 
 
-<div class="row-2 row  pt-0 pb-4 mb-4 border-bottom">
+<div class="row-2 d-inline w-100 mb-4  pt-0 pb-4 pt-4 border-bottom barraFiltri">
+    <div class="form-group rowFiltri">
 
-
-    <div class="form-group">
+        @*<img src="../img/Icons/search.svg" class="bi bi-search float-lg-right icoSearch blu" />*@
         <i class="bi bi-search float-lg-right icoSearch blu"></i>
-
         <input class="form-control float-lg-right filtriInput mx-1" @bind-value="SearchText" @bind-value:event="oninput" placeholder="Cerca SP ..." />
 
-    </div> <!--FINE BARRA FILTRI-->
+    </div>
 
-</div>
-
-
-
-
+</div><!--FINE BARRA FILTRI-->
 @*Modale per l'aggiunta dell'anagrafica*@
 <TelerikWindow Class="modal-app" Width="500px" Height="300px" Centered="true" @bind-Visible=@WindowVisible Modal="true">
 
@@ -101,95 +95,98 @@
 
 @*OnEdit="@EditHandler"//*@
 <div class="row-3 d-flex justify-content-between flex-wrap flex-md-nowrap  pt-0 pb-4 mb-4">
-    <TelerikGrid Data="@ServicePartners_filtered" EditMode="@GridEditMode.Popup" Pageable="true" Height="500px" Class="table table-striped"
+
+
+    <TelerikGrid Data="@ServicePartners_filtered" EditMode="@GridEditMode.Popup" Pageable="true"  Class="table table-striped"
                  OnUpdate="@UpdateHandler" OnDelete="@DeleteHandler" OnCreate="@CreateHandler" OnCancel="@CancelHandler" Resizable="true" Sortable="true">
         <GridColumns>
             <GridColumn Field=@nameof(ServicePartner.CodiceFornitore) Title="CODICE FORNITORE" />
             <GridColumn Field=@nameof(ServicePartner.RagioneSociale) Title="RAGIONE SOCIALE" />
             <GridColumn Field=@nameof(ServicePartner.CodiceCliente) Title="CODICE UTENTE" />
-            <GridColumn Field="N° UTENTI" Title="N° UTENTI">
+            <GridColumn Field="N° UTENTI" Title="N° UTENTI" Id="utenti">
                 <Template>
                     @((context as ServicePartner).Utenti.Count())
                 </Template>
             </GridColumn>
-            <GridCommandColumn Width="75px">
-                <GridCommandButton Class="bt-cmd" Command="MyOwnCommand" Icon="" ShowInEdit="false" ImageUrl="/img/Icons/setting.svg" OnClick="@EditHandler"></GridCommandButton>
+            <GridCommandColumn Width="80px" Id="thSetting">
+                <GridCommandButton Class="settingCol btnIcon bgBluOn white" Command="MyOwnCommand" Icon="" ShowInEdit="false" ImageUrl="/img/Icons/setting.svg" OnClick="@EditHandler"></GridCommandButton>
+                <i class="bi bi-gear-fill"></i>
             </GridCommandColumn>
         </GridColumns>
     </TelerikGrid>
 </div>
 
 
-<style>
-    .myClasse {
-        color: aliceblue;
-        background-color: forestgreen
-    }
+@*<style>
+        .myClasse {
+            color: aliceblue;
+            background-color: forestgreen
+        }
 
-    .cont {
-        height: 115px
-    }
+        .cont {
+            height: 115px
+        }
 
-    .cont-child {
-        display: flex;
-        flex-direction: row;
-        height: 40px;
-    }
+        .cont-child {
+            display: flex;
+            flex-direction: row;
+            height: 40px;
+        }
 
-    .editColor {
-        color: aliceblue;
-        background-color: dodgerblue
-    }
+        .editColor {
+            color: aliceblue;
+            background-color: dodgerblue
+        }
 
-    .btn-add {
-        float: right;
-        color: aliceblue;
-        background-color: forestgreen;
-        width: 180px
-    }
+        .btn-add {
+            float: right;
+            color: aliceblue;
+            background-color: forestgreen;
+            width: 180px
+        }
 
-    .btn-ad {
-        position: absolute;
-        right: 25px;
-    }
+        .btn-ad {
+            position: absolute;
+            right: 25px;
+        }
 
-    .tit-pg {
-        display: inline-block;
-    }
+        .tit-pg {
+            display: inline-block;
+        }
 
-    .modal-app {
-        width: 350px;
-    }
+        .modal-app {
+            width: 350px;
+        }
 
-    div.k-widget.k-window.modal-app {
-        width: 250px;
-        height: 600px;
-        border: 1px solid white
-    }
+        div.k-widget.k-window.modal-app {
+            width: 250px;
+            height: 600px;
+            border: 1px solid white
+        }
 
-    .modal-app .k-dialog-titlebar.k-header.k-window-titlebar {
-        background: white;
-        height: 10px;
-        border: none;
-        color: black
-    }
+        .modal-app .k-dialog-titlebar.k-header.k-window-titlebar {
+            background: white;
+            height: 10px;
+            border: none;
+            color: black
+        }
 
-    .modal-app .k-window-content.k-content.k-dialog-content {
-    }
+        .modal-app .k-window-content.k-content.k-dialog-content {
+        }
 
-    .modal-app .k-button.telerik-blazor.k-primary.k-form-submit {
-        border: 2px solid dodgerblue;
-        color: aliceblue;
-        background-color: dodgerblue;
-        width: 700px;
-    }
+        .modal-app .k-button.telerik-blazor.k-primary.k-form-submit {
+            border: 2px solid dodgerblue;
+            color: aliceblue;
+            background-color: dodgerblue;
+            width: 700px;
+        }
 
-    .cas-ric {
-        height: auto
-    }
+        .cas-ric {
+            height: auto
+        }
 
-    .cerc-sp {
-        position: absolute;
-        right: 25px;
-    }
-</style>
+        .cerc-sp {
+            position: absolute;
+            right: 25px;
+        }
+    </style>*@
