@@ -157,9 +157,11 @@ html, body {
     text-transform: capitalize !important;
 }
 
+.uppercase {
+    text-transform: uppercase;
+}
 
 /*************** LINK ******************/
-
 
 a {
     text-decoration: none !important;
@@ -174,7 +176,9 @@ a {
     .linksottolieato a:hover {
         text-decoration: none !important;
     }
+
 /*************** SPAZI & ALLINEAMENTI ******************/
+
 .float-lg-left {
     float: left !important;
 }
@@ -243,6 +247,10 @@ a {
 
 
 
+/*************** LARGHEZZE ******************/
+.w100 {
+    width: 100% !important;
+}
 
 /*************** BORDI ******************/
 
@@ -260,14 +268,16 @@ a {
 
 
 
-
+/*************** NOTIFICHE ******************/
 
 .notifica {
 }
     .notifica .alert {
         padding: 14px 16px 15px 16px;
     }
+
 /*************** SELECT LINGUA ******************/
+
 .lingua {
     width: 100%;
     text-align: right;
@@ -284,8 +294,6 @@ a {
         text-align: right !important;
         display: inline-block !important;
     }
-
-
 
 
 /*************** PROFILO ******************/
@@ -321,12 +329,14 @@ a {
 
 .form-control, .form-select, .input-group {
     width: auto !important;
-/*    padding: .7rem 1rem !important;*/
+    /*    padding: .7rem 1rem !important;*/
     border-radius: .125rem !important;
     font-size: 14px;
     line-height: 2 !important;
     color: #000000 !important;
     min-width: 200px;
+    height: auto !important;
+    font-family: 'Open Sans', Helvetica, Arial, sans-serif !important;
 }
 
     .form-select select {
@@ -340,9 +350,11 @@ a {
         color: #5F5F5F !important;
         height:48px;
     }
+
 .form-label {
-/*    margin-bottom: .7rem !important;*/
+    /*    margin-bottom: .7rem !important;*/
     color: #5F5F5F;
+    text-transform: uppercase !important;
 }
 
 ::-webkit-input-placeholder { /* Chrome/Opera/Safari */
@@ -381,11 +393,6 @@ a {
     background-image: url('../img/Icons/solid/grigio/calendar-date.svg');
 }
 
-
-
-.w100 {
-    width: 100% !important;
-}
 
 .inp-login {
     background-repeat: no-repeat;
@@ -437,33 +444,6 @@ a {
         z-index: 2;
     }
 
-/*.form-check-mod::after .form-check-input:checked  {
-	background-color: #cccccc!important;
-    content: '';
-    height: 55.5px;
-    width: 80px;
-    display: inline-block;
-    position: absolute;
-    left: -23px;
-    z-index: -1;
-    top: -20px;
-}
-*/
-
-
-
-
-
-/*.form-check-mod .form-check-input:checked {
-    background-position: right center;
-    background-image: url('../img/pallino-blu.svg')!important;
-}
-.form-check-input:checked {
-    background-color: #fff!important;
-    border-color: #fff!important;
-}*/
-
-
 .btn-blu {
     background-color: #007BFF !important;
     border-color: #007BFF !important;
@@ -474,6 +454,17 @@ a {
         border-color: #2A5C92 !important;
     }
 
+.btn-primary {
+    background-color: #0d6efd !important;
+    border-color: #0d6efd !important;
+}
+
+    .btn-primary:hover {
+        background-color: #0b5ed7 !important;
+        border-color: #0a58ca !important;
+        color: #fff !important;
+    }
+
 .btn-verde {
     background-color: #4C8B32 !important;
     border-color: #4C8B32 !important;
@@ -482,6 +473,7 @@ a {
     .btn-verde:hover {
         background-color: #395D2A !important;
         border-color: #395D2A !important;
+        color: #fff !important;
     }
 
 .btnIcon {
@@ -598,52 +590,12 @@ a {
     border-color: none !important;
 }
 
-
-
-
-
-
 /*************** HEADER ******************/
 
 .logo img {
     min-height: 4rem;
     height: 4rem;
 }
-
-/*
-.nav {
-}
-
-.nav-link {
-    padding: 0.6rem 2rem !important;
-    text-transform: uppercase !important;
-    margin-right: 1rem;
-    border: 0 !important;
-    border-radius: .125rem !important;
-}
-
-.nav-pills .nav-link {
-    background-color: #0572E8 !important;
-    color: #fff !important;
-}
-
-    .nav-pills .nav-link.active, .nav-pills .show > .nav-link {
-        color: #fff !important;
-        background-color: #E2251D !important;
-    }
-
-    .nav-pills .nav-link:hover {
-        color: #fff !important;
-        background-color: #0b5ed7 !important;
-        text-decoration: none!important;
-    }
-
-.dropdown-custom-toggle::after {
-    position: relative !important;
-    right: -0.625em !important;
-}
-*/
-
 
 .nav .k-menu-expand-arrow {
     color: #fff !important;
@@ -699,8 +651,6 @@ a:not([href]):not([tabindex]) {
     color: #fff !important;
 }
 
-
-
 .navLink {
     /*    padding: 0.6rem 2.7rem !important;*/
     text-transform: uppercase !important;
@@ -711,13 +661,9 @@ a:not([href]):not([tabindex]) {
     line-height: 21px !important;
 }
 
-
-
-
 .k-menu.k-menu-horizontal:not(.k-context-menu) {
     padding: 0 !important;
 }
-
 
 .navLink:hover {
     color: #fff !important;
@@ -762,6 +708,7 @@ a:not([href]):not([tabindex]) {
 
 
 /*************** CUSTOM ******************/
+
 .barraStrumenti {
     border-left: solid 1px #cccccc;
     height: 40px;
@@ -782,9 +729,6 @@ a:not([href]):not([tabindex]) {
     background-color: #007BFF !important;
 }
 
-.form-label {
-    text-transform: uppercase !important;
-}
 
 .footer {
     background-color: #F5F5F5 !important;
@@ -797,40 +741,10 @@ a:not([href]):not([tabindex]) {
         display: none !important;
     }
 
-.form-control, .form-select, .input-group {
-    height: auto !important;
-}
-
-.btn-primary {
-    background-color: #0d6efd !important;
-    border-color: #0d6efd !important;
-}
-
-    .btn-primary:hover {
-        background-color: #0b5ed7 !important;
-        border-color: #0a58ca !important;
-        color: #fff !important;
-    }
-
-.btn-verde {
-    background-color: #4C8B32 !important;
-    border-color: #4C8B32 !important;
-
-}
-
-    .btn-verde:hover {
-        background-color: #395D2A !important;
-        border-color: #395D2A !important;
-        color: #fff !important;
-    }
-
 .btn-link.nav-link:focus {
     outline: black auto 1px;
 }
 
-.uppercase {
-    text-transform: uppercase;
-}
 
 .validation-summary-errors {
     color: #721c24 !important;
