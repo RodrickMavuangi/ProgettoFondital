@@ -189,19 +189,19 @@ namespace Fondital.Client.Pages
 
 		public async Task SendMail(GridCommandEventArgs args)
 		{
-			Utente utente = (Utente)args.Item;
-			bool isConfirmed = await Dialogs.ConfirmAsync(localizer[$"Vuoi mandare una mail all'utente {utente.Nome} {utente.Cognome} per il reset della password ? "]);
-			if (isConfirmed)
-			{
-				MailRequest mailRequest = new MailRequest()
-				{
-					ToEmail = "mavelec@libero.it",
-					Subject = "Hello world",
-					Body = "<h1>Hello world<h1>"
-				};
+			//Utente utente = (Utente)args.Item;
+			//bool isConfirmed = await Dialogs.ConfirmAsync(localizer[$"Vuoi mandare una mail all'utente {utente.Nome} {utente.Cognome} per il reset della password ? "]);
+			//if (isConfirmed)
+			//{
+			//	MailRequest mailRequest = new MailRequest()
+			//	{
+			//		ToEmail = "mavelec@libero.it",
+			//		Subject = "Hello world",
+			//		Body = "<h1>Hello world<h1>"
+			//	};
 
-				await mailClient.sendMail(mailRequest);
-			}
+			//	await mailClient.sendMail(mailRequest);
+			//}
 			
 		} 
 

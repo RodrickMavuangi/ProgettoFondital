@@ -26,14 +26,11 @@ namespace Fondital.Client.Clients
         public async Task<Utente> GetUtente(string username) =>
             await httpClient.GetFromJsonAsync<Utente>($"utentiControl/{username}", JsonSerializerOpts.JsonOpts);
 
-        public async Task UpdateUtente(int id, Utente utente)
+        public async Task UpdateUtente(int utenteId, Utente utente)
 		{
-            var options = new JsonSerializerOptions()
-            {
-                ReferenceHandler = ReferenceHandler.Preserve
-            };
-            await httpClient.PutAsJsonAsync($"utenti/{id}", utente, options /*JsonSerializerOpts.JsonOpts*/);
-         }
-            
+            var response =  await httpClient.PutAsJsonAsync($"utentiControl/{utenteId}", utente, JsonSerializerOpts.JsonOpts);
+            response.EnsureSuccessStatusCode();
+        }
+           
     }
 }

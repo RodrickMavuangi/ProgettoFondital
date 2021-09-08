@@ -77,6 +77,7 @@ namespace Fondital.Client.Pages
 		}
 		async Task Refresh()
 		{
+			myEditTemplate = false;
 			WindowVisible = false;
 			await OnInitializedAsync();
 		}
