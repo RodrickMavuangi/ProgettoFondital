@@ -10,8 +10,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using Telerik.Blazor;
 using Telerik.Blazor.Components;
-using System.Net.Http;
 using Fondital.Client.ClientModel;
+using Microsoft.Extensions.Localization;
 
 namespace Fondital.Client.Pages
 {
@@ -35,37 +35,42 @@ namespace Fondital.Client.Pages
 		[Inject] public ServicePartnerClient servicePartnerClient { get; set; }
 		[Inject] public UtenteClient utenteClient { get;set; }
 		[Inject] public MailClient mailClient { get; set; }
+		[Inject] private IStringLocalizer<App> localizer { get; set; }
 		public int UtentiAbilitati { get; set; } = 0;
 		public int UtentiDisabilitati { get; set; } = 0;
 		public ServicePartner servicePartnersWithUtenti { get; set; } = new ServicePartner() { Utenti = new List<Utente>()};
 		Utente DatiUtente = new Utente();
-		public List<string> ListaScelta = new List<string>() { "Tutti","Abilitati","Disabilitati"};
+		public List<string> ListaScelta { get; set; } = new List<string>() { };
 		public string SceltaCorrente = string.Empty;
+	    [Parameter]
+		public string servicePId { get; set; }
 
 
 
 		protected override async Task OnInitializedAsync()
 		{
+			ListaScelta = new List<string>() { @localizer["Tutti"], localizer["Abilitati"], localizer["Disabilitati"] };
 			myEditContext_AddUTente = new EditContext(ServicePartnerModel_AddUtente);
 			myEditContext_UpdateSP = new EditContext(ServicePartnerModel_UpdateSP);
 			myEditContext_UpdateUtente = new EditContext(UtenteModel_EditUtente);
 
-			ServicePartnerModel_UpdateSP = await servicePartnerClient.GetServicePartnerWithUtenti(1);
+			ServicePartnerModel_UpdateSP = await servicePartnerClient.GetServicePartnerWithUtenti(int.Parse(servicePId));
 			ListUtenti = ServicePartnerModel_UpdateSP.Utenti;
 			if (ListUtenti == null){
 				ListUtenti = new List<Utente>();
 				ServicePartnerModel_UpdateSP.Utenti = ListUtenti;
 
 			}
-
 			UtentiAbilitati = ServicePartnerModel_UpdateSP.Utenti.Where(x => x.IsAbilitato == true).Count();
 			UtentiDisabilitati = ServicePartnerModel_UpdateSP.Utenti.Where(x => x.IsAbilitato == false).Count();
 
-			servicePartnersWithUtenti =(ServicePartner)await servicePartnerClient.GetServicePartnerWithUtenti(1);
+			servicePartnersWithUtenti =(ServicePartner)await servicePartnerClient.GetServicePartnerWithUtenti(int.Parse(servicePId));
 
 			SceltaCorrente = null;
 		}
-		public List<Utente> FilteredUtenti => servicePartnersWithUtenti.Utenti.Where<Utente>(x => x.Email.Contains(SearchText)).ToList() ;
+
+
+		public List<Utente> FilteredUtenti => servicePartnersWithUtenti.Utenti.Where<Utente>(x => x.Email.Contains(SearchText)).ToList();
 		public List<Utente> FilterdUtenti_Abilitati => servicePartnersWithUtenti.Utenti.Where<Utente>(x => x.Email.Contains(SearchText) && x.IsAbilitato == true).ToList();
 		public List<Utente> FilterdUtenti_Disabilitati => servicePartnersWithUtenti.Utenti.Where<Utente>(x => x.Email.Contains(SearchText) && x.IsAbilitato == false).ToList();
 
@@ -143,8 +148,8 @@ namespace Fondital.Client.Pages
 		{
 			Utente ut = FilteredUtenti.Single(x => x.Id == Id);
 			bool isConfirmed = false;
-			if (ut.IsAbilitato)isConfirmed = await Dialogs.ConfirmAsync($"Si è sicuri di voler abilitare l'utente {ut.Nome} {ut.Cognome} ?", "Modifica utente");
-			else isConfirmed = await Dialogs.ConfirmAsync($"Si è sicuri di voler disabilitare l'utente {ut.Nome} {ut.Cognome} ?", "Modifica utente");
+			if (ut.IsAbilitato)isConfirmed = await Dialogs.ConfirmAsync(localizer[$"Si è sicuri di voler abilitare l'utente {ut.Nome} {ut.Cognome} ?", "Modifica utente"]);
+			else isConfirmed = await Dialogs.ConfirmAsync(localizer[$"Si è sicuri di voler disabilitare l'utente {ut.Nome} {ut.Cognome} ?", "Modifica utente"]);
 			
 			if (isConfirmed)
 			{
@@ -152,7 +157,6 @@ namespace Fondital.Client.Pages
 				{
 					await utenteClient.UpdateUtente(Id, ut) ;
 					await Refresh();
-					//await httpClient.UpdateUtente(Id, FilteredUtenti.Single(x => x.Id == Id));
 				}
 				catch (Exception e)
 				{
@@ -186,7 +190,7 @@ namespace Fondital.Client.Pages
 		public async Task SendMail(GridCommandEventArgs args)
 		{
 			Utente utente = (Utente)args.Item;
-			bool isConfirmed = await Dialogs.ConfirmAsync($"Vuoi mandare una mail all'utente {utente.Nome} {utente.Cognome} per il reset della password ? ");
+			bool isConfirmed = await Dialogs.ConfirmAsync(localizer[$"Vuoi mandare una mail all'utente {utente.Nome} {utente.Cognome} per il reset della password ? "]);
 			if (isConfirmed)
 			{
 				MailRequest mailRequest = new MailRequest()
@@ -200,5 +204,7 @@ namespace Fondital.Client.Pages
 			}
 			
 		} 
+
+		
 	}
 }

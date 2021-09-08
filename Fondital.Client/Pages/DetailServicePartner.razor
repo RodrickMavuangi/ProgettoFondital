@@ -1,4 +1,4 @@
-﻿@page "/detailservicepartner"
+﻿@page "/detailservicepartner/{servicePId}"
 @inherits DetailServicePartnerBase
 @using Fondital.Shared.Models
 @attribute [Authorize]
@@ -14,12 +14,12 @@ else
         <div class="u-h-left">
             <div class="top">
                 <div class="TechSt"><strong>@ServicePartnerModel_UpdateSP.RagioneSociale</strong></div>
-                <div class="butt"><TelerikButton OnClick="@( _ => isModalVisible = true )">Modifica SP</TelerikButton></div>
+                <div class="butt"><TelerikButton OnClick="@( _ => isModalVisible = true )">@localizer["Modifica SP"]</TelerikButton></div>
             </div>
             <hr />
             <div class="middle">
-                <div class="Forn"><span class="span">Codice Fornitore : </span><strong>@ServicePartnerModel_UpdateSP.CodiceFornitore</strong> </div>
-                <div class="CClient"><span class="span">Codice Cliente : </span><strong>@ServicePartnerModel_UpdateSP.CodiceCliente</strong></div>
+                <div class="Forn"><span class="span">@localizer["Codice Fornitore"] : </span><strong>@ServicePartnerModel_UpdateSP.CodiceFornitore</strong> </div>
+                <div class="CClient"><span class="span">@localizer["Codice Cliente"] : </span><strong>@ServicePartnerModel_UpdateSP.CodiceCliente</strong></div>
             </div>
             <hr />
             <div class="bottom"></div>
@@ -28,22 +28,22 @@ else
         <div class="u-h-right">
             <div class="btn-ad">
                 <div class="bloc-sin-a-Add">
-                    <span class="utent">Utenti</span>
-                    <span class="ut-Abil">Abilitati / @UtentiAbilitati</span>
-                    <span class="ut-Disab">Disabilitati / @UtentiDisabilitati</span>
+                    <span class="utent">@localizer["Utenti"]</span>
+                    <span class="ut-Abil">@localizer["Abilitati"] / @UtentiAbilitati</span>
+                    <span class="ut-Disab">@localizer["Disabilitati"] / @UtentiDisabilitati</span>
                 </div>
                 <div>
-                    <TelerikButton Class="btn-add" OnClick=@(()=> WindowVisible = true)>Aggiungi Utente</TelerikButton>
+                    <TelerikButton Class="btn-add" OnClick=@(()=> WindowVisible = true)>@localizer["Aggiungi Utente"]</TelerikButton>
                 </div>
 
             </div>
             <div class="Cerca">
                 <div>
-                    <input class="border-rod-first" @bind-value="SearchText" @bind-value:event="oninput" placeholder="Cerca Utenti ..." />
+                    <input class="border-rod-first" @bind-value="SearchText" @bind-value:event="oninput" placeholder=@localizer["Cerca Utenti ..."] />
                 </div>
                 <div class="border-rod">
                     <TelerikDropDownList Width="180px" Class="border-rod" PopupClass="dropdown-ite"
-                                         Data="@ListaScelta" ValueChanged="@( (string v) => MyValueChangeHandler(v) )" DefaultText="@((SceltaCorrente==null)?"STATO DELL'UTENTE":null)">
+                                         Data="@ListaScelta" ValueChanged="@( (string v) => MyValueChangeHandler(v) )" DefaultText="@((SceltaCorrente==null)?localizer["STATO DELL'UTENTE"]:null)">
                     </TelerikDropDownList>
                 </div>
             </div>
@@ -58,8 +58,8 @@ else
     <WindowContent>
         @if (ValidSubmit)
         {
-            <div class="demo-alert demo-alert-success" role="alert">
-                The form was submitted successfully.
+            <div class="" role="alert">
+                @localizer["Caricamento"]...
             </div>
         }
         else
@@ -91,9 +91,9 @@ else
     <WindowContent>
         @if (ValidSubmit)
         {
-            <div class="demo-alert demo-alert-success" role="alert">
-                The form was submitted successfully.
-            </div>
+        <div class="" role="alert">
+            @localizer["Caricamento"]...
+        </div>
         }
         else
         {
@@ -125,9 +125,9 @@ else
         <div class="demo-section">
             @if (ValidSubmit)
             {
-                <div class="demo-alert demo-alert-success" role="alert">
-                    The form was submitted successfully.
-                </div>
+            <div class="" role="alert">
+                @localizer["Caricamento"]...
+            </div>
             }
             else
             {
@@ -159,9 +159,9 @@ else
              Resizable="true"
              Sortable="true">
     <GridColumns>
-        <GridColumn Field=@nameof(Utente.UserName) Title="UTENTI" />
-        <GridColumn Field=@nameof(Utente.Nome) Title="NOME" />
-        <GridColumn Field=@nameof(Utente.Cognome) Title="COGNOME" />
+        <GridColumn Field=@nameof(Utente.UserName) Title=@localizer["UTENTI"] />
+        <GridColumn Field=@nameof(Utente.Nome) Title=@localizer["NOME"] />
+        <GridColumn Field=@nameof(Utente.Cognome) Title=@localizer["COGNOME"] />
         <GridCommandColumn Width="75px">
             <GridCommandButton Class="bt-cmd" Command="MyOwnCommand" Icon="" ShowInEdit="false" ImageUrl="/img/Icons/setting.svg" OnClick="@EditHandler"></GridCommandButton>
         </GridCommandColumn>

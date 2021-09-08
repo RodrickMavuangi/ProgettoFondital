@@ -1,26 +1,24 @@
 ﻿@page  "/servicePartners"
 @attribute [Authorize]
 
-@using System.ComponentModel.DataAnnotations
-@inject NavigationManager NavigationManager
 @using Fondital.Shared.Models
 @inject ServicePartnerClient servicePartnerClient
 @inherits ListServicePartnerBase
 @inject IStringLocalizer<App> localizer
-
+@inject NavigationManager NavigationManager
 
 <div class="cont">
     <div class="cont-child">
         <div class="tit-pg">
-            <h1><strong>Anagrafiche</strong> Service Partner</h1>
+            <h1><strong>@localizer["Anagrafiche"]</strong> @localizer["Service Partner"]</h1>
         </div>
         <div class="btn-ad">
-            <TelerikButton Class="btn-add" OnClick=@(()=> WindowVisible = true)>Inserisci Anagrafica</TelerikButton>
+            <TelerikButton Class="btn-add" OnClick=@(()=> WindowVisible = true)>@localizer["Inserisci Anagrafica"]</TelerikButton>
         </div>
     </div>
     <hr class="hr" />
     <div class="cerc-sp">
-        <input class="border-rod" @bind-value="SearchText" @bind-value:event="oninput" placeholder="Cerca SP ..." />
+        <input class="border-rod" @bind-value="SearchText" @bind-value:event="oninput" placeholder=@localizer["Cerca SP"] />
     </div>
 </div>
 
@@ -32,9 +30,9 @@
     <WindowContent>
         @if (ValidSubmit)
         {
-            <div class="demo-alert demo-alert-success" role="alert">
-                The form was submitted successfully.
-            </div>
+        <div class="" role="alert">
+            @localizer["Caricamento"]...
+        </div>
         }
         else
         {
@@ -66,13 +64,13 @@
         <div class="demo-section">
             @if (ValidSubmit)
             {
-                <div class="demo-alert demo-alert-success" role="alert">
-                    The form was submitted successfully.
-                </div>
+            <div class="" role="alert">
+                @localizer["Caricamento"]...
+            </div>
             }
             else
             {
-                <TelerikForm Model="@ServicePartnerModel" OnSubmit="OnSubmitHandlerAsync" EditContext="myEditContext" ValidationMessageType="@FormValidationMessageType.Inline" >
+                <TelerikForm Model="@ServicePartnerModel" OnSubmit="OnSubmitHandlerAsync" EditContext="myEditContext" ValidationMessageType="@FormValidationMessageType.Inline">
                     <FormValidation>
                         <DataAnnotationsValidator></DataAnnotationsValidator>
                     </FormValidation>
@@ -85,8 +83,6 @@
                         <TelerikButton Class="btn btn-secondary mr-auto" @onclick="() => WindowVisible = false" ButtonType="@ButtonType.Button">@localizer["Cancella"]</TelerikButton>
                         <TelerikButton Class="btn btn-success ml-auto" ButtonType="@ButtonType.Submit">@localizer["Salva"]</TelerikButton>
                     </FormButtons>
-                    @*<button class="btn btn-secondary mr-auto" @onclick="OnClose">@localizer["Cancella"]</button>*@
-                    @*<button type="submit" class="btn btn-success ml-auto" disabled="@isSubmitting">@localizer["Salva"]</button>*@
                 </TelerikForm>
 
             }
@@ -96,23 +92,22 @@
 
 
 @*OnEdit="@EditHandler"//*@
-<TelerikGrid Data="@ServicePartners_filtered" 
-             EditMode="@GridEditMode.Popup" 
-             Pageable="true" 
+<TelerikGrid Data="@ServicePartners_filtered"
+             EditMode="@GridEditMode.Popup"
+             Pageable="true"
              Height="500px"
-             OnUpdate="@UpdateHandler"  
-             Resizable="true" 
-             Sortable="true" 
-             OnRowClick="Navigate">
+             OnUpdate="@UpdateHandler"
+             Resizable="true"
+             Sortable="true">
     <GridColumns>
-        <GridColumn Field=@nameof(ServicePartner.CodiceFornitore) Title="CODICE FORNITORE" />
-        <GridColumn Field=@nameof(ServicePartner.RagioneSociale) Title="RAGIONE SOCIALE" />
-        <GridColumn Field=@nameof(ServicePartner.CodiceCliente) Title="CODICE UTENTE" />
-        <GridColumn Field="N° UTENTI" Title="N° UTENTI">
-            <Template>
-                @((context as ServicePartner).Utenti.Count())
-            </Template>
-        </GridColumn>
+        <GridColumn Field=@nameof(ServicePartner.CodiceFornitore) Title=@localizer["CODICE FORNITORE"] />
+        <GridColumn Field=@nameof(ServicePartner.RagioneSociale) Title=@localizer["RAGIONE SOCIALE"] />
+        <GridColumn Field=@nameof(ServicePartner.CodiceCliente) Title=@localizer["CODICE UTENTE"] />
+        <GridCommandColumn Title="N° UTENTI" Context="sp">
+            @{ var serviceP = sp as ServicePartner;
+                <GridCommandButton Command="EditSP" Icon="" ImageUrl="/img/Icons/solid/primary/people-fill.svg" OnClick="@(() => NavigationManager.NavigateTo($"detailservicepartner/{serviceP.Id}"))" />
+                @serviceP.Utenti.Count() }
+        </GridCommandColumn>
         <GridCommandColumn Width="75px">
             <GridCommandButton Class="bt-cmd" Command="MyOwnCommand" Icon="" ShowInEdit="false" ImageUrl="/img/Icons/setting.svg" OnClick="@EditHandler"></GridCommandButton>
         </GridCommandColumn>
