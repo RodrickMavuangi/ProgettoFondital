@@ -246,12 +246,6 @@ a {
 }
 
 
-
-/*************** LARGHEZZE ******************/
-.w100 {
-    width: 100% !important;
-}
-
 /*************** BORDI ******************/
 
 .border-bottom {
@@ -266,14 +260,12 @@ a {
     border-right: 2px solid #dee2e6 !important;
 }
 
-
-
 /*************** NOTIFICHE ******************/
 
 .notifica {
 }
     .notifica .alert {
-        padding: 14px 16px 15px 16px;
+        padding: 12px ​16px 13px 16p;
     }
 
 /*************** SELECT LINGUA ******************/
@@ -504,6 +496,11 @@ a {
         background-color: #007BFF !important;
     }
 
+
+/*************** LARGHEZZE ******************/
+.w100 {
+    width: 100% !important;
+}
 
 /*************** MODAL ******************/
 

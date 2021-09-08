@@ -3,11 +3,6 @@
 @inject IStringLocalizer<App> localizer
 @attribute [Authorize]
 
-
-
-
-
-
 <div class="row-1 d-flex justify-content-between flex-wrap flex-md-nowrap  pt-0 mb-64">
 <!--TITOLO PAGINA-->
     <div class="col-md-5  text-left pb-4 border-bottom">
@@ -69,11 +64,11 @@ else
 
         @if (submitSucceded == true)
         {
-<div class="col-md-4  text-left pb-4 float-lg-left mt-48 notifica"><span class="alert-success alert">@localizer["ModificheSuccesso"]</span></div>
+<div class="col-md-4  text-left pb-4 float-lg-left mt-36 notifica"><span class="alert-success alert">@localizer["ModificheSuccesso"]</span></div>
         }
         else if (submitSucceded == false)
         {
-<div class="col-md-4  text-left pb-4 float-lg-left pt-48 notifica "><span class="alert-danger alert">@localizer["ModificheErrore"]</span></div>
+<div class="col-md-4  text-left pb-4 float-lg-left pt-36 notifica "><span class="alert-danger alert">@localizer["ModificheErrore"]</span></div>
         }
 </div>
 }
