@@ -228,9 +228,6 @@
   <data name="ModificheSuccesso" xml:space="preserve">
     <value>Modifiche effettuate con successo. RU</value>
   </data>
-  <data name="ModificaLavorazione" xml:space="preserve">
-    <value>Modifica Lavorazione # RU</value>
-  </data>
   <data name="NoLoginEffettuato" xml:space="preserve">
     <value>Non hai effettuato il login RU</value>
   </data>
@@ -344,5 +341,7 @@
   </data>
   <data name="Utenti" xml:space="preserve">
     <value>Utenti RU</value>
+  <data name="Lavorazione" xml:space="preserve">
+    <value>Lavorazione RU</value>
   </data>
 </root>
