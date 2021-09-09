@@ -57,8 +57,10 @@
     </div>
 
 </div><!--FINE BARRA FILTRI-->
+
+
 @*Modale per l'aggiunta dell'anagrafica*@
-<TelerikWindow Class="modal-app" Width="500px" Height="300px" Centered="true" @bind-Visible=@WindowVisible Modal="true">
+<TelerikWindow Class="modal-app modal fade" Centered="true" @bind-Visible=@WindowVisible Modal="true">
 
     <WindowActions>
         <WindowAction Name="Close" />
@@ -73,7 +75,7 @@
             }
             else
             {
-                <TelerikForm Model="@ServicePartnerModel" OnSubmit="OnSubmitHandlerAsync" EditContext="myEditContext">
+                <TelerikForm Model="@ServicePartnerModel" OnSubmit="OnSubmitHandlerAsync" EditContext="myEditContext" Class="ciccio">
                     <FormValidation>
                         <DataAnnotationsValidator></DataAnnotationsValidator>
                     </FormValidation>
@@ -115,78 +117,3 @@
         </GridColumns>
     </TelerikGrid>
 </div>
-
-
-@*<style>
-        .myClasse {
-            color: aliceblue;
-            background-color: forestgreen
-        }
-
-        .cont {
-            height: 115px
-        }
-
-        .cont-child {
-            display: flex;
-            flex-direction: row;
-            height: 40px;
-        }
-
-        .editColor {
-            color: aliceblue;
-            background-color: dodgerblue
-        }
-
-        .btn-add {
-            float: right;
-            color: aliceblue;
-            background-color: forestgreen;
-            width: 180px
-        }
-
-        .btn-ad {
-            position: absolute;
-            right: 25px;
-        }
-
-        .tit-pg {
-            display: inline-block;
-        }
-
-        .modal-app {
-            width: 350px;
-        }
-
-        div.k-widget.k-window.modal-app {
-            width: 250px;
-            height: 600px;
-            border: 1px solid white
-        }
-
-        .modal-app .k-dialog-titlebar.k-header.k-window-titlebar {
-            background: white;
-            height: 10px;
-            border: none;
-            color: black
-        }
-
-        .modal-app .k-window-content.k-content.k-dialog-content {
-        }
-
-        .modal-app .k-button.telerik-blazor.k-primary.k-form-submit {
-            border: 2px solid dodgerblue;
-            color: aliceblue;
-            background-color: dodgerblue;
-            width: 700px;
-        }
-
-        .cas-ric {
-            height: auto
-        }
-
-        .cerc-sp {
-            position: absolute;
-            right: 25px;
-        }
-    </style>*@
