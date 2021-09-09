@@ -105,12 +105,12 @@
             <GridColumn Field=@nameof(ServicePartner.CodiceCliente) Title="CODICE UTENTE" />
             <GridColumn Field="N° UTENTI" Title="N° UTENTI" Id="utenti">
                 <Template>
-                    @((context as ServicePartner).Utenti.Count())
+                    <i class="bi bi-people-fill float-lg-left icoClienti blu"></i>
+                    <b>@((context as ServicePartner).Utenti.Count())</b>
                 </Template>
             </GridColumn>
-            <GridCommandColumn Width="80px" Id="thSetting">
-                <GridCommandButton Class="settingCol btnIcon bgBluOn white" Command="MyOwnCommand" Icon="" ShowInEdit="false" ImageUrl="/img/Icons/setting.svg" OnClick="@EditHandler"></GridCommandButton>
-                <i class="bi bi-gear-fill"></i>
+            <GridCommandColumn Width="80px" >
+                <GridCommandButton Class="settingCol btnIcon bgBluOn white" Command="MyOwnCommand" Icon="" ShowInEdit="false" ImageUrl="/img/Icons/gear-fill.svg" OnClick="@EditHandler"></GridCommandButton>
             </GridCommandColumn>
         </GridColumns>
     </TelerikGrid>

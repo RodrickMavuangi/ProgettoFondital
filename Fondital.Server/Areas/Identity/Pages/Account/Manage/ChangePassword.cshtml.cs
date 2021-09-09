@@ -74,7 +74,7 @@ namespace Fondital.Server.Areas.Identity.Pages.Account.Manage
             ReturnUrl = returnUrl;
             Username = username;
             var user = await _userManager.FindByNameAsync(Username);
-            
+
             if (user == null)
             {
                 return NotFound($"Impossibile caricare un utente con username '{Username}'.");
