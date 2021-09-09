@@ -6,10 +6,29 @@
 @inject IConfiguration config
 @attribute [Authorize]
 
-<div style="display: flex;">
-    <h1><b>@localizer["Anagrafiche"]</b> @localizer["Difetti"]</h1>
-    <button class="d-block mr-0 ml-auto" @onclick="(() => ShowAddDialog = true)">@localizer["Nuovo"] @localizer["Difetto"]</button>
+<div class="row-1 d-flex justify-content-between flex-wrap flex-md-nowrap  pt-0">
+    <!--TITOLO PAGINA-->
+    <div class="col-md-5  text-left pb-4 border-bottom">
+        <div class="col  text-left d-inline-block ">
+            <div class="page-header">
+                <h1 class="h1"><b>@localizer["Anagrafiche"]</b> @localizer["Difetti"]</h1>
+            </div>
+        </div>
+    </div>
+    <!--FINE TITLE PAGE-->
+    <!--ROW BOTTONI-->
+    <div class="col-md-7 pb-4 border-bottom pr-0">
+
+        <div class="col  text-left d-none barraStrumenti "> </div>
+        <div class="col  text-right d-inline-block float-lg-right p-0">
+            <button class="btn btn-primary btn-verde btn-lg mx-1" @onclick="(() => ShowAddDialog = true)">@localizer["Nuovo"] @localizer["Difetto"]</button>
+        </div>
+    </div>
+    <!--FINE BUTTON TOP DX-->
 </div>
+<!--FINE ROW 1 . TITOLI + BUTTON DX-->
+
+
 
 @if (ListaDifetti == null)
 {
@@ -17,29 +36,48 @@
 }
 else
 {
-    <TelerikGrid Data=@ListaDifetti Pageable="true" PageSize="@PageSize">
-        <GridToolBar>
-            <span class="k-toolbar-spacer"></span> @* add this spacer to keep the searchbox on the right *@
-            <GridSearchBox />
-        </GridToolBar>
-        <GridColumns>
-            <GridColumn Field=@nameof(Difetto.Id) Title="#" />
-            <GridColumn Field=@nameof(Difetto.NomeItaliano) Title=@localizer["Descrizione"].Value.ToUpper() Visible="@(CurrentCulture == "it-IT")" />
-            <GridColumn Field=@nameof(Difetto.NomeRusso) Title=@localizer["Descrizione"].Value.ToUpper() Visible="@(CurrentCulture == "ru-RU")" />
-            <GridCommandColumn Context="dif">
-                @{
+
+   
+
+
+    <div class="row-2 d-inline w-100 mb-4  pt-0 pb-4 pt-4 border-bottom barraFiltri">
+        <div class="form-group rowFiltri">
+
+            <i class="bi bi-search float-lg-right icoSearch blu"></i>
+            <input class="form-control float-lg-right filtriInput mx-1"  type="text" placeholder="Cerca Difetto ..." />
+        </div>
+    </div><!--FINE BARRA FILTRI-->
+
+
+    <div class="row-3 d-flex justify-content-between flex-wrap flex-md-nowrap  pt-0 pb-4 mb-4">
+        <TelerikGrid Data=@ListaDifetti Pageable="true" PageSize="@PageSize" Class="table table-striped">
+
+
+            <!--<GridToolBar>
+        <span class="k-toolbar-spacer"></span>-->
+            @* add this spacer to keep the searchbox on the right *@
+            <!--<GridSearchBox />
+    </GridToolBar>-->
+
+            <GridColumns>
+                <GridColumn Field=@nameof(Difetto.Id) Title="#" />
+                <GridColumn Field=@nameof(Difetto.NomeItaliano) Title=@localizer["Descrizione"].Value.ToUpper() Visible="@(CurrentCulture == "it-IT")" />
+                <GridColumn Field=@nameof(Difetto.NomeRusso) Title=@localizer["Descrizione"].Value.ToUpper() Visible="@(CurrentCulture == "ru-RU")" />
+                <GridCommandColumn Context="dif">
+                    @{
                         var difetto = dif as Difetto;
-                    <GridCommandButton Command="EditDifetto" Icon="edit" OnClick="@(() => EditDifetto(difetto.Id))" />
-                }
-            </GridCommandColumn>
-            <GridCommandColumn Context="dif">
-                @{
+                        <GridCommandButton Class=" btnIcon bgBianco white" Command="EditDifetto" Icon="" ImageUrl="/img/Icons/edit.svg" OnClick="@(() => EditDifetto(difetto.Id))" />
+                    }
+                </GridCommandColumn>
+                <GridCommandColumn Context="dif">
+                    @{
                         var difetto = dif as Difetto;
-                    <TelerikSwitch OffLabel=" " OnLabel=" " OnChange="@(() => UpdateEnableDifetto(difetto.Id))" @bind-Value="@difetto.IsAbilitato"></TelerikSwitch>
-                }
-            </GridCommandColumn>
-        </GridColumns>
-    </TelerikGrid>
+                        <TelerikSwitch Class="  bgBluOn white" OffLabel=" " OnLabel=" " OnChange="@(() => UpdateEnableDifetto(difetto.Id))" @bind-Value="@difetto.IsAbilitato"></TelerikSwitch>
+                    }
+                </GridCommandColumn>
+            </GridColumns>
+        </TelerikGrid>
+    </div>
 }
 
 <TelerikWindow Modal="true" @bind-Visible="ShowAddDialog">

@@ -585,6 +585,10 @@ a:not([href]):not([tabindex]) {
         z-index: 2;
     }
 
+.table .k-button, .table .k-button-secondary {
+    background-image: none !important;
+}
+
 .btn-blu {
     background-color: #007BFF !important;
     border-color: #007BFF !important;

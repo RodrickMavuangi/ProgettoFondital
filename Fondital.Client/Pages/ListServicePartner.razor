@@ -6,20 +6,7 @@
 @using Fondital.Shared.Models
 @inject ServicePartnerClient servicePartnerClient
 @inherits ListServicePartnerBase
-@*<div class="cont">
-        <div class="cont-child">
-            <div class="tit-pg">
-                <h1><strong>Anagrafiche</strong> Service Partner</h1>
-            </div>
-            <div class="btn-ad">
-                <TelerikButton Class="btn-add" OnClick=@(()=> WindowVisible = true)>Inserisci Anagrafica</TelerikButton>
-            </div>
-        </div>
-        <hr class="hr" />
-        <div class="cerc-sp">
-            <input class="border-rod" @bind-value="SearchText" @bind-value:event="oninput" placeholder="Cerca SP ..." />
-        </div>
-    </div>*@
+
 
 
 
@@ -57,6 +44,8 @@
     </div>
 
 </div><!--FINE BARRA FILTRI-->
+
+
 @*Modale per l'Edervice partner*@
 <TelerikWindow Class="modal-app dialogBox" Width="600px" Height="auto" Centered="true" @bind-Visible="myEditTemplate" Modal="true">
     <WindowActions>
