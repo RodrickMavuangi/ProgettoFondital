@@ -1,38 +1,38 @@
 ﻿@page  "/servicePartners"
 @attribute [Authorize]
 
-@using System.ComponentModel.DataAnnotations
-@inject NavigationManager NavigationManager
 @using Fondital.Shared.Models
 @inject ServicePartnerClient servicePartnerClient
 @inherits ListServicePartnerBase
+@inject IStringLocalizer<App> localizer
+@inject NavigationManager NavigationManager
 
 <div class="cont">
     <div class="cont-child">
         <div class="tit-pg">
-            <h1><strong>Anagrafiche</strong> Service Partner</h1>
+            <h1><strong>@localizer["Anagrafiche"]</strong> @localizer["ServicePartner"]</h1>
         </div>
         <div class="btn-ad">
-            <TelerikButton Class="btn-add" OnClick=@(()=> WindowVisible = true)>Inserisci Anagrafica</TelerikButton>
+            <TelerikButton Class="btn-add" OnClick=@(()=> WindowVisible = true)>@localizer["InserisciAnagrafica"]</TelerikButton>
         </div>
     </div>
-    <hr class="hr"/>
+    <hr class="hr" />
     <div class="cerc-sp">
-        <input class="border-rod" @bind-value="SearchText" @bind-value:event="oninput" placeholder="Cerca SP ..." />
+        <input class="border-rod" @bind-value="SearchText" @bind-value:event="oninput" placeholder=@localizer["CercaSP"] />
     </div>
 </div>
 
-@*Modale per l'Edervice partner*@
-<TelerikWindow Class="modal-app" Width="400px" Height="300px" Centered="true" @bind-Visible="myEditTemplate" Modal="true">
-    <WindowActions>
-        <WindowAction Name="Close" />
-    </WindowActions>
+@*Modale per l'Edit Service partner*@
+<TelerikWindow Class="modal-app" Width="365px" Height="330px" Centered="true" @bind-Visible="myEditTemplate" Modal="true">
+    <WindowTitle>
+        <strong>@localizer["ModificaAnagrafica"]</strong>
+    </WindowTitle>
     <WindowContent>
         @if (ValidSubmit)
         {
-            <div class="demo-alert demo-alert-success" role="alert">
-                The form was submitted successfully.
-            </div>
+        <div class="" role="alert">
+            @localizer["Caricamento"]...
+        </div>
         }
         else
         {
@@ -41,10 +41,14 @@
                     <DataAnnotationsValidator></DataAnnotationsValidator>
                 </FormValidation>
                 <FormItems>
-                    <FormItem Field="@nameof(ServicePartner.RagioneSociale)" ></FormItem>
+                    <FormItem Field="@nameof(ServicePartner.RagioneSociale)"></FormItem>
                     <FormItem Field="@nameof(ServicePartner.CodiceFornitore)"></FormItem>
                     <FormItem Field="@nameof(ServicePartner.CodiceCliente)"></FormItem>
                 </FormItems>
+                <FormButtons>
+                    <TelerikButton Class="btn btn-secondary mr-auto" @onclick="() => myEditTemplate = false" ButtonType="@ButtonType.Button">@localizer["Cancella"]</TelerikButton>
+                    <TelerikButton Class="btn btn-success ml-auto" ButtonType="@ButtonType.Submit">@localizer["Modifica"]</TelerikButton>
+                </FormButtons>
             </TelerikForm>
         }
     </WindowContent>
@@ -52,22 +56,21 @@
 
 
 @*Modale per l'aggiunta dell'anagrafica*@
-<TelerikWindow Class="modal-app" Width="500px" Height="300px" Centered="true" @bind-Visible=@WindowVisible Modal="true">
-
-    <WindowActions>
-        <WindowAction Name="Close" />
-    </WindowActions>
+<TelerikWindow Class="modal-app" Width="350px" Height="330px" Centered="true" @bind-Visible=@WindowVisible Modal="true">
+    <WindowTitle>
+        <strong>@localizer["AggiungiAnagrafica"]</strong>
+    </WindowTitle>
     <WindowContent>
         <div class="demo-section">
             @if (ValidSubmit)
             {
-                <div class="demo-alert demo-alert-success" role="alert">
-                    The form was submitted successfully.
-                </div>
+            <div class="" role="alert">
+                @localizer["Caricamento"]...
+            </div>
             }
             else
             {
-                <TelerikForm Model="@ServicePartnerModel" OnSubmit="OnSubmitHandlerAsync" EditContext="myEditContext">
+                <TelerikForm Model="@ServicePartnerModel" OnSubmit="OnSubmitHandlerAsync" EditContext="myEditContext" ValidationMessageType="@FormValidationMessageType.Inline">
                     <FormValidation>
                         <DataAnnotationsValidator></DataAnnotationsValidator>
                     </FormValidation>
@@ -76,9 +79,10 @@
                         <FormItem Field="@nameof(ServicePartner.CodiceFornitore)"></FormItem>
                         <FormItem Field="@nameof(ServicePartner.CodiceCliente)"></FormItem>
                     </FormItems>
-                    @*<FormButtons>
-                            <TelerikButton  ButtonType="@ButtonType.Submit" Primary="true">SALVA</TelerikButton>
-                        </FormButtons>*@
+                    <FormButtons>
+                        <TelerikButton Class="btn btn-secondary mr-auto" @onclick="() => WindowVisible = false" ButtonType="@ButtonType.Button">@localizer["Cancella"]</TelerikButton>
+                        <TelerikButton Class="btn btn-success ml-auto" ButtonType="@ButtonType.Submit">@localizer["Salva"]</TelerikButton>
+                    </FormButtons>
                 </TelerikForm>
 
             }
@@ -88,21 +92,26 @@
 
 
 @*OnEdit="@EditHandler"//*@
-<TelerikGrid  Data="@ServicePartners_filtered" EditMode="@GridEditMode.Popup" Pageable="true" Height="500px"
-             OnUpdate="@UpdateHandler" OnDelete="@DeleteHandler" OnCreate="@CreateHandler" OnCancel="@CancelHandler" Resizable="true" Sortable="true" >
-   <GridColumns>
-        <GridColumn Field=@nameof(ServicePartner.CodiceFornitore) Title="CODICE FORNITORE" />
-        <GridColumn Field=@nameof(ServicePartner.RagioneSociale) Title="RAGIONE SOCIALE" />
-        <GridColumn Field=@nameof(ServicePartner.CodiceCliente) Title="CODICE UTENTE" />
-        <GridColumn Field="N° UTENTI" Title="N° UTENTI">
-            <Template>
-                @((context as ServicePartner).Utenti.Count())
-            </Template>
-        </GridColumn>
+<TelerikGrid Data="@ServicePartners_filtered"
+             EditMode="@GridEditMode.Popup"
+             Pageable="true"
+             Height="500px"
+             OnUpdate="@UpdateHandler"
+             Resizable="true"
+             Sortable="true">
+    <GridColumns>
+        <GridColumn Field=@nameof(ServicePartner.CodiceFornitore) Title=@localizer["CodiceFornitore"] />
+        <GridColumn Field=@nameof(ServicePartner.RagioneSociale) Title=@localizer["RagioneSociale"] />
+        <GridColumn Field=@nameof(ServicePartner.CodiceCliente) Title=@localizer["CodiceCliente"] />
+        <GridCommandColumn Title="N° UTENTI" Context="sp">
+            @{ var serviceP = sp as ServicePartner;
+                <GridCommandButton Command="EditSP" Icon="" ImageUrl="/img/Icons/solid/primary/people-fill.svg" OnClick="@(() => NavigationManager.NavigateTo($"detailservicepartner/{serviceP.Id}"))" />
+                @serviceP.Utenti.Count() }
+        </GridCommandColumn>
         <GridCommandColumn Width="75px">
             <GridCommandButton Class="bt-cmd" Command="MyOwnCommand" Icon="" ShowInEdit="false" ImageUrl="/img/Icons/setting.svg" OnClick="@EditHandler"></GridCommandButton>
-        </GridCommandColumn>    
-   </GridColumns>
+        </GridCommandColumn>
+    </GridColumns>
 </TelerikGrid>
 
 
@@ -114,13 +123,15 @@
     }
 
     .cont {
-        height:115px
+        height: 115px
     }
-    .cont-child{
-        display:flex;
-        flex-direction:row;
-        height:40px;
+
+    .cont-child {
+        display: flex;
+        flex-direction: row;
+        height: 40px;
     }
+
     .editColor {
         color: aliceblue;
         background-color: dodgerblue
@@ -130,7 +141,7 @@
         float: right;
         color: aliceblue;
         background-color: forestgreen;
-        width: 180px
+        width: 170px
     }
 
     .btn-ad {
@@ -142,21 +153,10 @@
         display: inline-block;
     }
 
-    .modal-app {
-        width: 350px;
-    }
-
     div.k-widget.k-window.modal-app {
         width: 250px;
         height: 600px;
         border: 1px solid white
-    }
-
-    .modal-app .k-dialog-titlebar.k-header.k-window-titlebar {
-        background: white;
-        height: 10px;
-        border: none;
-        color: black
     }
 
     .modal-app .k-window-content.k-content.k-dialog-content {
@@ -172,8 +172,12 @@
     .cas-ric {
         height: auto
     }
-    .cerc-sp{
-        position:absolute;
-        right:25px;
-     }
+
+    .cerc-sp {
+        position: absolute;
+        right: 25px;
+    }
+
+    .k-form-buttons {
+    }
 </style>
