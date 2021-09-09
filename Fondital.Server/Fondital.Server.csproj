@@ -25,7 +25,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Fondital.Client\Fondital.Client.csproj" />
     <ProjectReference Include="..\Fondital.Data\Fondital.Data.csproj" />
     <ProjectReference Include="..\Fondital.Services\Fondital.Services.csproj" />
     <ProjectReference Include="..\Fondital.Shared\Fondital.Shared.csproj" />

@@ -192,8 +192,8 @@
   <data name="ErroreNomeRusso" xml:space="preserve">
     <value>Errore nell'immissione dei dati: il Nome Russo inserito esiste già. RU</value>
   </data>
-  <data name="Esci" xml:space="preserve">
-    <value>Esci RU</value>
+  <data name="Logout" xml:space="preserve">
+    <value>Log out RU</value>
   </data>
   <data name="Forfettario" xml:space="preserve">
     <value>Forfettario RU</value>

@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 
 namespace Fondital.Server.Controllers
 {
+    [AllowAnonymous]
     public class OidcConfigurationController : Controller
     {
         private readonly ILogger<OidcConfigurationController> _logger;

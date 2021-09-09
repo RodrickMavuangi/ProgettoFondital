@@ -23,7 +23,7 @@
       "dotnetRunMessages": "true",
       "launchBrowser": true,
       "inspectUri": "{wsProtocol}://{url.hostname}:{url.port}/_framework/debug/ws-proxy?browser={browserInspectUri}",
-      //"launchUrl": "swagger", //decommentare per avere swagger come pagina iniziale
+      "launchUrl": "swagger", //decommentare per avere swagger come pagina iniziale
       "applicationUrl": "https://localhost:5001;http://localhost:5000",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"

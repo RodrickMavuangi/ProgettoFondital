@@ -1,11 +1,7 @@
 ﻿@page  "/servicePartners"
 @attribute [Authorize]
-
-@using System.ComponentModel.DataAnnotations
 @inject NavigationManager NavigationManager
-@using Fondital.Shared.Models
 @inject ServicePartnerClient servicePartnerClient
-@inherits ListServicePartnerBase
 
 <div class="cont">
     <div class="cont-child">
@@ -18,7 +14,7 @@
     </div>
     <hr class="hr"/>
     <div class="cerc-sp">
-        <input class="border-rod" @bind-value="SearchText" @bind-value:event="oninput" placeholder="Cerca SP ..." />
+        <input class="border-rod" @bind-value="SearchText" @bind-value:event="oninput" placeholder="Cerca SP..." />
     </div>
 </div>
 
@@ -90,19 +86,26 @@
 @*OnEdit="@EditHandler"//*@
 <TelerikGrid  Data="@ServicePartners_filtered" EditMode="@GridEditMode.Popup" Pageable="true" Height="500px"
              OnUpdate="@UpdateHandler" OnDelete="@DeleteHandler" OnCreate="@CreateHandler" OnCancel="@CancelHandler" Resizable="true" Sortable="true" >
-   <GridColumns>
+    <GridColumns>
         <GridColumn Field=@nameof(ServicePartner.CodiceFornitore) Title="CODICE FORNITORE" />
         <GridColumn Field=@nameof(ServicePartner.RagioneSociale) Title="RAGIONE SOCIALE" />
         <GridColumn Field=@nameof(ServicePartner.CodiceCliente) Title="CODICE UTENTE" />
-        <GridColumn Field="N° UTENTI" Title="N° UTENTI">
+        <GridCommandColumn Title="N° UTENTI" Context="sp">
+            @{
+                var serviceP = sp as ServicePartner;
+                <GridCommandButton Command="EditSP" Icon="" ImageUrl="/img/Icons/solid/primary/people-fill.svg" OnClick="@(() => NavigationManager.NavigateTo($"detailservicepartner/{serviceP.Id}"))" />
+                    @serviceP.Utenti.Count()
+            }
+        </GridCommandColumn>
+        @*<GridColumn Field="N° UTENTI" Title="N° UTENTI">
             <Template>
                 @((context as ServicePartner).Utenti.Count())
             </Template>
-        </GridColumn>
+        </GridColumn>*@
         <GridCommandColumn Width="75px">
             <GridCommandButton Class="bt-cmd" Command="MyOwnCommand" Icon="" ShowInEdit="false" ImageUrl="/img/Icons/setting.svg" OnClick="@EditHandler"></GridCommandButton>
-        </GridCommandColumn>    
-   </GridColumns>
+        </GridCommandColumn>
+    </GridColumns>
 </TelerikGrid>
 
 

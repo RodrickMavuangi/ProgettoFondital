@@ -6,6 +6,7 @@ using Fondital.Shared.Models.Auth;
 using Fondital.Shared.Models.Settings;
 using Fondital.Shared.Services;
 using IdentityServer4.Stores;
+using Microsoft.AspNetCore.ApiAuthorization.IdentityServer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
@@ -46,7 +47,7 @@ namespace Fondital.Server
 
             services.Configure<MailSettings>(Configuration.GetSection("MailSettings"));
 
-            services.AddIdentityServer()
+            services.AddIdentityServer( opts => opts.Cors.CorsPolicyName = "CorsPolicy")
             .AddConfigurationStore(options =>
             {
                 options.ConfigureDbContext = builder =>
@@ -63,7 +64,24 @@ namespace Fondital.Server
                     options.TokenCleanupInterval = 30;
                 }
             ).AddInMemoryCaching().AddClientStore<InMemoryClientStore>().AddResourceStore<InMemoryResourcesStore>()
-            .AddApiAuthorization<Utente, FonditalDbContext>();
+            .AddApiAuthorization<Utente, FonditalDbContext>(
+                //options =>
+                //{
+                //    // Clients
+                //    var spaClient = ClientBuilder
+                //        .SPA("Fondital.Client")
+                //        .WithRedirectUri("https://localhost:5001/authentication/login-callback")
+                //        .WithLogoutRedirectUri("https://localhost:5001/authentication/login")
+                //        .WithScopes("openid", "profile")
+                //        .Build();
+                //    spaClient.AllowedCorsOrigins = new[]
+                //    {
+                //        "https://localhost:5003"
+                //    };
+                //
+                //    options.Clients.Add(spaClient);
+                //}
+            );
 
             services.AddAuth(jwtSettings);
 

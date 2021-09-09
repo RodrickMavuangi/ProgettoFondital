@@ -1,17 +1,19 @@
 ﻿@inject NavigationManager Navigation
 @inject SignOutSessionStateManager SignOutManager
 @inject IStringLocalizer<App> localizer
+@inject AuthenticationStateProvider authStateProvider
+@inject FonditalAuthenticationState authState
 
 <div class="user-info">
     <AuthorizeView>
         @*<Authorizing>
-            <text>...</text>
-        </Authorizing>*@
+                <text>...</text>
+            </Authorizing>*@
         <Authorized>
-            <button class="nav-link" @onclick="BeginSignOut">@localizer["Esci"]</button>
+            <button class="nav-link" @onclick="BeginSignOut">@localizer["Logout"]</button>
         </Authorized>
         @*<NotAuthorized>
-            <a class="nav-link" href="authentication/login">@localizer["Accedi"]</a>
-        </NotAuthorized>*@
+                <a class="nav-link" href="authentication/login">@localizer["Accedi"]</a>
+            </NotAuthorized>*@
     </AuthorizeView>
 </div>
