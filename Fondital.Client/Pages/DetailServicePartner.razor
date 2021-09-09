@@ -6,7 +6,7 @@
 
 @if (ServicePartnerModel_UpdateSP.Id == default)
 {
-    <p>Loading Service Partner data ....</p>
+    <p>@localizer["Caricamento"]...</p>
 }
 else
 {
@@ -43,7 +43,7 @@ else
                 </div>
                 <div class="border-rod">
                     <TelerikDropDownList Width="180px" Class="border-rod" PopupClass="dropdown-ite"
-                                         Data="@ListaScelta" ValueChanged="@( (string v) => MyValueChangeHandler(v) )" DefaultText="@((SceltaCorrente==null)?localizer["STATO DELL'UTENTE"]:null)">
+                                         Data="@ListaScelta" ValueChanged="@( (string v) => MyValueChangeHandler(v) )" DefaultText="@((SceltaCorrente==null)?@localizer["STATO DELL'UTENTE"]:null)">
                     </TelerikDropDownList>
                 </div>
             </div>

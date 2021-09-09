@@ -1,5 +1,4 @@
-﻿//using BlastOff.Shared;
-using Fondital.Client.Clients;
+﻿using Fondital.Client.Clients;
 using Fondital.Shared.Models;
 using Fondital.Shared.Models.Auth;
 using Microsoft.AspNetCore.Components;
@@ -39,9 +38,12 @@ namespace Fondital.Client.Pages
 		public int UtentiAbilitati { get; set; } = 0;
 		public int UtentiDisabilitati { get; set; } = 0;
 		public ServicePartner servicePartnersWithUtenti { get; set; } = new ServicePartner() { Utenti = new List<Utente>()};
+
 		Utente DatiUtente = new Utente();
 		public List<string> ListaScelta { get; set; } = new List<string>() { };
+
 		public string SceltaCorrente = string.Empty;
+
 	    [Parameter]
 		public string servicePId { get; set; }
 
@@ -49,7 +51,7 @@ namespace Fondital.Client.Pages
 
 		protected override async Task OnInitializedAsync()
 		{
-			ListaScelta = new List<string>() { @localizer["Tutti"], localizer["Abilitati"], localizer["Disabilitati"] };
+			ListaScelta = new List<string>() { @localizer["Tutti"], @localizer["Abilitati"], @localizer["Disabilitati"] };
 			myEditContext_AddUTente = new EditContext(ServicePartnerModel_AddUtente);
 			myEditContext_UpdateSP = new EditContext(ServicePartnerModel_UpdateSP);
 			myEditContext_UpdateUtente = new EditContext(UtenteModel_EditUtente);
@@ -148,8 +150,8 @@ namespace Fondital.Client.Pages
 		{
 			Utente ut = FilteredUtenti.Single(x => x.Id == Id);
 			bool isConfirmed = false;
-			if (ut.IsAbilitato)isConfirmed = await Dialogs.ConfirmAsync(localizer[$"Si è sicuri di voler abilitare l'utente {ut.Nome} {ut.Cognome} ?", "Modifica utente"]);
-			else isConfirmed = await Dialogs.ConfirmAsync(localizer[$"Si è sicuri di voler disabilitare l'utente {ut.Nome} {ut.Cognome} ?", "Modifica utente"]);
+			if (ut.IsAbilitato)isConfirmed = await Dialogs.ConfirmAsync(@localizer[$"Si è sicuri di voler abilitare l'utente {ut.Nome} {ut.Cognome} ?", "Modifica utente"]);
+			else isConfirmed = await Dialogs.ConfirmAsync(@localizer[$"Si è sicuri di voler disabilitare l'utente {ut.Nome} {ut.Cognome} ?", "Modifica utente"]);
 			
 			if (isConfirmed)
 			{
