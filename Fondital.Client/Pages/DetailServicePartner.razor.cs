@@ -150,8 +150,8 @@ namespace Fondital.Client.Pages
 		{
 			Utente ut = FilteredUtenti.Single(x => x.Id == Id);
 			bool isConfirmed = false;
-			if (ut.IsAbilitato)isConfirmed = await Dialogs.ConfirmAsync(@localizer[$"Si è sicuri di voler abilitare l'utente {ut.Nome} {ut.Cognome} ?", "Modifica utente"]);
-			else isConfirmed = await Dialogs.ConfirmAsync(@localizer[$"Si è sicuri di voler disabilitare l'utente {ut.Nome} {ut.Cognome} ?", "Modifica utente"]);
+			if (ut.IsAbilitato)isConfirmed = await Dialogs.ConfirmAsync($"{@localizer["ConfermaModificaUtente"]} {ut.Nome} {ut.Cognome} ?",@localizer["ModificaUtente"]);
+			else isConfirmed = await Dialogs.ConfirmAsync($"{@localizer["ConfermaModificaUtenteAb"]} {ut.Nome} {ut.Cognome} ?", localizer["ModificaUtente"]);
 			
 			if (isConfirmed)
 			{

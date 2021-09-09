@@ -10,22 +10,22 @@
 <div class="cont">
     <div class="cont-child">
         <div class="tit-pg">
-            <h1><strong>@localizer["Anagrafiche"]</strong> @localizer["Service Partner"]</h1>
+            <h1><strong>@localizer["Anagrafiche"]</strong> @localizer["ServicePartner"]</h1>
         </div>
         <div class="btn-ad">
-            <TelerikButton Class="btn-add" OnClick=@(()=> WindowVisible = true)>@localizer["Inserisci Anagrafica"]</TelerikButton>
+            <TelerikButton Class="btn-add" OnClick=@(()=> WindowVisible = true)>@localizer["InserisciAnagrafica"]</TelerikButton>
         </div>
     </div>
     <hr class="hr" />
     <div class="cerc-sp">
-        <input class="border-rod" @bind-value="SearchText" @bind-value:event="oninput" placeholder=@localizer["Cerca SP"] />
+        <input class="border-rod" @bind-value="SearchText" @bind-value:event="oninput" placeholder=@localizer["CercaSP"] />
     </div>
 </div>
 
 @*Modale per l'Edit Service partner*@
 <TelerikWindow Class="modal-app" Width="365px" Height="330px" Centered="true" @bind-Visible="myEditTemplate" Modal="true">
     <WindowTitle>
-        <strong>@localizer["Modifica"] @localizer["Anagrafica"]</strong>
+        <strong>@localizer["ModificaAnagrafica"]</strong>
     </WindowTitle>
     <WindowContent>
         @if (ValidSubmit)
@@ -58,7 +58,7 @@
 @*Modale per l'aggiunta dell'anagrafica*@
 <TelerikWindow Class="modal-app" Width="350px" Height="330px" Centered="true" @bind-Visible=@WindowVisible Modal="true">
     <WindowTitle>
-        <strong>@localizer["Aggiungi"] @localizer["Anagrafica"]</strong>
+        <strong>@localizer["AggiungiAnagrafica"]</strong>
     </WindowTitle>
     <WindowContent>
         <div class="demo-section">
@@ -100,9 +100,9 @@
              Resizable="true"
              Sortable="true">
     <GridColumns>
-        <GridColumn Field=@nameof(ServicePartner.CodiceFornitore) Title=@localizer["CODICE FORNITORE"] />
-        <GridColumn Field=@nameof(ServicePartner.RagioneSociale) Title=@localizer["RAGIONE SOCIALE"] />
-        <GridColumn Field=@nameof(ServicePartner.CodiceCliente) Title=@localizer["CODICE UTENTE"] />
+        <GridColumn Field=@nameof(ServicePartner.CodiceFornitore) Title=@localizer["CodiceFornitore"] />
+        <GridColumn Field=@nameof(ServicePartner.RagioneSociale) Title=@localizer["RagioneSociale"] />
+        <GridColumn Field=@nameof(ServicePartner.CodiceCliente) Title=@localizer["CodiceCliente"] />
         <GridCommandColumn Title="N° UTENTI" Context="sp">
             @{ var serviceP = sp as ServicePartner;
                 <GridCommandButton Command="EditSP" Icon="" ImageUrl="/img/Icons/solid/primary/people-fill.svg" OnClick="@(() => NavigationManager.NavigateTo($"detailservicepartner/{serviceP.Id}"))" />

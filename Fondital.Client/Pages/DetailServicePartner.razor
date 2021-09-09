@@ -14,12 +14,12 @@ else
         <div class="u-h-left">
             <div class="top">
                 <div class="TechSt"><strong>@ServicePartnerModel_UpdateSP.RagioneSociale</strong></div>
-                <div class="butt"><TelerikButton OnClick="@( _ => isModalVisible = true )">@localizer["Modifica SP"]</TelerikButton></div>
+                <div class="butt"><TelerikButton OnClick="@( _ => isModalVisible = true )">@localizer["ModificaSP"]</TelerikButton></div>
             </div>
             <hr />
             <div class="middle">
-                <div class="Forn"><span class="span">@localizer["Codice Fornitore"] : </span><strong>@ServicePartnerModel_UpdateSP.CodiceFornitore</strong> </div>
-                <div class="CClient"><span class="span">@localizer["Codice Cliente"] : </span><strong>@ServicePartnerModel_UpdateSP.CodiceCliente</strong></div>
+                <div class="Forn"><span class="span">@localizer["CodiceFornitore"] : </span><strong>@ServicePartnerModel_UpdateSP.CodiceFornitore</strong> </div>
+                <div class="CClient"><span class="span">@localizer["CodiceCliente"] : </span><strong>@ServicePartnerModel_UpdateSP.CodiceCliente</strong></div>
             </div>
             <hr />
             <div class="bottom"></div>
@@ -33,17 +33,17 @@ else
                     <span class="ut-Disab">@localizer["Disabilitati"] / @UtentiDisabilitati</span>
                 </div>
                 <div>
-                    <TelerikButton Class="btn-add" OnClick=@(()=> WindowVisible = true)>@localizer["Aggiungi Utente"]</TelerikButton>
+                    <TelerikButton Class="btn-add" OnClick=@(()=> WindowVisible = true)>@localizer["AggiungiUtente"]</TelerikButton>
                 </div>
 
             </div>
             <div class="Cerca">
                 <div>
-                    <input class="border-rod-first" @bind-value="SearchText" @bind-value:event="oninput" placeholder=@localizer["Cerca Utenti ..."] />
+                    <input class="border-rod-first" @bind-value="SearchText" @bind-value:event="oninput" placeholder=@localizer["CercaUtenti"] />
                 </div>
                 <div class="border-rod">
                     <TelerikDropDownList Width="180px" Class="border-rod" PopupClass="dropdown-ite"
-                                         Data="@ListaScelta" ValueChanged="@( (string v) => MyValueChangeHandler(v) )" DefaultText="@((SceltaCorrente==null)?@localizer["STATO DELL'UTENTE"]:null)">
+                                         Data="@ListaScelta" ValueChanged="@( (string v) => MyValueChangeHandler(v) )" DefaultText="@((SceltaCorrente==null)?@localizer["StatoUtente"]:null)">
                     </TelerikDropDownList>
                 </div>
             </div>
@@ -53,7 +53,7 @@ else
 @*Modal per la modifica del service partner*@
 <TelerikWindow Class="modal-app" Width="360px" Height="330px" Centered="true" @bind-Visible="isModalVisible" Modal="true">
     <WindowTitle>
-        <strong>@localizer["Modifica"] @localizer["Service Partner"]</strong>
+        <strong>@localizer["ModificaServicePartner"]</strong>
     </WindowTitle>
     <WindowContent>
         @if (ValidSubmit)
@@ -86,7 +86,7 @@ else
 @*Modal per la modifica dell'utente*@
 <TelerikWindow Class="modal-app" Width="360px" Height="330px" Centered="true" @bind-Visible="myEditTemplate" Modal="true">
     <WindowTitle>
-        <strong>@localizer["Modifica"] @localizer["Utente"]</strong>
+        <strong>@localizer["ModificaUtente"]</strong>
     </WindowTitle>
     <WindowContent>
         @if (ValidSubmit)
@@ -119,7 +119,7 @@ else
 @*Modal per l'aggiunta dell'utente*@
 <TelerikWindow Class="modal-app" Width="350px" Height="330px" Centered="true" @bind-Visible=@WindowVisible Modal="true">
     <WindowTitle>
-        <strong>@localizer["Aggiungi"] @localizer["Utente"]</strong>
+        <strong>@localizer["AggiungiUtente"]</strong>
     </WindowTitle>
     <WindowContent>
         <div class="demo-section">

@@ -24,13 +24,13 @@ namespace Fondital.Client.Clients
         {
             return await httpClient.GetFromJsonAsync<IEnumerable<ServicePartner>>("servicePartnersControl", JsonSerializerOpts.JsonOpts);
         }
-        public async Task CreateServicePartner(ServicePartner servicePartner)
+        public async Task<ServicePartner> CreateServicePartner(ServicePartner servicePartner)
         {
             var response = await httpClient.PostAsJsonAsync($"servicePartnersControl", servicePartner, JsonSerializerOpts.JsonOpts);
-            //response.EnsureSuccessStatusCode();
-            //var result = await response.Content.ReadFromJsonAsync<ServicePartner>();
-            //return result;
-        }
+			response.EnsureSuccessStatusCode();
+			var result = await response.Content.ReadFromJsonAsync<ServicePartner>(JsonSerializerOpts.JsonOpts);
+			return result;
+		}
 
         public async Task UpdateServicePartner(int id, ServicePartner servicePartner) =>
             await httpClient.PutAsJsonAsync($"servicePartnersControl/{id}", servicePartner, JsonSerializerOpts.JsonOpts);
