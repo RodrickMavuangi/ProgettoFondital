@@ -457,11 +457,55 @@ a:not([href]):not([tabindex]) {
         text-align: right;
     }
 
+.nomeCircle {
+    width: 1.5em;
+    height: 1.5em;
+    box-sizing: initial;
+    background: #F4F4F4;
+    border: 0.1em solid #F4F4F4;
+    color: #007BFF;
+    text-align: center;
+    border-radius: 50%;
+    line-height: 1.5em;
+    box-sizing: content-box;
+    padding: 10px 15px 10px 5px;
+    display: inline-block;
+    float: left;
+}
+
+.fontProfilo {
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.menuProfilo {
+    display: inline-block;
+    float: left;
+}
+
+    .menuProfilo li.k-item {
+        margin: 0 0 0 0 !important;
+    }
+
+        .menuProfilo li.k-item .k-menu-link {
+            margin: 0 0 0 1em !important;
+            background: none;
+            padding: 0 0 0 0 !important;
+            align-items: center;
+            display: flex !important;
+            height: 47px;
+        }
+            .menuProfilo li.k-item .k-menu-link .k-menu-expand-arrow {
+                color: #fff;
+            }
+
+
 /*************** FORM. INPUT ******************/
 
+
 .icoSearch {
-    padding-top: 12px;
-    margin-left: 24px;
+                padding-top: 12px;
+                margin-left: 24px;
 }
 
 .form-control, .form-select, .input-group {
