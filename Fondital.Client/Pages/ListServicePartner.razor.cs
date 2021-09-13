@@ -22,7 +22,6 @@ namespace Fondital.Client.Pages
 		public ServicePartner ServicePartnerModel_UpdateSP { get; set; } = new ServicePartner() { CodiceCliente = "", CodiceFornitore = "", RagioneSociale = "" };
 
 		public List<string> SearchableFields = new List<string> { "RagioneSociale" };
-		[Inject] public ServicePartnerClient servicePartnerClient { get; set; }
 
 		public string SearchText = "";
 		public bool myEditTemplate { get; set; } = false;
