@@ -16,11 +16,11 @@
                     <NavMenu></NavMenu>
                 </div>
                 <div class="col-1 text-right">
-                    <div class="lingua float-lg-left">
+                    <div class="lingua float-lg-left border-right-2">
                         <CultureSelector></CultureSelector>
                     </div>
                 </div>
-                 <div class="col-2">
+                <div class="col-2">
                     <div class="float-lg-right">
                         <div class="float-lg-left link-light">
                             <ul class="mb-0 profilo">
@@ -29,14 +29,21 @@
                             </ul>
                         </div>
                         <div class="float-lg-left align-items-center">
-                            <a class="d-block link-light text-decoration-none dropdown-toggle" id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false"><img src="https://github.com/mdo.png" alt="mdo" width="32" height="32" class="rounded-circle"></a>
-                            <ul class="dropdown-menu text-small" aria-labelledby="dropdownUser1">
-                                <li><a class="dropdown-item" href="">@localizer["Impostazioni"]</a></li>
-                                <li>
-                                    <hr class="dropdown-divider">
-                                </li>
-                                <li><a class="dropdown-item" href="">@localizer["Esci"]</a></li>
-                            </ul>
+                           
+
+                            <div class="nomeCircle fontProfilo">GDD</div>
+
+                            <TelerikMenu Data="@MenuItems"
+                                         UrlField="@nameof(MenuItem.Page)"
+                                         ItemsField="@nameof(MenuItem.SubSectionList)"
+                                         TextField="@nameof(MenuItem.Section)"
+                                         Class="menuProfilo"
+                                         >
+                            </TelerikMenu>
+
+
+
+                            
                         </div>
                     </div>
                 </div>
@@ -44,3 +51,42 @@
         </div>
     </div>
 </header>
+
+
+@code {
+    public List<MenuItem> MenuItems { get; set; }
+
+    public class MenuItem
+    {
+        public string Section { get; set; }
+        public string Page { get; set; }
+        public List<MenuItem> SubSectionList { get; set; }
+    }
+
+    protected override void OnInitialized()
+    {
+        MenuItems = new List<MenuItem>()
+    {
+            
+            new MenuItem()
+            {
+                Section = "",
+                SubSectionList = new List<MenuItem>()
+            {
+                    new MenuItem()
+                    {
+                        Section = @localizer["Impostazioni"],
+                        Page = "/profilo"
+                    },
+                    new MenuItem()
+                    {
+                        Section = @localizer["Esci"],
+                        Page = "/logout"
+                    }
+                }
+            }
+        };
+
+        base.OnInitialized();
+    }
+}

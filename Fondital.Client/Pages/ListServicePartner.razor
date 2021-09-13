@@ -7,43 +7,63 @@
 @inject IStringLocalizer<App> localizer
 @inject NavigationManager NavigationManager
 
-<div class="cont">
-    <div class="cont-child">
-        <div class="tit-pg">
-            <h1><strong>@localizer["Anagrafiche"]</strong> @localizer["ServicePartner"]</h1>
-        </div>
-        <div class="btn-ad">
-            <TelerikButton Class="btn-add" OnClick=@(()=> WindowVisible = true)>@localizer["InserisciAnagrafica"]</TelerikButton>
+<div class="row-1 d-flex justify-content-between flex-wrap flex-md-nowrap  pt-0">
+    <!--TITOLO PAGINA-->
+    <div class="col-md-5  text-left pb-4 border-bottom">
+        <div class="col  text-left d-inline-block ">
+            <div class="page-header">
+                <h1 class="h1"><b>Anagrafiche</b> Service Partner</h1>
+            </div>
         </div>
     </div>
-    <hr class="hr" />
-    <div class="cerc-sp">
-        <input class="border-rod" @bind-value="SearchText" @bind-value:event="oninput" placeholder=@localizer["CercaSP"] />
-    </div>
-</div>
+    <!--FINE TITLE PAGE-->
+    <!--ROW BOTTONI-->
+    <div class="col-md-7 pb-4 border-bottom pr-0">
 
-@*Modale per l'Edit Service partner*@
-<TelerikWindow Class="modal-app" Width="365px" Height="330px" Centered="true" @bind-Visible="myEditTemplate" Modal="true">
-    <WindowTitle>
-        <strong>@localizer["ModificaAnagrafica"]</strong>
-    </WindowTitle>
+        <div class="col  text-left d-none barraStrumenti "> </div>
+        <div class="col  text-right d-inline-block float-lg-right p-0">
+            <TelerikButton Class="btn btn-primary btn-verde btn-lg mx-1" OnClick=@(()=> WindowVisible = true)>@localizer["InserisciAnagrafica"]</TelerikButton>
+        </div>
+    </div>
+    <!--FINE BUTTON TOP DX-->
+</div>
+<!--FINE ROW 1 . TITOLI + BUTTON DX-->
+
+
+<div class="row-2 d-inline w-100 mb-4  pt-0 pb-4 pt-4 border-bottom barraFiltri">
+    <div class="form-group rowFiltri">
+
+        @*<img src="../img/Icons/search.svg" class="bi bi-search float-lg-right icoSearch blu" />*@
+        <i class="bi bi-search float-lg-right icoSearch blu"></i>
+        <input class="form-control float-lg-right filtriInput mx-1" @bind-value="SearchText" @bind-value:event="oninput" placeholder=@localizer["CercaSP" />
+
+    </div>
+
+</div><!--FINE BARRA FILTRI-->
+
+
+@*Modale per l'Edervice partner*@
+<TelerikWindow Class="modal-app dialogBox" Width="600px" Height="auto" Centered="true" @bind-Visible="myEditTemplate" Modal="true">
+    <WindowActions>
+        <WindowAction Name="Close" />
+    </WindowActions>
     <WindowContent>
         @if (ValidSubmit)
         {
-        <div class="" role="alert">
-            @localizer["Caricamento"]...
-        </div>
+            <div class="demo-alert demo-alert-success alert" role="alert">
+                The form was submitted successfully.
+            </div>
         }
         else
         {
-            <TelerikForm Model="@ServicePartnerModel_UpdateSP" OnSubmit="@EditSP_UpdateHandler" EditContext="myEditContext_UpdateSP">
+            <TelerikForm Model="@ServicePartnerModel_UpdateSP" OnSubmit="@EditSP_UpdateHandler" EditContext="myEditContext_UpdateSP" Class="dialogForm">
                 <FormValidation>
                     <DataAnnotationsValidator></DataAnnotationsValidator>
                 </FormValidation>
                 <FormItems>
-                    <FormItem Field="@nameof(ServicePartner.RagioneSociale)"></FormItem>
-                    <FormItem Field="@nameof(ServicePartner.CodiceFornitore)"></FormItem>
-                    <FormItem Field="@nameof(ServicePartner.CodiceCliente)"></FormItem>
+                    <FormItem Class="form-group" Field="@nameof(ServicePartner.RagioneSociale)"></FormItem>
+                    <FormItem Class="form-group" Field="@nameof(ServicePartner.CodiceFornitore)"></FormItem>
+                    <FormItem Class="form-group" Field="@nameof(ServicePartner.CodiceCliente)"></FormItem>
                 </FormItems>
                 <FormButtons>
                     <TelerikButton Class="btn btn-secondary mr-auto" @onclick="() => myEditTemplate = false" ButtonType="@ButtonType.Button">@localizer["Cancella"]</TelerikButton>
@@ -56,128 +76,59 @@
 
 
 @*Modale per l'aggiunta dell'anagrafica*@
-<TelerikWindow Class="modal-app" Width="350px" Height="330px" Centered="true" @bind-Visible=@WindowVisible Modal="true">
-    <WindowTitle>
-        <strong>@localizer["AggiungiAnagrafica"]</strong>
-    </WindowTitle>
+<TelerikWindow Class="modal-app dialogBox" Width="500px" Height="auto" Centered="true" @bind-Visible=@WindowVisible Modal="true">
+    <WindowActions>
+        <WindowAction Name="Close" />
+    </WindowActions>
     <WindowContent>
         <div class="demo-section">
             @if (ValidSubmit)
             {
-            <div class="" role="alert">
-                @localizer["Caricamento"]...
-            </div>
+                <div class="demo-alert demo-alert-success alert" role="alert">
+                    The form was submitted successfully.
+                </div>
             }
             else
             {
-                <TelerikForm Model="@ServicePartnerModel" OnSubmit="OnSubmitHandlerAsync" EditContext="myEditContext" ValidationMessageType="@FormValidationMessageType.Inline">
+                <TelerikForm Model="@ServicePartnerModel" OnSubmit="OnSubmitHandlerAsync" EditContext="myEditContext" Class="dialogForm">
                     <FormValidation>
                         <DataAnnotationsValidator></DataAnnotationsValidator>
                     </FormValidation>
                     <FormItems>
-                        <FormItem Field="@nameof(ServicePartner.RagioneSociale)"></FormItem>
-                        <FormItem Field="@nameof(ServicePartner.CodiceFornitore)"></FormItem>
-                        <FormItem Field="@nameof(ServicePartner.CodiceCliente)"></FormItem>
+                        <FormItem Class="form-group" Field="@nameof(ServicePartner.RagioneSociale)"></FormItem>
+                        <FormItem Class="form-group" Field="@nameof(ServicePartner.CodiceFornitore)"></FormItem>
+                        <FormItem Class="form-group" Field="@nameof(ServicePartner.CodiceCliente)"></FormItem>
                     </FormItems>
                     <FormButtons>
                         <TelerikButton Class="btn btn-secondary mr-auto" @onclick="() => WindowVisible = false" ButtonType="@ButtonType.Button">@localizer["Cancella"]</TelerikButton>
                         <TelerikButton Class="btn btn-success ml-auto" ButtonType="@ButtonType.Submit">@localizer["Salva"]</TelerikButton>
                     </FormButtons>
                 </TelerikForm>
-
             }
         </div>
     </WindowContent>
 </TelerikWindow>
 
 
+
 @*OnEdit="@EditHandler"//*@
-<TelerikGrid Data="@ServicePartners_filtered"
-             EditMode="@GridEditMode.Popup"
-             Pageable="true"
-             Height="500px"
-             OnUpdate="@UpdateHandler"
-             Resizable="true"
-             Sortable="true">
-    <GridColumns>
-        <GridColumn Field=@nameof(ServicePartner.CodiceFornitore) Title=@localizer["CodiceFornitore"] />
-        <GridColumn Field=@nameof(ServicePartner.RagioneSociale) Title=@localizer["RagioneSociale"] />
-        <GridColumn Field=@nameof(ServicePartner.CodiceCliente) Title=@localizer["CodiceCliente"] />
-        <GridCommandColumn Title="N° UTENTI" Context="sp">
-            @{ var serviceP = sp as ServicePartner;
-                <GridCommandButton Command="EditSP" Icon="" ImageUrl="/img/Icons/solid/primary/people-fill.svg" OnClick="@(() => NavigationManager.NavigateTo($"detailservicepartner/{serviceP.Id}"))" />
-                @serviceP.Utenti.Count() }
-        </GridCommandColumn>
-        <GridCommandColumn Width="75px">
-            <GridCommandButton Class="bt-cmd" Command="MyOwnCommand" Icon="" ShowInEdit="false" ImageUrl="/img/Icons/setting.svg" OnClick="@EditHandler"></GridCommandButton>
-        </GridCommandColumn>
-    </GridColumns>
-</TelerikGrid>
+<div class="row-3 d-flex justify-content-between flex-wrap flex-md-nowrap  pt-0 pb-4 mb-4">
 
-
-
-<style>
-    .myClasse {
-        color: aliceblue;
-        background-color: forestgreen
-    }
-
-    .cont {
-        height: 115px
-    }
-
-    .cont-child {
-        display: flex;
-        flex-direction: row;
-        height: 40px;
-    }
-
-    .editColor {
-        color: aliceblue;
-        background-color: dodgerblue
-    }
-
-    .btn-add {
-        float: right;
-        color: aliceblue;
-        background-color: forestgreen;
-        width: 170px
-    }
-
-    .btn-ad {
-        position: absolute;
-        right: 25px;
-    }
-
-    .tit-pg {
-        display: inline-block;
-    }
-
-    div.k-widget.k-window.modal-app {
-        width: 250px;
-        height: 600px;
-        border: 1px solid white
-    }
-
-    .modal-app .k-window-content.k-content.k-dialog-content {
-    }
-
-    .modal-app .k-button.telerik-blazor.k-primary.k-form-submit {
-        border: 2px solid dodgerblue;
-        color: aliceblue;
-        background-color: dodgerblue;
-        width: 700px;
-    }
-
-    .cas-ric {
-        height: auto
-    }
-
-    .cerc-sp {
-        position: absolute;
-        right: 25px;
-    }
-
-    .k-form-buttons {
-    }
-</style>
+    <TelerikGrid Data="@ServicePartners_filtered" EditMode="@GridEditMode.Popup" Pageable="true" Class="table table-striped"
+                 OnUpdate="@UpdateHandler" OnDelete="@DeleteHandler" OnCreate="@CreateHandler" OnCancel="@CancelHandler" Resizable="true" Sortable="true">
+        <GridColumns>
+            <GridColumn Field=@nameof(ServicePartner.CodiceFornitore) Title=@localizer["CodiceFornitore"].Value.ToUpper() />
+            <GridColumn Field=@nameof(ServicePartner.RagioneSociale) Title=@localizer["RagioneSociale"].Value.ToUpper() />
+            <GridColumn Field=@nameof(ServicePartner.CodiceCliente) Title=@localizer["CodiceUtente"].Value.ToUpper() />
+            <GridColumn Field="N° UTENTI" Title="N° UTENTI" Id="utenti">
+                <Template>
+                    <i class="bi bi-people-fill float-lg-left icoClienti blu"></i>
+                    <b>@((context as ServicePartner).Utenti.Count())</b>
+                </Template>
+            </GridColumn>
+            <GridCommandColumn Width="80px">
+                <GridCommandButton Class="settingCol btnIcon bgBluOn white" Command="MyOwnCommand" Icon="" ShowInEdit="false" ImageUrl="/img/Icons/gear-fill.svg" OnClick="@EditHandler"></GridCommandButton>
+            </GridCommandColumn>
+        </GridColumns>
+    </TelerikGrid>
+</div>
