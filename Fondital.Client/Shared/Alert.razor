@@ -1,0 +1,12 @@
+﻿@if (IsVisible)
+{
+    <div class="alert alert-@CSSClass" role="alert">
+        <h4 class="alert-heading">@Title</h4>
+        <ul>
+            @foreach (string error in ErrorList)
+            {
+                <li>@error</li>
+            }
+        </ul>
+    </div>
+}

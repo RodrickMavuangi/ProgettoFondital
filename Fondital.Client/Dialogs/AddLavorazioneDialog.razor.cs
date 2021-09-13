@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Components;
 using System.Threading.Tasks;
 
-namespace Fondital.Client.Shared
+namespace Fondital.Client.Dialogs
 {
     public partial class AddLavorazioneDialog
     {

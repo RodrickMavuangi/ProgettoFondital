@@ -1,31 +1,28 @@
-﻿using Fondital.Shared.Enums;
-using Fondital.Shared.Models;
+﻿using Fondital.Shared.Models;
 using Microsoft.AspNetCore.Components;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
-namespace Fondital.Client.Shared
+namespace Fondital.Client.Dialogs
 {
-    public partial class AddVoceCostoDialog
+    public partial class EditLavorazioneDialog
     {
         [Parameter] public EventCallback OnClose { get; set; }
         [Parameter] public EventCallback OnSave { get; set; }
-        protected VoceCosto NuovaVoceCosto { get; set; } = new VoceCosto();
+        [Parameter] public Lavorazione LavorazioneToUpdate { get; set; }
         protected bool isSubmitting = false;
 
-        protected async Task SalvaVoceCosto()
+        protected async Task SalvaLavorazione()
         {
             isSubmitting = true;
 
             try
             {
-                await httpClient.CreateVoceCosto(NuovaVoceCosto);
+                await httpClient.UpdateLavorazione(LavorazioneToUpdate.Id, LavorazioneToUpdate);
                 isSubmitting = false;
                 await OnSave.InvokeAsync();
             }
-            catch (Exception ex)
+            catch (Exception e)
             {
                 isSubmitting = false;
                 throw;

@@ -9,18 +9,20 @@ using System.Linq;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using RouteAttribute = Microsoft.AspNetCore.Mvc.RouteAttribute;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Fondital.Server.Controllers
 {
     [ApiController]
     [Route("difettiControl")]
+    [Authorize]
     public class DifettoController : ControllerBase
     {
         private readonly ILogger<DifettoController> _logger;
         private readonly IDifettoService _difettoService;
         private readonly IConfiguration _configuration;
 
-        public DifettoController(ILogger<DifettoController> logger, FonditalDbContext db, IDifettoService difettoService, IConfiguration configuration)
+        public DifettoController(ILogger<DifettoController> logger, IDifettoService difettoService, IConfiguration configuration)
         {
             _logger = logger;
             _difettoService = difettoService;

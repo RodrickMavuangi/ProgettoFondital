@@ -1,7 +1,6 @@
 ﻿@layout TelerikLayout
 @inherits LayoutComponentBase
 @inject NavigationManager NavigationManager
-@inject FonditalAuthenticationState AuthState
 @inject IJSRuntime JS
 @inject IStringLocalizer<App> localizer
 
@@ -42,27 +41,30 @@
                         <CultureSelector></CultureSelector>
                     </div>
                 </div>
-
-                <div class="col-2">
-                    <div class="float-lg-right">
-                        <div class="float-lg-left link-light">
-                            <ul class="mb-0 profilo">
-                                <li class="nomeUtente">@localizer["Ciao"] @AuthState.UtenteCorrente?.Nome</li>
-                                <li class="ruoloUtente">@localizer["RuoloDirezione"]</li>
-                            </ul>
+                <AuthorizeView>
+                    <Authorized>
+                        <div class="col-2">
+                            <div class="float-lg-right">
+                                <div class="float-lg-left link-light">
+                                    <ul class="mb-0 profilo">
+                                        <li class="nomeUtente">@localizer["Ciao"] @context.User.Identity.Name</li>
+                                        <li class="ruoloUtente">@localizer["RuoloDirezione"]</li>
+                                    </ul>
+                                </div>
+                                <div class="float-lg-left align-items-center">
+                                    <a class="d-block link-light text-decoration-none dropdown-toggle" id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false"><img src="https://github.com/mdo.png" alt="mdo" width="32" height="32" class="rounded-circle"></a>
+                                    <ul class="dropdown-menu text-small" aria-labelledby="dropdownUser1">
+                                        <li><a class="dropdown-item" href="">@localizer["Impostazioni"]</a></li>
+                                        <li>
+                                            <hr class="dropdown-divider">
+                                        </li>
+                                        <li><a class="dropdown-item" href="account/logout">@localizer["Esci"]</a></li>
+                                    </ul>
+                                </div>
+                            </div>
                         </div>
-                        <div class="float-lg-left align-items-center">
-                            <a class="d-block link-light text-decoration-none dropdown-toggle" id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false"><img src="https://github.com/mdo.png" alt="mdo" width="32" height="32" class="rounded-circle"></a>
-                            <ul class="dropdown-menu text-small" aria-labelledby="dropdownUser1">
-                                <li><a class="dropdown-item" href="">@localizer["Impostazioni"]</a></li>
-                                <li>
-                                    <hr class="dropdown-divider">
-                                </li>
-                                <li><a class="dropdown-item" href="">@localizer["Esci"]</a></li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
+                    </Authorized>
+                </AuthorizeView>
             </div>
         </div>
     </div>

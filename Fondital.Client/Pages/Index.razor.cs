@@ -11,7 +11,7 @@ namespace Fondital.Client.Pages
     public partial class Index
     {
         private List<string> attributi = new List<string>();
-        Utente utente => authState.UtenteCorrente;
+        Utente utente => new Utente();
 
         private async Task GetClaimsPrincipalData()
         {
@@ -21,8 +21,8 @@ namespace Fondital.Client.Pages
             if (utente != null)
             {
                 attributi.Add(utente.UserName + " " + localizer["Autenticato"] + ".");
-                attributi.Add(localizer["Nome"] + ": " + utente.Nome);
-                attributi.Add(localizer["Cognome"] + ": " + utente.Cognome);
+                attributi.Add(localizer["Nome"] + ": " + utente?.Nome);
+                attributi.Add(localizer["Cognome"] + ": " + utente?.Cognome);
 
                 /*
                 attributi.Add($"{utente.UserName} è autenticato.");

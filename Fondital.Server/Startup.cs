@@ -1,21 +1,21 @@
 using Fondital.Data;
-using Fondital.Server.Extensions;
 using Fondital.Services;
 using Fondital.Shared;
 using Fondital.Shared.Models.Auth;
 using Fondital.Shared.Models.Settings;
 using Fondital.Shared.Services;
-using IdentityServer4.Stores;
-using Microsoft.AspNetCore.ApiAuthorization.IdentityServer;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.IdentityModel.Protocols.OpenIdConnect;
+using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using System.Collections.Generic;
-using System.Reflection;
+using System.Text;
 using System.Text.Json.Serialization;
 
 namespace Fondital.Server
@@ -31,8 +31,7 @@ namespace Fondital.Server
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
-        {
-            var jwtSettings = Configuration.GetSection("Jwt").Get<JwtSettings>();
+        {   
             services.AddDbContext<FonditalDbContext>(options => options.UseSqlServer(Configuration["Database:ConnectionString"]));
 
             services.AddDefaultIdentity<Utente>(options =>
@@ -43,47 +42,23 @@ namespace Fondital.Server
                     options.SignIn.RequireConfirmedAccount = false;
                 }).AddRoles<Ruolo>().AddEntityFrameworkStores<FonditalDbContext>();
 
+            var jwtSettings = Configuration.GetSection("Jwt").Get<JwtSettings>();
             services.Configure<JwtSettings>(Configuration.GetSection("Jwt"));
-
-            services.Configure<MailSettings>(Configuration.GetSection("MailSettings"));
-
-            services.AddIdentityServer( opts => opts.Cors.CorsPolicyName = "CorsPolicy")
-            .AddConfigurationStore(options =>
-            {
-                options.ConfigureDbContext = builder =>
-                    builder.UseSqlServer(Configuration["Database:ConnectionString"], sql =>
-                        sql.MigrationsAssembly(typeof(Startup).GetTypeInfo().Assembly.GetName().Name));
-            }).AddOperationalStore(options =>
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+                .AddJwtBearer(options =>
                 {
-                    options.ConfigureDbContext = builder =>
-                        builder.UseSqlServer(Configuration["Database:ConnectionString"],
-                            sql => sql.MigrationsAssembly(typeof(Startup).GetTypeInfo().Assembly.GetName().Name));
-
-                    // this enables automatic token cleanup. this is optional.
-                    options.EnableTokenCleanup = true;
-                    options.TokenCleanupInterval = 30;
-                }
-            ).AddInMemoryCaching().AddClientStore<InMemoryClientStore>().AddResourceStore<InMemoryResourcesStore>()
-            .AddApiAuthorization<Utente, FonditalDbContext>(
-                //options =>
-                //{
-                //    // Clients
-                //    var spaClient = ClientBuilder
-                //        .SPA("Fondital.Client")
-                //        .WithRedirectUri("https://localhost:5001/authentication/login-callback")
-                //        .WithLogoutRedirectUri("https://localhost:5001/authentication/login")
-                //        .WithScopes("openid", "profile")
-                //        .Build();
-                //    spaClient.AllowedCorsOrigins = new[]
-                //    {
-                //        "https://localhost:5003"
-                //    };
-                //
-                //    options.Clients.Add(spaClient);
-                //}
-            );
-
-            services.AddAuth(jwtSettings);
+                    options.TokenValidationParameters = new TokenValidationParameters
+                    {
+                        ValidateIssuer = true,
+                        ValidateAudience = true,
+                        ValidateLifetime = true,
+                        ValidateIssuerSigningKey = true,
+                        ValidIssuer = jwtSettings.Issuer,
+                        ValidAudience = jwtSettings.Audience,
+                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtSettings.Secret))
+                    };
+                    options.Configuration = new OpenIdConnectConfiguration();
+                });
 
             services.AddControllers().AddJsonOptions(opts =>
                 {
@@ -91,6 +66,7 @@ namespace Fondital.Server
                     opts.JsonSerializerOptions.PropertyNamingPolicy = null; // prevent camel case
                 });
             services.AddRazorPages();
+            services.Configure<MailSettings>(Configuration.GetSection("MailSettings"));
 
             services.AddCors(options =>
             {
@@ -98,7 +74,6 @@ namespace Fondital.Server
                     builder => builder
                         .AllowAnyMethod()
                         .AllowAnyOrigin()
-                        //.AllowCredentials()
                         .SetIsOriginAllowed((host) => true)
                         .AllowAnyHeader());
             });
@@ -166,8 +141,8 @@ namespace Fondital.Server
 
             app.UseBlazorFrameworkFiles();
             app.UseStaticFiles();
-            app.UseIdentityServer();
-            app.UseAuth();
+            app.UseAuthentication();
+            app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
             {

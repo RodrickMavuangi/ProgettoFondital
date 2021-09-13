@@ -1,11 +1,19 @@
 ﻿@page "/"
-@inject AuthenticationStateProvider authStateProvider
-@inject FonditalAuthenticationState authState
+@inject FonditalAuthStateProvider authStateProvider
 @inject IStringLocalizer<App> localizer
 @inject ServicePartnerClient spClient
 @attribute [Authorize]
   
-<h3>@localizer["Benvenuto"] @utente.Nome.</h3>
+
+<AuthorizeView>
+    <Authorized>
+        <h3>@localizer["Benvenuto"] @context.User.Identity.Name</h3>
+        <a href="account/logout">Log out</a>
+    </Authorized>
+    <NotAuthorized>
+        <a href="Login">Log in</a>
+    </NotAuthorized>
+</AuthorizeView>
 
 @*<button @onclick="GetClaimsPrincipalData">@localizer["OttieniInformazioni"]</button>
 

@@ -1,37 +1,33 @@
 ﻿using Fondital.Shared.Models;
 using Microsoft.AspNetCore.Components;
-using Microsoft.AspNetCore.Components.Forms;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Fondital.Client.Shared
+namespace Fondital.Client.Dialogs
 {
-    public partial class AddDifettoDialog
+    public partial class EditVoceCostoDialog
     {
         [Parameter] public EventCallback OnClose { get; set; }
         [Parameter] public EventCallback OnSave { get; set; }
-        protected Difetto NuovoDifetto { get; set; } = new Difetto();
+        [Parameter] public VoceCosto VoceCostoToUpdate { get; set; }
         protected bool isSubmitting = false;
-        protected string ErrorMessage = "";
 
-        protected async Task SalvaDifetto()
+        protected async Task SalvaVoceCosto()
         {
             isSubmitting = true;
-            ErrorMessage = "";
 
             try
             {
-                await httpClient.CreateDifetto(NuovoDifetto);
+                await httpClient.UpdateVoceCosto(VoceCostoToUpdate.Id, VoceCostoToUpdate);
                 isSubmitting = false;
                 await OnSave.InvokeAsync();
             }
             catch (Exception ex)
             {
                 isSubmitting = false;
-                ErrorMessage = localizer[ex.Message];
+                throw;
             }
         }
     }

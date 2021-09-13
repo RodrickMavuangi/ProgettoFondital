@@ -1,7 +1,0 @@
-﻿@page "/authentication/{action}"
-@inject NavigationManager NavigationManager
-@inject UtenteClient utenteClient
-@inject AuthenticationStateProvider authStateProvider 
-@inject FonditalAuthenticationState authState 
-
-<RemoteAuthenticatorViewCore TAuthenticationState="FonditalAuthenticationState" AuthenticationState="authState" OnLogInSucceeded="RestoreState" OnLogOutSucceeded="RestoreState" Action="@Action" />
