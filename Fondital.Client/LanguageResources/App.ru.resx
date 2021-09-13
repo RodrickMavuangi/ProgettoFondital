@@ -282,6 +282,65 @@
   <data name="VociCosto" xml:space="preserve">
     <value>Voci di Costo RU</value>
   </data>
+  <data name="Abilitati" xml:space="preserve">
+    <value>Abilitati RU</value>
+  </data>
+  <data name="AggiungiAnagrafica" xml:space="preserve">
+    <value>Aggiungi Anagrafica RU</value>
+  </data>
+  <data name="AggiungiUtente" xml:space="preserve">
+    <value>Aggiungi Utente RU</value>
+  </data>
+  <data name="Anagrafica" xml:space="preserve">
+    <value>Anagrafica RU</value>
+  </data>
+  <data name="CercaSP" xml:space="preserve">
+    <value>Cerca SP RU</value>
+  </data>
+  <data name="CercaUtenti" xml:space="preserve">
+    <value>Cerca Utenti RU</value>
+  </data>
+  <data name="CodiceCliente" xml:space="preserve">
+    <value>CODICE CLIENTE RU</value>
+  </data>
+  <data name="CodiceFornitore" xml:space="preserve">
+    <value>CODICE FORNITORE RU</value>
+  </data>
+  <data name="ConfermaModificaUtente" xml:space="preserve">
+    <value>Si è Sicuro di volere Disabilitare l'utente RU</value>
+  </data>
+  <data name="ConfermaModificaUtenteAb" xml:space="preserve">
+    <value>Si è Sicuro di volere Abilitare l'utente RU</value>
+  </data>
+  <data name="Disabilitati" xml:space="preserve">
+    <value>Disabilitati RU</value>
+  </data>
+  <data name="InserisciAnagrafica" xml:space="preserve">
+    <value>Inserisci Anagrafica RU</value>
+  </data>
+  <data name="ModificaAnagrafica" xml:space="preserve">
+    <value>Modifica Anagrafica RU</value>
+  </data>
+  <data name="ModificaSP" xml:space="preserve">
+    <value>Modifica SP RU</value>
+  </data>
+  <data name="ModificaUtente" xml:space="preserve">
+    <value>Modifica Utente RU</value>
+  </data>
+  <data name="RagioneSociale" xml:space="preserve">
+    <value>RAGIONE SOCIALE RU</value>
+  </data>
+  <data name="ServicePartner" xml:space="preserve">
+    <value>ServicePartner RU</value>
+  </data>
+  <data name="StatoUtente" xml:space="preserve">
+    <value>STATO DELL'UTENTE RU</value>
+  </data>
+  <data name="Tutti" xml:space="preserve">
+    <value>Tutti RU</value>
+  </data>
+  <data name="Utenti" xml:space="preserve">
+    <value>Utenti RU</value>
   <data name="Lavorazione" xml:space="preserve">
     <value>Lavorazione RU</value>
   </data>

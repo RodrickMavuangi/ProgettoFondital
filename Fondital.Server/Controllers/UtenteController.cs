@@ -60,8 +60,8 @@ namespace Fondital.Server.Controllers
         }
 
 
-        [HttpPut("{id}")]
-        public async Task UpdateUtente(int id, [FromBody] Utente utenteToUpdate)
+        [HttpPut("{utenteId}")]
+        public async Task UpdateUtente(int utenteId, [FromBody] Utente utenteToUpdate)
         {
             Utente _utente = new Utente();
             try
@@ -72,7 +72,7 @@ namespace Fondital.Server.Controllers
                 }
                 else
                 {
-                    _utente = await _ut.GetUtenteById(id);
+                    _utente = await _ut.GetUtenteById(utenteId);
 
                     if (_utente == null)
                     {
@@ -80,7 +80,7 @@ namespace Fondital.Server.Controllers
                     }
                     else
                     {
-                        Utente utenteFromDB = await _ut.GetUtenteById(id);
+                        Utente utenteFromDB = await _ut.GetUtenteById(utenteId);
                         await _ut.UpdateUtente(utenteToUpdate,utenteFromDB);
                     }
                 }

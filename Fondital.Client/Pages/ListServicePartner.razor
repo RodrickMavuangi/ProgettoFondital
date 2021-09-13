@@ -1,15 +1,11 @@
 ﻿@page  "/servicePartners"
 @attribute [Authorize]
 
-@using System.ComponentModel.DataAnnotations
-@inject NavigationManager NavigationManager
 @using Fondital.Shared.Models
 @inject ServicePartnerClient servicePartnerClient
 @inherits ListServicePartnerBase
-
-
-
-
+@inject IStringLocalizer<App> localizer
+@inject NavigationManager NavigationManager
 
 <div class="row-1 d-flex justify-content-between flex-wrap flex-md-nowrap  pt-0">
     <!--TITOLO PAGINA-->
@@ -26,7 +22,7 @@
 
         <div class="col  text-left d-none barraStrumenti "> </div>
         <div class="col  text-right d-inline-block float-lg-right p-0">
-            <TelerikButton Class="btn btn-primary btn-verde btn-lg mx-1" OnClick=@(()=> WindowVisible = true)>Inserisci Anagrafica</TelerikButton>
+            <TelerikButton Class="btn btn-primary btn-verde btn-lg mx-1" OnClick=@(()=> WindowVisible = true)>@localizer["InserisciAnagrafica"]</TelerikButton>
         </div>
     </div>
     <!--FINE BUTTON TOP DX-->
@@ -39,7 +35,7 @@
 
         @*<img src="../img/Icons/search.svg" class="bi bi-search float-lg-right icoSearch blu" />*@
         <i class="bi bi-search float-lg-right icoSearch blu"></i>
-        <input class="form-control float-lg-right filtriInput mx-1" @bind-value="SearchText" @bind-value:event="oninput" placeholder="Cerca SP ..." />
+        <input class="form-control float-lg-right filtriInput mx-1" @bind-value="SearchText" @bind-value:event="oninput" placeholder=@localizer["CercaSP" />
 
     </div>
 
@@ -69,6 +65,10 @@
                     <FormItem Class="form-group" Field="@nameof(ServicePartner.CodiceFornitore)"></FormItem>
                     <FormItem Class="form-group" Field="@nameof(ServicePartner.CodiceCliente)"></FormItem>
                 </FormItems>
+                <FormButtons>
+                    <TelerikButton Class="btn btn-secondary mr-auto" @onclick="() => myEditTemplate = false" ButtonType="@ButtonType.Button">@localizer["Cancella"]</TelerikButton>
+                    <TelerikButton Class="btn btn-success ml-auto" ButtonType="@ButtonType.Submit">@localizer["Modifica"]</TelerikButton>
+                </FormButtons>
             </TelerikForm>
         }
     </WindowContent>
@@ -77,7 +77,6 @@
 
 @*Modale per l'aggiunta dell'anagrafica*@
 <TelerikWindow Class="modal-app dialogBox" Width="500px" Height="auto" Centered="true" @bind-Visible=@WindowVisible Modal="true">
-
     <WindowActions>
         <WindowAction Name="Close" />
     </WindowActions>
@@ -100,11 +99,11 @@
                         <FormItem Class="form-group" Field="@nameof(ServicePartner.CodiceFornitore)"></FormItem>
                         <FormItem Class="form-group" Field="@nameof(ServicePartner.CodiceCliente)"></FormItem>
                     </FormItems>
-                    @*<FormButtons>
-                            <TelerikButton  ButtonType="@ButtonType.Submit" Primary="true">SALVA</TelerikButton>
-                        </FormButtons>*@
+                    <FormButtons>
+                        <TelerikButton Class="btn btn-secondary mr-auto" @onclick="() => WindowVisible = false" ButtonType="@ButtonType.Button">@localizer["Cancella"]</TelerikButton>
+                        <TelerikButton Class="btn btn-success ml-auto" ButtonType="@ButtonType.Submit">@localizer["Salva"]</TelerikButton>
+                    </FormButtons>
                 </TelerikForm>
-
             }
         </div>
     </WindowContent>
@@ -115,13 +114,12 @@
 @*OnEdit="@EditHandler"//*@
 <div class="row-3 d-flex justify-content-between flex-wrap flex-md-nowrap  pt-0 pb-4 mb-4">
 
-
     <TelerikGrid Data="@ServicePartners_filtered" EditMode="@GridEditMode.Popup" Pageable="true" Class="table table-striped"
                  OnUpdate="@UpdateHandler" OnDelete="@DeleteHandler" OnCreate="@CreateHandler" OnCancel="@CancelHandler" Resizable="true" Sortable="true">
         <GridColumns>
-            <GridColumn Field=@nameof(ServicePartner.CodiceFornitore) Title="CODICE FORNITORE" />
-            <GridColumn Field=@nameof(ServicePartner.RagioneSociale) Title="RAGIONE SOCIALE" />
-            <GridColumn Field=@nameof(ServicePartner.CodiceCliente) Title="CODICE UTENTE" />
+            <GridColumn Field=@nameof(ServicePartner.CodiceFornitore) Title=@localizer["CodiceFornitore"].Value.ToUpper() />
+            <GridColumn Field=@nameof(ServicePartner.RagioneSociale) Title=@localizer["RagioneSociale"].Value.ToUpper() />
+            <GridColumn Field=@nameof(ServicePartner.CodiceCliente) Title=@localizer["CodiceUtente"].Value.ToUpper() />
             <GridColumn Field="N° UTENTI" Title="N° UTENTI" Id="utenti">
                 <Template>
                     <i class="bi bi-people-fill float-lg-left icoClienti blu"></i>
@@ -134,5 +132,3 @@
         </GridColumns>
     </TelerikGrid>
 </div>
-
-
