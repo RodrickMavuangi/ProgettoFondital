@@ -1,0 +1,9 @@
+﻿@inject IStringLocalizer<App> localizer
+
+@if (IsVisible)
+{
+    <div class="alert-@CSSClass" role="alert">
+        <h4 class="alert-heading">@Title</h4>       
+                @localizer[Error]
+    </div>
+}

@@ -11,7 +11,7 @@ using Fondital.Client.Clients;
 
 namespace Fondital.Client.Pages
 {
-	public class ListServicePartnerBase : ComponentBase
+	public partial class ListServicePartner
 	{
 		public List<ServicePartner> ServicePartners { get; set; } = new List<ServicePartner>();
 		public ServicePartner ServicePartnerModel { get; set; } = new ServicePartner();
@@ -20,6 +20,8 @@ namespace Fondital.Client.Pages
 		public EditContext myEditContext { get; set; }
 		public EditContext myEditContext_UpdateSP { get; set; }
 		public ServicePartner ServicePartnerModel_UpdateSP { get; set; } = new ServicePartner() { CodiceCliente = "", CodiceFornitore = "", RagioneSociale = "" };
+
+		public List<string> SearchableFields = new List<string> { "RagioneSociale" };
 		[Inject] public ServicePartnerClient servicePartnerClient { get; set; }
 
 		public string SearchText = "";
@@ -36,9 +38,11 @@ namespace Fondital.Client.Pages
 
 			myEditContext_UpdateSP = new EditContext(ServicePartnerModel_UpdateSP);
 		}
-		public List<ServicePartner> ServicePartners_filtered => ServicePartners.Where<ServicePartner>(x => x.RagioneSociale.Contains(SearchText)).ToList();
-
-
+		public List<ServicePartner> ServicePartners_filtered => ServicePartners.Where(
+			x => x.RagioneSociale.ToLower().Contains(SearchText.ToLower())
+			//|| x.CodiceCliente.ToLower().Contains(SearchText.ToLower())
+			//|| x.CodiceFornitore.ToLower().Contains(SearchText.ToLower())
+			).ToList();	
 
 		public async Task EditHandler(GridCommandEventArgs args)
 		{

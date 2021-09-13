@@ -192,8 +192,8 @@
   <data name="ErroreNomeRusso" xml:space="preserve">
     <value>Errore nell'immissione dei dati: il Nome Russo inserito esiste già.</value>
   </data>
-  <data name="Esci" xml:space="preserve">
-    <value>Esci</value>
+  <data name="Logout" xml:space="preserve">
+    <value>Log out</value>
   </data>
   <data name="Forfettario" xml:space="preserve">
     <value>Forfettario</value>
@@ -346,5 +346,42 @@
     <value>Utenti</value>
   <data name="Lavorazione" xml:space="preserve">
     <value>Lavorazione</value>
+  </data>
+  <data name="Attenzione" xml:space="preserve">
+    <value>Attenzione</value>
+  </data>
+  <data name="Email" xml:space="preserve">
+    <value>Email</value>
+  </data>
+  <data name="InserisciPw" xml:space="preserve">
+    <value>Inserisci Password...</value>
+  </data>
+  <data name="InserisciUser" xml:space="preserve">
+    <value>Inserisci Username...</value>
+  </data>
+  <data name="Login" xml:space="preserve">
+    <value>Login</value>
+  </data>
+  <data name="ConfermaPassword" xml:space="preserve">
+    <value>Conferma Nuova Password</value>
+  </data>
+  <data name="ErroreConfermaPassword" xml:space="preserve">
+    <value>I campi Nuova Password e Conferma Nuova Password devono coincidere, ed essere diversi da Vecchia Password.</value>
+  </data>
+  <data name="ErroreUserPassword" xml:space="preserve">
+    <value>Lo Username o la Password sono incorretti.</value>
+  </data>
+  <data name="NuovaPassword" xml:space="preserve">
+    <value>Nuova Password</value>
+  </data>
+  <data name="PasswordMustChange" xml:space="preserve">
+    <value>Occorre cambiare la password.</value>
+  </data>
+  <data name="VecchiaPassword" xml:space="preserve">
+    <value>Vecchia Password</value>
+  </data>
+  <data name="ErroreCambioPw" xml:space="preserve">
+    <value>Errore: verificare che la vecchia password sia corretta.
+La nuova password deve essere lunga almeno 8 caratteri e contenere minuscole, maiuscole, numeri e simboli.</value>
   </data>
 </root>

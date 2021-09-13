@@ -1,25 +1,30 @@
 ﻿@page "/"
-@inject AuthenticationStateProvider authStateProvider
-@inject FonditalAuthenticationState authState
+@inject FonditalAuthStateProvider authStateProvider
 @inject IStringLocalizer<App> localizer
 @inject ServicePartnerClient spClient
 @attribute [Authorize]
+  
 
-@*<h3>@localizer["Benvenuto"] @utente.Nome.</h3>*@
-<div class="row-1 d-flex justify-content-between flex-wrap flex-md-nowrap  pt-0 mb-64">
+<AuthorizeView>
+    <Authorized>
+        <div class="row-1 d-flex justify-content-between flex-wrap flex-md-nowrap  pt-0 mb-64">
     <!--TITOLO PAGINA-->
     <div class="col-md-5  text-left pb-4 border-bottom">
         <div class="col  text-left d-inline-block ">
             <div class="page-header">
-                <h1 class="h1"><b>@localizer["Benvenuto"]</b> @utente.Nome.</h1>
+        <h3>@localizer["Benvenuto"] @context.User.Identity.Name</h3>
+                </div>
             </div>
         </div>
-    </div>
-    <!--FINE TITLE PAGE-->
-    <!--ROW BOTTONI-->
-    <div class="col-md-7 pb-4 border-bottom"></div><!--FINE BUTTON TOP DX-->
-</div>
-<!--FINE ROW 1 . TITOLI + BUTTON DX-->
+            <div class="col-md-7 pb-4 border-bottom"></div><!--FINE BUTTON TOP DX-->
+            <a href="account/logout">Log out</a>
+            </div>
+        
+    </Authorized>
+    <NotAuthorized>
+        <a href="Login">Log in</a>
+    </NotAuthorized>
+</AuthorizeView>
 
 @*<button @onclick="GetClaimsPrincipalData">@localizer["OttieniInformazioni"]</button>
 

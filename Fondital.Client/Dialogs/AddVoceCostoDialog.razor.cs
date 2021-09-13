@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Fondital.Client.Shared
+namespace Fondital.Client.Dialogs
 {
     public partial class AddVoceCostoDialog
     {

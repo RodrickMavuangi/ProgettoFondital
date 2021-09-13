@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Fondital.Shared.Models.Auth;
 
 namespace Fondital.Client.Shared
 {
@@ -10,7 +11,8 @@ namespace Fondital.Client.Shared
         async Task BeginSignOut()
         {
             await SignOutManager.SetSignOutState();
-            Navigation.NavigateTo("authentication/logout");
+
+            Navigation.NavigateTo("account/logout");
         }
     }
 }
