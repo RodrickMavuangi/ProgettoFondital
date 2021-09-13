@@ -14,14 +14,14 @@ namespace Fondital.Client.Shared
         public string Title { get; set; }
 
         [Parameter]
-        public IEnumerable<string> ErrorList { get; set; }
+        public string Error { get; set; }
 
         [Parameter]
         public string CSSClass { get; set; } = "warning";
 
         protected override void OnParametersSet()
         {
-            IsVisible = !String.IsNullOrEmpty(Title) && (ErrorList != null && ErrorList.Count() > 0);
+            IsVisible = !String.IsNullOrEmpty(Title) && (!String.IsNullOrEmpty(Error));
         }
     }
 }

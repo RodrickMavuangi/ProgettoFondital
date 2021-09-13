@@ -30,17 +30,19 @@ namespace Fondital.Server.Controllers
         private readonly JwtSettings _jwtSettings;
         private readonly IAuthService _authService;
         private readonly IConfigurazioneService _confService;
+        private readonly IUtenteService _utenteService;
         private readonly SignInManager<Utente> _signinManager;
         private readonly IConfiguration _configuration;
         private readonly ILogger<AuthController> _logger;
 
-        public AuthController(ILogger<AuthController> logger, UserManager<Utente> userManager, RoleManager<Ruolo> roleManager, IOptionsSnapshot<JwtSettings> jwtSettings, IAuthService authService, IConfigurazioneService confService, SignInManager<Utente> signInManager, IConfiguration configuration)
+        public AuthController(ILogger<AuthController> logger, UserManager<Utente> userManager, RoleManager<Ruolo> roleManager, IOptionsSnapshot<JwtSettings> jwtSettings, IAuthService authService, IConfigurazioneService confService, IUtenteService utenteService, SignInManager<Utente> signInManager, IConfiguration configuration)
         {
             _userManager = userManager;
             _roleManager = roleManager;
             _jwtSettings = jwtSettings.Value;
             _authService = authService;
             _confService = confService;
+            _utenteService = utenteService;
             _signinManager = signInManager;
             _configuration = configuration;
             _logger = logger;
@@ -69,8 +71,7 @@ namespace Fondital.Server.Controllers
 
                 if (!result.Succeeded)
                 {
-                    response.Errors = new List<string> { "ErroreUserPassword" };
-                    return Ok(response);
+                    return BadRequest("ErroreUserPassword");
                 }
 
                 var user = await _signinManager.UserManager.FindByEmailAsync(loginRequest.Email);
@@ -79,8 +80,7 @@ namespace Fondital.Server.Controllers
 
                 if (user.Pw_MustChange || (DateTime.Now - user.Pw_LastChanged).TotalDays > durataPasswordInGiorni)
                 {
-                    response.Errors = new List<string> { "PasswordMustChange" };
-                    return Ok(response);
+                    return BadRequest("PasswordMustChange");
                 }
 
                 var claims = new List<Claim>();
@@ -92,14 +92,36 @@ namespace Fondital.Server.Controllers
                 }
 
                 response.Token = GenerateJwt(user, roles, _jwtSettings);
-                response.IsSuccess = true;
                 return Ok(response);
             }
             catch (Exception ex)
             {
                 _logger.LogInformation($"Login error: {ex.Message} - Email: {loginRequest.Email}");
-                response.Errors = new List<string> { ex.Message };
-                return Ok(response);
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [HttpPost("changepw")]
+        [AllowAnonymous]
+        public async Task<IActionResult> ChangePassword([FromBody] ChangePwRequest ChangePwRequest)
+        {
+            try
+            {
+                var user = await _signinManager.UserManager.FindByEmailAsync(ChangePwRequest.Email);
+                user.Pw_LastChanged = DateTime.Now;
+                user.Pw_MustChange = false;
+                await _utenteService.UpdateUtente(user.UserName, user);
+
+                var task = await _userManager.ChangePasswordAsync(user, ChangePwRequest.OldPassword, ChangePwRequest.NewPassword);
+                if (task.Succeeded)
+                    return Ok();
+                else
+                    return BadRequest(task.Errors);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogInformation($"Change password error: {ex.Message} - Email: {ChangePwRequest.Email}");
+                return BadRequest(ex.Message);
             }
         }
 

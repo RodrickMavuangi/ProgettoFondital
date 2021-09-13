@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Fondital.Client.Pages
+namespace Fondital.Client.AuthPages
 {
     public partial class Logout
     {

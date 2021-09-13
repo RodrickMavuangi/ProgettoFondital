@@ -2,13 +2,8 @@
 
 @if (IsVisible)
 {
-    <div class="alert alert-@CSSClass" role="alert">
-        <h4 class="alert-heading">@Title</h4>
-        <ul>
-            @foreach (string error in ErrorList)
-            {
-                <li>@localizer[error]</li>
-            }
-        </ul>
+    <div class="alert-@CSSClass" role="alert">
+        <h4 class="alert-heading">@Title</h4>       
+                @localizer[Error]
     </div>
 }

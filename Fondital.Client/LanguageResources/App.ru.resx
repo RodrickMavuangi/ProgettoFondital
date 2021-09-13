@@ -285,4 +285,41 @@
   <data name="VociCosto" xml:space="preserve">
     <value>Voci di Costo RU</value>
   </data>
+  <data name="Attenzione" xml:space="preserve">
+    <value>Attenzione RU</value>
+  </data>
+  <data name="Email" xml:space="preserve">
+    <value>Email RU</value>
+  </data>
+  <data name="InserisciPw" xml:space="preserve">
+    <value>Inserisci Password RU...</value>
+  </data>
+  <data name="InserisciUser" xml:space="preserve">
+    <value>Inserisci Username RU...</value>
+  </data>
+  <data name="Login" xml:space="preserve">
+    <value>Login RU</value>
+  </data>
+  <data name="ConfermaPassword" xml:space="preserve">
+    <value>Conferma Nuova Password RU</value>
+  </data>
+  <data name="ErroreConfermaPassword" xml:space="preserve">
+    <value>I campi Nuova Password e Conferma Nuova Password devono coincidere, ed essere diversi da Vecchia Password RU.</value>
+  </data>
+  <data name="ErroreUserPassword" xml:space="preserve">
+    <value>Lo Username o la Password sono incorretti RU.</value>
+  </data>
+  <data name="NuovaPassword" xml:space="preserve">
+    <value>Nuova Password RU</value>
+  </data>
+  <data name="PasswordMustChange" xml:space="preserve">
+    <value>Occorre cambiare la password RU.</value>
+  </data>
+  <data name="VecchiaPassword" xml:space="preserve">
+    <value>Vecchia Password RU</value>
+  </data>
+  <data name="ErroreCambioPw" xml:space="preserve">
+    <value>Errore: verificare che la vecchia password sia corretta.
+La nuova password deve essere lunga almeno 8 caratteri e contenere minuscole, maiuscole, numeri e simboli RU.</value>
+  </data>
 </root>

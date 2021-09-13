@@ -20,9 +20,20 @@ namespace Fondital.Client.Clients
         public async Task<LoginResponse> Login(LoginRequest loginRequest)
         {
             var response = await httpClient.PostAsJsonAsync($"authControl/login", loginRequest, JsonSerializerOpts.JsonOpts);
-            response.EnsureSuccessStatusCode();
+
+            if (!response.IsSuccessStatusCode)
+                throw new Exception(response.Content.ReadAsStringAsync().Result); 
+            
             var result = await response.Content.ReadFromJsonAsync<LoginResponse>();
             return result;
+        }
+
+        public async Task ChangePassword(ChangePwRequest ChangeRequest)
+        {
+            var response = await httpClient.PostAsJsonAsync($"authControl/changepw", ChangeRequest, JsonSerializerOpts.JsonOpts);
+
+            if (!response.IsSuccessStatusCode)
+                throw new Exception(response.Content.ReadAsStringAsync().Result);
         }
     }
 }
