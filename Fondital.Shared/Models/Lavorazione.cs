@@ -7,9 +7,9 @@ namespace Fondital.Shared.Models
     {
         public int Id { get; set; }
         [Required]
-        public string NomeItaliano { get; set; }
+        public string NomeItaliano { get; set; } = "";
         [Required]
-        public string NomeRusso { get; set; }
-        public bool IsAbilitato { get; set; }
+        public string NomeRusso { get; set; } = "";
+        public bool IsAbilitato { get; set; } = true;
     }
 }

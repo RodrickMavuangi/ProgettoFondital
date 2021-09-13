@@ -1,5 +1,6 @@
 ﻿using Fondital.Shared.Models;
 using Microsoft.AspNetCore.Components;
+using System;
 using System.Threading.Tasks;
 
 namespace Fondital.Client.Dialogs
@@ -8,22 +9,14 @@ namespace Fondital.Client.Dialogs
     {
         [Parameter] public EventCallback OnClose { get; set; }
         [Parameter] public EventCallback OnSave { get; set; }
-        protected Lavorazione NuovaLavorazione { get; set; }
-        protected bool isSubmitting { get; set; }
-
-        protected async override Task OnInitializedAsync()
-        {
-            NuovaLavorazione = new Lavorazione()
-            {
-                NomeItaliano = "",
-                NomeRusso = "",
-                IsAbilitato = true
-            };
-        }
+        protected Lavorazione NuovaLavorazione { get; set; } = new Lavorazione();
+        protected bool isSubmitting = false;
+        protected string ErrorMessage = "";
 
         protected async Task SalvaLavorazione()
         {
             isSubmitting = true;
+            ErrorMessage = "";
 
             try
             {
@@ -31,10 +24,10 @@ namespace Fondital.Client.Dialogs
                 isSubmitting = false;
                 await OnSave.InvokeAsync();
             }
-            catch
+            catch (Exception ex)
             {
                 isSubmitting = false;
-                throw;
+                ErrorMessage = localizer[ex.Message];
             }
         }
     }

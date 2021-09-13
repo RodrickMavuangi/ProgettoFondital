@@ -4,38 +4,16 @@
 @inject IJSRuntime JS
 @inject IStringLocalizer<App> localizer
 
-<style>
-    .bd-placeholder-img {
-        font-size: 1.125rem;
-        text-anchor: middle;
-        -webkit-user-select: none;
-        -moz-user-select: none;
-        user-select: none
-}
-
-    @@media(min-width: 768px) {
-        .bd-placeholder-img-lg {
-            font-size: 3.5rem
-        }
-    }
-</style>
-
-<!-- Custom styles for this template -->
-<link href="css/bootstrap-child.css" rel="stylesheet">
-
 <header class="bgBlu mb-5 sticky-top">
     <div class="container-fluid">
         <div class="flex-wrap">
             <div class="row align-items-center pr-4">
-
                 <div class="col-2  p-0 bgBianco">
                     <div class="logo text-center"><img src="img/fondital-logo.svg" alt="logo"></div>
                 </div>
-
                 <div class="col-7 condensed-bold">
                     <NavMenu></NavMenu>
                 </div>
-
                 <div class="col-1 text-right">
                     <div class="lingua float-lg-left">
                         <CultureSelector></CultureSelector>

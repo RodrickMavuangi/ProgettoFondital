@@ -1,15 +1,13 @@
 ﻿@inject LavorazioneClient httpClient
 @inject IStringLocalizer<App> localizer
 
-<EditForm Model="LavorazioneToUpdate" OnInvalidSubmit="SalvaLavorazione">
+<EditForm Model="LavorazioneToUpdate" OnValidSubmit="SalvaLavorazione">
     <div class="form-field">
         <label>@localizer["NomeItaliano"]</label>
         <div>
             <InputText @bind-Value="LavorazioneToUpdate.NomeItaliano"></InputText>
             @if (LavorazioneToUpdate.NomeItaliano == "")
-            {
-                <div>@localizer["CampoObbligatorio"]</div>
-            }
+            {<div>@localizer["CampoObbligatorio"]</div>}
         </div>
     </div>
     <div class="form-field">
@@ -17,11 +15,10 @@
         <div>
             <InputText @bind-Value="LavorazioneToUpdate.NomeRusso"></InputText>
             @if (LavorazioneToUpdate.NomeRusso == "")
-            {
-                <div>@localizer["CampoObbligatorio"]</div>
-            }
+            {<div>@localizer["CampoObbligatorio"]</div>}
         </div>
     </div>
+
     <button class="btn btn-secondary mr-auto" @onclick="OnClose">@localizer["Cancella"]</button>
     <button type="submit" class="btn btn-success ml-auto" disabled="@isSubmitting">@localizer["Salva"]</button>
     <DataAnnotationsValidator />
