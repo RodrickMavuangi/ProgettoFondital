@@ -17,6 +17,7 @@ using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
+using Fondital.Shared.Enums;
 
 namespace Fondital.Server.Controllers
 {
@@ -28,16 +29,18 @@ namespace Fondital.Server.Controllers
         private readonly RoleManager<Ruolo> _roleManager;
         private readonly JwtSettings _jwtSettings;
         private readonly IAuthService _authService;
+        private readonly IConfigurazioneService _confService;
         private readonly SignInManager<Utente> _signinManager;
         private readonly IConfiguration _configuration;
         private readonly ILogger<AuthController> _logger;
 
-        public AuthController(ILogger<AuthController> logger, UserManager<Utente> userManager, RoleManager<Ruolo> roleManager, IOptionsSnapshot<JwtSettings> jwtSettings, IAuthService authService, SignInManager<Utente> signInManager, IConfiguration configuration)
+        public AuthController(ILogger<AuthController> logger, UserManager<Utente> userManager, RoleManager<Ruolo> roleManager, IOptionsSnapshot<JwtSettings> jwtSettings, IAuthService authService, IConfigurazioneService confService, SignInManager<Utente> signInManager, IConfiguration configuration)
         {
             _userManager = userManager;
             _roleManager = roleManager;
             _jwtSettings = jwtSettings.Value;
             _authService = authService;
+            _confService = confService;
             _signinManager = signInManager;
             _configuration = configuration;
             _logger = logger;
@@ -66,12 +69,19 @@ namespace Fondital.Server.Controllers
 
                 if (!result.Succeeded)
                 {
-                    response.Errors = new List<string> { "ErroreUserPassword." };
+                    response.Errors = new List<string> { "ErroreUserPassword" };
                     return Ok(response);
                 }
 
                 var user = await _signinManager.UserManager.FindByEmailAsync(loginRequest.Email);
                 var roles = await _signinManager.UserManager.GetRolesAsync(user);
+                int durataPasswordInGiorni = 30 * (int)Enum.Parse<DurataValiditaConfigurazione>(_confService.GetValoreByChiave("DurataPassword").Result);
+
+                if (user.Pw_MustChange || (DateTime.Now - user.Pw_LastChanged).TotalDays > durataPasswordInGiorni)
+                {
+                    response.Errors = new List<string> { "PasswordMustChange" };
+                    return Ok(response);
+                }
 
                 var claims = new List<Claim>();
                 claims.Add(new Claim(ClaimTypes.Name, loginRequest.Email));
