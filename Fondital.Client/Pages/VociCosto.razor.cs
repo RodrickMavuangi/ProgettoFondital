@@ -1,17 +1,11 @@
-﻿using Fondital.Client.Clients;
-using Fondital.Shared.Enums;
-using Fondital.Shared.Models;
+﻿using Fondital.Shared.Models;
 using Microsoft.AspNetCore.Components;
-using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
-using Microsoft.Extensions.Configuration;
 using Microsoft.JSInterop;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net.Http;
 using System.Threading.Tasks;
 using Telerik.Blazor;
-using Telerik.Blazor.Components;
 
 namespace Fondital.Client.Pages
 {
@@ -26,6 +20,8 @@ namespace Fondital.Client.Pages
         protected bool ShowEditDialog { get; set; } = false;
         protected VoceCosto VoceCostoSelected { get; set; }
 
+        public string SearchText = "";
+
         protected override async Task OnInitializedAsync()
         {
             var js = (IJSInProcessRuntime)JSRuntime;
@@ -34,6 +30,9 @@ namespace Fondital.Client.Pages
 
             await RefreshVociCosto();
         }
+        public List<VoceCosto> ListaLavorazioni_filtered => CurrentCulture == "ru-RU" ?
+            ListaVociCosto.Where<VoceCosto>(x => x.NomeRusso.ToLower().Contains(SearchText.ToLower())).ToList() :
+            ListaVociCosto.Where<VoceCosto>(x => x.NomeItaliano.ToLower().Contains(SearchText.ToLower())).ToList();
 
         protected async Task RefreshVociCosto()
         {

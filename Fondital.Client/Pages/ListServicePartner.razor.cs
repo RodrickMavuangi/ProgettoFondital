@@ -6,8 +6,7 @@ using Telerik.Blazor.Components;
 using Fondital.Shared.Models;
 using Microsoft.AspNetCore.Components.Forms;
 using Fondital.Client.Clients;
-
-
+using System;
 
 namespace Fondital.Client.Pages
 {
@@ -28,17 +27,45 @@ namespace Fondital.Client.Pages
 		ServicePartner DatiSP = new ServicePartner();
 		public ServicePartner ServicePartnerToSave { get; set; } = new ServicePartner();
 
+		// --codice temporaneo--
+		protected ServicePartner SpSelected { get; set; }
+		protected bool ShowAddDialog { get; set; } = false;
+
+		protected bool ShowEditDialog { get; set; } = false;
+
+		// --fine codice temporaneo--
+
 
 		protected override async Task OnInitializedAsync()
 		{
 			myEditContext = new EditContext(ServicePartnerModel);
 			ServicePartners = (List<ServicePartner>)await servicePartnerClient.GetAllServicePartners();
 
-			myEditContext_UpdateSP = new EditContext(ServicePartnerModel_UpdateSP);
+			//myEditContext_UpdateSP = new EditContext(ServicePartnerModel_UpdateSP);
 		}
-		public List<ServicePartner> ServicePartners_filtered => ServicePartners.Where<ServicePartner>(x => x.RagioneSociale.Contains(SearchText)).ToList();
+		public List<ServicePartner> ServicePartners_filtered => ServicePartners.Where<ServicePartner>(x => x.RagioneSociale.ToLower().Contains(SearchText.ToLower())).ToList();
 
+		// --codice temporaneo--
+		protected async Task RefreshSP()
+		{
+			ServicePartners = (List<ServicePartner>)await servicePartnerClient.GetAllServicePartners();
+			StateHasChanged();
+		}
 
+		protected async Task CloseAndRefresh()
+		{
+			ShowAddDialog = false;
+			ShowEditDialog = false;
+			await RefreshSP();
+		}
+
+		protected void EditSp(int SpId)
+        {
+			SpSelected = ServicePartners.Single(x => x.Id == SpId);
+			ShowEditDialog = true;
+        }
+
+		// --fine codice temporaneo--
 
 		public async Task EditHandler(GridCommandEventArgs args)
 		{

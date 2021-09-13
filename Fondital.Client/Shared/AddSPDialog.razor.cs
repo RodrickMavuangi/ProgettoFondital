@@ -5,21 +5,24 @@ using System.Threading.Tasks;
 
 namespace Fondital.Client.Shared
 {
-    public partial class EditLavorazioneDialog
+    public partial class AddSPDialog
     {
         [Parameter] public EventCallback OnClose { get; set; }
         [Parameter] public EventCallback OnSave { get; set; }
-        [Parameter] public Lavorazione LavorazioneToUpdate { get; set; }
+
+        protected ServicePartner NuovoSP { get; set; } = new ServicePartner();
+
         protected bool isSubmitting = false;
         protected string ErrorMessage = "";
 
-        protected async Task SalvaLavorazione()
+        protected async Task SalvaSP()
         {
             isSubmitting = true;
+            ErrorMessage = "";
 
             try
             {
-                await httpClient.UpdateLavorazione(LavorazioneToUpdate.Id, LavorazioneToUpdate);
+                await httpClient.CreateServicePartner(NuovoSP);
                 isSubmitting = false;
                 await OnSave.InvokeAsync();
             }

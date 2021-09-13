@@ -13,10 +13,12 @@ namespace Fondital.Client.Shared
         [Parameter] public EventCallback OnSave { get; set; }
         [Parameter] public VoceCosto VoceCostoToUpdate { get; set; }
         protected bool isSubmitting = false;
+        protected string ErrorMessage = "";
 
         protected async Task SalvaVoceCosto()
         {
             isSubmitting = true;
+            ErrorMessage = "";
 
             try
             {
@@ -27,7 +29,7 @@ namespace Fondital.Client.Shared
             catch (Exception ex)
             {
                 isSubmitting = false;
-                throw;
+                ErrorMessage = localizer[ex.Message];
             }
         }
     }

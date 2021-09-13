@@ -2,24 +2,25 @@
 @inject IStringLocalizer<App> localizer
 
 <EditForm Model="DifettoToUpdate" OnValidSubmit="SalvaDifetto">
+    <DataAnnotationsValidator />
+
+    <div>@ErrorMessage</div>
     <div class="form-field">
         <label>@localizer["NomeItaliano"]</label>
         <div>
             <InputText @bind-Value="DifettoToUpdate.NomeItaliano"></InputText>
-            @if (DifettoToUpdate.NomeItaliano == "")
-            {<div> @localizer["CampoObbligatorio"]</div>}
+            <ValidationMessage For="() => DifettoToUpdate.NomeItaliano" />
         </div>
     </div>
     <div class="form-field">
         <label>@localizer["NomeRusso"]</label>
         <div>
             <InputText @bind-Value="DifettoToUpdate.NomeRusso"></InputText>
-            @if (DifettoToUpdate.NomeRusso == "")
-            {<div> @localizer["CampoObbligatorio"]</div>}
+            <ValidationMessage For="() => DifettoToUpdate.NomeRusso" />
         </div>
     </div>
 
-    <button class="btn btn-secondary mr-auto" @onclick="OnClose">@localizer["Cancella"]</button>
+    @*<button class="btn btn-secondary mr-auto" @onclick="OnClose">@localizer["Cancella"]</button>*@
     <button type="submit" class="btn btn-success ml-auto" disabled="@isSubmitting">@localizer["Salva"]</button>
-    <DataAnnotationsValidator />
+
 </EditForm>

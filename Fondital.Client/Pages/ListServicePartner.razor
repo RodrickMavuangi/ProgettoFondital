@@ -22,7 +22,7 @@
 
         <div class="col  text-left d-none barraStrumenti "> </div>
         <div class="col  text-right d-inline-block float-lg-right p-0">
-            <TelerikButton Class="btn btn-primary btn-verde btn-lg mx-1" OnClick=@(()=> WindowVisible = true)>@localizer["InserisciAnagrafica"]</TelerikButton>
+            <TelerikButton Class="btn btn-primary btn-verde btn-lg mx-1" OnClick=@(()=> ShowAddDialog = true)>@localizer["InserisciAnagrafica"]</TelerikButton>
         </div>
     </div>
     <!--FINE BUTTON TOP DX-->
@@ -35,53 +35,17 @@
 
         @*<img src="../img/Icons/search.svg" class="bi bi-search float-lg-right icoSearch blu" />*@
         <i class="bi bi-search float-lg-right icoSearch blu"></i>
-        <input class="form-control float-lg-right filtriInput mx-1" @bind-value="SearchText" @bind-value:event="oninput" placeholder=@localizer["CercaSP" />
+        <input class="form-control float-lg-right filtriInput mx-1" @bind-value="SearchText" @bind-value:event="oninput" placeholder=@localizer["CercaSP"] />
 
     </div>
 
 </div><!--FINE BARRA FILTRI-->
-
-
-@*Modale per l'Edervice partner*@
-<TelerikWindow Class="modal-app dialogBox" Width="600px" Height="auto" Centered="true" @bind-Visible="myEditTemplate" Modal="true">
-    <WindowActions>
-        <WindowAction Name="Close" />
-    </WindowActions>
-    <WindowContent>
-        @if (ValidSubmit)
-        {
-            <div class="demo-alert demo-alert-success alert" role="alert">
-                The form was submitted successfully.
-            </div>
-        }
-        else
-        {
-            <TelerikForm Model="@ServicePartnerModel_UpdateSP" OnSubmit="@EditSP_UpdateHandler" EditContext="myEditContext_UpdateSP" Class="dialogForm">
-                <FormValidation>
-                    <DataAnnotationsValidator></DataAnnotationsValidator>
-                </FormValidation>
-                <FormItems>
-                    <FormItem Class="form-group" Field="@nameof(ServicePartner.RagioneSociale)"></FormItem>
-                    <FormItem Class="form-group" Field="@nameof(ServicePartner.CodiceFornitore)"></FormItem>
-                    <FormItem Class="form-group" Field="@nameof(ServicePartner.CodiceCliente)"></FormItem>
-                </FormItems>
-                <FormButtons>
-                    <TelerikButton Class="btn btn-secondary mr-auto" @onclick="() => myEditTemplate = false" ButtonType="@ButtonType.Button">@localizer["Cancella"]</TelerikButton>
-                    <TelerikButton Class="btn btn-success ml-auto" ButtonType="@ButtonType.Submit">@localizer["Modifica"]</TelerikButton>
-                </FormButtons>
-            </TelerikForm>
-        }
-    </WindowContent>
-</TelerikWindow>
-
-
-@*Modale per l'aggiunta dell'anagrafica*@
-<TelerikWindow Class="modal-app dialogBox" Width="500px" Height="auto" Centered="true" @bind-Visible=@WindowVisible Modal="true">
-    <WindowActions>
-        <WindowAction Name="Close" />
-    </WindowActions>
-    <WindowContent>
-        <div class="demo-section">
+@*Modale per l'Edervice partner
+    <TelerikWindow Class="modal-app dialogBox" Width="600px" Height="auto" Centered="true" @bind-Visible="myEditTemplate" Modal="true">
+        <WindowActions>
+            <WindowAction Name="Close" />
+        </WindowActions>
+        <WindowContent>
             @if (ValidSubmit)
             {
                 <div class="demo-alert demo-alert-success alert" role="alert">
@@ -90,22 +54,77 @@
             }
             else
             {
-                <TelerikForm Model="@ServicePartnerModel" OnSubmit="OnSubmitHandlerAsync" EditContext="myEditContext" Class="dialogForm">
+                <TelerikForm Model="@ServicePartnerModel_UpdateSP" OnSubmit="@EditSP_UpdateHandler" EditContext="myEditContext_UpdateSP" Class="dialogForm">
                     <FormValidation>
-                        <DataAnnotationsValidator></DataAnnotationsValidator>
+                        <DataAnnotationsValidator />
                     </FormValidation>
                     <FormItems>
                         <FormItem Class="form-group" Field="@nameof(ServicePartner.RagioneSociale)"></FormItem>
                         <FormItem Class="form-group" Field="@nameof(ServicePartner.CodiceFornitore)"></FormItem>
                         <FormItem Class="form-group" Field="@nameof(ServicePartner.CodiceCliente)"></FormItem>
                     </FormItems>
-                    <FormButtons>
-                        <TelerikButton Class="btn btn-secondary mr-auto" @onclick="() => WindowVisible = false" ButtonType="@ButtonType.Button">@localizer["Cancella"]</TelerikButton>
-                        <TelerikButton Class="btn btn-success ml-auto" ButtonType="@ButtonType.Submit">@localizer["Salva"]</TelerikButton>
+                    <FormButtons>-->
+                        <TelerikButton Class="btn btn-secondary mr-auto" @onclick="() => myEditTemplate = false" ButtonType="@ButtonType.Button">@localizer["Cancella"]</TelerikButton>
+                        <!--<TelerikButton Class="btn btn-success ml-auto" ButtonType="@ButtonType.Submit">@localizer["Modifica"]</TelerikButton>
                     </FormButtons>
                 </TelerikForm>
             }
-        </div>
+        </WindowContent>
+    </TelerikWindow>
+*@
+
+
+@*Modale per l'aggiunta dell'anagrafica
+    <TelerikWindow Class="modal-app dialogBox" Width="500px" Height="auto" Centered="true" @bind-Visible=@WindowVisible Modal="true">
+        <WindowActions>
+            <WindowAction Name="Close" />
+        </WindowActions>
+        <WindowContent>
+            <div class="demo-section">
+                @if (ValidSubmit)
+                {
+                    <div class="demo-alert demo-alert-success alert" role="alert">
+                        The form was submitted successfully.
+                    </div>
+                }
+                else
+                {
+                    <TelerikForm Model="@ServicePartnerModel" OnSubmit="OnSubmitHandlerAsync" EditContext="myEditContext" Class="dialogForm">
+                        <FormValidation>
+                            <DataAnnotationsValidator />
+                        </FormValidation>
+                        <FormItems>
+                            <FormItem Class="form-group" Field="@nameof(ServicePartner.RagioneSociale)"></FormItem>
+                            <FormItem Class="form-group" Field="@nameof(ServicePartner.CodiceFornitore)"></FormItem>
+                            <FormItem Class="form-group" Field="@nameof(ServicePartner.CodiceCliente)"></FormItem>
+                        </FormItems>
+                        <FormButtons>
+                            <TelerikButton Class="btn btn-secondary mr-auto" @onclick="() => WindowVisible = false" ButtonType="@ButtonType.Button">@localizer["Cancella"]</TelerikButton>
+                            <TelerikButton Class="btn btn-success ml-auto" ButtonType="@ButtonType.Submit">@localizer["Salva"]</TelerikButton>
+                        </FormButtons>
+                    </TelerikForm>
+                }
+            </div>
+        </WindowContent>
+    </TelerikWindow>
+*@
+
+
+<TelerikWindow Class="modal-app dialogBox" Width="500px" Height="auto" Centered="true" @bind-Visible=@ShowAddDialog Modal="true">
+    <WindowActions>
+        <WindowAction Name="Close" />
+    </WindowActions>
+    <WindowContent>
+        <AddSPDialog OnClose="@(() => ShowAddDialog = false)" OnSave="CloseAndRefresh" />
+    </WindowContent>
+</TelerikWindow>
+
+<TelerikWindow Class="modal-app dialogBox" Width="500px" Height="auto" Centered="true" @bind-Visible=@ShowEditDialog Modal="true">
+    <WindowActions>
+        <WindowAction Name="Close" />
+    </WindowActions>
+    <WindowContent>
+        <EditSPDialog SPToUpdate="SpSelected" OnClose="@(() => ShowEditDialog = false)" OnSave="CloseAndRefresh" />
     </WindowContent>
 </TelerikWindow>
 
@@ -114,8 +133,8 @@
 @*OnEdit="@EditHandler"//*@
 <div class="row-3 d-flex justify-content-between flex-wrap flex-md-nowrap  pt-0 pb-4 mb-4">
 
-    <TelerikGrid Data="@ServicePartners_filtered" EditMode="@GridEditMode.Popup" Pageable="true" Class="table table-striped"
-                 OnUpdate="@UpdateHandler" OnDelete="@DeleteHandler" OnCreate="@CreateHandler" OnCancel="@CancelHandler" Resizable="true" Sortable="true">
+    <TelerikGrid Data="@ServicePartners_filtered" EditMode="@GridEditMode.Popup" Pageable="true"
+                 Class="table table-striped" OnUpdate="@UpdateHandler" Resizable="true" Sortable="true">
         <GridColumns>
             <GridColumn Field=@nameof(ServicePartner.CodiceFornitore) Title=@localizer["CodiceFornitore"].Value.ToUpper() />
             <GridColumn Field=@nameof(ServicePartner.RagioneSociale) Title=@localizer["RagioneSociale"].Value.ToUpper() />
@@ -126,8 +145,11 @@
                     <b>@((context as ServicePartner).Utenti.Count())</b>
                 </Template>
             </GridColumn>
-            <GridCommandColumn Width="80px">
-                <GridCommandButton Class="settingCol btnIcon bgBluOn white" Command="MyOwnCommand" Icon="" ShowInEdit="false" ImageUrl="/img/Icons/gear-fill.svg" OnClick="@EditHandler"></GridCommandButton>
+            <GridCommandColumn Width="80px" Context="sp">
+                @{
+                    var servicePartner = sp as ServicePartner;
+                <GridCommandButton Class="settingCol btnIcon bgBluOn white" Command="MyOwnCommand" Icon="" ShowInEdit="false" ImageUrl="/img/Icons/gear-fill.svg" OnClick="@(() => EditSp(servicePartner.Id))"></GridCommandButton>
+                    }
             </GridCommandColumn>
         </GridColumns>
     </TelerikGrid>

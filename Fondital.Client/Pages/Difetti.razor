@@ -36,28 +36,23 @@
 }
 else
 {
-
-   
-
-
     <div class="row-2 d-inline w-100 mb-4  pt-0 pb-4 pt-4 border-bottom barraFiltri">
         <div class="form-group rowFiltri">
-
+            @*<img src="../img/Icons/search.svg" class="bi bi-search float-lg-right icoSearch blu" />*@
             <i class="bi bi-search float-lg-right icoSearch blu"></i>
-            <input class="form-control float-lg-right filtriInput mx-1"  type="text" placeholder="Cerca Difetto ..." />
+            <input class="form-control float-lg-right filtriInput mx-1" @bind-value="SearchText" @bind-value:event="oninput" placeholder=@localizer["CercaDifetti"] />
         </div>
     </div><!--FINE BARRA FILTRI-->
 
 
     <div class="row-3 d-flex justify-content-between flex-wrap flex-md-nowrap  pt-0 pb-4 mb-4">
-        <TelerikGrid Data=@ListaDifetti Pageable="true" PageSize="@PageSize" Class="table table-striped">
-
+        <TelerikGrid Data=@ListaDifetti_filtered Pageable="true" PageSize="@PageSize" Class="table table-striped">
 
             <!--<GridToolBar>
-        <span class="k-toolbar-spacer"></span>-->
+            <span class="k-toolbar-spacer"></span>-->
             @* add this spacer to keep the searchbox on the right *@
             <!--<GridSearchBox />
-    </GridToolBar>-->
+            </GridToolBar>-->
 
             <GridColumns>
                 <GridColumn Field=@nameof(Difetto.Id) Title="#" />
@@ -81,18 +76,18 @@ else
 }
 
 <TelerikWindow Modal="true" @bind-Visible="ShowAddDialog">
-    <WindowTitle>
-        <strong>@localizer["Aggiungi"] @localizer["Difetto"]</strong>
-    </WindowTitle>
+    <WindowActions>
+        <WindowAction Name="Close" />
+    </WindowActions>
     <WindowContent>
         <AddDifettoDialog OnClose="@(() => ShowAddDialog = false)" OnSave="CloseAndRefresh" />
     </WindowContent>
 </TelerikWindow>
 
 <TelerikWindow Modal="true" @bind-Visible="ShowEditDialog">
-    <WindowTitle>
-        <strong>@localizer["Modifica"] @localizer["Difetto"] # @DifettoSelected.Id</strong>
-    </WindowTitle>
+    <WindowActions>
+        <WindowAction Name="Close" />
+    </WindowActions>
     <WindowContent>
         <EditDifettoDialog DifettoToUpdate="DifettoSelected" OnClose="@(() => ShowEditDialog = false)" OnSave="CloseAndRefresh" />
     </WindowContent>

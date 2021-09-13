@@ -17,7 +17,15 @@
 }
 else
 {
-    <TelerikGrid Data=@ListaVociCosto Pageable="true" PageSize="@PageSize">
+    <div class="row-2 d-inline w-100 mb-4  pt-0 pb-4 pt-4 border-bottom barraFiltri">
+        <div class="form-group rowFiltri">
+            @*<img src="../img/Icons/search.svg" class="bi bi-search float-lg-right icoSearch blu" />*@
+            <i class="bi bi-search float-lg-right icoSearch blu"></i>
+            <input class="form-control float-lg-right filtriInput mx-1" @bind-value="SearchText" @bind-value:event="oninput" placeholder=@localizer["CercaVociCosto"] />
+        </div>
+    </div><!--FINE BARRA FILTRI-->
+
+    <TelerikGrid Data=@ListaLavorazioni_filtered Pageable="true" PageSize="@PageSize">
         <GridToolBar>
             <span class="k-toolbar-spacer"></span> @* add this spacer to keep the searchbox on the right *@
             <GridSearchBox />
@@ -50,18 +58,18 @@ else
 }
 
 <TelerikWindow Modal="true" @bind-Visible="ShowAddDialog">
-    <WindowTitle>
-        <strong>@localizer["Aggiungi"] @localizer["VoceCosto"]</strong>
-    </WindowTitle>
+    <WindowActions>
+        <WindowAction Name="Close" />
+    </WindowActions>
     <WindowContent>
         <AddVoceCostoDialog OnClose="@(() => ShowAddDialog = false)" OnSave="CloseAndRefresh" />
     </WindowContent>
 </TelerikWindow>
 
 <TelerikWindow Modal="true" @bind-Visible="ShowEditDialog">
-    <WindowTitle>
-        <strong>@localizer["Modifica"] @localizer["VoceCosto"] # @VoceCostoSelected.Id</strong>
-    </WindowTitle>
+    <WindowActions>
+        <WindowAction Name="Close" />
+    </WindowActions>
     <WindowContent>
         <EditVoceCostoDialog VoceCostoToUpdate="VoceCostoSelected" OnClose="@(() => ShowEditDialog = false)" OnSave="CloseAndRefresh" />
     </WindowContent>

@@ -1,23 +1,26 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Fondital.Shared.Models
 {
     public class Listino
     {
         public int Id { get; set; }
-        [Required]
+
+        [Display(Name = "ServicePartner", ResourceType = typeof(Resources.Display))]
+        [Required(ErrorMessageResourceName = "Required", ErrorMessageResourceType = typeof(Resources.Validation))]
         public ServicePartner ServicePartner { get; set; }
-        [Required]
+
+        [Display(Name = "VoceCosto", ResourceType = typeof(Resources.Display))]
+        [Required(ErrorMessageResourceName = "Required", ErrorMessageResourceType = typeof(Resources.Validation))]
         public VoceCosto VoceCosto { get; set; }
-        [Required]
+
+        [Display(Name = "Raggruppamento", ResourceType = typeof(Resources.Display))]
+        [Required(ErrorMessageResourceName = "Required", ErrorMessageResourceType = typeof(Resources.Validation))]
         public string Raggruppamento { get; set; } = "";
-        [Required]
+
+        [Display(Name = "Valore", ResourceType = typeof(Resources.Display))]
+        [Required(ErrorMessageResourceName = "Required", ErrorMessageResourceType = typeof(Resources.Validation))]
         [Range(0, Int32.MaxValue)]
         public int Valore { get; set; } = 0;
     }

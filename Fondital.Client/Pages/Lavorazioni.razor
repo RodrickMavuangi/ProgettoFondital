@@ -17,24 +17,28 @@
 }
 else
 {
-    <TelerikGrid Data="@ListaLavorazioni" Pageable="true" PageSize="@PageSize">
-        <GridToolBar>
-            <span class="k-toolbar-space"></span>
-            <GridSearchBox />
-        </GridToolBar>
+    <div class="row-2 d-inline w-100 mb-4  pt-0 pb-4 pt-4 border-bottom barraFiltri">
+        <div class="form-group rowFiltri">
+            @*<img src="../img/Icons/search.svg" class="bi bi-search float-lg-right icoSearch blu" />*@
+            <i class="bi bi-search float-lg-right icoSearch blu"></i>
+            <input class="form-control float-lg-right filtriInput mx-1" @bind-value="SearchText" @bind-value:event="oninput" placeholder=@localizer["CercaLavorazioni"] />
+        </div>
+    </div><!--FINE BARRA FILTRI-->
+
+    <TelerikGrid Data="@ListaLavorazioni_filtered" Pageable="true" PageSize="@PageSize">
         <GridColumns>
             <GridColumn Field=@nameof(Lavorazione.Id) Title="#" />
             <GridColumn Field=@nameof(Lavorazione.NomeItaliano) Title="@localizer["Descrizione"].Value.ToUpper()" Visible="@(CurrentCulture == "it-IT")" />
             <GridColumn Field=@nameof(Lavorazione.NomeRusso) Title="@localizer["Descrizione"].Value.ToUpper()" Visible="@(CurrentCulture == "ru-RU")" />
             <GridCommandColumn Context="lav">
                 @{
-                        var lavorazione = lav as Lavorazione;
+                    var lavorazione = lav as Lavorazione;
                     <GridCommandButton Command="EditLavorazione" Icon="edit" OnClick="@(() => EditLavorazione(lavorazione.Id))" />
                 }
             </GridCommandColumn>
             <GridCommandColumn Context="lav">
                 @{
-                        var lavorazione = lav as Lavorazione;
+                    var lavorazione = lav as Lavorazione;
                     <TelerikSwitch OffLabel=" " OnLabel=" " OnChange="@(() => UpdateEnableLavorazione(lavorazione.Id))" @bind-Value="@lavorazione.IsAbilitato"></TelerikSwitch>
                 }
             </GridCommandColumn>
@@ -43,18 +47,18 @@ else
 }
 
 <TelerikWindow Modal="true" @bind-Visible="ShowAddDialog">
-    <WindowTitle>
-        <strong>@localizer["AggiungiLavorazione"]</strong>
-    </WindowTitle>
+    <WindowActions>
+        <WindowAction Name="Close" />
+    </WindowActions>
     <WindowContent>
         <AddLavorazioneDialog OnClose="@(() => ShowAddDialog = false)" OnSave="CloseAndRefresh"></AddLavorazioneDialog>
     </WindowContent>
 </TelerikWindow>
 
 <TelerikWindow Modal="true" @bind-Visible="ShowEditDialog">
-    <WindowTitle>
-        <strong>@localizer["Modifica"] @localizer["Lavorazione"] # @LavorazioneSelected.Id</strong>
-    </WindowTitle>
+    <WindowActions>
+        <WindowAction Name="Close" />
+    </WindowActions>
     <WindowContent>
         <EditLavorazioneDialog LavorazioneToUpdate="LavorazioneSelected" OnClose="@(() => ShowEditDialog = false)" OnSave="CloseAndRefresh" />
     </WindowContent>

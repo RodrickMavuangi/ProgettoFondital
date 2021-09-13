@@ -1,0 +1,32 @@
+﻿@inject ServicePartnerClient httpClient
+@inject IStringLocalizer<App> localizer
+
+<EditForm Model="NuovoSP" OnValidSubmit="SalvaSP">
+    <DataAnnotationsValidator />
+
+    <div>@ErrorMessage</div>
+    <div class="form-field">
+        <label>@localizer["RagioneSociale"]</label>
+        <div>
+            <InputText @bind-Value="NuovoSP.RagioneSociale" />
+            <ValidationMessage For="() => NuovoSP.RagioneSociale" />
+        </div>
+    </div>
+    <div class="form-field">
+        <label>@localizer["CodiceFornitore"]</label>
+        <div>
+            <InputText @bind-Value="NuovoSP.CodiceFornitore" />
+            <ValidationMessage For="() => NuovoSP.CodiceFornitore" />
+        </div>
+    </div>
+    <div class="form-field">
+        <label>@localizer["CodiceCliente"]</label>
+        <div>
+            <InputText @bind-Value="NuovoSP.CodiceCliente" />
+            <ValidationMessage For="() => NuovoSP.CodiceCliente" />
+        </div>
+    </div>
+
+    <button type="submit" class="btn btn-success ml-auto" disabled="@isSubmitting">@localizer["Salva"]</button>
+
+</EditForm>

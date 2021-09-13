@@ -72,9 +72,9 @@ namespace Fondital.Client.Pages
 		}
 
 
-		public List<Utente> FilteredUtenti => servicePartnersWithUtenti.Utenti.Where<Utente>(x => x.Email.Contains(SearchText)).ToList();
-		public List<Utente> FilterdUtenti_Abilitati => servicePartnersWithUtenti.Utenti.Where<Utente>(x => x.Email.Contains(SearchText) && x.IsAbilitato == true).ToList();
-		public List<Utente> FilterdUtenti_Disabilitati => servicePartnersWithUtenti.Utenti.Where<Utente>(x => x.Email.Contains(SearchText) && x.IsAbilitato == false).ToList();
+		public List<Utente> FilteredUtenti => servicePartnersWithUtenti.Utenti.Where<Utente>(x => x.Email.ToLower().Contains(SearchText.ToLower())).ToList();
+		public List<Utente> FilterdUtenti_Abilitati => servicePartnersWithUtenti.Utenti.Where<Utente>(x => x.Email.ToLower().Contains(SearchText.ToLower()) && x.IsAbilitato == true).ToList();
+		public List<Utente> FilterdUtenti_Disabilitati => servicePartnersWithUtenti.Utenti.Where<Utente>(x => x.Email.ToLower().Contains(SearchText.ToLower()) && x.IsAbilitato == false).ToList();
 
 		public async Task OnSubmitHandlerAsync(EditContext editContext)
 		{

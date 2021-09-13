@@ -341,7 +341,20 @@
   </data>
   <data name="Utenti" xml:space="preserve">
     <value>Utenti RU</value>
+  </data>
   <data name="Lavorazione" xml:space="preserve">
     <value>Lavorazione RU</value>
+  </data>
+  <data name="CercaDifetti" xml:space="preserve">
+    <value>Cerca Difetti RU</value>
+  </data>
+  <data name="CercaLavorazioni" xml:space="preserve">
+    <value>Cerca Lavorazioni RU</value>
+  </data>
+  <data name="CercaVociCosto" xml:space="preserve">
+    <value>Cerca Voci di Costo RU</value>
+  </data>
+  <data name="ModificaServicePartner" xml:space="preserve">
+    <value>Modifica ServicePartner</value>
   </data>
 </root>
