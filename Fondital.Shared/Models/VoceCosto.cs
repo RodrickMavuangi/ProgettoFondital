@@ -1,22 +1,19 @@
 ﻿using Fondital.Shared.Enums;
-using Fondital.Shared.Models.Auth;
-using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Fondital.Shared.Models
 {
     public class VoceCosto
     {
         public int Id { get; set; }
-        [Required]
+
+        [Display(Name = "NomeItaliano", ResourceType = typeof(Resources.Display))]
+        [Required(ErrorMessageResourceName = "Required", ErrorMessageResourceType = typeof(Resources.Validation))]
         public string NomeItaliano { get; set; } = "";
-        [Required]
+
+        [Display(Name = "NomeRusso", ResourceType = typeof(Resources.Display))]
+        [Required(ErrorMessageResourceName = "Required", ErrorMessageResourceType = typeof(Resources.Validation))]
         public string NomeRusso { get; set; } = "";
         public TipologiaVoceCosto Tipologia { get; set; } = TipologiaVoceCosto.Forfettario;
         public bool IsAbilitato { get; set; } = true;

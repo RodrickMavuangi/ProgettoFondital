@@ -14,10 +14,12 @@ namespace Fondital.Client.Dialogs
         [Parameter] public EventCallback OnSave { get; set; }
         protected VoceCosto NuovaVoceCosto { get; set; } = new VoceCosto();
         protected bool isSubmitting = false;
+        protected string ErrorMessage = "";
 
         protected async Task SalvaVoceCosto()
         {
             isSubmitting = true;
+            ErrorMessage = "";
 
             try
             {
@@ -28,7 +30,7 @@ namespace Fondital.Client.Dialogs
             catch (Exception ex)
             {
                 isSubmitting = false;
-                throw;
+                ErrorMessage = localizer[ex.Message];
             }
         }
     }

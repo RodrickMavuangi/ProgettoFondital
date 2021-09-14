@@ -11,6 +11,7 @@ namespace Fondital.Client.Dialogs
         [Parameter] public EventCallback OnSave { get; set; }
         [Parameter] public Lavorazione LavorazioneToUpdate { get; set; }
         protected bool isSubmitting = false;
+        protected string ErrorMessage = "";
 
         protected async Task SalvaLavorazione()
         {
@@ -25,7 +26,7 @@ namespace Fondital.Client.Dialogs
             catch (Exception ex)
             {
                 isSubmitting = false;
-                throw;
+                ErrorMessage = localizer[ex.Message];
             }
         }
     }

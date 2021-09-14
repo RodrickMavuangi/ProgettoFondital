@@ -1,14 +1,17 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Fondital.Shared.Models
 {
     public class Difetto
     {
         public int Id { get; set; }
-        [Required]
+
+        [Display(Name = "NomeItaliano", ResourceType = typeof(Resources.Display))]
+        [Required(ErrorMessageResourceName = "Required", ErrorMessageResourceType = typeof(Resources.Validation))]
         public string NomeItaliano { get; set; } = "";
-        [Required]
+
+        [Display(Name = "NomeRusso", ResourceType = typeof(Resources.Display))]
+        [Required(ErrorMessageResourceName = "Required", ErrorMessageResourceType = typeof(Resources.Validation))]
         public string NomeRusso { get; set; } = "";
         public bool IsAbilitato { get; set; } = true;
     }

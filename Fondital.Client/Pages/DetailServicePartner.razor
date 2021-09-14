@@ -51,9 +51,9 @@ else
 }
 @*Modal per la modifica del service partner*@
 <TelerikWindow Class="modal-app" Width="360px" Height="330px" Centered="true" @bind-Visible="isModalVisible" Modal="true">
-    <WindowTitle>
-        <strong>@localizer["ModificaServicePartner"]</strong>
-    </WindowTitle>
+    <WindowActions>
+        <WindowAction Name="Close" />
+    </WindowActions>
     <WindowContent>
         @if (ValidSubmit)
         {
@@ -73,7 +73,7 @@ else
                     <FormItem Field="@nameof(ServicePartner.RagioneSociale)"></FormItem>
                 </FormItems>
                 <FormButtons>
-                    <TelerikButton Class="btn btn-secondary mr-auto" @onclick="() => isModalVisible = false" ButtonType="@ButtonType.Button">@localizer["Cancella"]</TelerikButton>
+                    @*<TelerikButton Class="btn btn-secondary mr-auto" @onclick="() => isModalVisible = false" ButtonType="@ButtonType.Button">@localizer["Cancella"]</TelerikButton>*@
                     <TelerikButton Class="btn btn-success ml-auto" ButtonType="@ButtonType.Submit">@localizer["Modifica"]</TelerikButton>
                 </FormButtons>
             </TelerikForm>
@@ -84,15 +84,15 @@ else
 
 @*Modal per la modifica dell'utente*@
 <TelerikWindow Class="modal-app" Width="360px" Height="330px" Centered="true" @bind-Visible="myEditTemplate" Modal="true">
-    <WindowTitle>
-        <strong>@localizer["ModificaUtente"]</strong>
-    </WindowTitle>
+    <WindowActions>
+        <WindowAction Name="Close" />
+    </WindowActions>
     <WindowContent>
         @if (ValidSubmit)
         {
-        <div class="" role="alert">
-            @localizer["Caricamento"]...
-        </div>
+            <div class="" role="alert">
+                @localizer["Caricamento"]...
+            </div>
         }
         else
         {
@@ -106,7 +106,7 @@ else
                     <FormItem Field="@nameof(Utente.Cognome)"></FormItem>
                 </FormItems>
                 <FormButtons>
-                    <TelerikButton Class="btn btn-secondary mr-auto" @onclick="() => myEditTemplate = false" ButtonType="@ButtonType.Button">@localizer["Cancella"]</TelerikButton>
+                    @*<TelerikButton Class="btn btn-secondary mr-auto" @onclick="() => myEditTemplate = false" ButtonType="@ButtonType.Button">@localizer["Cancella"]</TelerikButton>*@
                     <TelerikButton Class="btn btn-success ml-auto" ButtonType="@ButtonType.Submit">@localizer["Modifica"]</TelerikButton>
                 </FormButtons>
             </TelerikForm>
@@ -117,16 +117,16 @@ else
 
 @*Modal per l'aggiunta dell'utente*@
 <TelerikWindow Class="modal-app" Width="350px" Height="330px" Centered="true" @bind-Visible=@WindowVisible Modal="true">
-    <WindowTitle>
-        <strong>@localizer["AggiungiUtente"]</strong>
-    </WindowTitle>
+    <WindowActions>
+        <WindowAction Name="Close" />
+    </WindowActions>
     <WindowContent>
         <div class="demo-section">
             @if (ValidSubmit)
             {
-            <div class="" role="alert">
-                @localizer["Caricamento"]...
-            </div>
+                <div class="" role="alert">
+                    @localizer["Caricamento"]...
+                </div>
             }
             else
             {
@@ -140,7 +140,7 @@ else
                         <FormItem Field="@nameof(Utente.Cognome)"></FormItem>
                     </FormItems>
                     <FormButtons>
-                        <TelerikButton Class="btn btn-secondary mr-auto" @onclick="() => WindowVisible = false" ButtonType="@ButtonType.Button">@localizer["Cancella"]</TelerikButton>
+                        @*<TelerikButton Class="btn btn-secondary mr-auto" @onclick="() => WindowVisible = false" ButtonType="@ButtonType.Button">@localizer["Cancella"]</TelerikButton>*@
                         <TelerikButton Class="btn btn-success ml-auto" ButtonType="@ButtonType.Submit">@localizer["Salva"]</TelerikButton>
                     </FormButtons>
                 </TelerikForm>

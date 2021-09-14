@@ -1,7 +1,5 @@
 ﻿using Fondital.Shared.Models;
 using Microsoft.AspNetCore.Components;
-using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
-using Microsoft.Extensions.Configuration;
 using Microsoft.JSInterop;
 using System;
 using System.Collections.Generic;
@@ -15,12 +13,15 @@ namespace Fondital.Client.Pages
     {
         [CascadingParameter]
         public DialogFactory Dialogs { get; set; }
+
         private List<Difetto> ListaDifetti;
         private int PageSize { get; set; }
         private string CurrentCulture { get; set; }
         protected bool ShowAddDialog { get; set; } = false;
         protected bool ShowEditDialog { get; set; } = false;
         protected Difetto DifettoSelected { get; set; }
+
+        public string SearchText = "";
 
         protected override async Task OnInitializedAsync()
         {
@@ -30,6 +31,10 @@ namespace Fondital.Client.Pages
 
             await RefreshDifetti();
         }
+
+        public List<Difetto> ListaDifetti_filtered => CurrentCulture == "ru-RU" ?
+            ListaDifetti.Where<Difetto>(x => x.NomeRusso.ToLower().Contains(SearchText.ToLower())).ToList() :
+            ListaDifetti.Where<Difetto>(x => x.NomeItaliano.ToLower().Contains(SearchText.ToLower())).ToList();
 
         protected async Task RefreshDifetti()
         {
