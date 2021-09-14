@@ -6,21 +6,21 @@
 
     <div>@ErrorMessage</div>
     <div class="form-field">
-        <label>@localizer["NomeItaliano"]</label>
+        <label class="text-capitalize">@localizer["NomeItaliano"]</label>
         <div>
-            <InputText @bind-Value="NuovaVoceCosto.NomeItaliano"></InputText>
+            <InputText Class="form-control form-control-lg w100" @bind-Value="NuovaVoceCosto.NomeItaliano"></InputText>
             <ValidationMessage For="() => NuovaVoceCosto.NomeItaliano" />
         </div>
     </div>
-    <div class="form-field">
-        <label>@localizer["NomeRusso"]</label>
+    <div class="form-field mt-4">
+        <label class="text-capitalize">@localizer["NomeRusso"]</label>
         <div>
-            <InputText @bind-Value="NuovaVoceCosto.NomeRusso"></InputText>
+            <InputText Class="form-control form-control-lg w100" @bind-Value="NuovaVoceCosto.NomeRusso"></InputText>
             <ValidationMessage For="() => NuovaVoceCosto.NomeRusso" />
         </div>
     </div>
-    <div class="form-field">
-        <label>@localizer["Tipologia"]</label>
+    <div class="form-field mt-4">
+        <label class="text-capitalize">@localizer["Tipologia"]</label>
         <div>
             <InputRadioGroup TValue="TipologiaVoceCosto" @bind-Value="NuovaVoceCosto.Tipologia">
                 <InputRadio Value="TipologiaVoceCosto.Forfettario" /> @localizer["Forfettario"].Value.ToUpper()
@@ -32,6 +32,6 @@
     </div>
 
     @*<button class="btn btn-secondary mr-auto" @onclick="OnClose">@localizer["Cancella"]</button>*@
-    <button type="submit" class="btn btn-success ml-auto" disabled="@isSubmitting">@localizer["Salva"]</button>
+    <button type="submit" class="btn btn-primary ml-auto w-100 mt-4" disabled="@isSubmitting">@localizer["Salva"]</button>
 
 </EditForm>

@@ -75,18 +75,18 @@ else
     </div>
 }
 
-<TelerikWindow Modal="true" @bind-Visible="ShowAddDialog">
+<TelerikWindow Class="modal-app dialogBox" Width="500px" Height="auto" Centered="true" Modal="true" @bind-Visible="ShowAddDialog">
     <WindowActions>
-        <WindowAction Name="Close" />
+        <WindowAction Name="Close" IconClass="k-icon k-i-close text-dark" />
     </WindowActions>
     <WindowContent>
         <AddDifettoDialog OnClose="@(() => ShowAddDialog = false)" OnSave="CloseAndRefresh" />
     </WindowContent>
 </TelerikWindow>
 
-<TelerikWindow Modal="true" @bind-Visible="ShowEditDialog">
+<TelerikWindow Class="modal-app dialogBox" Width="500px" Height="auto" Centered="true" Modal="true" @bind-Visible="ShowEditDialog">
     <WindowActions>
-        <WindowAction Name="Close" />
+        <WindowAction Name="Close" IconClass="k-icon k-i-close text-dark" />
     </WindowActions>
     <WindowContent>
         <EditDifettoDialog DifettoToUpdate="DifettoSelected" OnClose="@(() => ShowEditDialog = false)" OnSave="CloseAndRefresh" />

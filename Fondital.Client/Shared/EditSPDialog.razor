@@ -6,27 +6,27 @@
 
     <div>@ErrorMessage</div>
     <div class="form-field">
-        <label>@localizer["RagioneSociale"]</label>
+        <label class="text-capitalize">@localizer["RagioneSociale"]</label>
         <div>
-            <InputText @bind-Value="SPToUpdate.RagioneSociale" />
+            <InputText Class="form-control form-control-lg w100" @bind-Value="SPToUpdate.RagioneSociale" />
             <ValidationMessage For="() => SPToUpdate.RagioneSociale" />
         </div>
     </div>
-    <div class="form-field">
-        <label>@localizer["CodiceFornitore"]</label>
+    <div class="form-field mt-4">
+        <label class="text-capitalize">@localizer["CodiceFornitore"]</label>
         <div>
-            <InputText @bind-Value="SPToUpdate.CodiceFornitore" />
+            <InputText Class="form-control form-control-lg w100" @bind-Value="SPToUpdate.CodiceFornitore" />
             <ValidationMessage For="() => SPToUpdate.CodiceFornitore" />
         </div>
     </div>
-    <div class="form-field">
-        <label>@localizer["CodiceCliente"]</label>
+    <div class="form-field mt-4">
+        <label class="text-capitalize">@localizer["CodiceCliente"]</label>
         <div>
-            <InputText @bind-Value="SPToUpdate.CodiceCliente" />
+            <InputText Class="form-control form-control-lg w100" @bind-Value="SPToUpdate.CodiceCliente" />
             <ValidationMessage For="() => SPToUpdate.CodiceCliente" />
         </div>
     </div>
 
-    <button type="submit" class="btn btn-success ml-auto" disabled="@isSubmitting">@localizer["Salva"]</button>
+    <button type="submit" class="btn btn-primary ml-auto w-100 mt-4" disabled="@isSubmitting">@localizer["Salva"]</button>
 
 </EditForm>

@@ -6,21 +6,21 @@
 
     <div>@ErrorMessage</div>
     <div class="form-field">
-        <label>@localizer["NomeItaliano"]</label>
+        <label class="text-capitalize">@localizer["NomeItaliano"]</label>
         <div>
-            <InputText @bind-Value="NuovaLavorazione.NomeItaliano"></InputText>
+            <InputText Class="form-control form-control-lg w100" @bind-Value="NuovaLavorazione.NomeItaliano"></InputText>
             <ValidationMessage For="() => NuovaLavorazione.NomeItaliano" />
         </div>
     </div>
-    <div class="form-field">
-        <label>@localizer["NomeRusso"]</label>
+    <div class="form-field mt-4">
+        <label class="text-capitalize">@localizer["NomeRusso"]</label>
         <div>
-            <InputText @bind-Value="NuovaLavorazione.NomeRusso"></InputText>
+            <InputText Class="form-control form-control-lg w100" @bind-Value="NuovaLavorazione.NomeRusso"></InputText>
             <ValidationMessage For="() => NuovaLavorazione.NomeRusso" />
         </div>
     </div>
 
     @*<button class="btn btn-secondary mr-auto" @onclick="OnClose">@localizer["Cancella"]</button>*@
-    <button type="submit" class="btn btn-success ml-auto" disabled="@isSubmitting">@localizer["Salva"]</button>
+    <button type="submit" class="btn btn-primary ml-auto w-100 mt-4" disabled="@isSubmitting">@localizer["Salva"]</button>
 
 </EditForm>

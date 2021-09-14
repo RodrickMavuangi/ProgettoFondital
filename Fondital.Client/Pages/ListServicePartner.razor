@@ -112,7 +112,7 @@
 
 <TelerikWindow Class="modal-app dialogBox" Width="500px" Height="auto" Centered="true" @bind-Visible=@ShowAddDialog Modal="true">
     <WindowActions>
-        <WindowAction Name="Close" />
+        <WindowAction Name="Close" IconClass="k-icon k-i-close text-dark" />
     </WindowActions>
     <WindowContent>
         <AddSPDialog OnClose="@(() => ShowAddDialog = false)" OnSave="CloseAndRefresh" />
@@ -121,7 +121,7 @@
 
 <TelerikWindow Class="modal-app dialogBox" Width="500px" Height="auto" Centered="true" @bind-Visible=@ShowEditDialog Modal="true">
     <WindowActions>
-        <WindowAction Name="Close" />
+        <WindowAction Name="Close" IconClass="k-icon k-i-close text-dark" />
     </WindowActions>
     <WindowContent>
         <EditSPDialog SPToUpdate="SpSelected" OnClose="@(() => ShowEditDialog = false)" OnSave="CloseAndRefresh" />
