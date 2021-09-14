@@ -1,17 +1,18 @@
-﻿using Fondital.Shared.Models;
+﻿using Fondital.Shared.Enums;
+using Fondital.Shared.Models;
 using Microsoft.AspNetCore.Components;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Fondital.Client.Shared
+namespace Fondital.Client.Dialogs
 {
-    public partial class EditVoceCostoDialog
+    public partial class AddVoceCostoDialog
     {
         [Parameter] public EventCallback OnClose { get; set; }
         [Parameter] public EventCallback OnSave { get; set; }
-        [Parameter] public VoceCosto VoceCostoToUpdate { get; set; }
+        protected VoceCosto NuovaVoceCosto { get; set; } = new VoceCosto();
         protected bool isSubmitting = false;
         protected string ErrorMessage = "";
 
@@ -22,7 +23,7 @@ namespace Fondital.Client.Shared
 
             try
             {
-                await httpClient.UpdateVoceCosto(VoceCostoToUpdate.Id, VoceCostoToUpdate);
+                await httpClient.CreateVoceCosto(NuovaVoceCosto);
                 isSubmitting = false;
                 await OnSave.InvokeAsync();
             }

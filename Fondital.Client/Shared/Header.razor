@@ -1,7 +1,6 @@
 ﻿@layout TelerikLayout
 @inherits LayoutComponentBase
 @inject NavigationManager NavigationManager
-@inject FonditalAuthenticationState AuthState
 @inject IJSRuntime JS
 @inject IStringLocalizer<App> localizer
 
@@ -20,33 +19,36 @@
                         <CultureSelector></CultureSelector>
                     </div>
                 </div>
-                <div class="col-2">
-                    <div class="float-lg-right">
-                        <div class="float-lg-left link-light">
-                            <ul class="mb-0 profilo">
-                                <li class="nomeUtente">@localizer["Ciao"] @AuthState.UtenteCorrente?.Nome</li>
-                                <li class="ruoloUtente">@localizer["RuoloDirezione"]</li>
-                            </ul>
+                <AuthorizeView>
+                    <Authorized>
+                        <div class="col-2">
+                            <div class="float-lg-right">
+                                <div class="float-lg-left link-light">
+                                    <ul class="mb-0 profilo">
+                                        <li class="nomeUtente">@localizer["Ciao"] @context.User.Identity.Name</li>
+                                        <li class="ruoloUtente">@localizer["RuoloDirezione"]</li>
+                                    </ul>
+                                </div>
+                                <div class="float-lg-left align-items-center">
+
+
+                                    <div class="nomeCircle fontProfilo">GDD</div>
+
+                                    <TelerikMenu Data="@MenuItems"
+                                                 UrlField="@nameof(MenuItem.Page)"
+                                                 ItemsField="@nameof(MenuItem.SubSectionList)"
+                                                 TextField="@nameof(MenuItem.Section)"
+                                                 Class="menuProfilo">
+                                    </TelerikMenu>
+
+
+
+
+                                </div>
+                            </div>
                         </div>
-                        <div class="float-lg-left align-items-center">
-                           
-
-                            <div class="nomeCircle fontProfilo">GDD</div>
-
-                            <TelerikMenu Data="@MenuItems"
-                                         UrlField="@nameof(MenuItem.Page)"
-                                         ItemsField="@nameof(MenuItem.SubSectionList)"
-                                         TextField="@nameof(MenuItem.Section)"
-                                         Class="menuProfilo"
-                                         >
-                            </TelerikMenu>
-
-
-
-                            
-                        </div>
-                    </div>
-                </div>
+                    </Authorized>
+                </AuthorizeView>
             </div>
         </div>
     </div>
@@ -54,39 +56,5 @@
 
 
 @code {
-    public List<MenuItem> MenuItems { get; set; }
 
-    public class MenuItem
-    {
-        public string Section { get; set; }
-        public string Page { get; set; }
-        public List<MenuItem> SubSectionList { get; set; }
-    }
-
-    protected override void OnInitialized()
-    {
-        MenuItems = new List<MenuItem>()
-    {
-            
-            new MenuItem()
-            {
-                Section = "",
-                SubSectionList = new List<MenuItem>()
-            {
-                    new MenuItem()
-                    {
-                        Section = @localizer["Impostazioni"],
-                        Page = "/profilo"
-                    },
-                    new MenuItem()
-                    {
-                        Section = @localizer["Esci"],
-                        Page = "/logout"
-                    }
-                }
-            }
-        };
-
-        base.OnInitialized();
-    }
 }

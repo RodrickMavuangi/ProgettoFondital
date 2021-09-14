@@ -3,24 +3,24 @@ using Microsoft.AspNetCore.Components;
 using System;
 using System.Threading.Tasks;
 
-namespace Fondital.Client.Shared
+namespace Fondital.Client.Dialogs
 {
-    public partial class AddDifettoDialog
+    public partial class AddLavorazioneDialog
     {
         [Parameter] public EventCallback OnClose { get; set; }
         [Parameter] public EventCallback OnSave { get; set; }
-        protected Difetto NuovoDifetto { get; set; } = new Difetto();
+        protected Lavorazione NuovaLavorazione { get; set; } = new Lavorazione();
         protected bool isSubmitting = false;
         protected string ErrorMessage = "";
 
-        protected async Task SalvaDifetto()
+        protected async Task SalvaLavorazione()
         {
             isSubmitting = true;
             ErrorMessage = "";
 
             try
             {
-                await httpClient.CreateDifetto(NuovoDifetto);
+                await httpClient.CreateLavorazione(NuovaLavorazione);
                 isSubmitting = false;
                 await OnSave.InvokeAsync();
             }

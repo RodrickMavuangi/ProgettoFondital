@@ -3,13 +3,13 @@ using Microsoft.AspNetCore.Components;
 using System;
 using System.Threading.Tasks;
 
-namespace Fondital.Client.Shared
+namespace Fondital.Client.Dialogs
 {
-    public partial class EditDifettoDialog
+    public partial class AddDifettoDialog
     {
         [Parameter] public EventCallback OnClose { get; set; }
         [Parameter] public EventCallback OnSave { get; set; }
-        [Parameter] public Difetto DifettoToUpdate { get; set; }
+        protected Difetto NuovoDifetto { get; set; } = new Difetto();
         protected bool isSubmitting = false;
         protected string ErrorMessage = "";
 
@@ -20,7 +20,7 @@ namespace Fondital.Client.Shared
 
             try
             {
-                await httpClient.UpdateDifetto(DifettoToUpdate.Id, DifettoToUpdate);
+                await httpClient.CreateDifetto(NuovoDifetto);
                 isSubmitting = false;
                 await OnSave.InvokeAsync();
             }

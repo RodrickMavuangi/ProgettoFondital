@@ -10,7 +10,7 @@ using System;
 
 namespace Fondital.Client.Pages
 {
-	public class ListServicePartnerBase : ComponentBase
+	public partial class ListServicePartner
 	{
 		public List<ServicePartner> ServicePartners { get; set; } = new List<ServicePartner>();
 		public ServicePartner ServicePartnerModel { get; set; } = new ServicePartner();
@@ -19,7 +19,8 @@ namespace Fondital.Client.Pages
 		public EditContext myEditContext { get; set; }
 		public EditContext myEditContext_UpdateSP { get; set; }
 		public ServicePartner ServicePartnerModel_UpdateSP { get; set; } = new ServicePartner() { CodiceCliente = "", CodiceFornitore = "", RagioneSociale = "" };
-		[Inject] public ServicePartnerClient servicePartnerClient { get; set; }
+
+		public List<string> SearchableFields = new List<string> { "RagioneSociale" };
 
 		public string SearchText = "";
 		public bool myEditTemplate { get; set; } = false;

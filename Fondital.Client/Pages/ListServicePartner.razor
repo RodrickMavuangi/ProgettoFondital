@@ -3,7 +3,6 @@
 
 @using Fondital.Shared.Models
 @inject ServicePartnerClient servicePartnerClient
-@inherits ListServicePartnerBase
 @inject IStringLocalizer<App> localizer
 @inject NavigationManager NavigationManager
 
@@ -30,14 +29,14 @@
 <!--FINE ROW 1 . TITOLI + BUTTON DX-->
 
 
-<div class="row-2 d-inline w-100 mb-4  pt-0 pb-4 pt-4 border-bottom barraFiltri">
+<div class="row-2 d-inline w-100 mb-4 pt-0 pb-4 pt-4 border-bottom barraFiltri">
     <div class="form-group rowFiltri">
 
         @*<img src="../img/Icons/search.svg" class="bi bi-search float-lg-right icoSearch blu" />*@
         <i class="bi bi-search float-lg-right icoSearch blu"></i>
         <input class="form-control float-lg-right filtriInput mx-1" @bind-value="SearchText" @bind-value:event="oninput" placeholder=@localizer["CercaSP"] />
-
     </div>
+</div>
 
 </div><!--FINE BARRA FILTRI-->
 @*Modale per l'Edervice partner
@@ -141,8 +140,11 @@
             <GridColumn Field=@nameof(ServicePartner.CodiceCliente) Title=@localizer["CodiceUtente"].Value.ToUpper() />
             <GridColumn Field="N° UTENTI" Title="N° UTENTI" Id="utenti">
                 <Template>
-                    <i class="bi bi-people-fill float-lg-left icoClienti blu"></i>
-                    <b>@((context as ServicePartner).Utenti.Count())</b>
+                    @{
+                        ServicePartner sp = (ServicePartner)context;
+                    <i class="bi bi-people-fill float-lg-left icoClienti blu" ></i>
+                    <b>@(sp.Utenti.Count())</b>
+                    }
                 </Template>
             </GridColumn>
             <GridCommandColumn Width="80px" Context="sp">

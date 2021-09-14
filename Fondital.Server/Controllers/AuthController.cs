@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Fondital.Server.Resources;
 using Fondital.Shared.Models.Auth;
 using Fondital.Services;
 using Microsoft.AspNetCore.Identity;
@@ -11,11 +10,18 @@ using Fondital.Shared.Services;
 using Microsoft.Extensions.Options;
 using System.Text;
 using System.Security.Cryptography;
+using Fondital.Shared.Resources;
 using Microsoft.AspNetCore.Authorization;
+using System.Security.Claims;
+using Microsoft.IdentityModel.Tokens;
+using System.IdentityModel.Tokens.Jwt;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Logging;
+using Fondital.Shared.Enums;
 
 namespace Fondital.Server.Controllers
 {
-    [Route("authentication")]
+    [Route("authControl")]
     [ApiController]
     public class AuthController : ControllerBase
     {
@@ -23,13 +29,23 @@ namespace Fondital.Server.Controllers
         private readonly RoleManager<Ruolo> _roleManager;
         private readonly JwtSettings _jwtSettings;
         private readonly IAuthService _authService;
+        private readonly IConfigurazioneService _confService;
+        private readonly IUtenteService _utenteService;
+        private readonly SignInManager<Utente> _signinManager;
+        private readonly IConfiguration _configuration;
+        private readonly ILogger<AuthController> _logger;
 
-        public AuthController(UserManager<Utente> userManager, RoleManager<Ruolo> roleManager, IOptionsSnapshot<JwtSettings> jwtSettings, IAuthService authService)
+        public AuthController(ILogger<AuthController> logger, UserManager<Utente> userManager, RoleManager<Ruolo> roleManager, IOptionsSnapshot<JwtSettings> jwtSettings, IAuthService authService, IConfigurazioneService confService, IUtenteService utenteService, SignInManager<Utente> signInManager, IConfiguration configuration)
         {
             _userManager = userManager;
             _roleManager = roleManager;
             _jwtSettings = jwtSettings.Value;
             _authService = authService;
+            _confService = confService;
+            _utenteService = utenteService;
+            _signinManager = signInManager;
+            _configuration = configuration;
+            _logger = logger;
         }
 
         [HttpPost("CreateWithPassword")]
@@ -44,65 +60,108 @@ namespace Fondital.Server.Controllers
                 return BadRequest(x.Errors);
         }
 
-        [HttpPost("Login")]
+        [HttpPost("login")]
         [AllowAnonymous]
-        public async Task<IActionResult> LogIn(UserLoginResource userLoginResource)
+        public async Task<IActionResult> LogIn([FromBody] LoginRequest loginRequest)
         {
-            var user = _userManager.Users.SingleOrDefault(u => u.UserName == userLoginResource.Email);
-
-            if (user is null)
+            LoginResponse response = new LoginResponse();
+            try
             {
-                return BadRequest("Email o password non corrette.");
+                var result = await _signinManager.PasswordSignInAsync(loginRequest.Email, loginRequest.Password, false, false);
+
+                if (!result.Succeeded)
+                {
+                    return BadRequest("ErroreUserPassword");
+                }
+
+                var user = await _signinManager.UserManager.FindByEmailAsync(loginRequest.Email);
+                var roles = await _signinManager.UserManager.GetRolesAsync(user);
+                int durataPasswordInGiorni = 30 * (int)Enum.Parse<DurataValiditaConfigurazione>(_confService.GetValoreByChiave("DurataPassword").Result);
+
+                if (user.Pw_MustChange || (DateTime.Now - user.Pw_LastChanged).TotalDays > durataPasswordInGiorni)
+                {
+                    return BadRequest("PasswordMustChange");
+                }
+
+                var claims = new List<Claim>();
+                claims.Add(new Claim(ClaimTypes.Name, loginRequest.Email));
+
+                foreach (var role in roles)
+                {
+                    claims.Add(new Claim(ClaimTypes.Role, role));
+                }
+
+                response.Token = GenerateJwt(user, roles, _jwtSettings);
+                return Ok(response);
             }
-
-            var userSigninResult = await _userManager.CheckPasswordAsync(user, userLoginResource.Password);
-
-            if (userSigninResult)
+            catch (Exception ex)
             {
-                var roles = await _userManager.GetRolesAsync(user);
-                return Ok(GenerateJwt(user, roles, _jwtSettings));
+                _logger.LogInformation($"Login error: {ex.Message} - Email: {loginRequest.Email}");
+                return BadRequest(ex.Message);
             }
-            else
-                return BadRequest("Email o password non corrette.");
         }
 
-        [HttpPost("Roles")]
-        public async Task<IActionResult> CreateRole(string roleName)
+        [HttpPost("changepw")]
+        [AllowAnonymous]
+        public async Task<IActionResult> ChangePassword([FromBody] ChangePwRequest ChangePwRequest)
         {
-            if (string.IsNullOrWhiteSpace(roleName))
+            try
             {
-                return BadRequest("Role name should be provided.");
+                var user = await _signinManager.UserManager.FindByEmailAsync(ChangePwRequest.Email);
+                user.Pw_LastChanged = DateTime.Now;
+                user.Pw_MustChange = false;
+                await _utenteService.UpdateUtente(user.UserName, user);
+
+                var task = await _userManager.ChangePasswordAsync(user, ChangePwRequest.OldPassword, ChangePwRequest.NewPassword);
+                if (task.Succeeded)
+                    return Ok();
+                else
+                    return BadRequest(task.Errors);
             }
-
-            var newRole = new Ruolo
+            catch (Exception ex)
             {
-                Name = roleName
-            };
-
-            var roleResult = await _roleManager.CreateAsync(newRole);
-
-            if (roleResult.Succeeded)
-            {
-                return Ok();
+                _logger.LogInformation($"Change password error: {ex.Message} - Email: {ChangePwRequest.Email}");
+                return BadRequest(ex.Message);
             }
-
-            return Problem(roleResult.Errors.First().Description, null, 500);
         }
 
-        [HttpPost("User/{userEmail}/Role")]
-        public async Task<IActionResult> AddUserToRole(string userEmail, [FromBody] string roleName)
-        {
-            var user = _userManager.Users.SingleOrDefault(u => u.UserName == userEmail);
+        //[HttpPost("Roles")]
+        //public async Task<IActionResult> CreateRole(string roleName)
+        //{
+        //    if (string.IsNullOrWhiteSpace(roleName))
+        //    {
+        //        return BadRequest("Role name should be provided.");
+        //    }
+        //
+        //    var newRole = new Ruolo
+        //    {
+        //        Name = roleName
+        //    };
+        //
+        //    var roleResult = await _roleManager.CreateAsync(newRole);
+        //
+        //    if (roleResult.Succeeded)
+        //    {
+        //        return Ok();
+        //    }
+        //
+        //    return Problem(roleResult.Errors.First().Description, null, 500);
+        //}
 
-            var result = await _userManager.AddToRoleAsync(user, roleName);
-
-            if (result.Succeeded)
-            {
-                return Ok();
-            }
-
-            return Problem(result.Errors.First().Description, null, 500);
-        }
+        //[HttpPost("User/{userEmail}/Role")]
+        //public async Task<IActionResult> AddUserToRole(string userEmail, [FromBody] string roleName)
+        //{
+        //    var user = _userManager.Users.SingleOrDefault(u => u.UserName == userEmail);
+        //
+        //    var result = await _userManager.AddToRoleAsync(user, roleName);
+        //
+        //    if (result.Succeeded)
+        //    {
+        //        return Ok();
+        //    }
+        //
+        //    return Problem(result.Errors.First().Description, null, 500);
+        //}
 
         [AllowAnonymous]
         private string GenerateJwt(Utente user, IList<string> roles, JwtSettings jwtSettings)
