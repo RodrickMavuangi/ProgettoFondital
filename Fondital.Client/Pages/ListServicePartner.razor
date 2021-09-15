@@ -4,7 +4,7 @@
 @using Fondital.Shared.Models
 @inject ServicePartnerClient servicePartnerClient
 @inject IStringLocalizer<App> localizer
-@inject NavigationManager NavigationManager
+@inject NavigationManager navManager
 
 <div class="row-1 d-flex justify-content-between flex-wrap flex-md-nowrap  pt-0">
     <!--TITOLO PAGINA-->
@@ -92,9 +92,9 @@
                     <DataAnnotationsValidator></DataAnnotationsValidator>
                 </FormValidation>
                 <FormItems>
-                    <FormItem Class="form-group" Field="@nameof(ServicePartner.RagioneSociale)"></FormItem>
-                    <FormItem Class="form-group" Field="@nameof(ServicePartner.CodiceFornitore)"></FormItem>
-                    <FormItem Class="form-group" Field="@nameof(ServicePartner.CodiceCliente)"></FormItem>
+                    <FormItem Class="form-group" Field="@nameof(ServicePartner.RagioneSociale)" LabelText=@localizer["RagioneSociale"]></FormItem>
+                    <FormItem Class="form-group" Field="@nameof(ServicePartner.CodiceFornitore)" LabelText=@localizer["CodiceFornitore"] ></FormItem>
+                    <FormItem Class="form-group" Field="@nameof(ServicePartner.CodiceCliente)" LabelText=@localizer["CodiceCliente"] ></FormItem>
                 </FormItems>
                 <FormButtons>
                     <TelerikButton Class="btn btn-secondary mr-auto" @onclick="() => WindowVisible = false" ButtonType="@ButtonType.Button">@localizer["Cancella"]</TelerikButton>
@@ -121,7 +121,7 @@
                 <Template>
                     @{
                         ServicePartner sp = (ServicePartner)context;
-                    <i class="bi bi-people-fill float-lg-left icoClienti blu" ></i>
+                    <i class="bi bi-people-fill float-lg-left icoClienti blu" @onclick="@(() => navManager.NavigateTo($"/detailservicepartner/{sp.Id}"))"></i>
                     <b>@(sp.Utenti.Count())</b>
                     }
                 </Template>

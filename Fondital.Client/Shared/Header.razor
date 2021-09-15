@@ -3,6 +3,7 @@
 @inject NavigationManager NavigationManager
 @inject IJSRuntime JS
 @inject IStringLocalizer<App> localizer
+@inject UtenteClient utClient
 
 <header class="bgBlu mb-5 sticky-top">
     <div class="container-fluid">
@@ -25,14 +26,14 @@
                             <div class="float-lg-right">
                                 <div class="float-lg-left link-light">
                                     <ul class="mb-0 profilo">
-                                        <li class="nomeUtente">@localizer["Ciao"] @context.User.Identity.Name</li>
+                                        <li class="nomeUtente">@localizer["Ciao"] @UtenteCorrente?.Nome</li>
                                         <li class="ruoloUtente">@localizer["RuoloDirezione"]</li>
                                     </ul>
                                 </div>
                                 <div class="float-lg-left align-items-center">
 
 
-                                    <div class="nomeCircle fontProfilo">GDD</div>
+                                    <div class="nomeCircle fontProfilo">@UtenteCorrente?.Nome.First()@UtenteCorrente?.Cognome.First()</div>
 
                                     <TelerikMenu Data="@MenuItems"
                                                  UrlField="@nameof(MenuItem.Page)"

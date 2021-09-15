@@ -4,14 +4,21 @@ using Fondital.Shared.Enums;
 using Microsoft.JSInterop;
 using System.Globalization;
 using System.Linq;
+using Fondital.Shared.Models.Auth;
+using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Components.Authorization;
 
 namespace Fondital.Client.Shared
 {
     public partial class Header
     {
+        [CascadingParameter]
+        private Task<AuthenticationState> authStateTask { get; set; }
+
         List<string> UserMenuList;
         bool ViewUserMenu = false;
         public List<MenuItem> MenuItems { get; set; }
+        protected Utente UtenteCorrente { get; set; }
 
         public class MenuItem
         {
@@ -42,8 +49,12 @@ namespace Fondital.Client.Shared
             }
         }
 
-        protected override Task OnInitializedAsync()
+        protected override async Task OnInitializedAsync()
         {
+            var authState = await authStateTask;
+            if (authState.User.Identity.IsAuthenticated)
+                UtenteCorrente = await utClient.GetUtente(authState.User.Identity.Name);
+
             UserMenuList = new List<string>
             {
                 localizer["CambiaPassword"], localizer["Esci"]
@@ -58,25 +69,25 @@ namespace Fondital.Client.Shared
             {
 
             new MenuItem()
-            {
+                {
                 Section = "",
                 SubSectionList = new List<MenuItem>()
-            {
-                    new MenuItem()
                     {
+                    new MenuItem()
+                        {
                         Section = @localizer["Impostazioni"],
                         Page = "/profile"
-                    },
+                        },
                     new MenuItem()
-                    {
+                        {
                         Section = @localizer["Esci"],
                         Page = "/account/logout"
+                        }
                     }
                 }
-            }
-        };
+            };
 
-            return base.OnInitializedAsync();
+            await base.OnInitializedAsync();
         }
 
         public void ToggleUserMenu()
