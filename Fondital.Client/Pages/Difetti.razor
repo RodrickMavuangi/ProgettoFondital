@@ -31,7 +31,21 @@
 
 @if (ListaDifetti == null)
 {
-    <p><em>@localizer["Caricamento"]...</em></p>
+    @*<p><em>@localizer["Caricamento"]...</em></p>*@
+    <!--CARICO IL LOADER-->
+
+    <div class="k-loader-container k-loader-container-md k-loader-top " style="" data-id="7d13dd9e-e016-4aec-8e1b-5253cd5131d5">
+        <div class="k-loader-container-overlay k-overlay-light"></div>
+        <div class="k-loader-container-inner ">
+            <div class="k-loader k-loader-spinner-3 k-loader-lg k-loader-primary">
+                <div class="k-loader-canvas">
+                    <span class="k-loader-segment"></span>
+                    <span class="k-loader-segment"></span>
+                    <span class="k-loader-segment"></span>
+                </div>
+            </div>
+        </div>
+    </div>
 }
 else
 {
@@ -54,19 +68,19 @@ else
             </GridToolBar>-->
 
             <GridColumns>
-                <GridColumn Field=@nameof(DifettoDto.Id) Title="#" />
-                <GridColumn Field=@nameof(DifettoDto.NomeItaliano) Title=@localizer["Descrizione"].Value.ToUpper() Visible="@(CurrentCulture == "it-IT")" />
-                <GridColumn Field=@nameof(DifettoDto.NomeRusso) Title=@localizer["Descrizione"].Value.ToUpper() Visible="@(CurrentCulture == "ru-RU")" />
-                <GridCommandColumn Context="dif">
+                <GridColumn Field=@nameof(Difetto.Id) Title="#" Width="10%" />
+                <GridColumn Field=@nameof(Difetto.NomeItaliano) Width="84%" Title=@localizer["Descrizione"].Value.ToUpper() Visible="@(CurrentCulture == "it-IT")" />
+                <GridColumn Field=@nameof(Difetto.NomeRusso) Width="84%" Title=@localizer["Descrizione"].Value.ToUpper() Visible="@(CurrentCulture == "ru-RU")" />
+                <GridCommandColumn Context="dif" Width="3%">
                     @{
                         var difettoDto = dif as DifettoDto;
                         <GridCommandButton Class=" btnIcon bgBianco white" Command="EditDifetto" Icon="" ImageUrl="/img/Icons/edit.svg" OnClick="@(() => EditDifetto(difettoDto.Id))" />
                     }
                 </GridCommandColumn>
-                <GridCommandColumn Context="dif">
+                <GridCommandColumn Context="dif" Width="3%">
                     @{
-                        var difettoDto = dif as DifettoDto;
-                        <TelerikSwitch Class="  bgBluOn white" OffLabel=" " OnLabel=" " OnChange="@(() => UpdateEnableDifetto(difettoDto.Id))" @bind-Value="@difettoDto.IsAbilitato"></TelerikSwitch>
+                        var difetto = dif as Difetto;
+                                       <TelerikSwitch Class="switch_white" OffLabel=" " OnLabel=" " OnChange="@(() => UpdateEnableDifetto(difetto.Id))" @bind-Value="@difetto.IsAbilitato"></TelerikSwitch>
                     }
                 </GridCommandColumn>
             </GridColumns>
@@ -74,12 +88,14 @@ else
     </div>
 }
 
+
+<!--DIALOGS-->
 <TelerikWindow Class="modal-app dialogBox" Width="500px" Height="auto" Centered="true" Modal="true" @bind-Visible="ShowAddDialog">
     <WindowActions>
         <WindowAction Name="Close" IconClass="k-icon k-i-close text-dark" />
     </WindowActions>
     <WindowContent>
-        <AddDifettoDialog OnClose="@(() => ShowAddDialog = false)" OnSave="CloseAndRefresh" />
+        <div class="dialogForm"> <AddDifettoDialog OnClose="@(() => ShowAddDialog = false)" OnSave="CloseAndRefresh" /></div>
     </WindowContent>
 </TelerikWindow>
 
@@ -88,6 +104,6 @@ else
         <WindowAction Name="Close" IconClass="k-icon k-i-close text-dark" />
     </WindowActions>
     <WindowContent>
-        <EditDifettoDialog DifettoToUpdate="DifettoSelected" OnClose="@(() => ShowEditDialog = false)" OnSave="CloseAndRefresh" />
+        <div class="dialogForm"> <EditDifettoDialog DifettoToUpdate="DifettoSelected" OnClose="@(() => ShowEditDialog = false)" OnSave="CloseAndRefresh" /></div>
     </WindowContent>
 </TelerikWindow>
