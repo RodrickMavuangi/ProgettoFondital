@@ -7,6 +7,7 @@ using System.Linq;
 using Fondital.Shared.Models.Auth;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Authorization;
+using Fondital.Shared.Dto;
 
 namespace Fondital.Client.Shared
 {
@@ -18,7 +19,7 @@ namespace Fondital.Client.Shared
         List<string> UserMenuList;
         bool ViewUserMenu = false;
         public List<MenuItem> MenuItems { get; set; }
-        protected Utente UtenteCorrente { get; set; }
+        protected UtenteDto UtenteCorrente { get; set; }
 
         public class MenuItem
         {
