@@ -30,25 +30,25 @@ else
             <GridSearchBox />
         </GridToolBar>
         <GridColumns>
-            <GridColumn Field=@nameof(VoceCosto.Id) Title="#" />
-            <GridColumn Field=@nameof(VoceCosto.NomeItaliano) Title=@localizer["Descrizione"].Value.ToUpper() Visible="@(CurrentCulture == "it-IT")" />
-            <GridColumn Field=@nameof(VoceCosto.NomeRusso) Title=@localizer["Descrizione"].Value.ToUpper() Visible="@(CurrentCulture == "ru-RU")" />
+            <GridColumn Field=@nameof(VoceCostoDto.Id) Title="#" />
+            <GridColumn Field=@nameof(VoceCostoDto.NomeItaliano) Title=@localizer["Descrizione"].Value.ToUpper() Visible="@(CurrentCulture == "it-IT")" />
+            <GridColumn Field=@nameof(VoceCostoDto.NomeRusso) Title=@localizer["Descrizione"].Value.ToUpper() Visible="@(CurrentCulture == "ru-RU")" />
             <GridCommandColumn Title=@localizer["Tipologia"].Value.ToUpper() Context="vc">
                 @{
-                        var voceCosto = vc as VoceCosto;
+                        var voceCosto = vc as VoceCostoDto;
                         var traduzioneTipologia = localizer[voceCosto.Tipologia.ToString()];
                     <div>@traduzioneTipologia</div>
                 }
             </GridCommandColumn>
             <GridCommandColumn Context="vc">
                 @{
-                        var voceCosto = vc as VoceCosto;
+                        var voceCosto = vc as VoceCostoDto;
                     <GridCommandButton Command="EditVoceCosto" Icon="edit" OnClick="@(() => EditVoceCosto(voceCosto.Id))" />
                 }
             </GridCommandColumn>
             <GridCommandColumn Context="vc">
                 @{
-                        var voceCosto = vc as VoceCosto;
+                        var voceCosto = vc as VoceCostoDto;
                     <TelerikSwitch OffLabel=" " OnLabel=" " OnChange="@(() => UpdateEnableVoceCosto(voceCosto.Id))" @bind-Value="@voceCosto.IsAbilitato"></TelerikSwitch>
                 }
             </GridCommandColumn>

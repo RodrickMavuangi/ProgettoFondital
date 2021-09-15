@@ -1,4 +1,4 @@
-﻿using Fondital.Shared.Models;
+﻿using Fondital.Shared.Dto;
 using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
 using System;
@@ -13,12 +13,12 @@ namespace Fondital.Client.Pages
     {
         [CascadingParameter]
         public DialogFactory Dialogs { get; set; }
-        private List<VoceCosto> ListaVociCosto;
+        private List<VoceCostoDto> ListaVociCosto;
         private int PageSize { get; set; }
         private string CurrentCulture { get; set; }
         protected bool ShowAddDialog { get; set; } = false;
         protected bool ShowEditDialog { get; set; } = false;
-        protected VoceCosto VoceCostoSelected { get; set; }
+        protected VoceCostoDto VoceCostoSelected { get; set; }
 
         public string SearchText = "";
 
@@ -30,13 +30,13 @@ namespace Fondital.Client.Pages
 
             await RefreshVociCosto();
         }
-        public List<VoceCosto> ListaLavorazioni_filtered => CurrentCulture == "ru-RU" ?
-            ListaVociCosto.Where<VoceCosto>(x => x.NomeRusso.ToLower().Contains(SearchText.ToLower())).ToList() :
-            ListaVociCosto.Where<VoceCosto>(x => x.NomeItaliano.ToLower().Contains(SearchText.ToLower())).ToList();
+        public List<VoceCostoDto> ListaLavorazioni_filtered => CurrentCulture == "ru-RU" ?
+            ListaVociCosto.Where<VoceCostoDto>(x => x.NomeRusso.ToLower().Contains(SearchText.ToLower())).ToList() :
+            ListaVociCosto.Where<VoceCostoDto>(x => x.NomeItaliano.ToLower().Contains(SearchText.ToLower())).ToList();
 
         protected async Task RefreshVociCosto()
         {
-            ListaVociCosto = (List<VoceCosto>)await httpClient.GetAllVociCosto();
+            ListaVociCosto = (List<VoceCostoDto>)await httpClient.GetAllVociCosto();
             StateHasChanged();
         }
 

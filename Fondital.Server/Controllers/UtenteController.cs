@@ -1,17 +1,14 @@
-﻿using Fondital.Shared;
+﻿using AutoMapper;
+using Fondital.Shared.Dto;
 using Fondital.Shared.Models.Auth;
+using Fondital.Shared.Services;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using RouteAttribute = Microsoft.AspNetCore.Mvc.RouteAttribute;
-using Fondital.Data;
-using Fondital.Services;
-using Fondital.Shared.Services;
 
 namespace Fondital.Server.Controllers
 {
@@ -22,24 +19,26 @@ namespace Fondital.Server.Controllers
     {
         private readonly ILogger<UtenteController> _logger;
         private readonly IUtenteService _ut;
+        private readonly IMapper _mapper;
 
-        public UtenteController(ILogger<UtenteController> logger, IUtenteService ut)
+        public UtenteController(ILogger<UtenteController> logger, IUtenteService ut, IMapper mapper)
         {
             _ut = ut;
             _logger = logger;
+            _mapper = mapper;
         }
 
         [HttpGet]
-        public IEnumerable<Utente> GetUtenti()
+        public IEnumerable<UtenteDto> GetUtenti()
         {
-            return _ut.GetAllUtenti().Result;
+            return _mapper.Map<IEnumerable<UtenteDto>>(_ut.GetAllUtenti().Result);
         }
 
         [HttpGet("{username}")]
         [AllowAnonymous]
-        public Utente GetUtenteByUsername(string username)
+        public UtenteDto GetUtenteByUsername(string username)
         {
-            return _ut.GetUtenteByUsername(username).Result;
+            return _mapper.Map< UtenteDto>(_ut.GetUtenteByUsername(username).Result);
         }
 
         [HttpPost("PwUpdated/{username}")]
@@ -47,7 +46,7 @@ namespace Fondital.Server.Controllers
         {
             try
             {
-                var utente = this.GetUtenteByUsername(username);
+                var utente = _mapper.Map<Utente>(this.GetUtenteByUsername(username));
                 utente.Pw_LastChanged = DateTime.Now;
                 utente.Pw_MustChange = false;
                 await _ut.UpdateUtente(utente.UserName, utente);
@@ -59,10 +58,11 @@ namespace Fondital.Server.Controllers
             }
         }
 
-
-        [HttpPut("{utenteId}")]
-        public async Task UpdateUtente(int utenteId, [FromBody] Utente utenteToUpdate)
+        /*
+        [HttpPut("{id}")]
+        public async Task UpdateUtente(int id, [FromBody] UtenteDto utenteDtoToUpdate)
         {
+            Utente utenteToUpdate = _mapper.Map<Utente>(utenteDtoToUpdate);
             Utente _utente = new Utente();
             try
             {
@@ -72,7 +72,7 @@ namespace Fondital.Server.Controllers
                 }
                 else
                 {
-                    _utente = await _ut.GetUtenteById(utenteId);
+                    _utente = await _ut.GetUtenteById(id);
 
                     if (_utente == null)
                     {
@@ -80,8 +80,8 @@ namespace Fondital.Server.Controllers
                     }
                     else
                     {
-                        Utente utenteFromDB = await _ut.GetUtenteById(utenteId);
-                        await _ut.UpdateUtente(utenteToUpdate,utenteFromDB);
+                        Utente utenteFromDB = await _ut.GetUtenteById(id);
+                        await _ut.UpdateUtente(utenteToUpdate,_utente);
                     }
                 }
             }
@@ -89,6 +89,15 @@ namespace Fondital.Server.Controllers
             {
                 _logger.LogError($"C'è stato un problema : {e.Message}");
             }
+        }
+        */
+
+        [HttpPut("id")]
+        public async Task UpdateUtente(int id, [FromBody] UtenteDto utenteDtoToUpdate)
+        {
+            Utente utenteToUpdate = _mapper.Map<Utente>(utenteDtoToUpdate);
+            Utente utente = await _ut.GetUtenteById(id);
+            await _ut.UpdateUtente(utente.UserName, utenteToUpdate);
         }
     }
 }

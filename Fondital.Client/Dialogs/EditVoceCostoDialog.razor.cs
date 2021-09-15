@@ -1,8 +1,6 @@
-﻿using Fondital.Shared.Models;
+﻿using Fondital.Shared.Dto;
 using Microsoft.AspNetCore.Components;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace Fondital.Client.Dialogs
@@ -11,7 +9,7 @@ namespace Fondital.Client.Dialogs
     {
         [Parameter] public EventCallback OnClose { get; set; }
         [Parameter] public EventCallback OnSave { get; set; }
-        [Parameter] public VoceCosto VoceCostoToUpdate { get; set; }
+        [Parameter] public VoceCostoDto VoceCostoToUpdate { get; set; }
         protected bool isSubmitting = false;
         protected string ErrorMessage = "";
 

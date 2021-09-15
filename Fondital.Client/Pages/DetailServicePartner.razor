@@ -68,9 +68,9 @@ else
                     <DataAnnotationsValidator></DataAnnotationsValidator>
                 </FormValidation>
                 <FormItems>
-                    <FormItem Field="@nameof(ServicePartner.CodiceCliente)"></FormItem>
-                    <FormItem Field="@nameof(ServicePartner.CodiceFornitore)"></FormItem>
-                    <FormItem Field="@nameof(ServicePartner.RagioneSociale)"></FormItem>
+                    <FormItem Field="@nameof(ServicePartnerDto.CodiceCliente)"></FormItem>
+                    <FormItem Field="@nameof(ServicePartnerDto.CodiceFornitore)"></FormItem>
+                    <FormItem Field="@nameof(ServicePartnerDto.RagioneSociale)"></FormItem>
                 </FormItems>
                 <FormButtons>
                     @*<TelerikButton Class="btn btn-secondary mr-auto" @onclick="() => isModalVisible = false" ButtonType="@ButtonType.Button">@localizer["Cancella"]</TelerikButton>*@
@@ -101,9 +101,9 @@ else
                     <DataAnnotationsValidator></DataAnnotationsValidator>
                 </FormValidation>
                 <FormItems>
-                    <FormItem Field="@nameof(Utente.Email)" Enabled="false"></FormItem>
-                    <FormItem Field="@nameof(Utente.Nome)"></FormItem>
-                    <FormItem Field="@nameof(Utente.Cognome)"></FormItem>
+                    <FormItem Field="@nameof(UtenteDto.Email)" Enabled="false"></FormItem>
+                    <FormItem Field="@nameof(UtenteDto.Nome)"></FormItem>
+                    <FormItem Field="@nameof(UtenteDto.Cognome)"></FormItem>
                 </FormItems>
                 <FormButtons>
                     @*<TelerikButton Class="btn btn-secondary mr-auto" @onclick="() => myEditTemplate = false" ButtonType="@ButtonType.Button">@localizer["Cancella"]</TelerikButton>*@
@@ -135,9 +135,9 @@ else
                         <DataAnnotationsValidator></DataAnnotationsValidator>
                     </FormValidation>
                     <FormItems>
-                        <FormItem Field="@nameof(Utente.UserName)"></FormItem>
-                        <FormItem Field="@nameof(Utente.Nome)"></FormItem>
-                        <FormItem Field="@nameof(Utente.Cognome)"></FormItem>
+                        <FormItem Field="@nameof(UtenteDto.UserName)"></FormItem>
+                        <FormItem Field="@nameof(UtenteDto.Nome)"></FormItem>
+                        <FormItem Field="@nameof(UtenteDto.Cognome)"></FormItem>
                     </FormItems>
                     <FormButtons>
                         @*<TelerikButton Class="btn btn-secondary mr-auto" @onclick="() => WindowVisible = false" ButtonType="@ButtonType.Button">@localizer["Cancella"]</TelerikButton>*@
@@ -158,9 +158,9 @@ else
              Resizable="true"
              Sortable="true">
     <GridColumns>
-        <GridColumn Field=@nameof(Utente.UserName) Title=@localizer["UTENTI"] />
-        <GridColumn Field=@nameof(Utente.Nome) Title=@localizer["NOME"] />
-        <GridColumn Field=@nameof(Utente.Cognome) Title=@localizer["COGNOME"] />
+        <GridColumn Field=@nameof(UtenteDto.UserName) Title=@localizer["UTENTI"] />
+        <GridColumn Field=@nameof(UtenteDto.Nome) Title=@localizer["NOME"] />
+        <GridColumn Field=@nameof(UtenteDto.Cognome) Title=@localizer["COGNOME"] />
         <GridCommandColumn Width="75px">
             <GridCommandButton Class="bt-cmd" Command="MyOwnCommand" Icon="" ShowInEdit="false" ImageUrl="/img/Icons/setting.svg" OnClick="@EditHandler"></GridCommandButton>
         </GridCommandColumn>
@@ -168,7 +168,7 @@ else
             <GridCommandButton Class="bt-cmd" Command="MyOwnCommand" Icon="" ShowInEdit="false" ImageUrl="/img/keyLogo.jpg" OnClick="@SendMail"></GridCommandButton>
         </GridCommandColumn>
         <GridCommandColumn Width="75px" Context="dif">
-            @{ var utente = dif as Utente;
+            @{ var utente = dif as UtenteDto;
                 <TelerikSwitch OffLabel=" " OnLabel=" " OnChange="@(() => UpdateEnableUtente(utente.Id))" @bind-Value="@utente.IsAbilitato"></TelerikSwitch> }
         </GridCommandColumn>
     </GridColumns>

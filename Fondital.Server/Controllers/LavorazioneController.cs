@@ -1,4 +1,6 @@
-﻿using Fondital.Data;
+﻿using AutoMapper;
+using Fondital.Data;
+using Fondital.Shared.Dto;
 using Fondital.Shared.Models;
 using Fondital.Shared.Services;
 using Microsoft.AspNetCore.Mvc;
@@ -19,29 +21,33 @@ namespace Fondital.Server.Controllers
         private readonly ILogger<LavorazioneController> _logger;
         private readonly ILavorazioneService _lavorazioneService;
         private readonly IConfiguration _configuration;
+        private readonly IMapper _mapper;
 
-        public LavorazioneController(ILogger<LavorazioneController> logger, FonditalDbContext db, ILavorazioneService lavorazioneService, IConfiguration configuration)
+        public LavorazioneController(ILogger<LavorazioneController> logger, FonditalDbContext db, ILavorazioneService lavorazioneService, IConfiguration configuration, IMapper mapper)
         {
             _logger = logger;
             _lavorazioneService = lavorazioneService;
             _configuration = configuration;
+            _mapper = mapper;
         }
 
         [HttpGet]
-        public async Task<IEnumerable<Lavorazione>> Get([FromQuery] bool? isEnabled)
+        public async Task<IEnumerable<LavorazioneDto>> Get([FromQuery] bool? isEnabled)
         {
-            return await _lavorazioneService.GetAllLavorazioni(isEnabled);
+            return _mapper.Map<IEnumerable<LavorazioneDto>>(await _lavorazioneService.GetAllLavorazioni(isEnabled));
         }
 
         [HttpPost("update/{lavorazioneId}")]
-        public async Task UpdateLavorazione([FromBody] Lavorazione lavorazione, int lavorazioneId)
+        public async Task UpdateLavorazione([FromBody] LavorazioneDto lavorazioneDto, int lavorazioneId)
         {
-            await _lavorazioneService.UpdateLavorazione(lavorazioneId, lavorazione);
+            Lavorazione lavorazioneToUpdate = _mapper.Map<Lavorazione>(lavorazioneDto);
+            await _lavorazioneService.UpdateLavorazione(lavorazioneId, lavorazioneToUpdate);
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateLavorazione([FromBody] Lavorazione lavorazione)
+        public async Task<IActionResult> CreateLavorazione([FromBody] LavorazioneDto lavorazioneDto)
         {
+            Lavorazione lavorazione = _mapper.Map<Lavorazione>(lavorazioneDto);
             try
             {
                 await _lavorazioneService.AddLavorazione(lavorazione);
@@ -54,7 +60,7 @@ namespace Fondital.Server.Controllers
                 else
                     _logger.LogError(ex.Message);
 
-                List<Lavorazione> lista = (List<Lavorazione>)await _lavorazioneService.GetAllLavorazioni();
+                List<LavorazioneDto> lista = (List<LavorazioneDto>)await _lavorazioneService.GetAllLavorazioni();
 
                 if (lista.Any(x => x.NomeItaliano == lavorazione.NomeItaliano))
                     return BadRequest("ErroreNomeItaliano");

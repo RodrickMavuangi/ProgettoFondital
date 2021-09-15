@@ -1,9 +1,5 @@
-﻿using Fondital.Shared;
-using Fondital.Shared.Enums;
-using Fondital.Shared.Models;
-using System;
+﻿using Fondital.Shared.Dto;
 using System.Collections.Generic;
-using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Json;
 using System.Threading.Tasks;
@@ -19,16 +15,16 @@ namespace Fondital.Client.Clients
             this.httpClient = httpClient;
         }
 
-        public async Task<IEnumerable<Listino>> GetAllListini() =>
-            await httpClient.GetFromJsonAsync<IEnumerable<Listino>>($"listiniControl", JsonSerializerOpts.JsonOpts);
+        public async Task<IEnumerable<ListinoDto>> GetAllListini() =>
+            await httpClient.GetFromJsonAsync<IEnumerable<ListinoDto>>($"listiniControl", JsonSerializerOpts.JsonOpts);
 
-        public async Task<Listino> GetListinoById(int id) =>
-            await httpClient.GetFromJsonAsync<Listino>($"listiniControl/{id}", JsonSerializerOpts.JsonOpts);
+        public async Task<ListinoDto> GetListinoById(int id) =>
+            await httpClient.GetFromJsonAsync<ListinoDto>($"listiniControl/{id}", JsonSerializerOpts.JsonOpts);
 
-        public async Task UpdateListino(int listinoId, Listino listino) =>
-            await httpClient.PostAsJsonAsync($"listiniControl/update/{listinoId}", listino, JsonSerializerOpts.JsonOpts);
+        public async Task UpdateListino(int listinoId, ListinoDto listinoDto) =>
+            await httpClient.PostAsJsonAsync($"listiniControl/update/{listinoId}", listinoDto, JsonSerializerOpts.JsonOpts);
 
-        public async Task CreateListino(Listino listino) =>
-            await httpClient.PostAsJsonAsync($"listiniControl", listino, JsonSerializerOpts.JsonOpts);
+        public async Task CreateListino(ListinoDto listinoDto) =>
+            await httpClient.PostAsJsonAsync($"listiniControl", listinoDto, JsonSerializerOpts.JsonOpts);
     }
 }

@@ -135,13 +135,13 @@
     <TelerikGrid Data="@ServicePartners_filtered" EditMode="@GridEditMode.Popup" Pageable="true"
                  Class="table table-striped" OnUpdate="@UpdateHandler" Resizable="true" Sortable="true">
         <GridColumns>
-            <GridColumn Field=@nameof(ServicePartner.CodiceFornitore) Title=@localizer["CodiceFornitore"].Value.ToUpper() />
-            <GridColumn Field=@nameof(ServicePartner.RagioneSociale) Title=@localizer["RagioneSociale"].Value.ToUpper() />
-            <GridColumn Field=@nameof(ServicePartner.CodiceCliente) Title=@localizer["CodiceUtente"].Value.ToUpper() />
+            <GridColumn Field=@nameof(ServicePartnerDto.CodiceFornitore) Title=@localizer["CodiceFornitore"].Value.ToUpper() />
+            <GridColumn Field=@nameof(ServicePartnerDto.RagioneSociale) Title=@localizer["RagioneSociale"].Value.ToUpper() />
+            <GridColumn Field=@nameof(ServicePartnerDto.CodiceCliente) Title=@localizer["CodiceUtente"].Value.ToUpper() />
             <GridColumn Field="N° UTENTI" Title="N° UTENTI" Id="utenti">
                 <Template>
                     @{
-                        ServicePartner sp = (ServicePartner)context;
+                        ServicePartnerDto sp = (ServicePartnerDto)context;
                     <i class="bi bi-people-fill float-lg-left icoClienti blu" ></i>
                     <b>@(sp.Utenti.Count())</b>
                     }
@@ -149,7 +149,7 @@
             </GridColumn>
             <GridCommandColumn Width="80px" Context="sp">
                 @{
-                    var servicePartner = sp as ServicePartner;
+                    var servicePartner = sp as ServicePartnerDto;
                 <GridCommandButton Class="settingCol btnIcon bgBluOn white" Command="MyOwnCommand" Icon="" ShowInEdit="false" ImageUrl="/img/Icons/gear-fill.svg" OnClick="@(() => EditSp(servicePartner.Id))"></GridCommandButton>
                     }
             </GridCommandColumn>
