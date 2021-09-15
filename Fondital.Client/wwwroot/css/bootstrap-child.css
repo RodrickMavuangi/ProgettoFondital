@@ -2,7 +2,7 @@
 Theme Name: Custom Telerik Blazor Child
 Description: This is a child theme for Telerik Blazor Librery.
 Template: Telerik Blazor
-Version: 1.1
+Version: 1.2
 */
 
 
@@ -548,7 +548,8 @@ a:not([href]):not([tabindex]) {
         font-size: 14px;
         line-height: 2 !important;
         color: #5F5F5F !important;
-        height:48px;
+        height: 48px;
+        
     }
 .form-control-lg {
     padding: .7rem 1rem !important;
@@ -559,30 +560,31 @@ a:not([href]):not([tabindex]) {
     /*    margin-bottom: .7rem !important;*/
     color: #5F5F5F;
     text-transform: uppercase !important;
+    font-size: 14px !important;
 }
 
 ::-webkit-input-placeholder { /* Chrome/Opera/Safari */
-    color: #5F5F5F !important;
+    color: #B4B4B4 !important;
     font-size: 12px;
 }
 
 ::-moz-placeholder { /* Firefox 19+ */
-    color: #5F5F5F !important;
+    color: #B4B4B4 !important;
     font-size: 12px;
 }
 
 :-ms-input-placeholder { /* IE 10+ */
-    color: #5F5F5F !important;
+    color: #B4B4B4 !important;
     font-size: 12px;
 }
 
 :-moz-placeholder { /* Firefox 18- */
-    color: #5F5F5F !important;
+    color: #B4B4B4 !important;
     font-size: 12px;
 }
 
 ::placeholder {
-    color: #5F5F5F !important;
+    color: #B4B4B4 !important;
     font-size: 12px;
 }
 
@@ -612,8 +614,10 @@ a:not([href]):not([tabindex]) {
 }
 
 
-/*************** BUTTON ******************/
 
+
+
+/*************** BUTTON ******************/
 .btn {
     /*min-width: 250px;*/
     font-family: 'Open Sans Condensed', sans-serif !important;
@@ -632,7 +636,7 @@ a:not([href]):not([tabindex]) {
     transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,-webkit-box-shadow .15s ease-in-out;
     transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;
     transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out,-webkit-box-shadow .15s ease-in-out;
-    height:48px!important;
+    height: 48px !important;
 }
 
 .form-check-mod {
@@ -944,11 +948,18 @@ a:not([href]):not([tabindex]) {
 .dialogForm .form-group, .dialogForm .form-field, .k-window-content .form-field {
     margin-bottom: 2rem !important;
 }
+    .dialogForm .form-field.mb-0 {
+        margin-bottom: 0 !important;
+    }
+    .dialogForm .form-field.mb-1 {
+        margin-bottom: 1rem !important;
+    }
     .dialogForm .form-group .k-form-label, .dialogForm .form-group label, .dialogForm .form-field label, .k-window-content .form-group label, .k-window-content .form-field label {
         color: #5F5F5F !important;
         text-transform: uppercase !important;
         display: inline-block !important;
         margin-bottom: .5rem !important;
+        font-size:14px!important;
     }
     .dialogForm .form-group input, .dialogForm .form-group select, .dialogForm .form-field input, .dialogForm .form-field select, .k-window-content .form-field input, .k-window-content .form-field select {
         padding: .7rem 1rem !important;
@@ -1034,8 +1045,26 @@ a:not([href]):not([tabindex]) {
         font-style: normal !important;
     }
 
+.dialogForm .form-field input.inputCheck {
+    width: 20px;
+    height: 20px !important;
+    display: inline-block;
+    padding: 0 0 0 0 !important;
+    min-width: 15px !important;
+    position: relative;
+    top: 4px;
+}
+
+.dialogForm .labelCheck {
+    margin-left: 16px;
+    color: #5F5F5F;
+    text-transform: uppercase !important;
+    font-size: 14px !important;
+}
 
 /*PAGINATION*/
+
+
 .table .k-grid-pager {
     background-color: transparent !important;
     border: none !important;
