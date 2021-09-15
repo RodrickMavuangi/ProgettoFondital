@@ -182,9 +182,22 @@ a {
     .linksottolieato a:hover {
         text-decoration: none !important;
     }
+.linkNormal {
+    background: none !important;
+    border: none !important;
+    font-size: 18px !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    text-decoration: underline !important;
+}
 
+.linkNormal:hover {
+    text-decoration: none !important;
+}
+    .noIcon .k-icon {
+    display:none!important;
+}
 /*************** SPAZI & ALLINEAMENTI ******************/
-
 .float-lg-left {
     float: left !important;
 }
@@ -297,11 +310,13 @@ a {
         padding: 12px ​16px 13px 16p;
     }
 
-
+.alert-warning {
+    padding: 10px 16px 10px 16px;
+    margin: 0 0 32px 0;
+}
 
 
 /*************** HEADER ******************/
-
 .logo img {
     min-height: 4rem;
     height: 4rem;
@@ -650,6 +665,7 @@ a:not([href]):not([tabindex]) {
 .btn-primary {
     background-color: #0d6efd !important;
     border-color: #0d6efd !important;
+    color: #fff !important;
 }
 
     .btn-primary:hover {
@@ -689,6 +705,11 @@ a:not([href]):not([tabindex]) {
     .bgBluOn:hover {
         background-color: #4C8B32 !important;
     }
+
+.bgBluOn_NoOver {
+    background-color: #007BFF !important;
+    
+}
 
 .bgBiancoOn {
     background-color: #fff !important;
@@ -790,7 +811,8 @@ a:not([href]):not([tabindex]) {
 .k-virtual-content {
     overflow-y: auto!important;
 }
-    
+
+
 
 .k-grid-header, .k-grouping-header, .k-grid-add-row, .k-grid-footer {
     color: #212529 !important;
@@ -843,6 +865,9 @@ a:not([href]):not([tabindex]) {
     left: 15rem;
 }
 
+.k-grid tr.k-alt {
+    background-color: #F9F9F9!important;
+}
 .k-grid td {
     
     padding-left: 1rem !important;
@@ -878,29 +903,54 @@ a:not([href]):not([tabindex]) {
     /* border: solid 1px red!important; */
 }
 
+
+
+.table .k-command-cell span {
+    display: inline-grid;
+    width: 100%;
+    height: 100%;
+}
+
+
+
+
 /*DIALOG*/
 .dialogBox {
-    padding-bottom:30px!important;
+    padding-bottom: 0px !important;
 }
-.dialogForm {
+.dialogForm, .k-dialog-titlebar {
     font-family: 'Open Sans', Helvetica, Arial, sans-serif !important;
 }
 
-.dialogBox .k-dialog-titlebar {
-    background-color: #ffffff !important;
-    border: none!important;
+.dialogBox .k-dialog-titlebar, .k-dialog-titlebar {
+    /*    background-color: #ffffff !important;*/
+    background-color: #F9F9F9 !important;
+    /*    border: none !important;*/
+    border-bottom: 1px solid #dee2e6 !important;
+}
+.k-dialog-titlebar {
+    color: #5F5F5F !important;
+}
+.k-window-content {
+    padding: 32px 32px!important;
+}
+.k-dialog-buttongroup {
+    border: none !important;
+}
+.dialogBox .btn {
+    text-transform: uppercase !important;
 }
 
-.dialogForm .form-group {
+.dialogForm .form-group, .dialogForm .form-field, .k-window-content .form-field {
     margin-bottom: 2rem !important;
 }
-    .dialogForm .form-group .k-form-label {
+    .dialogForm .form-group .k-form-label, .dialogForm .form-group label, .dialogForm .form-field label, .k-window-content .form-group label, .k-window-content .form-field label {
         color: #5F5F5F !important;
         text-transform: uppercase !important;
         display: inline-block !important;
         margin-bottom: .5rem !important;
     }
-    .dialogForm .form-group input, .dialogForm .form-group select {
+    .dialogForm .form-group input, .dialogForm .form-group select, .dialogForm .form-field input, .dialogForm .form-field select, .k-window-content .form-field input, .k-window-content .form-field select {
         padding: .7rem 1rem !important;
         border-radius: .125rem !important;
         font-size: 14px;
@@ -912,36 +962,77 @@ a:not([href]):not([tabindex]) {
         border: 1px solid #ced4da !important;
     }
 
-    .dialogForm .k-form-buttons .k-form-submit {
-        background-color: #0d6efd !important;
-        border-color: #0d6efd !important;
-        color: #fff;
-        display: inline-block;
-        text-align: center;
-        vertical-align: middle;
-        width: 100% !important;
-        font-family: 'Open Sans Condensed', sans-serif !important;
-        font-size: 16px !important;
-        font-weight: 700 !important;
-        letter-spacing: 1px !important;
-        padding: .7rem 3rem !important;
-        word-wrap: break-word;
-        white-space: normal;
-        cursor: pointer;
-        border: 0 !important;
-        border-radius: .125rem !important;
-        -webkit-box-shadow: 0 2px 5px 0 rgb(0 0 0 / 16%), 0 2px 10px 0 rgb(0 0 0 / 12%);
-        box-shadow: 0 2px 5px 0 rgb(0 0 0 / 16%), 0 2px 10px 0 rgb(0 0 0 / 12%);
-        -webkit-transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,-webkit-box-shadow .15s ease-in-out;
-        transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,-webkit-box-shadow .15s ease-in-out;
-        transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;
-        transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out,-webkit-box-shadow .15s ease-in-out;
-        height: 48px !important;
-        text-transform: uppercase;
-    }
-.k-form-hint, .k-form-error {
-    font-style: normal!important;
+.k-dialog-buttongroup .k-button {
+    background-color: #D7D7D7 !important;
+    border-color: #D7D7D7 !important;
+    color: #fff !important;
+    display: inline-block;
+    text-align: center;
+    vertical-align: middle;
+    width: 100% !important;
+    font-family: 'Open Sans Condensed', sans-serif !important;
+    font-size: 16px !important;
+    font-weight: 700 !important;
+    letter-spacing: 1px !important;
+    padding: .7rem 3rem !important;
+    word-wrap: break-word;
+    white-space: normal;
+    cursor: pointer;
+    border: 0 !important;
+    border-radius: .125rem !important;
+    -webkit-box-shadow: 0 2px 5px 0 rgb(0 0 0 / 16%), 0 2px 10px 0 rgb(0 0 0 / 12%);
+    box-shadow: 0 2px 5px 0 rgb(0 0 0 / 16%), 0 2px 10px 0 rgb(0 0 0 / 12%);
+    -webkit-transition: color .15s ease-in-out, background-color .15s ease-in-out, border-color .15s ease-in-out, -webkit-box-shadow .15s ease-in-out;
+    transition: color .15s ease-in-out, background-color .15s ease-in-out, border-color .15s ease-in-out, -webkit-box-shadow .15s ease-in-out;
+    transition: color .15s ease-in-out, background-color .15s ease-in-out, border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+    transition: color .15s ease-in-out, background-color .15s ease-in-out, border-color .15s ease-in-out, box-shadow .15s ease-in-out, -webkit-box-shadow .15s ease-in-out;
+    height: 48px !important;
+    text-transform: uppercase;
 }
+
+.dialogForm .k-form-buttons button, .dialogForm .form-field button, .k-dialog-buttongroup .k-primary {
+    background-color: #0d6efd !important;
+    border-color: #0d6efd !important;
+    color: #fff;
+    display: inline-block;
+    text-align: center;
+    vertical-align: middle;
+    width: 100% !important;
+    font-family: 'Open Sans Condensed', sans-serif !important;
+    font-size: 16px !important;
+    font-weight: 700 !important;
+    letter-spacing: 1px !important;
+    padding: .7rem 3rem !important;
+    word-wrap: break-word;
+    white-space: normal;
+    cursor: pointer;
+    border: 0 !important;
+    border-radius: .125rem !important;
+    -webkit-box-shadow: 0 2px 5px 0 rgb(0 0 0 / 16%), 0 2px 10px 0 rgb(0 0 0 / 12%);
+    box-shadow: 0 2px 5px 0 rgb(0 0 0 / 16%), 0 2px 10px 0 rgb(0 0 0 / 12%);
+    -webkit-transition: color .15s ease-in-out, background-color .15s ease-in-out, border-color .15s ease-in-out, -webkit-box-shadow .15s ease-in-out;
+    transition: color .15s ease-in-out, background-color .15s ease-in-out, border-color .15s ease-in-out, -webkit-box-shadow .15s ease-in-out;
+    transition: color .15s ease-in-out, background-color .15s ease-in-out, border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+    transition: color .15s ease-in-out, background-color .15s ease-in-out, border-color .15s ease-in-out, box-shadow .15s ease-in-out, -webkit-box-shadow .15s ease-in-out;
+    height: 48px !important;
+    text-transform: uppercase;
+}
+
+
+.k-dialog-buttongroup .k-button:hover {
+    background-color: #D7D7D7 !important;
+    border-color: #D7D7D7 !important;
+    color: #fff;
+}
+.dialogForm .k-form-buttons button:hover, .k-dialog-buttongroup .k-primary:hover {
+    background-color: #0b5ed7 !important;
+    border-color: #0a58ca !important;
+    color: #fff !important;
+}
+
+    .k-form-hint, .k-form-error {
+        font-style: normal !important;
+    }
 
 
 /*PAGINATION*/
@@ -975,13 +1066,20 @@ a:not([href]):not([tabindex]) {
     border-radius: 0;
 }
 
-
+.k-pager-numbers .k-link {
+    color: #868E96 !important;
+    
+}
+    .k-pager-numbers .k-link:hover, .k-grid-pager .k-link:hover {
+        text-decoration: none !important;
+        background-color: rgba(134, 142, 150, 0.1) !important;
+    }
 
 
 /*************** ICONS ******************/
-[class^="bi-"]::before, [class*=" bi-"]::before {
-    font-size: 1.25rem !important;
-}
+    [class^="bi-"]::before, [class*=" bi-"]::before {
+        font-size: 1.25rem !important;
+    }
 
 .white .bi::before {
     color: #fff;
@@ -1000,9 +1098,66 @@ a:not([href]):not([tabindex]) {
 }
 
 
+/*.table .k-command-cell span.k-switch, .table .k-command-cell span.k-switch-container {
+    width: 32px !important;
+    position: relative;
+    left: 10px;
+    height: auto!important;
+}
+*/
+
+.k-switch-on .k-switch-container {
+    background-color: #fff !important;
+}
+.k-switch-off .k-switch-container {
+    background-color: #868E96!important;
+}
+.k-switch-handle {
+    width: 18px !important;
+    height: 18px !important;
+    margin: 2px 0 2px 0px !important;
+}
+.k-switch-on .k-switch-handle {
+    left: calc(100% - 20px)!important;
+}
+.k-switch-on .k-switch-handle {
+    border-color: #007BFF !important;
+    background-color: #007BFF !important;
+}
+.k-switch-off .k-switch-handle {
+    border: none !important;
+    background-color: #fff !important;
+    margin-left: 2px !important;
+}
 
 
 
+.table .k-command-cell span.k-switch-on {
+    display: inline-grid;
+    width: 100% !important;
+    height: 100% !important;
+    left: 0 !important;
+    border-radius: 0;
+    background-color: #007BFF !important;
+    border: none !important;
+}
+
+.table .k-command-cell span.k-switch-off {
+    display: inline-grid;
+    width: 100% !important;
+    height: 100% !important;
+    left: 0 !important;
+    border-radius: 0;
+    background-color: #D8D8D8 !important;
+    border:none !important;
+}
+
+
+.table .k-command-cell span.k-switch-container {
+    width: 40px !important;
+    left: 17px !important;
+    height: auto !important;
+}
 /*************** TELERIK OVERRIDE ******************/
 .k-grid-header, .k-header, th.k-header, .k-grid-header-wrap, .k-grouping-header, .k-grouping-header .k-group-indicator, .k-grid td, .k-grid-footer, .k-grid-footer-wrap, .k-grid-content-locked, .k-grid-footer-locked, .k-grid-header-locked, .k-filter-row > td, .k-filter-row > th {
     border-color: none !important;
