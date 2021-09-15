@@ -10,7 +10,7 @@ namespace Fondital.Shared.Services
         Task<ServicePartner> GetServicePartnerWithUtentiAsync(int ServicePartnerID);
         Task<ServicePartner> GetServicePartnerById(int id);
         Task<ServicePartner> CreateServicePartner(ServicePartner sp);
-        Task UpdateServicePartner(ServicePartner spToBeUpdated, ServicePartner sp);
+        Task UpdateServicePartner(int spId, ServicePartner sp);
         Task DeleteServicePartner(ServicePartner sp);
     }
 }

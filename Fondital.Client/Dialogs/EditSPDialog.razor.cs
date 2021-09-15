@@ -1,28 +1,28 @@
-﻿using Fondital.Shared.Models;
+﻿using Fondital.Shared.Dto;
 using Microsoft.AspNetCore.Components;
 using System;
 using System.Threading.Tasks;
 
-namespace Fondital.Client.Shared
+namespace Fondital.Client.Dialogs
 {
-    public partial class AddSPDialog
+    public partial class EditSPDialog
     {
         [Parameter] public EventCallback OnClose { get; set; }
         [Parameter] public EventCallback OnSave { get; set; }
-
-        protected ServicePartner NuovoSP { get; set; } = new ServicePartner();
+        [Parameter] public ServicePartnerDto SPToUpdate { get; set; }
 
         protected bool isSubmitting = false;
+
         protected string ErrorMessage = "";
 
-        protected async Task SalvaSP()
+        protected async Task SalvaSp()
         {
             isSubmitting = true;
             ErrorMessage = "";
 
             try
             {
-                await httpClient.CreateServicePartner(NuovoSP);
+                await servicePartnerClient.UpdateServicePartner(SPToUpdate.Id, SPToUpdate);
                 isSubmitting = false;
                 await OnSave.InvokeAsync();
             }

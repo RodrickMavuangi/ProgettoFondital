@@ -1,4 +1,4 @@
-﻿using Fondital.Shared.Models;
+﻿using Fondital.Shared.Dto;
 using System;
 using System.Collections.Generic;
 using System.Net.Http;
@@ -16,16 +16,16 @@ namespace Fondital.Client.Clients
             this.httpClient = httpClient;
         }
 
-        public async Task<IEnumerable<Lavorazione>> GetAllLavorazioni(bool? isAbilitato = null) =>
-            await httpClient.GetFromJsonAsync<IEnumerable<Lavorazione>>($"lavorazioniControl?isEnabled={isAbilitato}", JsonSerializerOpts.JsonOpts);
+        public async Task<IEnumerable<LavorazioneDto>> GetAllLavorazioni(bool? isAbilitato = null) =>
+            await httpClient.GetFromJsonAsync<IEnumerable<LavorazioneDto>>($"lavorazioniControl?isEnabled={isAbilitato}", JsonSerializerOpts.JsonOpts);
 
-        public async Task UpdateLavorazione(int lavorazioneId, Lavorazione lavorazione)
+        public async Task UpdateLavorazione(int lavorazioneId, LavorazioneDto lavorazioneDto)
         {
-            var response = await httpClient.PostAsJsonAsync($"lavorazioniControl/update/{lavorazioneId}", lavorazione, JsonSerializerOpts.JsonOpts);
+            var response = await httpClient.PostAsJsonAsync($"lavorazioniControl/update/{lavorazioneId}", lavorazioneDto, JsonSerializerOpts.JsonOpts);
             response.EnsureSuccessStatusCode();
         }
 
-        public async Task CreateLavorazione(Lavorazione lavorazione)
+        public async Task CreateLavorazione(LavorazioneDto lavorazione)
         {
             var response = await httpClient.PostAsJsonAsync($"lavorazioniControl", lavorazione, JsonSerializerOpts.JsonOpts);
             if (!response.IsSuccessStatusCode)

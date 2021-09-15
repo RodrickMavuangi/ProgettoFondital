@@ -1,4 +1,4 @@
-﻿using Fondital.Shared.Models;
+﻿using Fondital.Shared.Dto;
 using System;
 using System.Collections.Generic;
 using System.Net.Http;
@@ -16,18 +16,18 @@ namespace Fondital.Client.Clients
             this.httpClient = httpClient;
         }
 
-        public async Task<IEnumerable<Difetto>> GetAllDifetti(bool? isAbilitato = null) =>
-            await httpClient.GetFromJsonAsync<IEnumerable<Difetto>>($"difettiControl?isEnabled={isAbilitato}", JsonSerializerOpts.JsonOpts);
+        public async Task<IEnumerable<DifettoDto>> GetAllDifetti(bool? isAbilitato = null) =>
+            await httpClient.GetFromJsonAsync<IEnumerable<DifettoDto>>($"difettiControl?isEnabled={isAbilitato}", JsonSerializerOpts.JsonOpts);
 
-        public async Task UpdateDifetto(int difettoId, Difetto difetto)
+        public async Task UpdateDifetto(int difettoId, DifettoDto difettoDto)
         {
-            var response = await httpClient.PostAsJsonAsync($"difettiControl/update/{difettoId}", difetto, JsonSerializerOpts.JsonOpts);
+            var response = await httpClient.PostAsJsonAsync($"difettiControl/update/{difettoId}", difettoDto, JsonSerializerOpts.JsonOpts);
             response.EnsureSuccessStatusCode();
         }
 
-        public async Task CreateDifetto(Difetto difetto)
+        public async Task CreateDifetto(DifettoDto difettoDto)
         {
-            var response = await httpClient.PostAsJsonAsync($"difettiControl", difetto, JsonSerializerOpts.JsonOpts);
+            var response = await httpClient.PostAsJsonAsync($"difettiControl", difettoDto, JsonSerializerOpts.JsonOpts);
             if (!response.IsSuccessStatusCode)
                throw new Exception(response.Content.ReadAsStringAsync().Result);
         }

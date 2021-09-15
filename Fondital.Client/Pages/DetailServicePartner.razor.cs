@@ -1,22 +1,23 @@
-﻿using Fondital.Client.Clients;
+﻿using Fondital.Client.ClientModel;
+using Fondital.Client.Clients;
+using Fondital.Shared.Dto;
 using Fondital.Shared.Models;
 using Fondital.Shared.Models.Auth;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Forms;
+using Microsoft.Extensions.Localization;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Telerik.Blazor;
 using Telerik.Blazor.Components;
-using Fondital.Client.ClientModel;
-using Microsoft.Extensions.Localization;
 
 namespace Fondital.Client.Pages
 {
-	public class DetailServicePartnerBase : ComponentBase
+    public class DetailServicePartnerBase : ComponentBase
 	{
-		public List<Utente> ListUtenti { get; set; } = new List<Utente>();
+		public List<UtenteDto> ListUtenti { get; set; } = new List<UtenteDto>();
 		public string SearchText = "";
 		public StatoUtente ConStato { get; set; } = new StatoUtente();
 		[CascadingParameter]
@@ -25,9 +26,9 @@ namespace Fondital.Client.Pages
 		public bool isModalVisible { get; set; } = false;
 		public bool ValidSubmit { get; set; } = false;
 		public bool myEditTemplate { get; set; } = false;
-		public Utente ServicePartnerModel_AddUtente { get; set; } = new Utente();
-		public ServicePartner ServicePartnerModel_UpdateSP { get; set; } = new ServicePartner() { CodiceCliente = "", CodiceFornitore = "", RagioneSociale = "" };
-		public Utente UtenteModel_EditUtente { get; set; } = new Utente { Email = "", Nome = "", Cognome = "" };
+		public UtenteDto ServicePartnerModel_AddUtente { get; set; } = new UtenteDto();
+		public ServicePartnerDto ServicePartnerModel_UpdateSP { get; set; } = new ServicePartnerDto() { CodiceCliente = "", CodiceFornitore = "", RagioneSociale = "" };
+		public UtenteDto UtenteModel_EditUtente { get; set; } = new UtenteDto { Email = "", Nome = "", Cognome = "" };
 		public EditContext myEditContext_AddUTente { get; set; } 
 		public EditContext myEditContext_UpdateSP { get; set; }
 		public EditContext myEditContext_UpdateUtente { get; set; }
@@ -37,9 +38,9 @@ namespace Fondital.Client.Pages
 		[Inject] private IStringLocalizer<App> localizer { get; set; }
 		public int UtentiAbilitati { get; set; } = 0;
 		public int UtentiDisabilitati { get; set; } = 0;
-		public ServicePartner servicePartnersWithUtenti { get; set; } = new ServicePartner() { Utenti = new List<Utente>()};
+		public ServicePartnerDto servicePartnersWithUtenti { get; set; } = new ServicePartnerDto() { Utenti = new List<UtenteDto>()};
 
-		Utente DatiUtente = new Utente();
+		UtenteDto DatiUtente = new UtenteDto();
 		public List<string> ListaScelta { get; set; } = new List<string>() { };
 
 		public string SceltaCorrente = string.Empty;
@@ -59,22 +60,22 @@ namespace Fondital.Client.Pages
 			ServicePartnerModel_UpdateSP = await servicePartnerClient.GetServicePartnerWithUtenti(int.Parse(servicePId));
 			ListUtenti = ServicePartnerModel_UpdateSP.Utenti;
 			if (ListUtenti == null){
-				ListUtenti = new List<Utente>();
+				ListUtenti = new List<UtenteDto>();
 				ServicePartnerModel_UpdateSP.Utenti = ListUtenti;
 
 			}
 			UtentiAbilitati = ServicePartnerModel_UpdateSP.Utenti.Where(x => x.IsAbilitato == true).Count();
 			UtentiDisabilitati = ServicePartnerModel_UpdateSP.Utenti.Where(x => x.IsAbilitato == false).Count();
 
-			servicePartnersWithUtenti =(ServicePartner)await servicePartnerClient.GetServicePartnerWithUtenti(int.Parse(servicePId));
+			servicePartnersWithUtenti =(ServicePartnerDto)await servicePartnerClient.GetServicePartnerWithUtenti(int.Parse(servicePId));
 
 			SceltaCorrente = null;
 		}
 
 
-		public List<Utente> FilteredUtenti => servicePartnersWithUtenti.Utenti.Where<Utente>(x => x.Email.ToLower().Contains(SearchText.ToLower())).ToList();
-		public List<Utente> FilterdUtenti_Abilitati => servicePartnersWithUtenti.Utenti.Where<Utente>(x => x.Email.ToLower().Contains(SearchText.ToLower()) && x.IsAbilitato == true).ToList();
-		public List<Utente> FilterdUtenti_Disabilitati => servicePartnersWithUtenti.Utenti.Where<Utente>(x => x.Email.ToLower().Contains(SearchText.ToLower()) && x.IsAbilitato == false).ToList();
+		public List<UtenteDto> FilteredUtenti => servicePartnersWithUtenti.Utenti.Where<UtenteDto>(x => x.Email.ToLower().Contains(SearchText.ToLower())).ToList();
+		public List<UtenteDto> FilterdUtenti_Abilitati => servicePartnersWithUtenti.Utenti.Where<UtenteDto>(x => x.Email.ToLower().Contains(SearchText.ToLower()) && x.IsAbilitato == true).ToList();
+		public List<UtenteDto> FilterdUtenti_Disabilitati => servicePartnersWithUtenti.Utenti.Where<UtenteDto>(x => x.Email.ToLower().Contains(SearchText.ToLower()) && x.IsAbilitato == false).ToList();
 
 		public async Task OnSubmitHandlerAsync(EditContext editContext)
 		{
@@ -82,13 +83,13 @@ namespace Fondital.Client.Pages
 
 			if (isFormValid)
 			{
-				Utente UtenteToSave = (Utente)editContext.Model;
+				UtenteDto UtenteToSave = (UtenteDto)editContext.Model;
 				UtenteToSave.IsAbilitato = false;
 				UtenteToSave.Email = UtenteToSave.UserName;
-				if (ServicePartnerModel_UpdateSP.Utenti == null) ServicePartnerModel_UpdateSP.Utenti = new List<Utente>();
+				if (ServicePartnerModel_UpdateSP.Utenti == null) ServicePartnerModel_UpdateSP.Utenti = new List<UtenteDto>();
 				ServicePartnerModel_UpdateSP.Utenti.Add(UtenteToSave);
 				await servicePartnerClient.UpdateServicePartner(ServicePartnerModel_UpdateSP.Id, ServicePartnerModel_UpdateSP);
-				ServicePartnerModel_AddUtente = new Utente();
+				ServicePartnerModel_AddUtente = new UtenteDto();
 				await Refresh();
 
 			}
@@ -102,7 +103,7 @@ namespace Fondital.Client.Pages
 			bool isFormValid = editContext.Validate();
 			if (isFormValid)
 			{
-				ServicePartner ServicePartnerToSave = (ServicePartner)editContext.Model;
+				ServicePartnerDto ServicePartnerToSave = (ServicePartnerDto)editContext.Model;
 
 				await servicePartnerClient.UpdateServicePartner(ServicePartnerToSave.Id, ServicePartnerToSave);
 				await Refresh();
@@ -123,7 +124,7 @@ namespace Fondital.Client.Pages
 		public async Task EditHandler(GridCommandEventArgs args)
 		{
 			myEditTemplate = true;
-			DatiUtente = (Utente)args.Item;
+			DatiUtente = (UtenteDto)args.Item;
 			UtenteModel_EditUtente.Cognome = DatiUtente.Cognome;
 			UtenteModel_EditUtente.Nome = DatiUtente.Nome;
 			UtenteModel_EditUtente.Email = DatiUtente.Email;
@@ -134,11 +135,11 @@ namespace Fondital.Client.Pages
 			bool isFormValid = editContext.Validate();
 			if (isFormValid)
 			{
-				Utente utente = (Utente)editContext.Model;
+				UtenteDto utente = (UtenteDto)editContext.Model;
 				utente.IsAbilitato = DatiUtente.IsAbilitato;
 				await utenteClient.UpdateUtente(DatiUtente.Id, utente);
 				await Refresh();
-				DatiUtente = new Utente();
+				DatiUtente = new UtenteDto();
 			}
 			else
 			{
@@ -148,7 +149,7 @@ namespace Fondital.Client.Pages
 
 		protected async Task UpdateEnableUtente(int Id)
 		{
-			Utente ut = FilteredUtenti.Single(x => x.Id == Id);
+			UtenteDto ut = FilteredUtenti.Single(x => x.Id == Id);
 			bool isConfirmed = false;
 			if (ut.IsAbilitato)isConfirmed = await Dialogs.ConfirmAsync($"{@localizer["ConfermaModificaUtente"]} {ut.Nome} {ut.Cognome} ?",@localizer["ModificaUtente"]);
 			else isConfirmed = await Dialogs.ConfirmAsync($"{@localizer["ConfermaModificaUtenteAb"]} {ut.Nome} {ut.Cognome} ?", localizer["ModificaUtente"]);

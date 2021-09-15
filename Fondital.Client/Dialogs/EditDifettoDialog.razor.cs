@@ -1,4 +1,4 @@
-﻿using Fondital.Shared.Models;
+﻿using Fondital.Shared.Dto;
 using Microsoft.AspNetCore.Components;
 using System;
 using System.Threading.Tasks;
@@ -9,7 +9,8 @@ namespace Fondital.Client.Dialogs
     {
         [Parameter] public EventCallback OnClose { get; set; }
         [Parameter] public EventCallback OnSave { get; set; }
-        [Parameter] public Difetto DifettoToUpdate { get; set; }
+        [Parameter] public DifettoDto DifettoToUpdate { get; set; }
+
         protected bool isSubmitting = false;
         protected string ErrorMessage = "";
 

@@ -48,8 +48,9 @@ namespace Fondital.Services
             return await _unitOfWork.ServicePartners.GetByIdAsync(id);
         }
 
-        public async Task UpdateServicePartner(ServicePartner spToUpdate, ServicePartner sp)
+        public async Task UpdateServicePartner(int spId, ServicePartner sp)
         {
+            var spToUpdate = await _unitOfWork.ServicePartners.SingleOrDefaultAsync(c => c.Id == spId);
             _unitOfWork.Update(spToUpdate, sp);
 
             if(spToUpdate.Utenti != null && sp.Utenti != null)

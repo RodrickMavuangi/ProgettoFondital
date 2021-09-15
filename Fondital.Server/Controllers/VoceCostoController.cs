@@ -1,18 +1,12 @@
-﻿using Fondital.Data;
-using Fondital.Services;
-using Fondital.Shared;
+﻿using AutoMapper;
+using Fondital.Data;
+using Fondital.Shared.Dto;
 using Fondital.Shared.Models;
-using Fondital.Shared.Models.Auth;
 using Fondital.Shared.Services;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
-using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using RouteAttribute = Microsoft.AspNetCore.Mvc.RouteAttribute;
 
@@ -25,29 +19,33 @@ namespace Fondital.Server.Controllers
         private readonly ILogger<VoceCostoController> _logger;
         private readonly IVoceCostoService _voceCostoService;
         private readonly IConfiguration _configuration;
+        private readonly IMapper _mapper;
 
-        public VoceCostoController(ILogger<VoceCostoController> logger, FonditalDbContext db, IVoceCostoService voceCostoService, IConfiguration configuration)
+        public VoceCostoController(ILogger<VoceCostoController> logger, FonditalDbContext db, IVoceCostoService voceCostoService, IConfiguration configuration, IMapper mapper)
         {
             _logger = logger;
             _voceCostoService = voceCostoService;
             _configuration = configuration;
+            _mapper = mapper;
         }
 
         [HttpGet]
-        public async Task<IEnumerable<VoceCosto>> Get([FromQuery] bool? isEnabled)
+        public async Task<IEnumerable<VoceCostoDto>> Get([FromQuery] bool? isEnabled)
         {
-            return await _voceCostoService.GetAllVociCosto(isEnabled);
+            return _mapper.Map<IEnumerable<VoceCostoDto>>(await _voceCostoService.GetAllVociCosto(isEnabled));
         }
 
         [HttpPost("update/{voceCostoId}")]
-        public async Task UpdateVoceCosto([FromBody] VoceCosto voceCosto, int voceCostoId)
+        public async Task UpdateVoceCosto([FromBody] VoceCostoDto voceCostoDto, int voceCostoId)
         {
-            await _voceCostoService.UpdateVoceCosto(voceCostoId, voceCosto);
+            VoceCosto voceCostoToUpdate = _mapper.Map<VoceCosto>(voceCostoDto);
+            await _voceCostoService.UpdateVoceCosto(voceCostoId, voceCostoToUpdate);
         }
 
         [HttpPost]
-        public async Task CreateVoceCosto([FromBody] VoceCosto voceCosto)
+        public async Task CreateVoceCosto([FromBody] VoceCostoDto voceCostoDto)
         {
+            VoceCosto voceCosto = _mapper.Map<VoceCosto>(voceCostoDto);
             await _voceCostoService.AddVoceCosto(voceCosto);
         }
     }

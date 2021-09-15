@@ -54,19 +54,19 @@ else
             </GridToolBar>-->
 
             <GridColumns>
-                <GridColumn Field=@nameof(Difetto.Id) Title="#" />
-                <GridColumn Field=@nameof(Difetto.NomeItaliano) Title=@localizer["Descrizione"].Value.ToUpper() Visible="@(CurrentCulture == "it-IT")" />
-                <GridColumn Field=@nameof(Difetto.NomeRusso) Title=@localizer["Descrizione"].Value.ToUpper() Visible="@(CurrentCulture == "ru-RU")" />
+                <GridColumn Field=@nameof(DifettoDto.Id) Title="#" />
+                <GridColumn Field=@nameof(DifettoDto.NomeItaliano) Title=@localizer["Descrizione"].Value.ToUpper() Visible="@(CurrentCulture == "it-IT")" />
+                <GridColumn Field=@nameof(DifettoDto.NomeRusso) Title=@localizer["Descrizione"].Value.ToUpper() Visible="@(CurrentCulture == "ru-RU")" />
                 <GridCommandColumn Context="dif">
                     @{
-                        var difetto = dif as Difetto;
-                        <GridCommandButton Class=" btnIcon bgBianco white" Command="EditDifetto" Icon="" ImageUrl="/img/Icons/edit.svg" OnClick="@(() => EditDifetto(difetto.Id))" />
+                        var difettoDto = dif as DifettoDto;
+                        <GridCommandButton Class=" btnIcon bgBianco white" Command="EditDifetto" Icon="" ImageUrl="/img/Icons/edit.svg" OnClick="@(() => EditDifetto(difettoDto.Id))" />
                     }
                 </GridCommandColumn>
                 <GridCommandColumn Context="dif">
                     @{
-                        var difetto = dif as Difetto;
-                        <TelerikSwitch Class="  bgBluOn white" OffLabel=" " OnLabel=" " OnChange="@(() => UpdateEnableDifetto(difetto.Id))" @bind-Value="@difetto.IsAbilitato"></TelerikSwitch>
+                        var difettoDto = dif as DifettoDto;
+                        <TelerikSwitch Class="  bgBluOn white" OffLabel=" " OnLabel=" " OnChange="@(() => UpdateEnableDifetto(difettoDto.Id))" @bind-Value="@difettoDto.IsAbilitato"></TelerikSwitch>
                     }
                 </GridCommandColumn>
             </GridColumns>

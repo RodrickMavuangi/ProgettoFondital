@@ -1,4 +1,4 @@
-﻿using Fondital.Shared.Models;
+﻿using Fondital.Shared.Dto;
 using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
 using System;
@@ -14,16 +14,14 @@ namespace Fondital.Client.Pages
         [CascadingParameter]
         public DialogFactory Dialogs { get; set; }
 
-        private List<Lavorazione> ListaLavorazioni;
+        private List<LavorazioneDto> ListaLavorazioni;
         private int PageSize { get; set; }
         private string CurrentCulture { get; set; }
         protected bool ShowAddDialog { get; set; } = false;
         protected bool ShowEditDialog { get; set; } = false;
-        protected Lavorazione LavorazioneSelected { get; set; }
+        protected LavorazioneDto LavorazioneSelected { get; set; }
 
         public string SearchText = "";
-
-
 
         protected override async Task OnInitializedAsync()
         {
@@ -34,13 +32,13 @@ namespace Fondital.Client.Pages
             await RefreshLavorazioni();
         }
 
-        public List<Lavorazione> ListaLavorazioni_filtered => CurrentCulture == "ru-RU" ?
-            ListaLavorazioni.Where<Lavorazione>(x => x.NomeRusso.ToLower().Contains(SearchText.ToLower())).ToList() :
-            ListaLavorazioni.Where<Lavorazione>(x => x.NomeItaliano.ToLower().Contains(SearchText.ToLower())).ToList();
+        public List<LavorazioneDto> ListaLavorazioni_filtered => CurrentCulture == "ru-RU" ?
+            ListaLavorazioni.Where<LavorazioneDto>(x => x.NomeRusso.ToLower().Contains(SearchText.ToLower())).ToList() :
+            ListaLavorazioni.Where<LavorazioneDto>(x => x.NomeItaliano.ToLower().Contains(SearchText.ToLower())).ToList();
 
         protected async Task RefreshLavorazioni()
         {
-            ListaLavorazioni = (List<Lavorazione>)await httpClient.GetAllLavorazioni();
+            ListaLavorazioni = (List<LavorazioneDto>)await httpClient.GetAllLavorazioni();
             StateHasChanged();
         }
 
