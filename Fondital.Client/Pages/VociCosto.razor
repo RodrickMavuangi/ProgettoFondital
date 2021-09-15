@@ -16,31 +16,39 @@
 }
 else
 {
-    <TelerikGrid Data=@ListaVociCosto Pageable="true" PageSize="@PageSize">
+    <div class="row-2 d-inline w-100 mb-4  pt-0 pb-4 pt-4 border-bottom barraFiltri">
+        <div class="form-group rowFiltri">
+            @*<img src="../img/Icons/search.svg" class="bi bi-search float-lg-right icoSearch blu" />*@
+            <i class="bi bi-search float-lg-right icoSearch blu"></i>
+            <input class="form-control float-lg-right filtriInput mx-1" @bind-value="SearchText" @bind-value:event="oninput" placeholder=@localizer["CercaVociCosto"] />
+        </div>
+    </div><!--FINE BARRA FILTRI-->
+
+    <TelerikGrid Data=@ListaLavorazioni_filtered Pageable="true" PageSize="@PageSize">
         <GridToolBar>
             <span class="k-toolbar-spacer"></span> @* add this spacer to keep the searchbox on the right *@
             <GridSearchBox />
         </GridToolBar>
         <GridColumns>
-            <GridColumn Field=@nameof(VoceCosto.Id) Title="#" />
-            <GridColumn Field=@nameof(VoceCosto.NomeItaliano) Title=@localizer["Descrizione"].Value.ToUpper() Visible="@(CurrentCulture == "it-IT")" />
-            <GridColumn Field=@nameof(VoceCosto.NomeRusso) Title=@localizer["Descrizione"].Value.ToUpper() Visible="@(CurrentCulture == "ru-RU")" />
+            <GridColumn Field=@nameof(VoceCostoDto.Id) Title="#" />
+            <GridColumn Field=@nameof(VoceCostoDto.NomeItaliano) Title=@localizer["Descrizione"].Value.ToUpper() Visible="@(CurrentCulture == "it-IT")" />
+            <GridColumn Field=@nameof(VoceCostoDto.NomeRusso) Title=@localizer["Descrizione"].Value.ToUpper() Visible="@(CurrentCulture == "ru-RU")" />
             <GridCommandColumn Title=@localizer["Tipologia"].Value.ToUpper() Context="vc">
                 @{
-                        var voceCosto = vc as VoceCosto;
+                        var voceCosto = vc as VoceCostoDto;
                         var traduzioneTipologia = localizer[voceCosto.Tipologia.ToString()];
                     <div>@traduzioneTipologia</div>
                 }
             </GridCommandColumn>
             <GridCommandColumn Context="vc">
                 @{
-                        var voceCosto = vc as VoceCosto;
+                        var voceCosto = vc as VoceCostoDto;
                     <GridCommandButton Command="EditVoceCosto" Icon="edit" OnClick="@(() => EditVoceCosto(voceCosto.Id))" />
                 }
             </GridCommandColumn>
             <GridCommandColumn Context="vc">
                 @{
-                        var voceCosto = vc as VoceCosto;
+                        var voceCosto = vc as VoceCostoDto;
                     <TelerikSwitch OffLabel=" " OnLabel=" " OnChange="@(() => UpdateEnableVoceCosto(voceCosto.Id))" @bind-Value="@voceCosto.IsAbilitato"></TelerikSwitch>
                 }
             </GridCommandColumn>
@@ -48,19 +56,19 @@ else
     </TelerikGrid>
 }
 
-<TelerikWindow Modal="true" @bind-Visible="ShowAddDialog">
-    <WindowTitle>
-        <strong>@localizer["Aggiungi"] @localizer["VoceCosto"]</strong>
-    </WindowTitle>
+<TelerikWindow Class="modal-app dialogBox" Width="500px" Height="auto" Centered="true" Modal="true" @bind-Visible="ShowAddDialog">
+    <WindowActions>
+        <WindowAction Name="Close" IconClass="k-icon k-i-close text-dark" />
+    </WindowActions>
     <WindowContent>
         <AddVoceCostoDialog OnClose="@(() => ShowAddDialog = false)" OnSave="CloseAndRefresh" />
     </WindowContent>
 </TelerikWindow>
 
-<TelerikWindow Modal="true" @bind-Visible="ShowEditDialog">
-    <WindowTitle>
-        <strong>@localizer["Modifica"] @localizer["VoceCosto"] # @VoceCostoSelected.Id</strong>
-    </WindowTitle>
+<TelerikWindow Class="modal-app dialogBox" Width="500px" Height="auto" Centered="true" Modal="true" @bind-Visible="ShowEditDialog">
+    <WindowActions>
+        <WindowAction Name="Close" IconClass="k-icon k-i-close text-dark" />
+    </WindowActions>
     <WindowContent>
         <EditVoceCostoDialog VoceCostoToUpdate="VoceCostoSelected" OnClose="@(() => ShowEditDialog = false)" OnSave="CloseAndRefresh" />
     </WindowContent>

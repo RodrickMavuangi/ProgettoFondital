@@ -17,6 +17,8 @@ using Microsoft.OpenApi.Models;
 using System.Collections.Generic;
 using System.Text;
 using System.Text.Json.Serialization;
+using AutoMapper;
+using Fondital.Server.Automapper;
 
 namespace Fondital.Server
 {
@@ -77,6 +79,8 @@ namespace Fondital.Server
                         .SetIsOriginAllowed((host) => true)
                         .AllowAnyHeader());
             });
+
+            services.AddAutoMapper(cfg => cfg.AddProfile<MappingProfile>());
 
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddTransient<IAuthService, AuthService>();

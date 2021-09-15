@@ -1,4 +1,4 @@
-﻿using Fondital.Shared.Models;
+﻿using Fondital.Shared.Dto;
 using Microsoft.AspNetCore.Components;
 using System;
 using System.Threading.Tasks;
@@ -9,7 +9,7 @@ namespace Fondital.Client.Dialogs
     {
         [Parameter] public EventCallback OnClose { get; set; }
         [Parameter] public EventCallback OnSave { get; set; }
-        protected Lavorazione NuovaLavorazione { get; set; } = new Lavorazione();
+        protected LavorazioneDto NuovaLavorazione { get; set; } = new LavorazioneDto();
         protected bool isSubmitting = false;
         protected string ErrorMessage = "";
 

@@ -1,12 +1,7 @@
-﻿using Fondital.Shared;
-using Fondital.Shared.Models;
-using System;
+﻿using Fondital.Shared.Dto;
 using System.Collections.Generic;
-using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Json;
-using System.Text.Json;
-using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 namespace Fondital.Client.Clients
@@ -20,25 +15,25 @@ namespace Fondital.Client.Clients
             this.httpClient = httpClient;
         }
 
-        public async Task<IEnumerable<ServicePartner>> GetAllServicePartners()
+        public async Task<IEnumerable<ServicePartnerDto>> GetAllServicePartners()
         {
-            return await httpClient.GetFromJsonAsync<IEnumerable<ServicePartner>>("servicePartnersControl", JsonSerializerOpts.JsonOpts);
+            return await httpClient.GetFromJsonAsync<IEnumerable<ServicePartnerDto>>("servicePartnersControl", JsonSerializerOpts.JsonOpts);
         }
-        public async Task<ServicePartner> CreateServicePartner(ServicePartner servicePartner)
+        public async Task<ServicePartnerDto> CreateServicePartner(ServicePartnerDto servicePartner)
         {
             var response = await httpClient.PostAsJsonAsync($"servicePartnersControl", servicePartner, JsonSerializerOpts.JsonOpts);
 			response.EnsureSuccessStatusCode();
-			var result = await response.Content.ReadFromJsonAsync<ServicePartner>(JsonSerializerOpts.JsonOpts);
+			var result = await response.Content.ReadFromJsonAsync<ServicePartnerDto>(JsonSerializerOpts.JsonOpts);
 			return result;
 		}
 
-        public async Task UpdateServicePartner(int id, ServicePartner servicePartner) =>
+        public async Task UpdateServicePartner(int id, ServicePartnerDto servicePartner) =>
             await httpClient.PutAsJsonAsync($"servicePartnersControl/{id}", servicePartner, JsonSerializerOpts.JsonOpts);
 
-        public async Task<ServicePartner> GetServicePartnerById(int id) =>
-            await httpClient.GetFromJsonAsync<ServicePartner>($"servicePartnersControl/{id}", JsonSerializerOpts.JsonOpts);
+        public async Task<ServicePartnerDto> GetServicePartnerById(int id) =>
+            await httpClient.GetFromJsonAsync<ServicePartnerDto>($"servicePartnersControl/{id}", JsonSerializerOpts.JsonOpts);
         
-		public async Task<ServicePartner> GetServicePartnerWithUtenti(int id) =>
-		    await httpClient.GetFromJsonAsync<ServicePartner>($"servicePartnersControl/utenti/{id}", JsonSerializerOpts.JsonOpts);
+		public async Task<ServicePartnerDto> GetServicePartnerWithUtenti(int id) =>
+		    await httpClient.GetFromJsonAsync<ServicePartnerDto>($"servicePartnersControl/utenti/{id}", JsonSerializerOpts.JsonOpts);
 	}
 }

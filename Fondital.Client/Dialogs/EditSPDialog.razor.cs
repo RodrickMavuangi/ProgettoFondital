@@ -5,23 +5,24 @@ using System.Threading.Tasks;
 
 namespace Fondital.Client.Dialogs
 {
-    public partial class EditDifettoDialog
+    public partial class EditSPDialog
     {
         [Parameter] public EventCallback OnClose { get; set; }
         [Parameter] public EventCallback OnSave { get; set; }
-        [Parameter] public DifettoDto DifettoToUpdate { get; set; }
+        [Parameter] public ServicePartnerDto SPToUpdate { get; set; }
 
         protected bool isSubmitting = false;
+
         protected string ErrorMessage = "";
 
-        protected async Task SalvaDifetto()
+        protected async Task SalvaSp()
         {
             isSubmitting = true;
             ErrorMessage = "";
 
             try
             {
-                await httpClient.UpdateDifetto(DifettoToUpdate.Id, DifettoToUpdate);
+                await servicePartnerClient.UpdateServicePartner(SPToUpdate.Id, SPToUpdate);
                 isSubmitting = false;
                 await OnSave.InvokeAsync();
             }

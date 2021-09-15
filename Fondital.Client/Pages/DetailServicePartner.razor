@@ -51,9 +51,9 @@ else
 }
 @*Modal per la modifica del service partner*@
 <TelerikWindow Class="modal-app" Width="360px" Height="330px" Centered="true" @bind-Visible="isModalVisible" Modal="true">
-    <WindowTitle>
-        <strong>@localizer["ModificaServicePartner"]</strong>
-    </WindowTitle>
+    <WindowActions>
+        <WindowAction Name="Close" />
+    </WindowActions>
     <WindowContent>
         @if (ValidSubmit)
         {
@@ -68,12 +68,12 @@ else
                     <DataAnnotationsValidator></DataAnnotationsValidator>
                 </FormValidation>
                 <FormItems>
-                    <FormItem Field="@nameof(ServicePartner.CodiceCliente)"></FormItem>
-                    <FormItem Field="@nameof(ServicePartner.CodiceFornitore)"></FormItem>
-                    <FormItem Field="@nameof(ServicePartner.RagioneSociale)"></FormItem>
+                    <FormItem Field="@nameof(ServicePartnerDto.CodiceCliente)"></FormItem>
+                    <FormItem Field="@nameof(ServicePartnerDto.CodiceFornitore)"></FormItem>
+                    <FormItem Field="@nameof(ServicePartnerDto.RagioneSociale)"></FormItem>
                 </FormItems>
                 <FormButtons>
-                    <TelerikButton Class="btn btn-secondary mr-auto" @onclick="() => isModalVisible = false" ButtonType="@ButtonType.Button">@localizer["Cancella"]</TelerikButton>
+                    @*<TelerikButton Class="btn btn-secondary mr-auto" @onclick="() => isModalVisible = false" ButtonType="@ButtonType.Button">@localizer["Cancella"]</TelerikButton>*@
                     <TelerikButton Class="btn btn-success ml-auto" ButtonType="@ButtonType.Submit">@localizer["Modifica"]</TelerikButton>
                 </FormButtons>
             </TelerikForm>
@@ -84,15 +84,15 @@ else
 
 @*Modal per la modifica dell'utente*@
 <TelerikWindow Class="modal-app" Width="360px" Height="330px" Centered="true" @bind-Visible="myEditTemplate" Modal="true">
-    <WindowTitle>
-        <strong>@localizer["ModificaUtente"]</strong>
-    </WindowTitle>
+    <WindowActions>
+        <WindowAction Name="Close" />
+    </WindowActions>
     <WindowContent>
         @if (ValidSubmit)
         {
-        <div class="" role="alert">
-            @localizer["Caricamento"]...
-        </div>
+            <div class="" role="alert">
+                @localizer["Caricamento"]...
+            </div>
         }
         else
         {
@@ -101,12 +101,12 @@ else
                     <DataAnnotationsValidator></DataAnnotationsValidator>
                 </FormValidation>
                 <FormItems>
-                    <FormItem Field="@nameof(Utente.Email)" Enabled="false"></FormItem>
-                    <FormItem Field="@nameof(Utente.Nome)"></FormItem>
-                    <FormItem Field="@nameof(Utente.Cognome)"></FormItem>
+                    <FormItem Field="@nameof(UtenteDto.Email)" Enabled="false"></FormItem>
+                    <FormItem Field="@nameof(UtenteDto.Nome)"></FormItem>
+                    <FormItem Field="@nameof(UtenteDto.Cognome)"></FormItem>
                 </FormItems>
                 <FormButtons>
-                    <TelerikButton Class="btn btn-secondary mr-auto" @onclick="() => myEditTemplate = false" ButtonType="@ButtonType.Button">@localizer["Cancella"]</TelerikButton>
+                    @*<TelerikButton Class="btn btn-secondary mr-auto" @onclick="() => myEditTemplate = false" ButtonType="@ButtonType.Button">@localizer["Cancella"]</TelerikButton>*@
                     <TelerikButton Class="btn btn-success ml-auto" ButtonType="@ButtonType.Submit">@localizer["Modifica"]</TelerikButton>
                 </FormButtons>
             </TelerikForm>
@@ -117,16 +117,16 @@ else
 
 @*Modal per l'aggiunta dell'utente*@
 <TelerikWindow Class="modal-app" Width="350px" Height="330px" Centered="true" @bind-Visible=@WindowVisible Modal="true">
-    <WindowTitle>
-        <strong>@localizer["AggiungiUtente"]</strong>
-    </WindowTitle>
+    <WindowActions>
+        <WindowAction Name="Close" />
+    </WindowActions>
     <WindowContent>
         <div class="demo-section">
             @if (ValidSubmit)
             {
-            <div class="" role="alert">
-                @localizer["Caricamento"]...
-            </div>
+                <div class="" role="alert">
+                    @localizer["Caricamento"]...
+                </div>
             }
             else
             {
@@ -135,12 +135,12 @@ else
                         <DataAnnotationsValidator></DataAnnotationsValidator>
                     </FormValidation>
                     <FormItems>
-                        <FormItem Field="@nameof(Utente.UserName)"></FormItem>
-                        <FormItem Field="@nameof(Utente.Nome)"></FormItem>
-                        <FormItem Field="@nameof(Utente.Cognome)"></FormItem>
+                        <FormItem Field="@nameof(UtenteDto.UserName)"></FormItem>
+                        <FormItem Field="@nameof(UtenteDto.Nome)"></FormItem>
+                        <FormItem Field="@nameof(UtenteDto.Cognome)"></FormItem>
                     </FormItems>
                     <FormButtons>
-                        <TelerikButton Class="btn btn-secondary mr-auto" @onclick="() => WindowVisible = false" ButtonType="@ButtonType.Button">@localizer["Cancella"]</TelerikButton>
+                        @*<TelerikButton Class="btn btn-secondary mr-auto" @onclick="() => WindowVisible = false" ButtonType="@ButtonType.Button">@localizer["Cancella"]</TelerikButton>*@
                         <TelerikButton Class="btn btn-success ml-auto" ButtonType="@ButtonType.Submit">@localizer["Salva"]</TelerikButton>
                     </FormButtons>
                 </TelerikForm>
@@ -158,9 +158,9 @@ else
              Resizable="true"
              Sortable="true">
     <GridColumns>
-        <GridColumn Field=@nameof(Utente.UserName) Title=@localizer["UTENTI"] />
-        <GridColumn Field=@nameof(Utente.Nome) Title=@localizer["NOME"] />
-        <GridColumn Field=@nameof(Utente.Cognome) Title=@localizer["COGNOME"] />
+        <GridColumn Field=@nameof(UtenteDto.UserName) Title=@localizer["UTENTI"] />
+        <GridColumn Field=@nameof(UtenteDto.Nome) Title=@localizer["NOME"] />
+        <GridColumn Field=@nameof(UtenteDto.Cognome) Title=@localizer["COGNOME"] />
         <GridCommandColumn Width="75px">
             <GridCommandButton Class="bt-cmd" Command="MyOwnCommand" Icon="" ShowInEdit="false" ImageUrl="/img/Icons/setting.svg" OnClick="@EditHandler"></GridCommandButton>
         </GridCommandColumn>
@@ -168,7 +168,7 @@ else
             <GridCommandButton Class="bt-cmd" Command="MyOwnCommand" Icon="" ShowInEdit="false" ImageUrl="/img/keyLogo.jpg" OnClick="@SendMail"></GridCommandButton>
         </GridCommandColumn>
         <GridCommandColumn Width="75px" Context="dif">
-            @{ var utente = dif as Utente;
+            @{ var utente = dif as UtenteDto;
                 <TelerikSwitch OffLabel=" " OnLabel=" " OnChange="@(() => UpdateEnableUtente(utente.Id))" @bind-Value="@utente.IsAbilitato"></TelerikSwitch> }
         </GridCommandColumn>
     </GridColumns>

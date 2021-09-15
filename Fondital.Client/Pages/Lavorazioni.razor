@@ -16,44 +16,48 @@
 }
 else
 {
-    <TelerikGrid Data="@ListaLavorazioni" Pageable="true" PageSize="@PageSize">
-        <GridToolBar>
-            <span class="k-toolbar-space"></span>
-            <GridSearchBox />
-        </GridToolBar>
+    <div class="row-2 d-inline w-100 mb-4  pt-0 pb-4 pt-4 border-bottom barraFiltri">
+        <div class="form-group rowFiltri">
+            @*<img src="../img/Icons/search.svg" class="bi bi-search float-lg-right icoSearch blu" />*@
+            <i class="bi bi-search float-lg-right icoSearch blu"></i>
+            <input class="form-control float-lg-right filtriInput mx-1" @bind-value="SearchText" @bind-value:event="oninput" placeholder=@localizer["CercaLavorazioni"] />
+        </div>
+    </div><!--FINE BARRA FILTRI-->
+
+    <TelerikGrid Data="@ListaLavorazioni_filtered" Pageable="true" PageSize="@PageSize">
         <GridColumns>
-            <GridColumn Field=@nameof(Lavorazione.Id) Title="#" />
-            <GridColumn Field=@nameof(Lavorazione.NomeItaliano) Title="@localizer["Descrizione"].Value.ToUpper()" Visible="@(CurrentCulture == "it-IT")" />
-            <GridColumn Field=@nameof(Lavorazione.NomeRusso) Title="@localizer["Descrizione"].Value.ToUpper()" Visible="@(CurrentCulture == "ru-RU")" />
+            <GridColumn Field=@nameof(LavorazioneDto.Id) Title="#" />
+            <GridColumn Field=@nameof(LavorazioneDto.NomeItaliano) Title="@localizer["Descrizione"].Value.ToUpper()" Visible="@(CurrentCulture == "it-IT")" />
+            <GridColumn Field=@nameof(LavorazioneDto.NomeRusso) Title="@localizer["Descrizione"].Value.ToUpper()" Visible="@(CurrentCulture == "ru-RU")" />
             <GridCommandColumn Context="lav">
                 @{
-                        var lavorazione = lav as Lavorazione;
-                    <GridCommandButton Command="EditLavorazione" Icon="edit" OnClick="@(() => EditLavorazione(lavorazione.Id))" />
+                    var lavorazioneDto = lav as LavorazioneDto;
+                    <GridCommandButton Command="EditLavorazione" Icon="edit" OnClick="@(() => EditLavorazione(lavorazioneDto.Id))" />
                 }
             </GridCommandColumn>
             <GridCommandColumn Context="lav">
                 @{
-                        var lavorazione = lav as Lavorazione;
-                    <TelerikSwitch OffLabel=" " OnLabel=" " OnChange="@(() => UpdateEnableLavorazione(lavorazione.Id))" @bind-Value="@lavorazione.IsAbilitato"></TelerikSwitch>
+                    var lavorazioneDto = lav as LavorazioneDto;
+                    <TelerikSwitch OffLabel=" " OnLabel=" " OnChange="@(() => UpdateEnableLavorazione(lavorazioneDto.Id))" @bind-Value="@lavorazioneDto.IsAbilitato"></TelerikSwitch>
                 }
             </GridCommandColumn>
         </GridColumns>
     </TelerikGrid>
 }
 
-<TelerikWindow Modal="true" @bind-Visible="ShowAddDialog">
-    <WindowTitle>
-        <strong>@localizer["AggiungiLavorazione"]</strong>
-    </WindowTitle>
+<TelerikWindow Class="modal-app dialogBox" Width="500px" Height="auto" Centered="true" Modal="true" @bind-Visible="ShowAddDialog">
+    <WindowActions>
+        <WindowAction Name="Close" IconClass="k-icon k-i-close text-dark" />
+    </WindowActions>
     <WindowContent>
         <AddLavorazioneDialog OnClose="@(() => ShowAddDialog = false)" OnSave="CloseAndRefresh"></AddLavorazioneDialog>
     </WindowContent>
 </TelerikWindow>
 
-<TelerikWindow Modal="true" @bind-Visible="ShowEditDialog">
-    <WindowTitle>
-        <strong>@localizer["Modifica"] @localizer["Lavorazione"] # @LavorazioneSelected.Id</strong>
-    </WindowTitle>
+<TelerikWindow Class="modal-app dialogBox" Width="500px" Height="auto" Centered="true" Modal="true" @bind-Visible="ShowEditDialog">
+    <WindowActions>
+        <WindowAction Name="Close" IconClass="k-icon k-i-close text-dark" />
+    </WindowActions>
     <WindowContent>
         <EditLavorazioneDialog LavorazioneToUpdate="LavorazioneSelected" OnClose="@(() => ShowEditDialog = false)" OnSave="CloseAndRefresh" />
     </WindowContent>

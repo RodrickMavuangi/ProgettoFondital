@@ -1,52 +1,72 @@
-﻿using Microsoft.AspNetCore.Components;
+﻿using Fondital.Shared.Dto;
+using Fondital.Shared.Models;
+using Microsoft.AspNetCore.Components.Forms;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Telerik.Blazor.Components;
-using Fondital.Shared.Models;
-using Microsoft.AspNetCore.Components.Forms;
-using Fondital.Client.Clients;
-
-
 
 namespace Fondital.Client.Pages
 {
-	public partial class ListServicePartner
+    public partial class ListServicePartner
 	{
-		public List<ServicePartner> ServicePartners { get; set; } = new List<ServicePartner>();
-		public ServicePartner ServicePartnerModel { get; set; } = new ServicePartner();
+		public List<ServicePartnerDto> ServicePartners { get; set; } = new List<ServicePartnerDto>();
+		public ServicePartnerDto ServicePartnerModel { get; set; } = new ServicePartnerDto();
 		public bool WindowVisible { get; set; }
 		public bool ValidSubmit { get; set; } = false;
 		public EditContext myEditContext { get; set; }
 		public EditContext myEditContext_UpdateSP { get; set; }
-		public ServicePartner ServicePartnerModel_UpdateSP { get; set; } = new ServicePartner() { CodiceCliente = "", CodiceFornitore = "", RagioneSociale = "" };
+		public ServicePartnerDto ServicePartnerModel_UpdateSP { get; set; } = new ServicePartnerDto() { CodiceCliente = "", CodiceFornitore = "", RagioneSociale = "" };
 
 		public List<string> SearchableFields = new List<string> { "RagioneSociale" };
 
 		public string SearchText = "";
 		public bool myEditTemplate { get; set; } = false;
 
-		ServicePartner DatiSP = new ServicePartner();
-		public ServicePartner ServicePartnerToSave { get; set; } = new ServicePartner();
+		ServicePartnerDto DatiSP = new ServicePartnerDto();
+		public ServicePartnerDto ServicePartnerToSave { get; set; } = new ServicePartnerDto();
+
+
+		protected ServicePartnerDto SpSelected { get; set; }
+		protected bool ShowAddDialog { get; set; } = false;
+
+		protected bool ShowEditDialog { get; set; } = false;
 
 
 		protected override async Task OnInitializedAsync()
 		{
 			myEditContext = new EditContext(ServicePartnerModel);
-			ServicePartners = (List<ServicePartner>)await servicePartnerClient.GetAllServicePartners();
+			ServicePartners = (List<ServicePartnerDto>)await servicePartnerClient.GetAllServicePartners();
 
-			myEditContext_UpdateSP = new EditContext(ServicePartnerModel_UpdateSP);
+			//myEditContext_UpdateSP = new EditContext(ServicePartnerModel_UpdateSP);
 		}
-		public List<ServicePartner> ServicePartners_filtered => ServicePartners.Where(
-			x => x.RagioneSociale.ToLower().Contains(SearchText.ToLower())
-			//|| x.CodiceCliente.ToLower().Contains(SearchText.ToLower())
-			//|| x.CodiceFornitore.ToLower().Contains(SearchText.ToLower())
-			).ToList();	
+		public List<ServicePartnerDto> ServicePartners_filtered => ServicePartners.Where<ServicePartnerDto>(x => x.RagioneSociale.ToLower().Contains(SearchText.ToLower())).ToList();
+
+
+		protected async Task RefreshSP()
+		{
+			ServicePartners = (List<ServicePartnerDto>)await servicePartnerClient.GetAllServicePartners();
+			StateHasChanged();
+		}
+
+		protected async Task CloseAndRefresh()
+		{
+			ShowAddDialog = false;
+			ShowEditDialog = false;
+			await RefreshSP();
+		}
+
+		protected void EditSp(int SpId)
+        {
+			SpSelected = ServicePartners.Single(x => x.Id == SpId);
+			ShowEditDialog = true;
+        }
+
 
 		public async Task EditHandler(GridCommandEventArgs args)
 		{
 			myEditTemplate = true;
-			DatiSP = (ServicePartner)args.Item;
+			DatiSP = (ServicePartnerDto)args.Item;
 			ServicePartnerModel_UpdateSP = await servicePartnerClient.GetServicePartnerWithUtenti(DatiSP.Id);
 			ServicePartnerModel_UpdateSP.RagioneSociale = DatiSP.RagioneSociale;
 			ServicePartnerModel_UpdateSP.CodiceCliente = DatiSP.CodiceCliente;
@@ -58,10 +78,10 @@ namespace Fondital.Client.Pages
 			bool isFormValid = editContext.Validate();
 			if (isFormValid)
 			{
-				ServicePartner ServicePartnerToSave = (ServicePartner)editContext.Model;
+				ServicePartnerDto ServicePartnerToSave = (ServicePartnerDto)editContext.Model;
 
 				await servicePartnerClient.UpdateServicePartner(DatiSP.Id, ServicePartnerToSave);
-				DatiSP = new ServicePartner();
+				DatiSP = new ServicePartnerDto();
 				await Refresh();
 			}
 
@@ -74,7 +94,7 @@ namespace Fondital.Client.Pages
 
 		public async Task UpdateHandler(GridCommandEventArgs args)
 		{
-			ServicePartner item = (ServicePartner)args.Item;
+			ServicePartnerDto item = (ServicePartnerDto)args.Item;
 			await servicePartnerClient.UpdateServicePartner(item.Id, item);
 			await Refresh();
 		}
@@ -91,10 +111,10 @@ namespace Fondital.Client.Pages
 
 			if (isFormValid)
 			{
-				ServicePartnerToSave = (ServicePartner)editContext.Model;
+				ServicePartnerToSave = (ServicePartnerDto)editContext.Model;
 				await servicePartnerClient.CreateServicePartner(ServicePartnerToSave);
-				ServicePartnerModel = new ServicePartner();
-				ServicePartnerToSave = new ServicePartner();
+				ServicePartnerModel = new ServicePartnerDto();
+				ServicePartnerToSave = new ServicePartnerDto();
 				await Refresh();
 			}
 			else
