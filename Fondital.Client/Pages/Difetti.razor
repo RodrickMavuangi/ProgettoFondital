@@ -69,8 +69,8 @@ else
 
             <GridColumns>
                 <GridColumn Field=@nameof(DifettoDto.Id) Title="#" Width="10%" />
-                <GridColumn Field=@nameof(DifettoDto.NomeItaliano) Width="84%" Title=@localizer["Descrizione"].Value.ToUpper() Visible="@(CurrentCulture == "it-IT")" />
-                <GridColumn Field=@nameof(DifettoDto.NomeRusso) Width="84%" Title=@localizer["Descrizione"].Value.ToUpper() Visible="@(CurrentCulture == "ru-RU")" />
+                <GridColumn Field=@nameof(DifettoDto.NomeItaliano) Width="70%" Title=@localizer["Descrizione"].Value.ToUpper() Visible="@(CurrentCulture == "it-IT")" />
+                <GridColumn Field=@nameof(DifettoDto.NomeRusso) Width="70%" Title=@localizer["Descrizione"].Value.ToUpper() Visible="@(CurrentCulture == "ru-RU")" />
                 <GridCommandColumn Context="dif" Width="3%">
                     @{
                         var difettoDto = dif as DifettoDto;

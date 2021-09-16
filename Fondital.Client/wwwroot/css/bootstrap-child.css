@@ -2,7 +2,7 @@
 Theme Name: Custom Telerik Blazor Child
 Description: This is a child theme for Telerik Blazor Librery.
 Template: Telerik Blazor
-Version: 1.2
+Version: 1.3
 */
 
 
@@ -143,7 +143,7 @@ html, body {
 /*************** MAIN ******************/
 
 .content {
-    padding-top: 0!important;
+    padding-top: 0 !important;
 }
 
 /*************** TITOLI ******************/
@@ -176,12 +176,15 @@ a {
     a:hover {
         text-decoration: underline !important;
     }
+
 .linksottolieato a {
     text-decoration: underline !important;
 }
+
     .linksottolieato a:hover {
         text-decoration: none !important;
     }
+
 .linkNormal {
     background: none !important;
     border: none !important;
@@ -191,11 +194,12 @@ a {
     text-decoration: underline !important;
 }
 
-.linkNormal:hover {
-    text-decoration: none !important;
-}
-    .noIcon .k-icon {
-    display:none!important;
+    .linkNormal:hover {
+        text-decoration: none !important;
+    }
+
+.noIcon .k-icon {
+    display: none !important;
 }
 /*************** SPAZI & ALLINEAMENTI ******************/
 .float-lg-left {
@@ -215,18 +219,19 @@ a {
 }
 
 .d-inline {
-    display:inline-block!important;
+    display: inline-block !important;
 }
 
 .w-100 {
-    width:100%;
-   }
+    width: 100%;
+}
 
 /*************** PADDING & MARGIN ******************/
 
 .p-0 {
     padding: 0px !important;
 }
+
 .pr-0 {
     padding-right: 0px !important;
 }
@@ -239,6 +244,7 @@ a {
 .pt-48 {
     padding-top: 48px !important;
 }
+
 .pr-4 {
     padding-right: 1.5rem !important;
 }
@@ -250,6 +256,7 @@ a {
 .mt-36 {
     margin-top: 36px;
 }
+
 .mt-48 {
     margin-top: 48px;
 }
@@ -265,6 +272,7 @@ a {
 .mb-32 {
     margin-bottom: 32px !important;
 }
+
 .mb-56 {
     margin-bottom: 56px !important;
 }
@@ -306,6 +314,7 @@ a {
 
 .notifica {
 }
+
     .notifica .alert {
         padding: 12px ​16px 13px 16p;
     }
@@ -514,6 +523,7 @@ a:not([href]):not([tabindex]) {
             display: flex !important;
             height: 47px;
         }
+
             .menuProfilo li.k-item .k-menu-link .k-menu-expand-arrow {
                 color: #fff;
             }
@@ -523,8 +533,8 @@ a:not([href]):not([tabindex]) {
 
 
 .icoSearch {
-                padding-top: 12px;
-                margin-left: 24px;
+    padding-top: 12px;
+    margin-left: 24px;
 }
 
 .form-control, .form-select, .input-group {
@@ -549,8 +559,8 @@ a:not([href]):not([tabindex]) {
         line-height: 2 !important;
         color: #5F5F5F !important;
         height: 48px;
-        
     }
+
 .form-control-lg {
     padding: .7rem 1rem !important;
     height: 48px;
@@ -712,7 +722,6 @@ a:not([href]):not([tabindex]) {
 
 .bgBluOn_NoOver {
     background-color: #007BFF !important;
-    
 }
 
 .bgBiancoOn {
@@ -737,9 +746,9 @@ a:not([href]):not([tabindex]) {
     padding: 0 1rem 0 1rem;
 }
 
-.barraFiltri .form-group {
-    margin-bottom: 0 !important;
-}
+    .barraFiltri .form-group {
+        margin-bottom: 0 !important;
+    }
 
 .row > .rowFiltri {
     flex-shrink: 0;
@@ -747,7 +756,6 @@ a:not([href]):not([tabindex]) {
     max-width: 100%;
     padding-right: 0.75rem;
     padding-left: 0.75rem;
-    
 }
 
 .rowFiltri .form-control {
@@ -813,7 +821,7 @@ a:not([href]):not([tabindex]) {
 /*OVERRIDE TELERIK TABLE*/
 
 .k-virtual-content {
-    overflow-y: auto!important;
+    overflow-y: auto !important;
 }
 
 
@@ -825,18 +833,21 @@ a:not([href]):not([tabindex]) {
     font-weight: bold !important;
     padding: 0 0 0 0 !important;
 }
+
     .k-grid-header table, .k-grid-footer table {
         font-weight: 600 !important;
-
     }
+
         .k-grid-header table thead tr th, .k-grid-footer table thead tr th {
             text-transform: uppercase !important;
             font-size: 1rem !important;
             font-weight: 600 !important;
         }
+
 .k-grid-header-wrap, .k-grid-footer-wrap {
     border: none !important;
 }
+
 .k-grid {
     border: none !important;
 }
@@ -855,6 +866,7 @@ a:not([href]):not([tabindex]) {
     border: none !important;
     border-bottom: none !important;
 }
+
 .k-cell-inner > .k-link {
     padding: 1rem 1em !important;
 }
@@ -865,22 +877,22 @@ a:not([href]):not([tabindex]) {
 }
 
 .k-i-sort-asc-sm, .k-i-sort-desc-sm {
-    font-size: 22px!important;
+    font-size: 22px !important;
     left: 15rem;
 }
 
 .k-grid tr.k-alt {
-    background-color: #F9F9F9!important;
+    background-color: #F9F9F9 !important;
 }
+
 .k-grid td {
-    
     padding-left: 1rem !important;
     padding-right: 1rem !important;
     color: #212529 !important;
 }
 
 .table-striped tbody tr:nth-of-type(odd) {
-    background-color: #fff!important;
+    background-color: #fff !important;
 }
 
 
@@ -910,9 +922,13 @@ a:not([href]):not([tabindex]) {
 
 
 .table .k-command-cell span {
-    display: inline-grid;
+    /*display: inline-grid;
+    width: 100%;
+    height: 100%;*/
+    display: flex;
     width: 100%;
     height: 100%;
+    align-content: center;
 }
 
 
@@ -922,6 +938,7 @@ a:not([href]):not([tabindex]) {
 .dialogBox {
     padding-bottom: 0px !important;
 }
+
 .dialogForm, .k-dialog-titlebar {
     font-family: 'Open Sans', Helvetica, Arial, sans-serif !important;
 }
@@ -932,15 +949,19 @@ a:not([href]):not([tabindex]) {
     /*    border: none !important;*/
     border-bottom: 1px solid #dee2e6 !important;
 }
+
 .k-dialog-titlebar {
     color: #5F5F5F !important;
 }
+
 .k-window-content {
-    padding: 32px 32px!important;
+    padding: 32px 32px !important;
 }
+
 .k-dialog-buttongroup {
     border: none !important;
 }
+
 .dialogBox .btn {
     text-transform: uppercase !important;
 }
@@ -948,19 +969,23 @@ a:not([href]):not([tabindex]) {
 .dialogForm .form-group, .dialogForm .form-field, .k-window-content .form-field {
     margin-bottom: 2rem !important;
 }
+
     .dialogForm .form-field.mb-0 {
         margin-bottom: 0 !important;
     }
+
     .dialogForm .form-field.mb-1 {
         margin-bottom: 1rem !important;
     }
+
     .dialogForm .form-group .k-form-label, .dialogForm .form-group label, .dialogForm .form-field label, .k-window-content .form-group label, .k-window-content .form-field label {
         color: #5F5F5F !important;
         text-transform: uppercase !important;
         display: inline-block !important;
         margin-bottom: .5rem !important;
-        font-size:14px!important;
+        font-size: 14px !important;
     }
+
     .dialogForm .form-group input, .dialogForm .form-group select, .dialogForm .form-field input, .dialogForm .form-field select, .k-window-content .form-field input, .k-window-content .form-field select {
         padding: .7rem 1rem !important;
         border-radius: .125rem !important;
@@ -1035,15 +1060,16 @@ a:not([href]):not([tabindex]) {
     border-color: #D7D7D7 !important;
     color: #fff;
 }
+
 .dialogForm .k-form-buttons button:hover, .k-dialog-buttongroup .k-primary:hover {
     background-color: #0b5ed7 !important;
     border-color: #0a58ca !important;
     color: #fff !important;
 }
 
-    .k-form-hint, .k-form-error {
-        font-style: normal !important;
-    }
+.k-form-hint, .k-form-error {
+    font-style: normal !important;
+}
 
 .dialogForm .form-field input.inputCheck {
     width: 20px;
@@ -1073,7 +1099,7 @@ a:not([href]):not([tabindex]) {
 
 .k-pager-nav, .k-pager-numbers .k-link, .k-pager-refresh {
     width: 48px;
-    height: 48px!important;
+    height: 48px !important;
     border-top: solid 1px #dee2e6 !important;
     border-left: solid 1px #dee2e6 !important;
     border-bottom: solid 1px #dee2e6 !important;
@@ -1082,6 +1108,7 @@ a:not([href]):not([tabindex]) {
     .k-pager-nav.k-pager-last {
         border-right: solid 1px #dee2e6 !important;
     }
+
     .k-pager-numbers .k-link.k-state-selected {
         color: #007BFF !important;
         background-color: rgba(134, 142, 150, 0.2) !important;
@@ -1097,8 +1124,8 @@ a:not([href]):not([tabindex]) {
 
 .k-pager-numbers .k-link {
     color: #868E96 !important;
-    
 }
+
     .k-pager-numbers .k-link:hover, .k-grid-pager .k-link:hover {
         text-decoration: none !important;
         background-color: rgba(134, 142, 150, 0.1) !important;
@@ -1106,9 +1133,9 @@ a:not([href]):not([tabindex]) {
 
 
 /*************** ICONS ******************/
-    [class^="bi-"]::before, [class*=" bi-"]::before {
-        font-size: 1.25rem !important;
-    }
+[class^="bi-"]::before, [class*=" bi-"]::before {
+    font-size: 1.25rem !important;
+}
 
 .white .bi::before {
     color: #fff;
@@ -1138,21 +1165,26 @@ a:not([href]):not([tabindex]) {
 .k-switch-on .k-switch-container {
     background-color: #fff !important;
 }
+
 .k-switch-off .k-switch-container {
-    background-color: #868E96!important;
+    background-color: #868E96 !important;
 }
+
 .k-switch-handle {
     width: 18px !important;
     height: 18px !important;
     margin: 2px 0 2px 0px !important;
 }
+
 .k-switch-on .k-switch-handle {
-    left: calc(100% - 20px)!important;
+    left: calc(100% - 20px) !important;
 }
+
 .k-switch-on .k-switch-handle {
     border-color: #007BFF !important;
     background-color: #007BFF !important;
 }
+
 .k-switch-off .k-switch-handle {
     border: none !important;
     background-color: #fff !important;
@@ -1178,13 +1210,13 @@ a:not([href]):not([tabindex]) {
     left: 0 !important;
     border-radius: 0;
     background-color: #D8D8D8 !important;
-    border:none !important;
+    border: none !important;
 }
 
 
 .table .k-command-cell span.k-switch-container {
     width: 40px !important;
-    left: 17px !important;
+    left: 22px !important;
     height: auto !important;
 }
 /*************** TELERIK OVERRIDE ******************/
@@ -1255,25 +1287,39 @@ a:not([href]):not([tabindex]) {
 
 
 
-
-/*************** DEFAULT ******************/
-
+/*************** RESPONSIVE ******************/
 
 
-
-
-.mv-up {
-    margin-top: -9px !important;
-    margin-bottom: 8px !important;
+@media screen and (max-width: 1920px) {
+    .table .k-command-cell span.k-switch-container {
+        left: 11px !important;
+    }
 }
 
-.invalid-feedback {
-    color: #ff606e;
+@media screen and (max-width: 1536px) {
+    .table .k-command-cell span.k-switch-container {
+        left: 5px !important;
+    }
 }
 
-.valid-feedback {
-    color: #2acc80;
-}
+    /*************** DEFAULT ******************/
+
+
+
+
+
+    .mv-up {
+        margin-top: -9px !important;
+        margin-bottom: 8px !important;
+    }
+
+    .invalid-feedback {
+        color: #ff606e;
+    }
+
+    .valid-feedback {
+        color: #2acc80;
+    }
 
 
 
@@ -1282,108 +1328,108 @@ a:not([href]):not([tabindex]) {
 
 
 
-body {
-    font-size: .875rem;
-}
+    body {
+        font-size: .875rem;
+    }
 
-.autoWidth {
-    width: auto !important;
-}
+    .autoWidth {
+        width: auto !important;
+    }
 
 
-.feather {
-    width: 16px;
-    height: 16px;
-    vertical-align: text-bottom;
-}
+    .feather {
+        width: 16px;
+        height: 16px;
+        vertical-align: text-bottom;
+    }
 
-/*
+    /*
  * Sidebar
  */
 
-.sidebar {
-    position: fixed;
-    top: 0;
-    /* rtl:raw:
+    .sidebar {
+        position: fixed;
+        top: 0;
+        /* rtl:raw:
   right: 0;
   */
-    bottom: 0;
-    /* rtl:remove */
-    left: 0;
-    z-index: 100; /* Behind the navbar */
-    padding: 48px 0 0; /* Height of navbar */
-    box-shadow: inset -1px 0 0 rgba(0, 0, 0, .1);
-}
-
-@media (max-width: 767.98px) {
-    .sidebar {
-        top: 5rem;
-    }
-}
-
-.sidebar-sticky {
-    position: relative;
-    top: 0;
-    height: calc(100vh - 48px);
-    padding-top: .5rem;
-    overflow-x: hidden;
-    overflow-y: auto; /* Scrollable contents if viewport is shorter than content. */
-}
-
-.sidebar .nav-link {
-    font-weight: 500;
-    color: #333;
-}
-
-    .sidebar .nav-link .feather {
-        margin-right: 4px;
-        color: #727272;
+        bottom: 0;
+        /* rtl:remove */
+        left: 0;
+        z-index: 100; /* Behind the navbar */
+        padding: 48px 0 0; /* Height of navbar */
+        box-shadow: inset -1px 0 0 rgba(0, 0, 0, .1);
     }
 
-    .sidebar .nav-link.active {
-        color: #2470dc;
+    @media (max-width: 767.98px) {
+        .sidebar {
+            top: 5rem;
+        }
     }
 
-        .sidebar .nav-link:hover .feather,
-        .sidebar .nav-link.active .feather {
-            color: inherit;
+    .sidebar-sticky {
+        position: relative;
+        top: 0;
+        height: calc(100vh - 48px);
+        padding-top: .5rem;
+        overflow-x: hidden;
+        overflow-y: auto; /* Scrollable contents if viewport is shorter than content. */
+    }
+
+    .sidebar .nav-link {
+        font-weight: 500;
+        color: #333;
+    }
+
+        .sidebar .nav-link .feather {
+            margin-right: 4px;
+            color: #727272;
         }
 
-.sidebar-heading {
-    font-size: .75rem;
-    text-transform: uppercase;
-}
+        .sidebar .nav-link.active {
+            color: #2470dc;
+        }
 
-/*
+            .sidebar .nav-link:hover .feather,
+            .sidebar .nav-link.active .feather {
+                color: inherit;
+            }
+
+    .sidebar-heading {
+        font-size: .75rem;
+        text-transform: uppercase;
+    }
+
+    /*
  * Navbar
  */
 
-.navbar-brand {
-    padding-top: .75rem;
-    padding-bottom: .75rem;
-    font-size: 1rem;
-    background-color: rgba(0, 0, 0, .25);
-    box-shadow: inset -1px 0 0 rgba(0, 0, 0, .25);
-}
-
-.navbar .navbar-toggler {
-    top: .25rem;
-    right: 1rem;
-}
-
-.navbar .form-control {
-    padding: .75rem 1rem;
-    border-width: 0;
-    border-radius: 0;
-}
-
-.form-control-dark {
-    color: #fff;
-    background-color: rgba(255, 255, 255, .1);
-    border-color: rgba(255, 255, 255, .1);
-}
-
-    .form-control-dark:focus {
-        border-color: transparent;
-        box-shadow: 0 0 0 3px rgba(255, 255, 255, .25);
+    .navbar-brand {
+        padding-top: .75rem;
+        padding-bottom: .75rem;
+        font-size: 1rem;
+        background-color: rgba(0, 0, 0, .25);
+        box-shadow: inset -1px 0 0 rgba(0, 0, 0, .25);
     }
+
+    .navbar .navbar-toggler {
+        top: .25rem;
+        right: 1rem;
+    }
+
+    .navbar .form-control {
+        padding: .75rem 1rem;
+        border-width: 0;
+        border-radius: 0;
+    }
+
+    .form-control-dark {
+        color: #fff;
+        background-color: rgba(255, 255, 255, .1);
+        border-color: rgba(255, 255, 255, .1);
+    }
+
+        .form-control-dark:focus {
+            border-color: transparent;
+            box-shadow: 0 0 0 3px rgba(255, 255, 255, .25);
+        }

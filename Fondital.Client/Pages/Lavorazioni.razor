@@ -61,8 +61,8 @@ else
         <TelerikGrid Data="@ListaLavorazioni_filtered" Pageable="true" PageSize="@PageSize" Class="table table-striped">
             <GridColumns>
                 <GridColumn Field=@nameof(LavorazioneDto.Id) Title="#" Width="10%" />
-                <GridColumn Field=@nameof(LavorazioneDto.NomeItaliano) Width="84%" Title="@localizer["Descrizione"].Value.ToUpper()" Visible="@(CurrentCulture == "it-IT")" />
-                <GridColumn Field=@nameof(LavorazioneDto.NomeRusso) Width="84%" Title="@localizer["Descrizione"].Value.ToUpper()" Visible="@(CurrentCulture == "ru-RU")" />
+                <GridColumn Field=@nameof(LavorazioneDto.NomeItaliano) Width="70%" Title="@localizer["Descrizione"].Value.ToUpper()" Visible="@(CurrentCulture == "it-IT")" />
+                <GridColumn Field=@nameof(LavorazioneDto.NomeRusso) Width="70%" Title="@localizer["Descrizione"].Value.ToUpper()" Visible="@(CurrentCulture == "ru-RU")" />
                 <GridCommandColumn Context="lav" Width="3%">
                     @{
                         var lavorazione = lav as LavorazioneDto;
