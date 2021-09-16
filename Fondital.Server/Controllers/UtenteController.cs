@@ -92,7 +92,7 @@ namespace Fondital.Server.Controllers
         }
         */
 
-        [HttpPut("id")]
+        [HttpPut("{id}")]
         public async Task UpdateUtente(int id, [FromBody] UtenteDto utenteDtoToUpdate)
         {
             Utente utenteToUpdate = _mapper.Map<Utente>(utenteDtoToUpdate);

@@ -1,7 +1,12 @@
 ﻿@page "/detailservicepartner/{servicePId}"
-@inherits DetailServicePartnerBase
+
+@inject UtenteClient httpClient
+@*@inherits DetailServicePartnerBase*@
 @attribute [Authorize]
 @inject IStringLocalizer<App> localizer
+@inject MailClient mailClient
+@inject UtenteClient utenteClient
+@inject ServicePartnerClient servicePartner 
 
 @if (ServicePartnerModel_UpdateSP.Id == default)
 {
@@ -82,38 +87,46 @@ else
 </TelerikWindow>
 
 
-@*Modal per la modifica dell'utente*@
-<TelerikWindow Class="modal-app" Width="360px" Height="330px" Centered="true" @bind-Visible="myEditTemplate" Modal="true">
+@*Modal per la modifica dell'utente
+    <TelerikWindow Class="modal-app" Width="360px" Height="330px" Centered="true" @bind-Visible="myEditTemplate" Modal="true">
+        <WindowActions>
+            <WindowAction Name="Close" />
+        </WindowActions>
+        <WindowContent>
+            @if (ValidSubmit)
+            {
+                <div class="" role="alert">
+                    @localizer["Caricamento"]...
+                </div>
+            }
+            else
+            {
+                <TelerikForm Model="@UtenteModel_EditUtente" OnSubmit="@EditUtente_UpdateHandler" EditContext="myEditContext_UpdateUtente">
+                    <FormValidation>
+                        <DataAnnotationsValidator></DataAnnotationsValidator>
+                    </FormValidation>
+                    <FormItems>
+                        <FormItem Field="@nameof(UtenteDto.Email)" Enabled="false"></FormItem>
+                        <FormItem Field="@nameof(UtenteDto.Nome)"></FormItem>
+                        <FormItem Field="@nameof(UtenteDto.Cognome)"></FormItem>
+                    </FormItems>
+                    <FormButtons>
+                        <TelerikButton Class="btn btn-success ml-auto" ButtonType="@ButtonType.Submit">@localizer["Modifica"]</TelerikButton>
+                    </FormButtons>
+                </TelerikForm>
+            }
+        </WindowContent>
+    </TelerikWindow>*@
+
+
+<TelerikWindow Class="modal-app dialogBox" Width="500px" Height="auto" Centered="true" Modal="true" @bind-Visible="ShowEditDialog">
     <WindowActions>
-        <WindowAction Name="Close" />
+        <WindowAction Name="Close" IconClass="k-icon k-i-close text-dark" />
     </WindowActions>
     <WindowContent>
-        @if (ValidSubmit)
-        {
-            <div class="" role="alert">
-                @localizer["Caricamento"]...
-            </div>
-        }
-        else
-        {
-            <TelerikForm Model="@UtenteModel_EditUtente" OnSubmit="@EditUtente_UpdateHandler" EditContext="myEditContext_UpdateUtente">
-                <FormValidation>
-                    <DataAnnotationsValidator></DataAnnotationsValidator>
-                </FormValidation>
-                <FormItems>
-                    <FormItem Field="@nameof(UtenteDto.Email)" Enabled="false"></FormItem>
-                    <FormItem Field="@nameof(UtenteDto.Nome)"></FormItem>
-                    <FormItem Field="@nameof(UtenteDto.Cognome)"></FormItem>
-                </FormItems>
-                <FormButtons>
-                    @*<TelerikButton Class="btn btn-secondary mr-auto" @onclick="() => myEditTemplate = false" ButtonType="@ButtonType.Button">@localizer["Cancella"]</TelerikButton>*@
-                    <TelerikButton Class="btn btn-success ml-auto" ButtonType="@ButtonType.Submit">@localizer["Modifica"]</TelerikButton>
-                </FormButtons>
-            </TelerikForm>
-        }
+        <EditUtenteDialog UtenteToUpdate="UtenteSelected" OnClose="@(() => ShowEditDialog = false)" OnSave="CloseAndRefresh" />
     </WindowContent>
 </TelerikWindow>
-
 
 @*Modal per l'aggiunta dell'utente*@
 <TelerikWindow Class="modal-app" Width="350px" Height="330px" Centered="true" @bind-Visible=@WindowVisible Modal="true">
@@ -151,7 +164,7 @@ else
 
 
 </TelerikWindow>
-<TelerikGrid Data="@((ConStato.Abilitati == true)? FilterdUtenti_Abilitati :(ConStato.Disabilitati == true)?FilterdUtenti_Disabilitati: FilteredUtenti)"
+<TelerikGrid Data="@(ListaUtenti_Filtered)"
              EditMode="@GridEditMode.Popup"
              Pageable="true"
              Height="500px"
@@ -161,12 +174,24 @@ else
         <GridColumn Field=@nameof(UtenteDto.UserName) Title=@localizer["UTENTI"] />
         <GridColumn Field=@nameof(UtenteDto.Nome) Title=@localizer["NOME"] />
         <GridColumn Field=@nameof(UtenteDto.Cognome) Title=@localizer["COGNOME"] />
-        <GridCommandColumn Width="75px">
+        @*<GridCommandColumn Width="75px">
             <GridCommandButton Class="bt-cmd" Command="MyOwnCommand" Icon="" ShowInEdit="false" ImageUrl="/img/Icons/setting.svg" OnClick="@EditHandler"></GridCommandButton>
+        </GridCommandColumn>*@
+        <GridCommandColumn Context="lav">
+            @{
+                var utenteDto = lav as UtenteDto;
+                <GridCommandButton Command="EditLavorazione" Icon="edit" OnClick="@(() => EditUtente(utenteDto.Id))" />
+            }
         </GridCommandColumn>
-        <GridCommandColumn Width="75px">
+        <GridCommandColumn Context="lav">
+            @{
+                var utenteDto = lav as UtenteDto;
+                <GridCommandButton Command="" Icon="" ImageUrl="/img/keyLogo.jpg" OnClick="@(() => sendMail_b(utenteDto.Id))" />
+            }
+        </GridCommandColumn>
+        @*<GridCommandColumn Width="75px">
             <GridCommandButton Class="bt-cmd" Command="MyOwnCommand" Icon="" ShowInEdit="false" ImageUrl="/img/keyLogo.jpg" OnClick="@SendMail"></GridCommandButton>
-        </GridCommandColumn>
+        </GridCommandColumn>*@
         <GridCommandColumn Width="75px" Context="dif">
             @{ var utente = dif as UtenteDto;
                 <TelerikSwitch OffLabel=" " OnLabel=" " OnChange="@(() => UpdateEnableUtente(utente.Id))" @bind-Value="@utente.IsAbilitato"></TelerikSwitch> }
@@ -300,7 +325,7 @@ else
         height: 30px
     }
 
-/*    .k-dialog-titlebar.k-header {
+    /*    .k-dialog-titlebar.k-header {
         background: white
     }*/
 

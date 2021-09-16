@@ -1,4 +1,6 @@
-﻿using Fondital.Shared.Models;
+﻿using Fondital.Shared.Dto;
+using Fondital.Shared.Models;
+using Fondital.Shared.Models.Auth;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,11 +24,28 @@ namespace Fondital.Client.Clients
 		{
 			try
 			{
-				var response = await httpClient.PostAsJsonAsync<MailRequest>("sendMail", mailRequest);
+				var response = await httpClient.PostAsJsonAsync("MailController", mailRequest, JsonSerializerOpts.JsonOpts);
 				response.EnsureSuccessStatusCode();
-				var result = await response.Content.ReadFromJsonAsync<ServicePartner>();
+				var result = await response.Content.ReadFromJsonAsync<Utente>(JsonSerializerOpts.JsonOpts);
 			}
-			catch(Exception e) { var tu = e.Message; }			
+			catch (Exception e)
+			{
+				throw;
+			}
+		}
+
+		public async Task sendMailForNewUser(UtenteDto utente, ServicePartnerDto servicePartner)
+		{
+			try
+			{
+				int servicePartnerId = servicePartner.Id;
+				var response = await httpClient.PostAsJsonAsync($"MailController/{servicePartnerId}", utente, JsonSerializerOpts.JsonOpts);
+				response.EnsureSuccessStatusCode();
+			}
+			catch (Exception e)
+			{
+				throw;
+			}
 		}
 	}
 }

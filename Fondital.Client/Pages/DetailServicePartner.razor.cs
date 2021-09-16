@@ -1,5 +1,4 @@
-﻿using Fondital.Client.ClientModel;
-using Fondital.Client.Clients;
+﻿using Fondital.Client.Clients;
 using Fondital.Shared.Dto;
 using Fondital.Shared.Models;
 using Fondital.Shared.Models.Auth;
@@ -15,9 +14,8 @@ using Telerik.Blazor.Components;
 
 namespace Fondital.Client.Pages
 {
-    public class DetailServicePartnerBase : ComponentBase
+    public partial class DetailServicePartner
 	{
-		public List<UtenteDto> ListUtenti { get; set; } = new List<UtenteDto>();
 		public string SearchText = "";
 		public StatoUtente ConStato { get; set; } = new StatoUtente();
 		[CascadingParameter]
@@ -25,31 +23,34 @@ namespace Fondital.Client.Pages
 		public bool WindowVisible { get; set; }
 		public bool isModalVisible { get; set; } = false;
 		public bool ValidSubmit { get; set; } = false;
-		public bool myEditTemplate { get; set; } = false;
 		public UtenteDto ServicePartnerModel_AddUtente { get; set; } = new UtenteDto();
 		public ServicePartnerDto ServicePartnerModel_UpdateSP { get; set; } = new ServicePartnerDto() { CodiceCliente = "", CodiceFornitore = "", RagioneSociale = "" };
 		public UtenteDto UtenteModel_EditUtente { get; set; } = new UtenteDto { Email = "", Nome = "", Cognome = "" };
-		public EditContext myEditContext_AddUTente { get; set; } 
+		public EditContext myEditContext_AddUTente { get; set; }
 		public EditContext myEditContext_UpdateSP { get; set; }
 		public EditContext myEditContext_UpdateUtente { get; set; }
-		[Inject] public ServicePartnerClient servicePartnerClient { get; set; }
-		[Inject] public UtenteClient utenteClient { get;set; }
-		[Inject] public MailClient mailClient { get; set; }
-		[Inject] private IStringLocalizer<App> localizer { get; set; }
+		//[Inject] public ServicePartnerClient servicePartnerClient { get; set; }
+		//[Inject] public UtenteClient utenteClient { get; set; }
+		//[Inject] public MailClient mailClient { get; set; }
+		//[Inject] private IStringLocalizer<App> localizer { get; set; }
 		public int UtentiAbilitati { get; set; } = 0;
 		public int UtentiDisabilitati { get; set; } = 0;
-		public ServicePartnerDto servicePartnersWithUtenti { get; set; } = new ServicePartnerDto() { Utenti = new List<UtenteDto>()};
+		public ServicePartnerDto servicePartnersWithUtenti { get; set; } = new ServicePartnerDto() { Utenti = new List<UtenteDto>() };
 
 		UtenteDto DatiUtente = new UtenteDto();
 		public List<string> ListaScelta { get; set; } = new List<string>() { };
 
 		public string SceltaCorrente = string.Empty;
 
-	    [Parameter]
+		[Parameter]
 		public string servicePId { get; set; }
 
-
-
+		//------------------------------------------------------------------------------
+		private List<UtenteDto> ListaUtenti = new List<UtenteDto>();
+		protected bool ShowAddDialog { get; set; } = false;
+		protected bool ShowEditDialog { get; set; } = false;
+		protected UtenteDto UtenteSelected { get; set; }
+		//----------------------------------------------------------
 		protected override async Task OnInitializedAsync()
 		{
 			ListaScelta = new List<string>() { @localizer["Tutti"], @localizer["Abilitati"], @localizer["Disabilitati"] };
@@ -57,25 +58,23 @@ namespace Fondital.Client.Pages
 			myEditContext_UpdateSP = new EditContext(ServicePartnerModel_UpdateSP);
 			myEditContext_UpdateUtente = new EditContext(UtenteModel_EditUtente);
 
-			ServicePartnerModel_UpdateSP = await servicePartnerClient.GetServicePartnerWithUtenti(int.Parse(servicePId));
-			ListUtenti = ServicePartnerModel_UpdateSP.Utenti;
-			if (ListUtenti == null){
-				ListUtenti = new List<UtenteDto>();
-				ServicePartnerModel_UpdateSP.Utenti = ListUtenti;
+			ServicePartnerModel_UpdateSP = await servicePartner.GetServicePartnerWithUtenti(int.Parse(servicePId));
 
-			}
+			if (ServicePartnerModel_UpdateSP.Utenti == null) ServicePartnerModel_UpdateSP.Utenti = new List<UtenteDto>();
+
 			UtentiAbilitati = ServicePartnerModel_UpdateSP.Utenti.Where(x => x.IsAbilitato == true).Count();
 			UtentiDisabilitati = ServicePartnerModel_UpdateSP.Utenti.Where(x => x.IsAbilitato == false).Count();
 
-			servicePartnersWithUtenti =(ServicePartnerDto)await servicePartnerClient.GetServicePartnerWithUtenti(int.Parse(servicePId));
+			//servicePartnersWithUtenti = (ServicePartnerDto)await servicePartnerClient.GetServicePartnerWithUtenti(int.Parse(servicePId));
 
 			SceltaCorrente = null;
+			//------------
+			await RefreshUtenti();
+			//-----------
 		}
-
-
-		public List<UtenteDto> FilteredUtenti => servicePartnersWithUtenti.Utenti.Where<UtenteDto>(x => x.Email.ToLower().Contains(SearchText.ToLower())).ToList();
-		public List<UtenteDto> FilterdUtenti_Abilitati => servicePartnersWithUtenti.Utenti.Where<UtenteDto>(x => x.Email.ToLower().Contains(SearchText.ToLower()) && x.IsAbilitato == true).ToList();
-		public List<UtenteDto> FilterdUtenti_Disabilitati => servicePartnersWithUtenti.Utenti.Where<UtenteDto>(x => x.Email.ToLower().Contains(SearchText.ToLower()) && x.IsAbilitato == false).ToList();
+		public List<UtenteDto> ListaUtenti_Filtered => ConStato.Abilitati == true ? ListaUtenti.Where<UtenteDto>(x => x.Email.ToLower().Contains(SearchText.ToLower()) && x.IsAbilitato == true).ToList() :
+													   ConStato.Disabilitati == true ? ListaUtenti.Where<UtenteDto>(x => x.Email.ToLower().Contains(SearchText.ToLower()) && x.IsAbilitato == false).ToList() :
+													   ListaUtenti.Where<UtenteDto>(x => x.Email.ToLower().Contains(SearchText.ToLower())).ToList();
 
 		public async Task OnSubmitHandlerAsync(EditContext editContext)
 		{
@@ -86,18 +85,18 @@ namespace Fondital.Client.Pages
 				UtenteDto UtenteToSave = (UtenteDto)editContext.Model;
 				UtenteToSave.IsAbilitato = false;
 				UtenteToSave.Email = UtenteToSave.UserName;
+
 				if (ServicePartnerModel_UpdateSP.Utenti == null) ServicePartnerModel_UpdateSP.Utenti = new List<UtenteDto>();
 				ServicePartnerModel_UpdateSP.Utenti.Add(UtenteToSave);
-				await servicePartnerClient.UpdateServicePartner(ServicePartnerModel_UpdateSP.Id, ServicePartnerModel_UpdateSP);
 				ServicePartnerModel_AddUtente = new UtenteDto();
+				await mailClient.sendMailForNewUser(UtenteToSave, ServicePartnerModel_UpdateSP);
 				await Refresh();
+				//await Dialogs.AlertAsync($"{@localizer["MailInviato"]} {UtenteToSave.Email} {@localizer["PrimaImposaPassword"]}");
 
 			}
-			else
-			{
-				//apply some custom logic when the form is not valid
-			}
 		}
+
+
 		public async Task OnSubmit_updateService_HandlerAsync(EditContext editContext)
 		{
 			bool isFormValid = editContext.Validate();
@@ -105,60 +104,92 @@ namespace Fondital.Client.Pages
 			{
 				ServicePartnerDto ServicePartnerToSave = (ServicePartnerDto)editContext.Model;
 
-				await servicePartnerClient.UpdateServicePartner(ServicePartnerToSave.Id, ServicePartnerToSave);
+				await servicePartner.UpdateServicePartner(ServicePartnerToSave.Id, ServicePartnerToSave);
 				await Refresh();
 			}
-			else
+		}
+		//----------------------------------------------------------
+		
+		protected async Task CloseAndRefresh()
+		{
+			ShowAddDialog = false;
+			ShowEditDialog = false;
+			await RefreshUtenti();
+		}
+
+		protected async Task RefreshUtenti()
+		{
+			ListaUtenti = (List<UtenteDto>) await utenteClient.GetUtenti();
+			StateHasChanged();
+		}
+
+		protected void EditUtente(int utenteId)
+		{
+			UtenteSelected = ListaUtenti.Single(x => x.Id == utenteId);
+			ShowEditDialog = true;
+		}
+
+		protected async Task sendMail_b(int utenteId)
+		{
+			UtenteSelected = ListaUtenti.Single(x => x.Id == utenteId);
+			//UtenteDto utente = (UtenteDto)args.Item;
+			UtenteDto UtenteToSendMail = (UtenteDto)await utenteClient.GetUtente(UtenteSelected.UserName);
+			bool isConfirmed = await Dialogs.ConfirmAsync($"{@localizer["MandaMail"]} {UtenteToSendMail.Nome} {UtenteToSendMail.Cognome} {localizer["ResetPassword"]}");
+			if (isConfirmed)
 			{
-				
+				MailRequest mailRequest = new MailRequest()
+				{
+					ToEmail = UtenteToSendMail.UserName,
+					Subject = "Crea la Password",
+				};
+
+				await mailClient.sendMail(mailRequest);
+				await Dialogs.AlertAsync($"{@localizer["MailInviato"]} {UtenteToSendMail.Email} {@localizer["ResetPassword"]}");
 			}
 		}
+
+		//------------------------------------------------------------------------------------
 		async Task Refresh()
 		{
 			WindowVisible = false;
 			isModalVisible = false;
-			myEditTemplate = false;
 			await OnInitializedAsync();
 		}
 
-		public async Task EditHandler(GridCommandEventArgs args)
-		{
-			myEditTemplate = true;
-			DatiUtente = (UtenteDto)args.Item;
-			UtenteModel_EditUtente.Cognome = DatiUtente.Cognome;
-			UtenteModel_EditUtente.Nome = DatiUtente.Nome;
-			UtenteModel_EditUtente.Email = DatiUtente.Email;
-		}
+		//public async Task EditHandler(GridCommandEventArgs args)
+		//{
+		//	myEditTemplate = true;
+		//	DatiUtente = (UtenteDto)args.Item;
+		//	UtenteModel_EditUtente.Cognome = DatiUtente.Cognome;
+		//	UtenteModel_EditUtente.Nome = DatiUtente.Nome;
+		//	UtenteModel_EditUtente.Email = DatiUtente.Email;
+		//}
 
-		public async Task EditUtente_UpdateHandler(EditContext editContext)
-		{
-			bool isFormValid = editContext.Validate();
-			if (isFormValid)
-			{
-				UtenteDto utente = (UtenteDto)editContext.Model;
-				utente.IsAbilitato = DatiUtente.IsAbilitato;
-				await utenteClient.UpdateUtente(DatiUtente.Id, utente);
-				await Refresh();
-				DatiUtente = new UtenteDto();
-			}
-			else
-			{
-
-			}
-		}
+		//public async Task EditUtente_UpdateHandler(EditContext editContext)
+		//{
+		//	bool isFormValid = editContext.Validate();
+		//	if (isFormValid)
+		//	{
+		//		UtenteDto utente = (UtenteDto)editContext.Model;
+		//		utente.IsAbilitato = DatiUtente.IsAbilitato;
+		//		await utenteClient.UpdateUtente(DatiUtente.Id, utente);
+		//		await Refresh();
+		//		DatiUtente = new UtenteDto();
+		//	}
+		//}
 
 		protected async Task UpdateEnableUtente(int Id)
 		{
-			UtenteDto ut = FilteredUtenti.Single(x => x.Id == Id);
+			UtenteDto ut = ListaUtenti_Filtered.Single(x => x.Id == Id);
 			bool isConfirmed = false;
-			if (ut.IsAbilitato)isConfirmed = await Dialogs.ConfirmAsync($"{@localizer["ConfermaModificaUtente"]} {ut.Nome} {ut.Cognome} ?",@localizer["ModificaUtente"]);
-			else isConfirmed = await Dialogs.ConfirmAsync($"{@localizer["ConfermaModificaUtenteAb"]} {ut.Nome} {ut.Cognome} ?", localizer["ModificaUtente"]);
-			
+			if (ut.IsAbilitato) isConfirmed = await Dialogs.ConfirmAsync($"{@localizer["ConfermaModificaUtenteAb"]} {ut.Nome} {ut.Cognome} ?", @localizer["ModificaUtente"]);
+			else isConfirmed = await Dialogs.ConfirmAsync($"{@localizer["ConfermaModificaUtente"]} {ut.Nome} {ut.Cognome} ?", localizer["ModificaUtente"]);
+
 			if (isConfirmed)
 			{
 				try
 				{
-					await utenteClient.UpdateUtente(Id, ut) ;
+					await utenteClient.UpdateUtente(Id, ut);
 					await Refresh();
 				}
 				catch (Exception e)
@@ -171,9 +202,11 @@ namespace Fondital.Client.Pages
 				//	//fai revert: ^ restituisce lo XOR dei due valori
 				//	//true XOR true = false
 				//	//false XOR true = true
-				FilteredUtenti.Single(x => x.Id == Id).IsAbilitato ^= true;
+				ListaUtenti_Filtered.Single(x => x.Id == Id).IsAbilitato ^= true;
 			}
 		}
+
+
 		public async Task MyValueChangeHandler(string theUserChoice)
 		{
 			switch (theUserChoice)
@@ -192,22 +225,32 @@ namespace Fondital.Client.Pages
 
 		public async Task SendMail(GridCommandEventArgs args)
 		{
-			//Utente utente = (Utente)args.Item;
-			//bool isConfirmed = await Dialogs.ConfirmAsync(localizer[$"Vuoi mandare una mail all'utente {utente.Nome} {utente.Cognome} per il reset della password ? "]);
-			//if (isConfirmed)
-			//{
-			//	MailRequest mailRequest = new MailRequest()
-			//	{
-			//		ToEmail = "mavelec@libero.it",
-			//		Subject = "Hello world",
-			//		Body = "<h1>Hello world<h1>"
-			//	};
+			UtenteDto utente = (UtenteDto)args.Item;
+			UtenteDto UtenteToSendMail = (UtenteDto) await  utenteClient.GetUtente(utente.UserName);
+			bool isConfirmed = await Dialogs.ConfirmAsync($"{@localizer["MandaMail"]} {utente.Nome} {utente.Cognome} {localizer["ResetPassword"]}");
+			if (isConfirmed)
+			{
+				MailRequest mailRequest = new MailRequest()
+				{
+					ToEmail = UtenteToSendMail.UserName,
+					Subject = "Crea la Password",
+				};
 
-			//	await mailClient.sendMail(mailRequest);
-			//}
-			
-		} 
+				await mailClient.sendMail(mailRequest);
+				await Dialogs.AlertAsync($"{@localizer["MailInviato"]} {utente.Email} {@localizer["ResetPassword"]}");
+			}
 
-		
+		}
+
+		public class StatoUtente
+		{
+
+			public bool Tutti { get; set; } = false;
+			public bool Abilitati { get; set; } = false;
+			public bool Disabilitati { get; set; } = false;
+
+		}
+
+
 	}
 }
