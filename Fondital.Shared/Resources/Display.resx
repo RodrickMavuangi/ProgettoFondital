@@ -123,6 +123,9 @@
   <data name="CodiceFornitore" xml:space="preserve">
     <value>Codice Fornitore</value>
   </data>
+  <data name="Nome" xml:space="preserve">
+    <value>Nome</value>
+  </data>
   <data name="NomeItaliano" xml:space="preserve">
     <value>Nome Italiano</value>
   </data>
