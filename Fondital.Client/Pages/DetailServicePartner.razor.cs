@@ -58,23 +58,23 @@ namespace Fondital.Client.Pages
 			myEditContext_UpdateSP = new EditContext(ServicePartnerModel_UpdateSP);
 			myEditContext_UpdateUtente = new EditContext(UtenteModel_EditUtente);
 
-			ServicePartnerModel_UpdateSP = await servicePartner.GetServicePartnerWithUtenti(int.Parse(servicePId));
+			ServicePartnerModel_UpdateSP = await servicePartnerClient.GetServicePartnerWithUtenti(int.Parse(servicePId));
 
 			if (ServicePartnerModel_UpdateSP.Utenti == null) ServicePartnerModel_UpdateSP.Utenti = new List<UtenteDto>();
 
 			UtentiAbilitati = ServicePartnerModel_UpdateSP.Utenti.Where(x => x.IsAbilitato == true).Count();
 			UtentiDisabilitati = ServicePartnerModel_UpdateSP.Utenti.Where(x => x.IsAbilitato == false).Count();
 
-			//servicePartnersWithUtenti = (ServicePartnerDto)await servicePartnerClient.GetServicePartnerWithUtenti(int.Parse(servicePId));
+			servicePartnersWithUtenti = (ServicePartnerDto)await servicePartnerClient.GetServicePartnerWithUtenti(int.Parse(servicePId));
 
 			SceltaCorrente = null;
 			//------------
 			await RefreshUtenti();
 			//-----------
 		}
-		public List<UtenteDto> ListaUtenti_Filtered => ConStato.Abilitati == true ? ListaUtenti.Where<UtenteDto>(x => x.Email.ToLower().Contains(SearchText.ToLower()) && x.IsAbilitato == true).ToList() :
-													   ConStato.Disabilitati == true ? ListaUtenti.Where<UtenteDto>(x => x.Email.ToLower().Contains(SearchText.ToLower()) && x.IsAbilitato == false).ToList() :
-													   ListaUtenti.Where<UtenteDto>(x => x.Email.ToLower().Contains(SearchText.ToLower())).ToList();
+		public List<UtenteDto> ListaUtenti_Filtered => ConStato.Abilitati == true ? servicePartnersWithUtenti.Utenti.Where<UtenteDto>(x => x.Email.ToLower().Contains(SearchText.ToLower()) && x.IsAbilitato == true).ToList() :
+													   ConStato.Disabilitati == true ? servicePartnersWithUtenti.Utenti.Where<UtenteDto>(x => x.Email.ToLower().Contains(SearchText.ToLower()) && x.IsAbilitato == false).ToList() :
+													   servicePartnersWithUtenti.Utenti.Where<UtenteDto>(x => x.Email.ToLower().Contains(SearchText.ToLower())).ToList();
 
 		public async Task OnSubmitHandlerAsync(EditContext editContext)
 		{
@@ -83,7 +83,7 @@ namespace Fondital.Client.Pages
 			if (isFormValid)
 			{
 				UtenteDto UtenteToSave = (UtenteDto)editContext.Model;
-				UtenteToSave.IsAbilitato = false;
+				UtenteToSave.IsAbilitato = false;  
 				UtenteToSave.Email = UtenteToSave.UserName;
 
 				if (ServicePartnerModel_UpdateSP.Utenti == null) ServicePartnerModel_UpdateSP.Utenti = new List<UtenteDto>();
@@ -104,7 +104,7 @@ namespace Fondital.Client.Pages
 			{
 				ServicePartnerDto ServicePartnerToSave = (ServicePartnerDto)editContext.Model;
 
-				await servicePartner.UpdateServicePartner(ServicePartnerToSave.Id, ServicePartnerToSave);
+				await servicePartnerClient.UpdateServicePartner(ServicePartnerToSave.Id, ServicePartnerToSave);
 				await Refresh();
 			}
 		}

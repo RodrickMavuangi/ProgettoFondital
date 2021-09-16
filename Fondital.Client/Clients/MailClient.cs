@@ -26,7 +26,7 @@ namespace Fondital.Client.Clients
 			{
 				var response = await httpClient.PostAsJsonAsync("MailController", mailRequest, JsonSerializerOpts.JsonOpts);
 				response.EnsureSuccessStatusCode();
-				var result = await response.Content.ReadFromJsonAsync<Utente>(JsonSerializerOpts.JsonOpts);
+				//var result = await response.Content.ReadFromJsonAsync<Utente>(JsonSerializerOpts.JsonOpts);
 			}
 			catch (Exception e)
 			{
