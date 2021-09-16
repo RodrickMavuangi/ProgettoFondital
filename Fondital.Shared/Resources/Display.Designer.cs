@@ -79,6 +79,15 @@ namespace Fondital.Shared.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Nome.
+        /// </summary>
+        public static string Nome {
+            get {
+                return ResourceManager.GetString("Nome", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Nome Italiano.
         /// </summary>
         public static string NomeItaliano {

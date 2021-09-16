@@ -32,7 +32,7 @@ else
                     <span class="ut-Disab">@localizer["Disabilitati"] / @UtentiDisabilitati</span>
                 </div>
                 <div>
-                    <TelerikButton Class="btn-add" OnClick=@(()=> ShowE = true)>@localizer["AggiungiUtente"]</TelerikButton>
+                    <TelerikButton Class="btn-add" OnClick=@(()=> ShowEditUserDialog = true)>@localizer["AggiungiUtente"]</TelerikButton>
                 </div>
 
             </div>
@@ -165,7 +165,10 @@ else
         <GridColumn Field=@nameof(UtenteDto.Nome) Title=@localizer["NOME"] />
         <GridColumn Field=@nameof(UtenteDto.Cognome) Title=@localizer["COGNOME"] />
         <GridCommandColumn Width="75px">
-            <GridCommandButton Class="bt-cmd" Command="MyOwnCommand" Icon="" ShowInEdit="false" ImageUrl="/img/Icons/setting.svg" OnClick="@EditHandler"></GridCommandButton>
+            @{
+                UtenteDto userToEdit = (UtenteDto)context;
+                <GridCommandButton Class="bt-cmd" Command="MyOwnCommand" Icon="" ShowInEdit="false" ImageUrl="/img/Icons/setting.svg" OnClick=@(() => EditUser(userToEdit.UserName))></GridCommandButton>
+            }
         </GridCommandColumn>
         <GridCommandColumn Width="75px">
             <GridCommandButton Class="bt-cmd" Command="MyOwnCommand" Icon="" ShowInEdit="false" ImageUrl="/img/keyLogo.jpg" OnClick="@SendMail"></GridCommandButton>
@@ -188,12 +191,12 @@ else
     </WindowContent>
 </TelerikWindow>
 
-<TelerikWindow Class="modal-app dialogBox" Width="500px" Height="auto" Centered="true" @bind-Visible=@ShowEditSpDialog Modal="true">
+<TelerikWindow Class="modal-app dialogBox" Width="500px" Height="auto" Centered="true" @bind-Visible=@ShowEditUserDialog Modal="true">
     <WindowActions>
         <WindowAction Name="Close" IconClass="k-icon k-i-close text-dark" />
     </WindowActions>
     <WindowContent>
-        <EditSPDialog SPToUpdate="SpSelected" OnClose="@(() => ShowEditSpDialog = false)" OnSave="CloseAndRefresh" />
+        <EditUserDialog UtenteToUpdate="UserSelected" OnClose="@(() => ShowEditUserDialog = false)" OnSave="CloseAndRefresh" />
     </WindowContent>
 </TelerikWindow>
 

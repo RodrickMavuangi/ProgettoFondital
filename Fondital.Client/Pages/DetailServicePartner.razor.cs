@@ -47,6 +47,7 @@ namespace Fondital.Client.Pages
 		public string servicePId { get; set; }
 
 		protected ServicePartnerDto SpSelected { get; set; } = new ServicePartnerDto();
+		protected UtenteDto UserSelected { get; set; } = new UtenteDto();
 		protected bool ShowEditSpDialog { get; set; } = false;
 		protected bool ShowEditUserDialog { get; set; } = false;
 
@@ -83,6 +84,7 @@ namespace Fondital.Client.Pages
 		protected async Task CloseAndRefresh()
         {
 			ShowEditSpDialog = false;
+			ShowEditUserDialog = false;
 			await Refresh();
         }
 
@@ -91,6 +93,12 @@ namespace Fondital.Client.Pages
 			SpSelected = await servicePartnerClient.GetServicePartnerById(int.Parse(servicePId));
 			ShowEditSpDialog = true;
 		}
+
+		protected async Task EditUser(string username)
+        {
+			UserSelected = await utenteClient.GetUtente(username);
+			ShowEditUserDialog = true;
+        }
 
 
 		public async Task OnSubmitHandlerAsync(EditContext editContext)
