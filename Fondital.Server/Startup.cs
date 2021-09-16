@@ -19,6 +19,8 @@ using System.Text;
 using System.Text.Json.Serialization;
 using AutoMapper;
 using Fondital.Server.Automapper;
+using Fondital.Repository;
+using Fondital.Shared.Settings;
 
 namespace Fondital.Server
 {

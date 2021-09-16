@@ -1,4 +1,5 @@
 ﻿using Fondital.Shared.Enums;
+using Fondital.Shared.Extensions;
 using Microsoft.JSInterop;
 using System.Collections.Generic;
 using System.Globalization;
@@ -9,14 +10,14 @@ namespace Fondital.Client.Shared
     public partial class CultureSelector
     {
         public static IEnumerable<string> SupportedLanguages { get => EnumExtensions.GetEnumNames<Lingua>(); }
-        private string _currentLang { get; set; }
+        private string CurrentLanguage { get; set; }
 
         public string CurrentLang
         {
-            get => _currentLang;
+            get => CurrentLanguage;
             set
             {
-                _currentLang = value;
+                CurrentLanguage = value;
 
                 var curLang = EnumExtensions.GetEnumValues<Lingua>().FirstOrDefault(l => l.ToString() == value);
 
@@ -33,7 +34,7 @@ namespace Fondital.Client.Shared
         protected override void OnInitialized()
         {
             var region = new RegionInfo(CultureInfo.CurrentCulture.LCID);
-            _currentLang = region.TwoLetterISORegionName;
+            CurrentLanguage = region.TwoLetterISORegionName;
         }
     }
 }

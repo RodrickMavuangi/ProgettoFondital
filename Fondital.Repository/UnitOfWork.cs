@@ -1,9 +1,10 @@
-﻿using Fondital.Data.Repositories;
+﻿using Fondital.Data;
 using Fondital.Shared;
 using Fondital.Shared.Repositories;
+using System;
 using System.Threading.Tasks;
 
-namespace Fondital.Data
+namespace Fondital.Repository
 {
     public class UnitOfWork : IUnitOfWork
     {
@@ -42,6 +43,7 @@ namespace Fondital.Data
         public void Dispose()
         {
             _context.Dispose();
+            GC.SuppressFinalize(this);
         }
     }
 }

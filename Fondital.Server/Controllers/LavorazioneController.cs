@@ -1,10 +1,9 @@
 ﻿using AutoMapper;
-using Fondital.Data;
 using Fondital.Shared.Dto;
 using Fondital.Shared.Models;
 using Fondital.Shared.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
@@ -16,18 +15,17 @@ namespace Fondital.Server.Controllers
 {
     [ApiController]
     [Route("lavorazioniControl")]
+    [Authorize]
     public class LavorazioneController : ControllerBase
     {
         private readonly ILogger<LavorazioneController> _logger;
         private readonly ILavorazioneService _lavorazioneService;
-        private readonly IConfiguration _configuration;
         private readonly IMapper _mapper;
 
-        public LavorazioneController(ILogger<LavorazioneController> logger, FonditalDbContext db, ILavorazioneService lavorazioneService, IConfiguration configuration, IMapper mapper)
+        public LavorazioneController(ILogger<LavorazioneController> logger, ILavorazioneService lavorazioneService, IMapper mapper)
         {
             _logger = logger;
             _lavorazioneService = lavorazioneService;
-            _configuration = configuration;
             _mapper = mapper;
         }
 

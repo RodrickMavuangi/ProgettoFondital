@@ -1,29 +1,29 @@
-﻿using System;
-using System.Threading.Tasks;
+﻿using Fondital.Shared.Dto;
 using Microsoft.AspNetCore.Authorization;
-using Fondital.Shared.Resources;
+using System;
+using System.Threading.Tasks;
 
 namespace Fondital.Client.AuthPages
 {
     [AllowAnonymous]
     public partial class Login
     {
-        LoginRequest model = new LoginRequest();
-        LoginResponse loginResponse = new LoginResponse();
+        LoginRequestDto Model { get; set; } = new();
+        LoginResponseDto LoginResponse = new();
         protected string Error { get; set; }
 
         public async Task UserLogin()
         {
             try
             {
-                loginResponse = await authClient.Login(model);
-                await loginService.Login(loginResponse.Token);
+                LoginResponse = await authClient.Login(Model);
+                await loginService.Login(LoginResponse.Token);
                 navManager.NavigateTo("");
             }
             catch (Exception e)
             {
                 if (e.Message == "PasswordMustChange")
-                    navManager.NavigateTo($"/account/changepassword/{model.Email}");
+                    navManager.NavigateTo($"/account/changepassword/{Model.Email}");
                 else
                     Error = e.Message;
             }

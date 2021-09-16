@@ -15,7 +15,7 @@ namespace Fondital.Client.Authentication
         private readonly ILocalStorageService _localStorage;
         private readonly HttpClient _httpClient;
         private static readonly string _tokenkey = "TOKENKEY";
-        private AuthenticationState _anonymous => new AuthenticationState(new ClaimsPrincipal(new ClaimsIdentity()));
+        private static AuthenticationState Anonymous => new(new ClaimsPrincipal(new ClaimsIdentity()));
 
         public FonditalAuthStateProvider(ILocalStorageService localStorage, HttpClient httpClient)
         {
@@ -26,19 +26,19 @@ namespace Fondital.Client.Authentication
         public async override Task<AuthenticationState> GetAuthenticationStateAsync()
         {
             var token = await _localStorage.GetItemAsync<string>(_tokenkey);
-            if (!tokenStatus(token))
+            if (!TokenStatus(token))
             {
                 _httpClient.DefaultRequestHeaders.Authorization = null;
                 await _localStorage.RemoveItemAsync(_tokenkey);
-                return _anonymous;
+                return Anonymous;
             }
-            return buildAuthenticationState(token);
+            return BuildAuthenticationState(token);
         }
 
         public async Task Login(string token)
         {
             await _localStorage.SetItemAsync(_tokenkey, token);
-            var authState = buildAuthenticationState(token);
+            var authState = BuildAuthenticationState(token);
             NotifyAuthenticationStateChanged(Task.FromResult(authState));
         }
 
@@ -46,16 +46,16 @@ namespace Fondital.Client.Authentication
         {
             _httpClient.DefaultRequestHeaders.Authorization = null;
             await _localStorage.RemoveItemAsync(_tokenkey);
-            NotifyAuthenticationStateChanged(Task.FromResult(_anonymous));
+            NotifyAuthenticationStateChanged(Task.FromResult(Anonymous));
         }
 
-        private AuthenticationState buildAuthenticationState(string token)
+        private AuthenticationState BuildAuthenticationState(string token)
         {
             _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("bearer", token);
-            return new AuthenticationState(new ClaimsPrincipal(new ClaimsIdentity(claimsFromJwt(token), "jwt")));
+            return new AuthenticationState(new ClaimsPrincipal(new ClaimsIdentity(ClaimsFromJwt(token), "jwt")));
         }
 
-        private bool tokenStatus(string token)
+        private static bool TokenStatus(string token)
         {
             try
             {
@@ -72,7 +72,7 @@ namespace Fondital.Client.Authentication
             }
         }
 
-        private IEnumerable<Claim> claimsFromJwt(string token)
+        private static IEnumerable<Claim> ClaimsFromJwt(string token)
         {
             try
             {

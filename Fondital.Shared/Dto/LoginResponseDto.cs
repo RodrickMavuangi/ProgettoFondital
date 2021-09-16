@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Fondital.Shared.Resources
+namespace Fondital.Shared.Dto
 {
-    public class LoginResponse
+    public class LoginResponseDto
     {
         public string Token { get; set; }
     }

@@ -15,6 +15,5 @@ namespace Fondital.Shared.Repositories
         Task AddRangeAsync(IEnumerable<TEntity> entities);
         void Remove(TEntity entity);
         void RemoveRange(IEnumerable<TEntity> entities);
-        //Task UpdateAsync(TEntity entity);
     }
 }

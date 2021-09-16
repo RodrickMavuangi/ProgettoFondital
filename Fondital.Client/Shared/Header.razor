@@ -22,28 +22,31 @@
                 </div>
                 <AuthorizeView>
                     <Authorized>
-                        <div class="col-2">
-                            <div class="float-lg-right">
-                                <div class="float-lg-left link-light">
-                                    <ul class="mb-0 profilo">
-                                        <li class="nomeUtente">@localizer["Ciao"] @UtenteCorrente?.Nome</li>
-                                        <li class="ruoloUtente">@localizer["RuoloDirezione"]</li>
-                                    </ul>
-                                </div>
-                                <div class="float-lg-left align-items-center">
+                        @if (UtenteCorrente != null)
+                        {
+                            <div class="col-2">
+                                <div class="float-lg-right">
+                                    <div class="float-lg-left link-light">
+                                        <ul class="mb-0 profilo">
+                                            <li class="nomeUtente">@localizer["Ciao"] @UtenteCorrente?.Nome</li>
+                                            <li class="ruoloUtente">@localizer["RuoloDirezione"]</li>
+                                        </ul>
+                                    </div>
+                                    <div class="float-lg-left align-items-center">
 
-                                    <div class="nomeCircle fontProfilo">@UtenteCorrente?.Nome.First()@UtenteCorrente?.Cognome.First()</div>
+                                        <div class="nomeCircle fontProfilo">@UtenteCorrente?.Nome.First()@UtenteCorrente?.Cognome.First()</div>
 
-                                    <TelerikMenu Data="@MenuItems"
-                                                 UrlField="@nameof(MenuItem.Page)"
-                                                 ItemsField="@nameof(MenuItem.SubSectionList)"
-                                                 TextField="@nameof(MenuItem.Section)"
-                                                 Class="menuProfilo">
-                                    </TelerikMenu>
+                                        <TelerikMenu Data="@MenuItems"
+                                                     UrlField="@nameof(MenuItem.Page)"
+                                                     ItemsField="@nameof(MenuItem.SubSectionList)"
+                                                     TextField="@nameof(MenuItem.Section)"
+                                                     Class="menuProfilo">
+                                        </TelerikMenu>
 
+                                    </div>
                                 </div>
                             </div>
-                        </div>
+                        }
                     </Authorized>
                 </AuthorizeView>
             </div>

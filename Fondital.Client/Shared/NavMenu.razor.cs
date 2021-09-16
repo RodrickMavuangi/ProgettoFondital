@@ -1,13 +1,14 @@
 ﻿using Microsoft.JSInterop;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace Fondital.Client.Shared
 {
     public partial class NavMenu
     {
         List<MenuItem> MenuItems { get; set; }
-        bool IsInternalPage (string url)
+        static bool IsInternalPage(string url)
         {
             if (string.IsNullOrEmpty(url)) return false;
 
@@ -20,9 +21,9 @@ namespace Fondital.Client.Shared
             return !protocols.Any(p => url.StartsWith(p.ToLower()));
         }
 
-        protected void OnClickHandler (MenuItem item)
+        protected async Task OnClickHandler(MenuItem item)
         {
-            JSRuntime.InvokeVoidAsync("OnClickHandler", item);
+            await JSRuntime.InvokeVoidAsync("OnClickHandler", item);
         }
 
         protected override void OnInitialized()
@@ -74,6 +75,7 @@ namespace Fondital.Client.Shared
             };
         }
     }
+
     public partial class MenuItem
     {
         public string Text { get; set; }

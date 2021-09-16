@@ -123,6 +123,18 @@
   <data name="CodiceFornitore" xml:space="preserve">
     <value>Codice Fornitore</value>
   </data>
+  <data name="Cognome" xml:space="preserve">
+    <value>Cognome</value>
+  </data>
+  <data name="ConfirmPassword" xml:space="preserve">
+    <value>Conferma Password</value>
+  </data>
+  <data name="Email" xml:space="preserve">
+    <value>Email</value>
+  </data>
+  <data name="NewPassword" xml:space="preserve">
+    <value>Nuova Password</value>
+  </data>
   <data name="Nome" xml:space="preserve">
     <value>Nome</value>
   </data>
@@ -131,6 +143,12 @@
   </data>
   <data name="NomeRusso" xml:space="preserve">
     <value>Nome Russo</value>
+  </data>
+  <data name="OldPassword" xml:space="preserve">
+    <value>Vecchia Password</value>
+  </data>
+  <data name="Password" xml:space="preserve">
+    <value>Password</value>
   </data>
   <data name="Raggruppamento" xml:space="preserve">
     <value>Raggruppamento</value>
