@@ -1,8 +1,6 @@
 ﻿using Fondital.Client.ClientModel;
 using Fondital.Client.Clients;
 using Fondital.Shared.Dto;
-using Fondital.Shared.Models;
-using Fondital.Shared.Models.Auth;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Forms;
 using Microsoft.Extensions.Localization;
@@ -48,6 +46,11 @@ namespace Fondital.Client.Pages
 	    [Parameter]
 		public string servicePId { get; set; }
 
+		protected ServicePartnerDto SpSelected { get; set; } = new ServicePartnerDto();
+		protected UtenteDto UserSelected { get; set; } = new UtenteDto();
+		protected bool ShowEditSpDialog { get; set; } = false;
+		protected bool ShowEditUserDialog { get; set; } = false;
+
 
 
 		protected override async Task OnInitializedAsync()
@@ -77,6 +80,27 @@ namespace Fondital.Client.Pages
 		public List<UtenteDto> FilterdUtenti_Abilitati => servicePartnersWithUtenti.Utenti.Where<UtenteDto>(x => x.Email.ToLower().Contains(SearchText.ToLower()) && x.IsAbilitato == true).ToList();
 		public List<UtenteDto> FilterdUtenti_Disabilitati => servicePartnersWithUtenti.Utenti.Where<UtenteDto>(x => x.Email.ToLower().Contains(SearchText.ToLower()) && x.IsAbilitato == false).ToList();
 
+
+		protected async Task CloseAndRefresh()
+        {
+			ShowEditSpDialog = false;
+			ShowEditUserDialog = false;
+			await Refresh();
+        }
+
+		protected async Task EditSp()
+		{
+			SpSelected = await servicePartnerClient.GetServicePartnerById(int.Parse(servicePId));
+			ShowEditSpDialog = true;
+		}
+
+		protected async Task EditUser(string username)
+        {
+			UserSelected = await utenteClient.GetUtente(username);
+			ShowEditUserDialog = true;
+        }
+
+
 		public async Task OnSubmitHandlerAsync(EditContext editContext)
 		{
 			bool isFormValid = editContext.Validate();
@@ -91,7 +115,6 @@ namespace Fondital.Client.Pages
 				await servicePartnerClient.UpdateServicePartner(ServicePartnerModel_UpdateSP.Id, ServicePartnerModel_UpdateSP);
 				ServicePartnerModel_AddUtente = new UtenteDto();
 				await Refresh();
-
 			}
 			else
 			{
