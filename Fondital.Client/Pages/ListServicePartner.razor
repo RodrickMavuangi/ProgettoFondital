@@ -111,6 +111,7 @@ else
     <WindowContent>
         <div class="dialogForm"><EditSPDialog SPToUpdate="SpSelected" OnClose="@(() => ShowEditDialog = false)" OnSave="CloseAndRefresh" /> </div>
     </WindowContent>
+</TelerikWindow>
 
 @*OnEdit="@EditHandler"//*@
 <div class="row-3 d-flex justify-content-between flex-wrap flex-md-nowrap  pt-0 pb-4 mb-4">
@@ -125,19 +126,18 @@ else
                 <Template>
                     @{
                         ServicePartnerDto sp = (ServicePartnerDto)context;
-                    <i class="bi bi-people-fill float-lg-left icoClienti blu gj-cursor-pointer" @onclick="@(() => navManager.NavigateTo($"/detailservicepartner/{sp.Id}"))"></i>
+                        <i class="bi bi-people-fill float-lg-left icoClienti blu gj-cursor-pointer" @onclick="@(() => navManager.NavigateTo($"/detailservicepartner/{sp.Id}"))"></i>
 
-                    <b>@(sp.Utenti.Count())</b>
+                        <b>@(sp.Utenti.Count())</b>
                     }
                 </Template>
             </GridColumn>
             <GridCommandColumn Width="80px" Context="sp">
                 @{
                     var servicePartner = sp as ServicePartnerDto;
-                <GridCommandButton Class="settingCol btnIcon bgBluOn white" Command="MyOwnCommand" Icon="" ShowInEdit="false" ImageUrl="/img/Icons/gear-fill.svg" OnClick="@(() => EditSp(servicePartner.Id))"></GridCommandButton>
-                    }
+                    <GridCommandButton Class="settingCol btnIcon bgBluOn white" Command="MyOwnCommand" Icon="" ShowInEdit="false" ImageUrl="/img/Icons/gear-fill.svg" OnClick="@(() => EditSp(servicePartner.Id))"></GridCommandButton>
+                }
             </GridCommandColumn>
         </GridColumns>
     </TelerikGrid>
 </div>
-</TelerikWindow>
