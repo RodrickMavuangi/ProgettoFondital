@@ -61,11 +61,29 @@ namespace Fondital.Shared.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Il campo {0} è obbligatorio!.
+        ///   Looks up a localized string similar to Il campo {0} deve essere un intero..
+        /// </summary>
+        public static string OutOfBounds {
+            get {
+                return ResourceManager.GetString("OutOfBounds", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Il campo {0} è obbligatorio..
         /// </summary>
         public static string Required {
             get {
                 return ResourceManager.GetString("Required", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Il campo {0} deve contenere una email valida..
+        /// </summary>
+        public static string ValidEmail {
+            get {
+                return ResourceManager.GetString("ValidEmail", resourceCulture);
             }
         }
     }

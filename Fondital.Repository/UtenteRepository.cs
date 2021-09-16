@@ -1,30 +1,25 @@
-﻿using System.Collections.Generic;
-using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
-using Fondital.Shared.Models;
-using Fondital.Shared.Repositories;
-using Fondital.Data;
-using System.Linq;
+﻿using Fondital.Data;
 using Fondital.Shared.Models.Auth;
+using Fondital.Shared.Repositories;
+using Microsoft.EntityFrameworkCore;
+using System.Threading.Tasks;
 
-namespace Fondital.Data.Repositories
+namespace Fondital.Repository
 {
     public class UtenteRepository : Repository<Utente>, IUtenteRepository
     {
         public UtenteRepository(FonditalDbContext context)
             : base(context)
         { }
-        
 
-        private FonditalDbContext _db
+        private FonditalDbContext Db
         {
             get { return Context as FonditalDbContext; }
         }
 
         public async Task<Utente> GetByUsernameAsync(string username)
         {
-            return await _db.Utenti.SingleOrDefaultAsync(u => u.UserName == username);
+            return await Db.Utenti.SingleOrDefaultAsync(u => u.UserName == username);
         }
-
     }
 }

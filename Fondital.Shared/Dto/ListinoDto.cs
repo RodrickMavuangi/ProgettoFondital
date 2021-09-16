@@ -21,7 +21,7 @@ namespace Fondital.Shared.Dto
 
         [Display(Name = "Valore", ResourceType = typeof(Resources.Display))]
         [Required(ErrorMessageResourceName = "Required", ErrorMessageResourceType = typeof(Resources.Validation))]
-        [Range(0, Int32.MaxValue)]
+        [Range(0, Int32.MaxValue, ErrorMessageResourceName = "OutOfBounds", ErrorMessageResourceType = typeof(Resources.Validation))]
         public int Valore { get; set; } = 0;
     }
 }

@@ -1,10 +1,9 @@
 ﻿using AutoMapper;
-using Fondital.Data;
 using Fondital.Shared.Dto;
 using Fondital.Shared.Models;
 using Fondital.Shared.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -14,18 +13,17 @@ namespace Fondital.Server.Controllers
 {
     [ApiController]
     [Route("listiniControl")]
+    [Authorize]
     public class ListinoController : ControllerBase
     {
         private readonly ILogger<ListinoController> _logger;
         private readonly IListinoService _listinoService;
-        private readonly IConfiguration _configuration;
         private readonly IMapper _mapper;
 
-        public ListinoController(ILogger<ListinoController> logger, FonditalDbContext db, IListinoService listinoService, IConfiguration configuration, IMapper mapper)
+        public ListinoController(ILogger<ListinoController> logger, IListinoService listinoService, IMapper mapper)
         {
             _logger = logger;
             _listinoService = listinoService;
-            _configuration = configuration;
             _mapper = mapper;
         }
 

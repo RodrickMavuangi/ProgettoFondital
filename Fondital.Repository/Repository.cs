@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Fondital.Shared.Repositories;
 
-namespace Fondital.Data.Repositories
+namespace Fondital.Repository
 {
     public class Repository<TEntity> : IRepository<TEntity> where TEntity : class
     {
@@ -55,10 +55,5 @@ namespace Fondital.Data.Repositories
         {
             return Context.Set<TEntity>().SingleOrDefaultAsync(predicate);
         }
-
-  //      public async Task UpdateAsync(TEntity entity)
-		//{
-  //          Context.Set<TEntity>().Update(entity);
-		//}
     }
 }

@@ -2,6 +2,7 @@
 using Fondital.Shared.Dto;
 using Fondital.Shared.Models;
 using Fondital.Shared.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
@@ -14,6 +15,7 @@ namespace Fondital.Server.Controllers
 {
     [ApiController]
     [Route("servicePartnersControl")]
+    [Authorize]
     public class ServicePartnerController : ControllerBase
     {
         private readonly ILogger<ServicePartnerController> _logger;
@@ -33,11 +35,11 @@ namespace Fondital.Server.Controllers
             return _mapper.Map<IEnumerable<ServicePartnerDto>>(await _spService.GetAllServicePartners());
         }
 
-		[HttpGet("utenti/{id}")]
-		public async Task<ServicePartnerDto> getWithUtentiFor(int id)
-		{
-			return _mapper.Map<ServicePartnerDto>(await _spService.GetServicePartnerWithUtentiAsync(id));
-		}
+        [HttpGet("utenti/{id}")]
+        public async Task<ServicePartnerDto> getWithUtentiFor(int id)
+        {
+            return _mapper.Map<ServicePartnerDto>(await _spService.GetServicePartnerWithUtentiAsync(id));
+        }
 
         /*
 		[HttpPost]
@@ -127,26 +129,26 @@ namespace Fondital.Server.Controllers
         */
 
         [HttpPut("{id}")]
-        public async Task UpdateServicePartner(int id, [FromBody]ServicePartnerDto spDtoToUpdate)
+        public async Task UpdateServicePartner(int id, [FromBody] ServicePartnerDto spDtoToUpdate)
         {
             ServicePartner spToUpdate = _mapper.Map<ServicePartner>(spDtoToUpdate);
             await _spService.UpdateServicePartner(id, spToUpdate);
         }
 
-         
+
         [HttpGet("{id}")]
         public async Task<ServicePartnerDto> GetServicePArtnerById(int id)
-		{
+        {
             ServicePartnerDto servicePartnerDto = new ServicePartnerDto();
-			try
-			{
+            try
+            {
                 servicePartnerDto = _mapper.Map<ServicePartnerDto>(await _spService.GetServicePartnerById(id));
-			}
-            catch(Exception e)
-			{
+            }
+            catch (Exception e)
+            {
                 _logger.LogError($"C'è stato un problema : {e.Message}");
             }
             return servicePartnerDto;
-		}
-	}
+        }
+    }
 }

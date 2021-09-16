@@ -142,7 +142,7 @@
                 <Template>
                     @{
                         ServicePartnerDto sp = (ServicePartnerDto)context;
-                    <i class="bi bi-people-fill float-lg-left icoClienti blu" @onclick="@(() => navManager.NavigateTo($"/detailservicepartner/{sp.Id}"))"></i>
+                    <i class="bi bi-people-fill float-lg-left icoClienti blu gj-cursor-pointer" @onclick="@(() => navManager.NavigateTo($"/detailservicepartner/{sp.Id}"))"></i>
 
                     <b>@(sp.Utenti.Count())</b>
                     }

@@ -1,4 +1,5 @@
 ﻿using Fondital.Shared.Models.Auth;
+using Fondital.Shared.Settings;
 using System;
 using System.Collections.Generic;
 using System.Linq;

@@ -9,10 +9,12 @@ namespace Fondital.Shared.Dto
         public ServicePartnerDto ServicePartner { get; set; }
         public bool IsAbilitato { get; set; } = true;
 
-        [Required(ErrorMessage = "CampoObbligatorio")]
+        [Display(Name = "Nome", ResourceType = typeof(Resources.Display))]
+        [Required(ErrorMessageResourceName = "Required", ErrorMessageResourceType = typeof(Resources.Validation))]
         public string Nome { get; set; } = "";
 
-        [Required(ErrorMessage = "CampoObbligatorio")]
+        [Display(Name = "Cognome", ResourceType = typeof(Resources.Display))]
+        [Required(ErrorMessageResourceName = "Required", ErrorMessageResourceType = typeof(Resources.Validation))]
         public string Cognome { get; set; } = "";
         public DateTime Pw_LastChanged { get; set; } = DateTime.Now;
         public bool Pw_MustChange { get; set; } = true;
