@@ -10,6 +10,7 @@ namespace Fondital.Client.Dialogs
         [Parameter] public EventCallback OnClose { get; set; }
         [Parameter] public EventCallback OnSave { get; set; }
         [Parameter] public VoceCostoDto VoceCostoToUpdate { get; set; }
+
         protected bool isSubmitting = false;
         protected string ErrorMessage = "";
 

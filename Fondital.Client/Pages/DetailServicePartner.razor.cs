@@ -48,6 +48,7 @@ namespace Fondital.Client.Pages
 
 		protected ServicePartnerDto SpSelected { get; set; } = new ServicePartnerDto();
 		protected bool ShowEditSpDialog { get; set; } = false;
+		protected bool ShowEditUserDialog { get; set; } = false;
 
 
 
