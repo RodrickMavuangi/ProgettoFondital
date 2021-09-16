@@ -60,19 +60,19 @@ else
     <div class="row-3 d-flex justify-content-between flex-wrap flex-md-nowrap  pt-0 pb-4 mb-4">
         <TelerikGrid Data="@ListaLavorazioni_filtered" Pageable="true" PageSize="@PageSize" Class="table table-striped">
             <GridColumns>
-                <GridColumn Field=@nameof(Lavorazione.Id) Title="#" Width="10%" />
-                <GridColumn Field=@nameof(Lavorazione.NomeItaliano) Width="84%" Title="@localizer["Descrizione"].Value.ToUpper()" Visible="@(CurrentCulture == "it-IT")" />
-                <GridColumn Field=@nameof(Lavorazione.NomeRusso) Width="84%" Title="@localizer["Descrizione"].Value.ToUpper()" Visible="@(CurrentCulture == "ru-RU")" />
+                <GridColumn Field=@nameof(LavorazioneDto.Id) Title="#" Width="10%" />
+                <GridColumn Field=@nameof(LavorazioneDto.NomeItaliano) Width="84%" Title="@localizer["Descrizione"].Value.ToUpper()" Visible="@(CurrentCulture == "it-IT")" />
+                <GridColumn Field=@nameof(LavorazioneDto.NomeRusso) Width="84%" Title="@localizer["Descrizione"].Value.ToUpper()" Visible="@(CurrentCulture == "ru-RU")" />
                 <GridCommandColumn Context="lav" Width="3%">
                     @{
-                        var lavorazione = lav as Lavorazione;
+                        var lavorazione = lav as LavorazioneDto;
                         <GridCommandButton Class=" btnIcon bgBianco white" Command="EditLavorazione" Icon="" ImageUrl="/img/Icons/edit.svg" OnClick="@(() => EditLavorazione(lavorazione.Id))" />
                       
                     }
                 </GridCommandColumn>
                 <GridCommandColumn Context="lav" Width="3%">
                     @{
-                        var lavorazione = lav as Lavorazione;
+                        var lavorazione = lav as LavorazioneDto;
                         <TelerikSwitch OffLabel=" " OnLabel=" " OnChange="@(() => UpdateEnableLavorazione(lavorazione.Id))" @bind-Value="@lavorazione.IsAbilitato"></TelerikSwitch>
                     }
                 </GridCommandColumn>

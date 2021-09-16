@@ -67,9 +67,9 @@ else
             <!--<GridSearchBox />
             </GridToolBar>-->
             <GridColumns>
-                <GridColumn Field=@nameof(VoceCosto.Id) Title="#" Width="10%" />
-                <GridColumn Field=@nameof(VoceCosto.NomeItaliano) Width="34%" Title=@localizer["Descrizione"].Value.ToUpper() Visible="@(CurrentCulture == "it-IT")" />
-                <GridColumn Field=@nameof(VoceCosto.NomeRusso) Width="34%" Title=@localizer["Descrizione"].Value.ToUpper() Visible="@(CurrentCulture == "ru-RU")" />
+                <GridColumn Field=@nameof(VoceCostoDto.Id) Title="#" Width="10%" />
+                <GridColumn Field=@nameof(VoceCostoDto.NomeItaliano) Width="34%" Title=@localizer["Descrizione"].Value.ToUpper() Visible="@(CurrentCulture == "it-IT")" />
+                <GridColumn Field=@nameof(VoceCostoDto.NomeRusso) Width="34%" Title=@localizer["Descrizione"].Value.ToUpper() Visible="@(CurrentCulture == "ru-RU")" />
 
 
                 @*<GridCommandColumn Title=@localizer["Tipologia"].Value.ToUpper() Width="40%" Context="vc">
@@ -84,7 +84,7 @@ else
                 <GridColumn Title=@localizer["Tipologia"].Value.ToUpper() Width="40%" Context="vc">
                     <Template>
                         @{
-                            var voceCosto = vc as VoceCosto;
+                            var voceCosto = vc as VoceCostoDto;
                             var traduzioneTipologia = localizer[voceCosto.Tipologia.ToString()];
                             <div>@traduzioneTipologia</div>
                         }
@@ -94,13 +94,13 @@ else
 
                 <GridCommandColumn Context="vc" Width="3%">
                     @{
-                        var voceCosto = vc as VoceCosto;
+                        var voceCosto = vc as VoceCostoDto;
                         <GridCommandButton Class=" btnIcon bgBianco white" Command="EditVoceCosto" Icon="" ImageUrl="/img/Icons/edit.svg" OnClick="@(() => EditVoceCosto(voceCosto.Id))" />
                     }
                 </GridCommandColumn>
                 <GridCommandColumn Context="vc" Width="3%">
                     @{
-                        var voceCosto = vc as VoceCosto;
+                        var voceCosto = vc as VoceCostoDto;
                         <TelerikSwitch OffLabel=" " OnLabel=" " OnChange="@(() => UpdateEnableVoceCosto(voceCosto.Id))" @bind-Value="@voceCosto.IsAbilitato"></TelerikSwitch>
                     }
                 </GridCommandColumn>

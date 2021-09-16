@@ -68,9 +68,9 @@ else
             </GridToolBar>-->
 
             <GridColumns>
-                <GridColumn Field=@nameof(Difetto.Id) Title="#" Width="10%" />
-                <GridColumn Field=@nameof(Difetto.NomeItaliano) Width="84%" Title=@localizer["Descrizione"].Value.ToUpper() Visible="@(CurrentCulture == "it-IT")" />
-                <GridColumn Field=@nameof(Difetto.NomeRusso) Width="84%" Title=@localizer["Descrizione"].Value.ToUpper() Visible="@(CurrentCulture == "ru-RU")" />
+                <GridColumn Field=@nameof(DifettoDto.Id) Title="#" Width="10%" />
+                <GridColumn Field=@nameof(DifettoDto.NomeItaliano) Width="84%" Title=@localizer["Descrizione"].Value.ToUpper() Visible="@(CurrentCulture == "it-IT")" />
+                <GridColumn Field=@nameof(DifettoDto.NomeRusso) Width="84%" Title=@localizer["Descrizione"].Value.ToUpper() Visible="@(CurrentCulture == "ru-RU")" />
                 <GridCommandColumn Context="dif" Width="3%">
                     @{
                         var difettoDto = dif as DifettoDto;
@@ -79,7 +79,7 @@ else
                 </GridCommandColumn>
                 <GridCommandColumn Context="dif" Width="3%">
                     @{
-                        var difetto = dif as Difetto;
+                        var difetto = dif as DifettoDto;
                                        <TelerikSwitch Class="switch_white" OffLabel=" " OnLabel=" " OnChange="@(() => UpdateEnableDifetto(difetto.Id))" @bind-Value="@difetto.IsAbilitato"></TelerikSwitch>
                     }
                 </GridCommandColumn>
