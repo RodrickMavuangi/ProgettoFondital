@@ -341,7 +341,7 @@
   </data>
   <data name="Utenti" xml:space="preserve">
     <value>Utenti RU</value>
-	</data>
+  </data>
   <data name="Attenzione" xml:space="preserve">
     <value>Attenzione RU</value>
   </data>
@@ -393,5 +393,14 @@ La nuova password deve essere lunga almeno 8 caratteri e contenere minuscole, ma
   </data>
   <data name="ModificaServicePartner" xml:space="preserve">
     <value>Modifica ServicePartner</value>
+  </data>
+  <data name="MailInviata" xml:space="preserve">
+    <value>è stata inviata una mail a RU</value>
+  </data>
+  <data name="ResetPassword" xml:space="preserve">
+    <value>Per Risettare la password RU</value>
+  </data>
+  <data name="InviaMail" xml:space="preserve">
+    <value>Vuoi mandare una mail all'utente</value>
   </data>
 </root>

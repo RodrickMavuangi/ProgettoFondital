@@ -1,29 +1,28 @@
 ﻿@page "/detailservicepartner/{servicePId}"
 
 @inject UtenteClient httpClient
-@*@inherits DetailServicePartnerBase*@
 @attribute [Authorize]
 @inject IStringLocalizer<App> localizer
 @inject MailClient mailClient
 @inject UtenteClient utenteClient
 @inject ServicePartnerClient servicePartnerClient
 
-@if (ServicePartnerModel_UpdateSP.Id == default)
-{
-    <p>@localizer["Caricamento"]...</p>
-}
-else
-{
-    <div class="under-Header">
+<div class="under-Header">
         <div class="u-h-left">
             <div class="top">
-                <div class="TechSt"><strong>@ServicePartnerModel_UpdateSP.RagioneSociale</strong></div>
-                <div class="butt"><TelerikButton OnClick="@( _ => isModalVisible = true )">@localizer["ModificaSP"]</TelerikButton></div>
+                <div class="TechSt"><strong>@SpSelected.RagioneSociale</strong></div>
+                <div class="butt">
+                    @{
+                        var servicePartner = @SpSelected as ServicePartnerDto;
+                        <TelerikButton OnClick="@(() => EditSp(servicePartner.Id))">@localizer["ModificaSP"]</TelerikButton>
+                    }
+                </div>
+                
             </div>
             <hr />
             <div class="middle">
-                <div class="Forn"><span class="span">@localizer["CodiceFornitore"] : </span><strong>@ServicePartnerModel_UpdateSP.CodiceFornitore</strong> </div>
-                <div class="CClient"><span class="span">@localizer["CodiceCliente"] : </span><strong>@ServicePartnerModel_UpdateSP.CodiceCliente</strong></div>
+                <div class="Forn"><span class="span">@localizer["CodiceFornitore"] : </span><strong>@SpSelected.CodiceFornitore</strong> </div>
+                <div class="CClient"><span class="span">@localizer["CodiceCliente"] : </span><strong>@SpSelected.CodiceCliente</strong></div>
             </div>
             <hr />
             <div class="bottom"></div>
@@ -33,8 +32,8 @@ else
             <div class="btn-ad">
                 <div class="bloc-sin-a-Add">
                     <span class="utent">@localizer["Utenti"]</span>
-                    <span class="ut-Abil">@localizer["Abilitati"] / @UtentiAbilitati</span>
-                    <span class="ut-Disab">@localizer["Disabilitati"] / @UtentiDisabilitati</span>
+                    <span class="ut-Abil">@localizer["Abilitati"] / @SpSelected.Utenti.Where(x => x.IsAbilitato == true).Count()</span>
+                    <span class="ut-Disab">@localizer["Disabilitati"] / @SpSelected.Utenti.Where(x => x.IsAbilitato == false).Count()</span>
                 </div>
                 <div>
                     <TelerikButton Class="btn-add" OnClick=@(()=> ShowAddDialog = true)>@localizer["AggiungiUtente"]</TelerikButton>
@@ -47,77 +46,22 @@ else
                 </div>
                 <div class="border-rod">
                     <TelerikDropDownList Width="180px" Class="border-rod" PopupClass="dropdown-ite"
-                                         Data="@ListaScelta" ValueChanged="@( (string v) => MyValueChangeHandler(v) )" DefaultText="@((SceltaCorrente==null)?@localizer["StatoUtente"]:null)">
+                                         Data="@ListaScelta" ValueChanged="@( (string v) => MyValueChangeHandler(v) )" DefaultText="@((SceltaCorrente==null)? @localizer["StatoUtente"]:null)">
                     </TelerikDropDownList>
                 </div>
             </div>
         </div>
-    </div>
-}
-@*Modal per la modifica del service partner*@
-<TelerikWindow Class="modal-app" Width="360px" Height="330px" Centered="true" @bind-Visible="isModalVisible" Modal="true">
+ </div>
+
+
+<TelerikWindow Class="modal-app dialogBox" Width="500px" Height="auto" Centered="true" @bind-Visible=@ShowEditDialog Modal="true">
     <WindowActions>
-        <WindowAction Name="Close" />
+        <WindowAction Name="Close" IconClass="k-icon k-i-close text-dark" />
     </WindowActions>
     <WindowContent>
-        @if (ValidSubmit)
-        {
-            <div class="" role="alert">
-                @localizer["Caricamento"]...
-            </div>
-        }
-        else
-        {
-            <TelerikForm Model="ServicePartnerModel_UpdateSP" OnSubmit="OnSubmit_updateService_HandlerAsync" EditContext="myEditContext_UpdateSP">
-                <FormValidation>
-                    <DataAnnotationsValidator></DataAnnotationsValidator>
-                </FormValidation>
-                <FormItems>
-                    <FormItem Field="@nameof(ServicePartnerDto.CodiceCliente)"></FormItem>
-                    <FormItem Field="@nameof(ServicePartnerDto.CodiceFornitore)"></FormItem>
-                    <FormItem Field="@nameof(ServicePartnerDto.RagioneSociale)"></FormItem>
-                </FormItems>
-                <FormButtons>
-                    @*<TelerikButton Class="btn btn-secondary mr-auto" @onclick="() => isModalVisible = false" ButtonType="@ButtonType.Button">@localizer["Cancella"]</TelerikButton>*@
-                    <TelerikButton Class="btn btn-success ml-auto" ButtonType="@ButtonType.Submit">@localizer["Modifica"]</TelerikButton>
-                </FormButtons>
-            </TelerikForm>
-        }
+        <EditSPDialog SPToUpdate="SpSelected" OnClose="@(() => ShowEditDialog = false)" OnSave="CloseAndRefresh" />
     </WindowContent>
 </TelerikWindow>
-
-
-@*Modal per la modifica dell'utente
-    <TelerikWindow Class="modal-app" Width="360px" Height="330px" Centered="true" @bind-Visible="myEditTemplate" Modal="true">
-        <WindowActions>
-            <WindowAction Name="Close" />
-        </WindowActions>
-        <WindowContent>
-            @if (ValidSubmit)
-            {
-                <div class="" role="alert">
-                    @localizer["Caricamento"]...
-                </div>
-            }
-            else
-            {
-                <TelerikForm Model="@UtenteModel_EditUtente" OnSubmit="@EditUtente_UpdateHandler" EditContext="myEditContext_UpdateUtente">
-                    <FormValidation>
-                        <DataAnnotationsValidator></DataAnnotationsValidator>
-                    </FormValidation>
-                    <FormItems>
-                        <FormItem Field="@nameof(UtenteDto.Email)" Enabled="false"></FormItem>
-                        <FormItem Field="@nameof(UtenteDto.Nome)"></FormItem>
-                        <FormItem Field="@nameof(UtenteDto.Cognome)"></FormItem>
-                    </FormItems>
-                    <FormButtons>
-                        <TelerikButton Class="btn btn-success ml-auto" ButtonType="@ButtonType.Submit">@localizer["Modifica"]</TelerikButton>
-                    </FormButtons>
-                </TelerikForm>
-            }
-        </WindowContent>
-    </TelerikWindow>*@
-
 
 <TelerikWindow Class="modal-app dialogBox" Width="500px" Height="auto" Centered="true" Modal="true" @bind-Visible="ShowEditDialog">
     <WindowActions>
@@ -128,47 +72,12 @@ else
     </WindowContent>
 </TelerikWindow>
 
-@*Modal per l'aggiunta dell'utente
-<TelerikWindow Class="modal-app" Width="350px" Height="330px" Centered="true" @bind-Visible=@WindowVisible Modal="true">
-    <WindowActions>
-        <WindowAction Name="Close" />
-    </WindowActions>
-    <WindowContent>
-        <div class="demo-section">
-            @if (ValidSubmit)
-            {
-                <div class="" role="alert">
-                    @localizer["Caricamento"]...
-                </div>
-            }
-            else
-            {
-                <TelerikForm Model="@ServicePartnerModel_AddUtente" OnSubmit="OnSubmitHandlerAsync" EditContext="myEditContext_AddUTente" ValidationMessageType="@FormValidationMessageType.Inline">
-                    <FormValidation>
-                        <DataAnnotationsValidator></DataAnnotationsValidator>
-                    </FormValidation>
-                    <FormItems>
-                        <FormItem Field="@nameof(UtenteDto.UserName)"></FormItem>
-                        <FormItem Field="@nameof(UtenteDto.Nome)"></FormItem>
-                        <FormItem Field="@nameof(UtenteDto.Cognome)"></FormItem>
-                    </FormItems>
-                    <FormButtons>
-                        <TelerikButton Class="btn btn-secondary mr-auto" @onclick="() => WindowVisible = false" ButtonType="@ButtonType.Button">@localizer["Cancella"]</TelerikButton>
-                        <TelerikButton Class="btn btn-success ml-auto" ButtonType="@ButtonType.Submit">@localizer["Salva"]</TelerikButton>
-                    </FormButtons>
-                </TelerikForm>
-
-            }
-        </div>
-    </WindowContent>
-</TelerikWindow>*@
-
 <TelerikWindow Class="modal-app dialogBox" Width="500px" Height="auto" Centered="true" @bind-Visible=@ShowAddDialog Modal="true">
     <WindowActions>
         <WindowAction Name="Close" IconClass="k-icon k-i-close text-dark" />
     </WindowActions>
     <WindowContent>
-        <AddUserDialog SPToUpdate="@ServicePartnerModel_UpdateSP" OnClose="@(() => ShowAddDialog = false)" OnSave="CloseAndRefresh" />
+        <AddUserDialog SPToUpdate="@SpSelected" OnClose="@(() => ShowAddDialog = false)" OnSave="CloseAndRefresh" />
     </WindowContent>
 </TelerikWindow>
 
@@ -183,9 +92,6 @@ else
         <GridColumn Field=@nameof(UtenteDto.UserName) Title=@localizer["UTENTI"] />
         <GridColumn Field=@nameof(UtenteDto.Nome) Title=@localizer["NOME"] />
         <GridColumn Field=@nameof(UtenteDto.Cognome) Title=@localizer["COGNOME"] />
-        @*<GridCommandColumn Width="75px">
-                <GridCommandButton Class="bt-cmd" Command="MyOwnCommand" Icon="" ShowInEdit="false" ImageUrl="/img/Icons/setting.svg" OnClick="@EditHandler"></GridCommandButton>
-            </GridCommandColumn>*@
         <GridCommandColumn Context="lav">
             @{
                 var utenteDto = lav as UtenteDto;
@@ -195,12 +101,9 @@ else
         <GridCommandColumn Context="lav">
             @{
                 var utenteDto = lav as UtenteDto;
-                <GridCommandButton Command="" Icon="" ImageUrl="/img/keyLogo.jpg" OnClick="@(() => sendMail_b(utenteDto.Id))" />
+                <GridCommandButton Command="" Icon="" ImageUrl="/img/keyLogo.jpg" OnClick="@(() => sendMail(utenteDto.Id))" />
             }
         </GridCommandColumn>
-        @*<GridCommandColumn Width="75px">
-                <GridCommandButton Class="bt-cmd" Command="MyOwnCommand" Icon="" ShowInEdit="false" ImageUrl="/img/keyLogo.jpg" OnClick="@SendMail"></GridCommandButton>
-            </GridCommandColumn>*@
         <GridCommandColumn Width="75px" Context="dif">
             @{ var utente = dif as UtenteDto;
                 <TelerikSwitch OffLabel=" " OnLabel=" " OnChange="@(() => UpdateEnableUtente(utente.Id))" @bind-Value="@utente.IsAbilitato"></TelerikSwitch> }

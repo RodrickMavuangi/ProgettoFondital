@@ -22,6 +22,7 @@ namespace Fondital.Client.Dialogs
 
             try
             {
+                UtenteToUpdate.Email = UtenteToUpdate.UserName;
                 await httpClient.UpdateUtente(UtenteToUpdate.Id, UtenteToUpdate);
                 isSubmitting = false;
                 await OnSave.InvokeAsync();

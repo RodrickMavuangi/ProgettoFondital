@@ -22,6 +22,8 @@ namespace Fondital.Client.Dialogs
 
             try
             {
+                NuovoUtente.Email = NuovoUtente.UserName;
+                NuovoUtente.IsAbilitato = false;
                 await httpClient.sendMailForNewUser(NuovoUtente,SPToUpdate);
                 isSubmitting = false;
                 await OnSave.InvokeAsync();

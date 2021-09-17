@@ -385,4 +385,13 @@
     <value>Errore: verificare che la vecchia password sia corretta.
 La nuova password deve essere lunga almeno 8 caratteri e contenere minuscole, maiuscole, numeri e simboli.</value>
   </data>
+  <data name="MailInviata" xml:space="preserve">
+    <value>è stata inviata una mail a </value>
+  </data>
+  <data name="ResetPassword" xml:space="preserve">
+    <value>Per Risettare la password ?</value>
+  </data>
+  <data name="InviaMail" xml:space="preserve">
+    <value>Vuoi mandare una mail all'utente</value>
+  </data>
 </root>
