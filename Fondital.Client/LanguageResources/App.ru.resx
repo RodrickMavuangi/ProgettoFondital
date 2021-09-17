@@ -403,4 +403,7 @@ La nuova password deve essere lunga almeno 8 caratteri e contenere minuscole, ma
   <data name="InviaMail" xml:space="preserve">
     <value>Vuoi mandare una mail all'utente</value>
   </data>
+  <data name="SettaPassword" xml:space="preserve">
+    <value>Per settare la prima Password RU</value>
+  </data>
 </root>

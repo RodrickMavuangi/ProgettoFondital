@@ -17,12 +17,6 @@ namespace Fondital.Client.Pages
 		public StatoUtente ConStato { get; set; } = new StatoUtente();
 		[CascadingParameter]
 		public DialogFactory Dialogs { get; set; }
-		//public bool isModalVisible { get; set; } = false;
-		//public bool ValidSubmit { get; set; } = false;
-		//public ServicePartnerDto ServicePartnerModel_UpdateSP { get; set; } = new ServicePartnerDto() { CodiceCliente = "", CodiceFornitore = "", RagioneSociale = "" };
-		//public EditContext myEditContext_UpdateSP { get; set; }
-		//public int UtentiAbilitati { get; set; } = 0;
-		//public int UtentiDisabilitati { get; set; } = 0;
 		UtenteDto DatiUtente = new UtenteDto();
 		public List<string> ListaScelta { get; set; } = new List<string>() { };
 		public string SceltaCorrente = string.Empty;
@@ -37,15 +31,9 @@ namespace Fondital.Client.Pages
 		protected override async Task OnInitializedAsync()
 		{
 			ListaScelta = new List<string>() { @localizer["Tutti"], @localizer["Abilitati"], @localizer["Disabilitati"] };
-			//myEditContext_UpdateSP = new EditContext(ServicePartnerModel_UpdateSP);
-
 			SpSelected = await servicePartnerClient.GetServicePartnerWithUtenti(int.Parse(servicePId));
 
 			if (SpSelected.Utenti == null) SpSelected.Utenti = new List<UtenteDto>();
-
-			//UtentiAbilitati = SpSelected.Utenti.Where(x => x.IsAbilitato == true).Count();
-			//UtentiDisabilitati = SpSelected.Utenti.Where(x => x.IsAbilitato == false).Count();
-
 
 			SceltaCorrente = null;
 			await RefreshUtenti();
@@ -55,19 +43,6 @@ namespace Fondital.Client.Pages
 													   ConStato.Disabilitati == true ? ListaUtenti.Where<UtenteDto>(x => x.Email.ToLower().Contains(SearchText.ToLower()) && x.IsAbilitato == false).ToList() :
 													   ListaUtenti.Where<UtenteDto>(x => x.Email.ToLower().Contains(SearchText.ToLower())).ToList();
 
-
-		//public async Task OnSubmit_updateService_HandlerAsync(EditContext editContext)
-		//{
-		//	bool isFormValid = editContext.Validate();
-		//	if (isFormValid)
-		//	{
-		//		ServicePartnerDto ServicePartnerToSave = (ServicePartnerDto)editContext.Model;
-
-		//		await servicePartnerClient.UpdateServicePartner(ServicePartnerToSave.Id, ServicePartnerToSave);
-		//		await CloseAndRefresh();
-		//	}
-		//}
-		
 		protected async Task CloseAndRefresh()
 		{
 			ShowAddDialog = false;
@@ -92,6 +67,8 @@ namespace Fondital.Client.Pages
 			SpSelected = await  servicePartnerClient.GetServicePartnerWithUtenti(int.Parse(servicePId));
 			ShowEditDialog = true;
 		}
+
+
 		protected async Task sendMail(int utenteId)
 		{
 			UtenteSelected = ListaUtenti.Single(x => x.Id == utenteId);
