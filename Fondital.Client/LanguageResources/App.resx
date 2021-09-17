@@ -385,4 +385,31 @@
     <value>Errore: verificare che la vecchia password sia corretta.
 La nuova password deve essere lunga almeno 8 caratteri e contenere minuscole, maiuscole, numeri e simboli.</value>
   </data>
+  <data name="Gestione" xml:space="preserve">
+    <value>Gestione</value>
+  </data>
+  <data name="Rapporti" xml:space="preserve">
+    <value>Rapporti</value>
+  </data>
+  <data name="Cliente" xml:space="preserve">
+    <value>Cliente</value>
+  </data>
+  <data name="DataDaA" xml:space="preserve">
+    <value>Data da / a</value>
+  </data>
+  <data name="Matricola" xml:space="preserve">
+    <value>Matricola</value>
+  </data>
+  <data name="NumRapporto" xml:space="preserve">
+    <value>N° Rapportino</value>
+  </data>
+  <data name="Stato" xml:space="preserve">
+    <value>Stato</value>
+  </data>
+  <data name="Telefono" xml:space="preserve">
+    <value>Telefono</value>
+  </data>
+  <data name="Data" xml:space="preserve">
+    <value>Data</value>
+  </data>
 </root>

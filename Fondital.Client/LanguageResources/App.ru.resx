@@ -341,7 +341,7 @@
   </data>
   <data name="Utenti" xml:space="preserve">
     <value>Utenti RU</value>
-	</data>
+  </data>
   <data name="Attenzione" xml:space="preserve">
     <value>Attenzione RU</value>
   </data>
@@ -393,5 +393,32 @@ La nuova password deve essere lunga almeno 8 caratteri e contenere minuscole, ma
   </data>
   <data name="ModificaServicePartner" xml:space="preserve">
     <value>Modifica ServicePartner</value>
+  </data>
+  <data name="Gestione" xml:space="preserve">
+    <value>Gestione RU</value>
+  </data>
+  <data name="Rapporti" xml:space="preserve">
+    <value>Rapporti RU</value>
+  </data>
+  <data name="Cliente" xml:space="preserve">
+    <value>Cliente RU</value>
+  </data>
+  <data name="DataDaA" xml:space="preserve">
+    <value>Data da / a RU</value>
+  </data>
+  <data name="Matricola" xml:space="preserve">
+    <value>Matricola RU</value>
+  </data>
+  <data name="NumRapporto" xml:space="preserve">
+    <value>N° Rapportino RU</value>
+  </data>
+  <data name="Stato" xml:space="preserve">
+    <value>Stato RU</value>
+  </data>
+  <data name="Telefono" xml:space="preserve">
+    <value>Telefono RU</value>
+  </data>
+  <data name="Data" xml:space="preserve">
+    <value>Data RU</value>
   </data>
 </root>

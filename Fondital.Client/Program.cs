@@ -1,15 +1,14 @@
+using Blazored.LocalStorage;
+using Fondital.Client.Authentication;
 using Fondital.Client.Clients;
-using Fondital.Shared.Services;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using Microsoft.Extensions.DependencyInjection;
-using Fondital.Client.Authentication;
 using Microsoft.JSInterop;
 using System;
+using System.Globalization;
 using System.Net.Http;
 using System.Threading.Tasks;
-using System.Globalization;
-using Blazored.LocalStorage;
 
 namespace Fondital.Client
 {

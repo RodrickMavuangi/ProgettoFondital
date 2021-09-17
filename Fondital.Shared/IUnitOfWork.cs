@@ -1,6 +1,6 @@
-﻿using System;
+﻿using Fondital.Shared.Repositories;
+using System;
 using System.Threading.Tasks;
-using Fondital.Shared.Repositories;
 
 namespace Fondital.Shared
 {
