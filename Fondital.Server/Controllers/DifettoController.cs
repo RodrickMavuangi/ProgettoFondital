@@ -4,7 +4,6 @@ using Fondital.Shared.Models;
 using Fondital.Shared.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
@@ -21,14 +20,12 @@ namespace Fondital.Server.Controllers
     {
         private readonly ILogger<DifettoController> _logger;
         private readonly IDifettoService _difettoService;
-        private readonly IConfiguration _configuration;
         private readonly IMapper _mapper;
 
-        public DifettoController(ILogger<DifettoController> logger, IDifettoService difettoService, IConfiguration configuration, IMapper mapper)
+        public DifettoController(ILogger<DifettoController> logger, IDifettoService difettoService, IMapper mapper)
         {
             _logger = logger;
             _difettoService = difettoService;
-            _configuration = configuration;
             _mapper = mapper;
         }
 

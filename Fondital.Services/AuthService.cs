@@ -1,5 +1,6 @@
 ﻿using Fondital.Shared.Models.Auth;
 using Fondital.Shared.Services;
+using Fondital.Shared.Settings;
 using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Collections.Generic;

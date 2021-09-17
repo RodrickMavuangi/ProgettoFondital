@@ -5,23 +5,24 @@ using System.Threading.Tasks;
 
 namespace Fondital.Client.Dialogs
 {
-    public partial class EditVoceCostoDialog
+    public partial class EditUserDialog
     {
         [Parameter] public EventCallback OnClose { get; set; }
         [Parameter] public EventCallback OnSave { get; set; }
-        [Parameter] public VoceCostoDto VoceCostoToUpdate { get; set; }
+        [Parameter] public UtenteDto UtenteToUpdate { get; set; }
 
         protected bool isSubmitting = false;
+
         protected string ErrorMessage = "";
 
-        protected async Task SalvaVoceCosto()
+        protected async Task SalvaUtente()
         {
             isSubmitting = true;
             ErrorMessage = "";
 
             try
             {
-                await httpClient.UpdateVoceCosto(VoceCostoToUpdate.Id, VoceCostoToUpdate);
+                await httpClient.UpdateUtente(UtenteToUpdate.Id, UtenteToUpdate);
                 isSubmitting = false;
                 await OnSave.InvokeAsync();
             }

@@ -12,26 +12,34 @@
             <ValidationMessage For="() => VoceCostoToUpdate.NomeItaliano" />
         </div>
     </div>
-    <div class="form-field mt-4">
+    <div class="form-field">
         <label class="text-capitalize">@localizer["NomeRusso"]</label>
         <div>
             <InputText Class="form-control form-control-lg w100" @bind-Value="VoceCostoToUpdate.NomeRusso"></InputText>
             <ValidationMessage For="() => VoceCostoToUpdate.NomeRusso" />
         </div>
     </div>
-    <div class="form-field mt-4">
-        <label class="text-capitalize">Tipologia</label>
-        <div>
+    <div class="form-field mb-0">
+        <label class="pb-3" style="color: #8E8E8E !important; text-transform: capitalize !important; ">Tipologia</label>
+
+        <div class="form-field mb-0">
             <InputRadioGroup TValue="TipologiaVoceCosto" @bind-Value="VoceCostoToUpdate.Tipologia">
-                <InputRadio Value="TipologiaVoceCosto.Forfettario" /> @localizer["Forfettario"].Value.ToUpper()
-                <br />
-                <InputRadio Value="TipologiaVoceCosto.Quantita" /> @localizer["Quantita"].Value.ToUpper()
+
+
+                <div class="form-field mb-1">
+                    <InputRadio Value="TipologiaVoceCosto.Forfettario" class="inputCheck" /> <span class="labelCheck"> @localizer["Forfettario"].Value.ToUpper()</span>
+                </div>
+                <div class="form-field mb-0">
+                    <InputRadio Value="TipologiaVoceCosto.Quantita" class="inputCheck" /> <span class="labelCheck">@localizer["Quantita"].Value.ToUpper()</span>
+                </div>
+
             </InputRadioGroup>
-            <ValidationMessage For="@(() => VoceCostoToUpdate.Tipologia)" />
+
+                <ValidationMessage For="@(() => VoceCostoToUpdate.Tipologia)" />
         </div>
     </div>
-
-    @*<button class="btn btn-secondary mr-auto" @onclick="OnClose">@localizer["Cancella"]</button>*@
-    <button type="submit" class="btn btn-primary ml-auto w-100 mt-4" disabled="@isSubmitting">@localizer["Salva"]</button>
-
+    <div class="form-field">
+        @*<button class="btn btn-secondary mr-auto" @onclick="OnClose">@localizer["Cancella"]</button>*@
+        <button type="submit" class="btn btn-primary ml-auto w-100 mt-5" disabled="@isSubmitting">@localizer["Salva"]</button>
+    </div>
 </EditForm>

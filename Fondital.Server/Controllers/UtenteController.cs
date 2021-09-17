@@ -14,7 +14,7 @@ namespace Fondital.Server.Controllers
 {
     [ApiController]
     [Route("utentiControl")]
-    //[Authorize]
+    [Authorize]
     public class UtenteController : ControllerBase
     {
         private readonly ILogger<UtenteController> _logger;
@@ -35,27 +35,9 @@ namespace Fondital.Server.Controllers
         }
 
         [HttpGet("{username}")]
-        [AllowAnonymous]
         public UtenteDto GetUtenteByUsername(string username)
         {
-            return _mapper.Map< UtenteDto>(_ut.GetUtenteByUsername(username).Result);
-        }
-
-        [HttpPost("PwUpdated/{username}")]
-        public async Task UpdateDataCambioPw(string username)
-        {
-            try
-            {
-                var utente = _mapper.Map<Utente>(this.GetUtenteByUsername(username));
-                utente.Pw_LastChanged = DateTime.Now;
-                utente.Pw_MustChange = false;
-                await _ut.UpdateUtente(utente.UserName, utente);
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError($"Errore nell'aggiornamento dell'ultimo cambio password per l'utente {username}.");
-                throw;
-            }
+            return _mapper.Map<UtenteDto>(_ut.GetUtenteByUsername(username).Result);
         }
 
         /*

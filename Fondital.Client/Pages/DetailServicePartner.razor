@@ -17,7 +17,6 @@
                         <TelerikButton OnClick="@(() => EditSp(servicePartner.Id))">@localizer["ModificaSP"]</TelerikButton>
                     }
                 </div>
-                
             </div>
             <hr />
             <div class="middle">
@@ -111,7 +110,26 @@
     </GridColumns>
 </TelerikGrid>
 
-@*}*@
+
+<TelerikWindow Class="modal-app dialogBox" Width="500px" Height="auto" Centered="true" @bind-Visible=@ShowEditSpDialog Modal="true">
+    <WindowActions>
+        <WindowAction Name="Close" IconClass="k-icon k-i-close text-dark" />
+    </WindowActions>
+    <WindowContent>
+        <EditSPDialog SPToUpdate="SpSelected" OnClose="@(() => ShowEditSpDialog = false)" OnSave="CloseAndRefresh" />
+    </WindowContent>
+</TelerikWindow>
+
+<TelerikWindow Class="modal-app dialogBox" Width="500px" Height="auto" Centered="true" @bind-Visible=@ShowEditUserDialog Modal="true">
+    <WindowActions>
+        <WindowAction Name="Close" IconClass="k-icon k-i-close text-dark" />
+    </WindowActions>
+    <WindowContent>
+        <EditUserDialog UtenteToUpdate="UserSelected" OnClose="@(() => ShowEditUserDialog = false)" OnSave="CloseAndRefresh" />
+    </WindowContent>
+</TelerikWindow>
+
+
 
 <style>
     .large-button {
@@ -247,6 +265,3 @@
         width: 75px
     }
 </style>
-
-
-

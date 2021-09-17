@@ -6,22 +6,22 @@
 @inject IStringLocalizer<App> localizer
 
 <main class="col-md-12 ms-sm-auto col-lg-12">
-    <EditForm Model="model" OnValidSubmit="UserLogin">
-        <div class="col-md-6 mx-auto mt-160">
+    <EditForm Model="Model" OnValidSubmit="UserLogin">
+        <div class="col-md-3 mx-auto mt-160">
             <div asp-validation-summary="All" class="text-danger">
                 <Alert Title=@localizer["Attenzione"] Error=@Error />
             </div>
             <div class="form-group mb-32">
                 <label class="form-label">@localizer["Email"].Value.ToUpper()</label>
-                <InputText @bind-Value="model.Email" class="form-control form-control-lg w100 inp-login icoUtente" placeholder=@localizer["InserisciUser"]></InputText>
-                <ValidationMessage For="@(() => model.Email)" />
+                <InputText @bind-Value="Model.Email" class="form-control form-control-lg w100 inp-login icoUtente" placeholder=@localizer["InserisciUser"]></InputText>
+                <ValidationMessage For="@(() => Model.Email)" />
                 @*<span asp-validation-for="model.Email" class="text-danger"></span>*@
             </div>
 
             <div class="form-group mb-56">
                 <label class="form-label">@localizer["Password"].Value.ToUpper()</label>
-                <InputText type="password" @bind-Value="model.Password" class="form-control form-control-lg w100 inp-login icoPsw" placeholder=@localizer["InserisciPw"]></InputText>
-                <ValidationMessage For="@(() => model.Password)" />
+                <InputText type="password" @bind-Value="Model.Password" class="form-control form-control-lg w100 inp-login icoPsw" placeholder=@localizer["InserisciPw"]></InputText>
+                <ValidationMessage For="@(() => Model.Password)" />
                 @*<span asp-validation-for="model.Password" class="text-danger"></span>*@
             </div>
 
@@ -34,9 +34,9 @@
         </div>
     </EditForm>
     @*<hr />*@
-    <div class="col-md-6 mx-auto mt-5">
-        <div class="form-group linksottolieato">
-            <TelerikButton Class="font18 nero condensed-bold lt-spacing-1" OnClick="@(() => navManager.NavigateTo(" /account/forgotpassword"))" Icon="lock_open">@localizer["PasswordDimenticata"]</TelerikButton>
+    <div class="col-md-3 mx-auto mt-5">
+        <div class="form-group linksottolieato noIcon">
+            <TelerikButton Class="nero condensed-bold lt-spacing-1 linkNormal" OnClick="@(() => navManager.NavigateTo(" /account/forgotpassword"))" Icon="lock_open">@localizer["PasswordDimenticata"]</TelerikButton>
         </div>
     </div>
 </main>

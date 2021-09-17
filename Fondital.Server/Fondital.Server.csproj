@@ -32,6 +32,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Fondital.Data\Fondital.Data.csproj" />
+    <ProjectReference Include="..\Fondital.Repository\Fondital.Repository.csproj" />
     <ProjectReference Include="..\Fondital.Services\Fondital.Services.csproj" />
     <ProjectReference Include="..\Fondital.Shared\Fondital.Shared.csproj" />
   </ItemGroup>

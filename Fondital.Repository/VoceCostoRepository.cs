@@ -1,11 +1,12 @@
-﻿using System.Collections.Generic;
-using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
+﻿using Fondital.Data;
 using Fondital.Shared.Models;
 using Fondital.Shared.Repositories;
+using Microsoft.EntityFrameworkCore;
+using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
-namespace Fondital.Data.Repositories
+namespace Fondital.Repository
 {
     public class VoceCostoRepository : Repository<VoceCosto>, IVoceCostoRepository
     {
@@ -13,7 +14,7 @@ namespace Fondital.Data.Repositories
             : base(context)
         { }
 
-        private FonditalDbContext _db
+        private FonditalDbContext Db
         {
             get { return Context as FonditalDbContext; }
         }
@@ -21,9 +22,9 @@ namespace Fondital.Data.Repositories
         public async Task<IEnumerable<VoceCosto>> GetAllAsync(bool? isAbilitato)
         {
             if (isAbilitato != null)
-                return await _db.VociCosto.Where(x => x.IsAbilitato == isAbilitato).ToListAsync();
+                return await Db.VociCosto.Where(x => x.IsAbilitato == isAbilitato).ToListAsync();
             else
-                return await _db.VociCosto.ToListAsync();
+                return await Db.VociCosto.ToListAsync();
         }
     }
 }

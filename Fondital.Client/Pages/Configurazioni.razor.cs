@@ -4,17 +4,18 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 using Fondital.Shared.Enums;
+using Fondital.Shared.Extensions;
 using Fondital.Shared.Models;
 
 namespace Fondital.Client.Pages
 {
-	public partial class Configurazioni
+    public partial class Configurazioni
 	{
         protected bool isSubmitting = false;
         protected bool? submitSucceded = null;
         protected List<Configurazione> ListaConfigurazioni;
 
-        protected InputModel Input { get; set; } = new InputModel();
+        protected InputModel Input { get; set; } = new();
 
         protected class InputModel
         {
@@ -37,8 +38,8 @@ namespace Fondital.Client.Pages
         {
             isSubmitting = true;
 
-            Configurazione ConfigurazioneGaranzia = new Configurazione { Chiave = "DurataGaranzia", Valore = Input.Garanzia.ToString() };
-            Configurazione ConfigurazionePassword = new Configurazione { Chiave = "DurataPassword", Valore = Input.Password.ToString() };
+            Configurazione ConfigurazioneGaranzia = new() { Chiave = "DurataGaranzia", Valore = Input.Garanzia.ToString() };
+            Configurazione ConfigurazionePassword = new() { Chiave = "DurataPassword", Valore = Input.Password.ToString() };
 
             try
             {

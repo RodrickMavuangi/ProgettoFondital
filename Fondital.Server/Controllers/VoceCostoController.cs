@@ -1,10 +1,9 @@
 ﻿using AutoMapper;
-using Fondital.Data;
 using Fondital.Shared.Dto;
 using Fondital.Shared.Models;
 using Fondital.Shared.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -14,18 +13,17 @@ namespace Fondital.Server.Controllers
 {
     [ApiController]
     [Route("vociCostoControl")]
+    [Authorize]
     public class VoceCostoController : ControllerBase
     {
         private readonly ILogger<VoceCostoController> _logger;
         private readonly IVoceCostoService _voceCostoService;
-        private readonly IConfiguration _configuration;
         private readonly IMapper _mapper;
 
-        public VoceCostoController(ILogger<VoceCostoController> logger, FonditalDbContext db, IVoceCostoService voceCostoService, IConfiguration configuration, IMapper mapper)
+        public VoceCostoController(ILogger<VoceCostoController> logger, IVoceCostoService voceCostoService, IMapper mapper)
         {
             _logger = logger;
             _voceCostoService = voceCostoService;
-            _configuration = configuration;
             _mapper = mapper;
         }
 

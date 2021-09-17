@@ -1,23 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using Fondital.Shared.Dto;
+using Fondital.Shared.Enums;
 using Fondital.Shared.Models.Auth;
-using Fondital.Services;
+using Fondital.Shared.Services;
+using Fondital.Shared.Settings;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Fondital.Shared.Services;
-using Microsoft.Extensions.Options;
-using System.Text;
-using System.Security.Cryptography;
-using Fondital.Shared.Resources;
-using Microsoft.AspNetCore.Authorization;
-using System.Security.Claims;
-using Microsoft.IdentityModel.Tokens;
-using System.IdentityModel.Tokens.Jwt;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
-using Fondital.Shared.Enums;
+using Microsoft.Extensions.Options;
+using System;
+using System.Collections.Generic;
+using System.Security.Claims;
+using System.Threading.Tasks;
 
 namespace Fondital.Server.Controllers
 {
@@ -32,10 +26,9 @@ namespace Fondital.Server.Controllers
         private readonly IConfigurazioneService _confService;
         private readonly IUtenteService _utenteService;
         private readonly SignInManager<Utente> _signinManager;
-        private readonly IConfiguration _configuration;
         private readonly ILogger<AuthController> _logger;
 
-        public AuthController(ILogger<AuthController> logger, UserManager<Utente> userManager, RoleManager<Ruolo> roleManager, IOptionsSnapshot<JwtSettings> jwtSettings, IAuthService authService, IConfigurazioneService confService, IUtenteService utenteService, SignInManager<Utente> signInManager, IConfiguration configuration)
+        public AuthController(ILogger<AuthController> logger, UserManager<Utente> userManager, RoleManager<Ruolo> roleManager, IOptionsSnapshot<JwtSettings> jwtSettings, IAuthService authService, IConfigurazioneService confService, IUtenteService utenteService, SignInManager<Utente> signInManager)
         {
             _userManager = userManager;
             _roleManager = roleManager;
@@ -44,7 +37,6 @@ namespace Fondital.Server.Controllers
             _confService = confService;
             _utenteService = utenteService;
             _signinManager = signInManager;
-            _configuration = configuration;
             _logger = logger;
         }
 
@@ -62,9 +54,9 @@ namespace Fondital.Server.Controllers
 
         [HttpPost("login")]
         [AllowAnonymous]
-        public async Task<IActionResult> LogIn([FromBody] LoginRequest loginRequest)
+        public async Task<IActionResult> LogIn([FromBody] LoginRequestDto loginRequest)
         {
-            LoginResponse response = new LoginResponse();
+            LoginResponseDto response = new();
             try
             {
                 var result = await _signinManager.PasswordSignInAsync(loginRequest.Email, loginRequest.Password, false, false);
@@ -83,8 +75,10 @@ namespace Fondital.Server.Controllers
                     return BadRequest("PasswordMustChange");
                 }
 
-                var claims = new List<Claim>();
-                claims.Add(new Claim(ClaimTypes.Name, loginRequest.Email));
+                var claims = new List<Claim>
+                {
+                    new Claim(ClaimTypes.Name, loginRequest.Email)
+                };
 
                 foreach (var role in roles)
                 {
@@ -103,7 +97,7 @@ namespace Fondital.Server.Controllers
 
         [HttpPost("changepw")]
         [AllowAnonymous]
-        public async Task<IActionResult> ChangePassword([FromBody] ChangePwRequest ChangePwRequest)
+        public async Task<IActionResult> ChangePassword([FromBody] ChangePwRequestDto ChangePwRequest)
         {
             try
             {
@@ -163,7 +157,6 @@ namespace Fondital.Server.Controllers
         //    return Problem(result.Errors.First().Description, null, 500);
         //}
 
-        [AllowAnonymous]
         private string GenerateJwt(Utente user, IList<string> roles, JwtSettings jwtSettings)
         {
             return _authService.GeneraJwt(user, roles, jwtSettings);

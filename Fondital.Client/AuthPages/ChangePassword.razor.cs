@@ -1,8 +1,6 @@
-﻿using Fondital.Shared.Resources;
+﻿using Fondital.Shared.Dto;
 using Microsoft.AspNetCore.Components;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace Fondital.Client.AuthPages
@@ -11,8 +9,8 @@ namespace Fondital.Client.AuthPages
     {
         [Parameter]
         public string Email { get; set; }
-        private LoginResponse loginResponse { get; set; }
-        public ChangePwRequest ChangeForm { get; set; } = new ChangePwRequest();
+        private LoginResponseDto LoginResponse { get; set; }
+        public ChangePwRequestDto ChangeForm { get; set; } = new ChangePwRequestDto();
         public string Error { get; set; }
 
         protected override async Task OnInitializedAsync()
@@ -29,8 +27,8 @@ namespace Fondital.Client.AuthPages
                 if (ChangeForm.NewPassword == ChangeForm.ConfirmPassword && ChangeForm.OldPassword != ChangeForm.NewPassword)
                 {
                     await authClient.ChangePassword(ChangeForm);
-                    loginResponse = await authClient.Login(new LoginRequest() { Email = ChangeForm.Email, Password = ChangeForm.NewPassword });
-                    await loginService.Login(loginResponse.Token);
+                    LoginResponse = await authClient.Login(new LoginRequestDto() { Email = ChangeForm.Email, Password = ChangeForm.NewPassword });
+                    await loginService.Login(LoginResponse.Token);
                     navManager.NavigateTo("");
                 }
                 else

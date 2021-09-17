@@ -1,11 +1,12 @@
-﻿using System.Collections.Generic;
-using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
+﻿using Fondital.Data;
 using Fondital.Shared.Models;
 using Fondital.Shared.Repositories;
+using Microsoft.EntityFrameworkCore;
+using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
-namespace Fondital.Data.Repositories
+namespace Fondital.Repository
 {
     public class ListinoRepository : Repository<Listino>, IListinoRepository
     {
@@ -13,14 +14,14 @@ namespace Fondital.Data.Repositories
             : base(context)
         { }
 
-        private FonditalDbContext _db
+        private FonditalDbContext Db
         {
             get { return Context as FonditalDbContext; }
         }
 
         public async Task<Listino> GetListinoByIdAsync(int Id)
         {
-            return await _db.Listini.Include( x => x.ServicePartner).Include( x => x.VoceCosto).SingleOrDefaultAsync( x => x.Id == Id);
+            return await Db.Listini.Include(x => x.ServicePartner).Include(x => x.VoceCosto).SingleOrDefaultAsync(x => x.Id == Id);
         }
     }
 }
