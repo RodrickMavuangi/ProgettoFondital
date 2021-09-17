@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace Fondital.Repository
 {
-    public class ListinoRepository : Repository<Listino>, IListinoRepository
+    public class RapportoRepository : Repository<Rapporto>, IRapportoRepository
     {
-        public ListinoRepository(FonditalDbContext context)
+        public RapportoRepository(FonditalDbContext context)
             : base(context)
         { }
 
@@ -17,9 +17,9 @@ namespace Fondital.Repository
             get { return Context as FonditalDbContext; }
         }
 
-        public async Task<Listino> GetListinoByIdAsync(int Id)
+        public async Task<Rapporto> GetRapportoByIdAsync(int Id)
         {
-            return await Db.Listini.Include(x => x.ServicePartner).Include(x => x.VoceCosto).SingleOrDefaultAsync(x => x.Id == Id);
+            return await Db.Rapporti.Include(x => x.ServicePartner).Include(x => x.Utente).SingleOrDefaultAsync(x => x.Id == Id);
         }
     }
 }

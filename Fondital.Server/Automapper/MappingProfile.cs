@@ -29,6 +29,9 @@ namespace Fondital.Server.Automapper
 
             CreateMap<Ruolo, RuoloDto>();
             CreateMap<RuoloDto, Ruolo>();
+
+            CreateMap<Rapporto, RapportoDto>();
+            CreateMap<RapportoDto, Rapporto>();
         }
     }
 }

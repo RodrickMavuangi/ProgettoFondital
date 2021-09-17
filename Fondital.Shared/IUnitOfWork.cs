@@ -13,6 +13,7 @@ namespace Fondital.Shared
         IVoceCostoRepository VociCosto { get; }
         IListinoRepository Listini { get; }
         ILavorazioneRepository Lavorazioni { get; }
+        IRapportoRepository Rapporti { get; }
         Task<int> CommitAsync();
         void Update<T>(T Old, T New) where T : class;
     }

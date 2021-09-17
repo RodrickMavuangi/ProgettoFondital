@@ -28,6 +28,7 @@ namespace Fondital.Data
         public DbSet<VoceCosto> VociCosto { get; set; }
         public DbSet<Listino> Listini { get; set; }
         public DbSet<Lavorazione> Lavorazioni { get; set; }
+        public DbSet<Rapporto> Rapporti { get; set; }
 
         public DbSet<PersistedGrant> PersistedGrants { get; set; }
         public DbSet<DeviceFlowCodes> DeviceFlowCodes { get; set; }
@@ -43,6 +44,7 @@ namespace Fondital.Data
             builder.ApplyConfiguration(new VoceCostoConfiguration());
             builder.ApplyConfiguration(new ListinoConfiguration());
             builder.ApplyConfiguration(new LavorazioneConfiguration());
+            builder.ApplyConfiguration(new RapportoConfiguration());
 
             builder.ConfigurePersistedGrantContext(_operationalStoreOptions.Value);
         }

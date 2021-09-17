@@ -31,6 +31,7 @@ namespace Fondital.Client
             builder.Services.AddHttpClient<MailClient>(client => client.BaseAddress = new Uri(builder.Configuration["WebAPI:BaseUrl"])).AddHttpMessageHandler<TokenHandler>();
             builder.Services.AddHttpClient<AuthClient>(client => client.BaseAddress = new Uri(builder.Configuration["WebAPI:BaseUrl"])).AddHttpMessageHandler<TokenHandler>();
             builder.Services.AddHttpClient<LavorazioneClient>(client => client.BaseAddress = new Uri(builder.Configuration["WebAPI:BaseUrl"])).AddHttpMessageHandler<TokenHandler>();
+            builder.Services.AddHttpClient<RapportoClient>(client => client.BaseAddress = new Uri(builder.Configuration["WebAPI:BaseUrl"])).AddHttpMessageHandler<TokenHandler>();
 
             builder.Services.AddBlazoredLocalStorage();
             builder.Services.AddAuthorizationCore();
