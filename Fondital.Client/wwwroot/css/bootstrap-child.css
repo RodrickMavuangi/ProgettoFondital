@@ -1420,6 +1420,9 @@ a:not([href]):not([tabindex]) {
     .rowFiltriRapportini .form-control, .rowFiltriRapportini .select .k-dropdown-wrap {
         min-width: 220px !important;
     }
+    .table .k-command-cell span.k-switch-container {
+        left: 12px !important;
+    }
 }
 
 

@@ -7,104 +7,112 @@
 @inject UtenteClient utenteClient
 @inject ServicePartnerClient servicePartnerClient
 
-<div class="under-Header">
-        <div class="u-h-left">
-            <div class="top">
-                <div class="TechSt"><strong>@SpSelected.RagioneSociale</strong></div>
-                <div class="butt">
-                    @{
-                        var servicePartner = @SpSelected as ServicePartnerDto;
-                        <TelerikButton OnClick="@(() => EditSp(servicePartner.Id))">@localizer["ModificaSP"]</TelerikButton>
-                    }
-                </div>
-            </div>
-            <hr />
-            <div class="middle">
-                <div class="Forn"><span class="span">@localizer["CodiceFornitore"] : </span><strong>@SpSelected.CodiceFornitore</strong> </div>
-                <div class="CClient"><span class="span">@localizer["CodiceCliente"] : </span><strong>@SpSelected.CodiceCliente</strong></div>
-            </div>
-            <hr />
-            <div class="bottom"></div>
-        </div>
 
-        <div class="u-h-right">
-            <div class="btn-ad">
-                <div class="bloc-sin-a-Add">
-                    <span class="utent">@localizer["Utenti"]</span>
-                    <span class="ut-Abil">@localizer["Abilitati"] / @SpSelected.Utenti.Where(x => x.IsAbilitato == true).Count()</span>
-                    <span class="ut-Disab">@localizer["Disabilitati"] / @SpSelected.Utenti.Where(x => x.IsAbilitato == false).Count()</span>
-                </div>
-                <div>
-                    <TelerikButton Class="btn-add" OnClick=@(()=> ShowAddDialog = true)>@localizer["AggiungiUtente"]</TelerikButton>
-                </div>
+<div class="row-1 d-flex justify-content-between flex-wrap flex-md-nowrap  pt-0 fit-content">
+    <!--TITOLO PAGINA-->
+    <div class="col-md-5  text-left pb-4 border-bottom">
 
-            </div>
-            <div class="Cerca">
-                <div>
-                    <input class="border-rod-first" @bind-value="SearchText" @bind-value:event="oninput" placeholder=@localizer["CercaUtenti"] />
-                </div>
-                <div class="border-rod">
-                    <TelerikDropDownList Width="180px" Class="border-rod" PopupClass="dropdown-ite"
-                                         Data="@ListaScelta" ValueChanged="@( (string v) => MyValueChangeHandler(v) )" DefaultText="@((SceltaCorrente==null)? @localizer["StatoUtente"]:null)">
-                    </TelerikDropDownList>
-                </div>
+        <div class="col  text-left d-inline-block ">
+            <div class="page-header">
+                <h1 class="h1" style="text-transform:uppercase;"><b>@SpSelected.RagioneSociale</b></h1>
             </div>
         </div>
- </div>
+        <div class="col  text-right d-inline-block  float-lg-right pr-40" style="margin-top:8px;">
+            <i class="bi bi-gear-fill float-lg-left  blu" style="margin-top:3px;"></i>
+            <span class="font12 grigio px-2">
+                @{
+                    var servicePartner = @SpSelected as ServicePartnerDto;
+                    <TelerikButton Class="linkNormal" OnClick="@(() => EditSp(servicePartner.Id))">@localizer["ModificaSP"]</TelerikButton>
+                }
+            </span>
+        </div>
+
+    </div>	   <!--FINE TITLE PAGE-->
+    <!--ROW BOTTONI-->
+
+    <div class="col-md-7 pb-4 ">
+
+        <div class="col  text-left d-inline-block  barraStrumenti">
+            <i class="bi bi-people-fill float-lg-left  blu pt-1"></i>
+            <span class="font12 grigio px-2">@localizer["Utenti"]</span>
+            <span class="font18 verde px-2">@localizer["Abilitati"] / <b>@SpSelected.Utenti.Where(x => x.IsAbilitato == true).Count()</b></span>
+            <span class="font18 rosso px-4">@localizer["Disabilitati"] / <b>@SpSelected.Utenti.Where(x => x.IsAbilitato == false).Count()</b></span>
+        </div>
+
+        <div class="col-3  text-right d-inline-block float-lg-right p-0">
+            <TelerikButton Class="btn btn-primary btn-verde btn-lg mx-1" OnClick=@(()=> ShowAddDialog = true)>@localizer["AggiungiUtente"]</TelerikButton>
+        </div>
 
 
-<TelerikWindow Class="modal-app dialogBox" Width="500px" Height="auto" Centered="true" @bind-Visible=@ShowEditDialog Modal="true">
-    <WindowActions>
-        <WindowAction Name="Close" IconClass="k-icon k-i-close text-dark" />
-    </WindowActions>
-    <WindowContent>
-        <EditSPDialog SPToUpdate="SpSelected" OnClose="CloseAndRefresh" OnSave="CloseAndRefresh" />
-    </WindowContent>
-</TelerikWindow>
+    </div>
+    <!--FINE BUTTON TOP DX-->
+</div>
+<!--FINE ROW 1 . TITOLI + BUTTON DX-->
 
-<TelerikWindow Class="modal-app dialogBox" Width="500px" Height="auto" Centered="true" Modal="true" @bind-Visible="ShowEditDialog">
-    <WindowActions>
-        <WindowAction Name="Close" IconClass="k-icon k-i-close text-dark" />
-    </WindowActions>
-    <WindowContent>
-        <EditUtenteDialog UtenteToUpdate="UtenteSelected" OnClose="CloseAndRefresh" OnSave="CloseAndRefresh" />
-    </WindowContent>
-</TelerikWindow>
 
-<TelerikWindow Class="modal-app dialogBox" Width="500px" Height="auto" Centered="true" @bind-Visible=@ShowAddDialog Modal="true">
-    <WindowActions>
-        <WindowAction Name="Close" IconClass="k-icon k-i-close text-dark" />
-    </WindowActions>
-    <WindowContent>
-        <AddUserDialog SPToUpdate="@SpSelected" OnClose="CloseAndRefresh" OnSave="CloseAndRefresh" />
-    </WindowContent>
-</TelerikWindow>
+
+<!-- BARRA FILTRI-->
+<div class="row-2 d-inline w-100 mb-4 pt-0 pb-4 pt-4 border-bottom barraFiltri">
+
+    <div class="col-md-12 ms-sm-auto col-lg-12 fit-content">
+
+        <div class="col  text-left d-inline-block  float-lg-left pt-2 mr-80">
+            <span class="font12 grigio px-2">@localizer["CodiceFornitore"]:</span>  <span class="font18 nero px-2"><b>@SpSelected.CodiceFornitore</b></span>
+        </div>
+
+        <div class="col  text-left d-inline-block  float-lg-left pt-2">
+            <span class="font12 grigio px-2">@localizer["CodiceCliente"]:</span>  <span class="font18 nero px-2"><b>@SpSelected.CodiceCliente</b></span>
+        </div>
+
+        <div class="col  text-right d-inline-block float-lg-right p-0">
+
+            <div class="form-group rowFiltri">
+                <i class="bi bi-search float-lg-right icoSearch blu"></i>
+
+
+
+                <input class="form-control float-lg-right filtriInput mx-1" @bind-value="SearchText" @bind-value:event="oninput" placeholder=@localizer["CercaUtenti"] />
+
+               
+
+                <TelerikDropDownList Class="select mx-1"  PopupClass="dropdown-ite"
+                                     Data="@ListaScelta" ValueChanged="@( (string v) => MyValueChangeHandler(v) )" DefaultText="@((SceltaCorrente==null)? @localizer["StatoUtente"]:null)">
+                </TelerikDropDownList>
+
+            </div> <!--FINE form-group-->
+
+        </div>
+    </div>
+
+</div>
+<!--FINE BARRA FILTRI-->
+
 
 <TelerikGrid Data="@(ListaUtenti_Filtered)"
              EditMode="@GridEditMode.Popup"
              Pageable="true"
-             Height="500px"
+             Class="table table-striped"
              Resizable="true"
              Sortable="true">
     <GridColumns>
         <GridColumn Field=@nameof(UtenteDto.UserName) Title=@localizer["UTENTI"] />
         <GridColumn Field=@nameof(UtenteDto.Nome) Title=@localizer["NOME"] />
         <GridColumn Field=@nameof(UtenteDto.Cognome) Title=@localizer["COGNOME"] />
-        <GridCommandColumn Context="lav">
+        <GridCommandColumn Context="lav" Width="80px">
             @{
                 var utenteDto = lav as UtenteDto;
-                <GridCommandButton Command="EditLavorazione" Icon="edit" OnClick="@(() => EditUtente(utenteDto.Id))" />
+                <GridCommandButton Class="btnIcon bgBianco white" Command="EditLavorazione" Icon="" ImageUrl="/img/Icons/edit.svg"  OnClick="@(() => EditUtente(utenteDto.Id))" />
             }
         </GridCommandColumn>
-        <GridCommandColumn Context="lav">
+        <GridCommandColumn Context="lav" Width="80px">
             @{
                 var utenteDto = lav as UtenteDto;
-                <GridCommandButton Command="" Icon="" ImageUrl="/img/keyLogo.jpg" OnClick="@(() => sendMail(utenteDto.Id))" />
+                <GridCommandButton Class="btnIcon bgBianco white" Command="" Icon="" ImageUrl="/img/Icons/key.svg" OnClick="@(() => sendMail(utenteDto.Id))" />
             }
         </GridCommandColumn>
-        <GridCommandColumn Width="75px" Context="dif">
+        <GridCommandColumn Width="80px" Context="dif">
             @{ var utente = dif as UtenteDto;
-                <TelerikSwitch OffLabel=" " OnLabel=" " OnChange="@(() => UpdateEnableUtente(utente.Id))" @bind-Value="@utente.IsAbilitato"></TelerikSwitch> }
+                <TelerikSwitch Class="switch_white" OffLabel=" " OnLabel=" " OnChange="@(() => UpdateEnableUtente(utente.Id))" @bind-Value="@utente.IsAbilitato"></TelerikSwitch> }
         </GridCommandColumn>
     </GridColumns>
 </TelerikGrid>
@@ -114,6 +122,27 @@
         <WindowAction Name="Close" IconClass="k-icon k-i-close text-dark" />
     </WindowActions>
     <WindowContent>
-        <EditSPDialog SPToUpdate="SpSelected" OnClose="@(() => ShowEditDialog = false)" OnSave="CloseAndRefresh" />
-    </WindowContent>
+        <div class="dialogForm"><EditSPDialog SPToUpdate="SpSelected" OnClose="@(() => ShowEditDialog = false)" OnSave="CloseAndRefresh" /></div>
+</WindowContent>
+</TelerikWindow>
+
+
+
+<TelerikWindow Class="modal-app dialogBox" Width="500px" Height="auto" Centered="true" @bind-Visible=@ShowEditDialog Modal="true">
+    <WindowActions>
+        <WindowAction Name="Close" IconClass="k-icon k-i-close text-dark" />
+    </WindowActions>
+    <WindowContent>
+        <div class="dialogForm"><EditSPDialog SPToUpdate="SpSelected" OnClose="CloseAndRefresh" OnSave="CloseAndRefresh" /></div>
+</WindowContent>
+</TelerikWindow>
+
+
+<TelerikWindow Class="modal-app dialogBox" Width="500px" Height="auto" Centered="true" @bind-Visible=@ShowAddDialog Modal="true">
+    <WindowActions>
+        <WindowAction Name="Close" IconClass="k-icon k-i-close text-dark" />
+    </WindowActions>
+    <WindowContent>
+        <div class="dialogForm"><AddUserDialog SPToUpdate="@SpSelected" OnClose="CloseAndRefresh" OnSave="CloseAndRefresh" /></div>
+</WindowContent>
 </TelerikWindow>
