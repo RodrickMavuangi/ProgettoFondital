@@ -80,7 +80,6 @@
     </WindowContent>
 </TelerikWindow>
 
-
 <TelerikGrid Data="@(ListaUtenti_Filtered)"
              EditMode="@GridEditMode.Popup"
              Pageable="true"
@@ -110,158 +109,11 @@
     </GridColumns>
 </TelerikGrid>
 
-
-<TelerikWindow Class="modal-app dialogBox" Width="500px" Height="auto" Centered="true" @bind-Visible=@ShowEditSpDialog Modal="true">
+<TelerikWindow Class="modal-app dialogBox" Width="500px" Height="auto" Centered="true" @bind-Visible=@ShowEditDialog Modal="true">
     <WindowActions>
         <WindowAction Name="Close" IconClass="k-icon k-i-close text-dark" />
     </WindowActions>
     <WindowContent>
-        <EditSPDialog SPToUpdate="SpSelected" OnClose="@(() => ShowEditSpDialog = false)" OnSave="CloseAndRefresh" />
+        <EditSPDialog SPToUpdate="SpSelected" OnClose="@(() => ShowEditDialog = false)" OnSave="CloseAndRefresh" />
     </WindowContent>
 </TelerikWindow>
-
-<TelerikWindow Class="modal-app dialogBox" Width="500px" Height="auto" Centered="true" @bind-Visible=@ShowEditUserDialog Modal="true">
-    <WindowActions>
-        <WindowAction Name="Close" IconClass="k-icon k-i-close text-dark" />
-    </WindowActions>
-    <WindowContent>
-        <EditUserDialog UtenteToUpdate="UserSelected" OnClose="@(() => ShowEditUserDialog = false)" OnSave="CloseAndRefresh" />
-    </WindowContent>
-</TelerikWindow>
-
-
-
-<style>
-    .large-button {
-        border: none;
-    }
-
-    .under-Header {
-        height: 145px
-    }
-
-    .u-h-left {
-        position: absolute;
-        left: 24px;
-        width: 630px;
-    }
-
-    .u-h-right {
-        position: absolute;
-        right: 24px;
-        width: 840px;
-        height: 130px;
-        display: flex;
-    }
-
-    .top {
-        display: flex;
-        flex-direction: row;
-    }
-
-    .butt {
-        margin-left: 425px;
-    }
-
-    .border-rod {
-        width: 30px;
-        position: absolute;
-        right: 0px
-    }
-
-    .border-rod-first {
-        margin-right: 190px;
-    }
-
-    .dropdown-ite {
-        height: 130px;
-    }
-
-    .Cerca {
-        display: flex;
-        flex-direction: row;
-        height: 60px;
-        /*width: 60px;*/
-        position: absolute;
-        right: 8px;
-        bottom: 0px
-    }
-
-    .btn-add {
-        color: aliceblue;
-        background-color: forestgreen;
-        width: 180px;
-        position: absolute;
-        right: 8px;
-        top: 0px;
-    }
-
-    div.k-widget.k-window.modal-app {
-        width: 250px;
-        height: 600px;
-        border: 1px solid white
-    }
-
-    .modal-app .k-window-content.k-content.k-dialog-content {
-    }
-
-    .modal-app .k-button.telerik-blazor.k-primary.k-form-submit {
-        border: 2px solid dodgerblue;
-        color: aliceblue;
-        background-color: dodgerblue;
-        width: 700px;
-    }
-
-    .CClient {
-        margin-left: 350px;
-    }
-
-    .Forn {
-        float: left;
-    }
-
-    .span {
-        font-size: 10px;
-        padding-bottom: 20px;
-    }
-
-    .bloc-sin-a-Add {
-        border-left: 1px solid #DCDCDC;
-        display: flex;
-        flex-direction: row;
-    }
-
-    .ut-Abil {
-        width: 100px;
-        height: 15px;
-        color: forestgreen;
-        margin-left: 15px
-    }
-
-    .ut-Disab {
-        width: 100px;
-        height: 15px;
-        color: red;
-        margin-left: 30px
-    }
-
-    .utent {
-        margin-left: 8px;
-        font-size: 10px;
-        padding-top: 3.5px;
-    }
-
-    .TechSt {
-        height: 30px
-    }
-
-    /*    .k-dialog-titlebar.k-header {
-        background: white
-    }*/
-
-    GridCommandColumn {
-        color: aliceblue;
-        background-color: dodgerblue;
-        width: 75px
-    }
-</style>
