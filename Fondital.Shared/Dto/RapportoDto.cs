@@ -5,10 +5,9 @@ namespace Fondital.Shared.Dto
 {
     public class RapportoDto
     {
-        public ServicePartnerDto ServicePartner { get; set; }
         public UtenteDto Utente { get; set; }
         public StatoRapporto Stato { get; set; }
-        public DateTime Data { get; set; }
+        public DateTime? Data { get; set; }
         public string Cliente { get; set; }
         public int Id { get; set; }
         public string Matricola { get; set; }

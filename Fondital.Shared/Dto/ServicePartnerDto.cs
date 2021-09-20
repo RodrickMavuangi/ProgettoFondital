@@ -20,6 +20,5 @@ namespace Fondital.Shared.Dto
         public string CodiceCliente { get; set; } = "";
         public List<UtenteDto> Utenti { get; set; } = new List<UtenteDto>();
         public List<ListinoDto> Listini { get; set; } = new List<ListinoDto>();
-        public List<RapportoDto> Rapporti { get; set; } = new List<RapportoDto>();
     }
 }

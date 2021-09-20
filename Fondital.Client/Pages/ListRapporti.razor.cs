@@ -1,5 +1,4 @@
 ﻿using Fondital.Shared.Dto;
-using Microsoft.JSInterop;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,18 +23,23 @@ namespace Fondital.Client.Pages
         // Temporary for Data search input
         private string SearchText { get; set; } = "";
 
+        protected bool ShowAddDialog { get; set; } = false;
+
         protected override async Task OnInitializedAsync()
         {
-            //var js = (IJSInProcessRuntime)JSRuntime;
-            //CurrentCulture = await js.InvokeAsync<string>("blazorCulture.get");
             PageSize = Convert.ToInt32(Config["PageSize"]);
+            await RefreshRapporti();
+        }
 
+        protected async Task CloseAndRefresh()
+        {
+            ShowAddDialog = false;
             await RefreshRapporti();
         }
 
         // Missing date filter
         public List<RapportoDto> ListaRapporti_filtered => ListaRapporti
-            .Where(x => x.ServicePartner.RagioneSociale.Contains(SearchBySp, StringComparison.InvariantCultureIgnoreCase) 
+            .Where(x => x.Utente.ServicePartner.RagioneSociale.Contains(SearchBySp, StringComparison.InvariantCultureIgnoreCase)
                      && x.Stato.ToString().Contains(SearchByStato, StringComparison.InvariantCultureIgnoreCase)
                      && x.Cliente.Contains(SearchByCliente, StringComparison.InvariantCultureIgnoreCase)
                      && x.Id.ToString().StartsWith(SearchById)

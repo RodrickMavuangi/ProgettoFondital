@@ -14,7 +14,7 @@ namespace Fondital.Server.Controllers
 {
     [ApiController]
     [Route("utentiControl")]
-    [Authorize]
+    //[Authorize]
     public class UtenteController : ControllerBase
     {
         private readonly ILogger<UtenteController> _logger;

@@ -1,6 +1,5 @@
 ﻿@page "/reports"
 @inject IStringLocalizer<App> Localizer
-@*@inject IJSInProcessRuntime JSRuntime*@
 @inject IConfiguration Config
 @inject RapportoClient HttpClient
 @inject NavigationManager NavigationManager
@@ -15,10 +14,19 @@
         </div>
     </div>
     <!--FINE TITLE PAGE-->
-</div>
-<!--FINE ROW 1 . TITOLI-->
+    <!--ROW BOTTONI-->
+    <div class="col-md-7 pb-4 border-bottom pr-0">
 
-@if (ListaRapporti != null)
+        <div class="col  text-left d-none barraStrumenti "> </div>
+        <div class="col  text-right d-inline-block float-lg-right p-0">
+            <TelerikButton Class="btn btn-primary btn-verde btn-lg mx-1" OnClick=@(()=> ShowAddDialog = true)>Nuovo Rapporto</TelerikButton>
+        </div>
+    </div>
+    <!--FINE BUTTON TOP DX-->
+</div>
+<!--FINE ROW 1 . TITOLI + BUTTON DX-->
+
+@if (ListaRapporti == null)
 {
     <div class="k-loader-container k-loader-container-md k-loader-top " style="" data-id="7d13dd9e-e016-4aec-8e1b-5253cd5131d5">
         <div class="k-loader-container-overlay k-overlay-light"></div>
@@ -53,9 +61,9 @@ else
     <!--FINE BARRA FILTRI-->
 
     <div class="row-3 d-flex justify-content-between flex-wrap flex-md-nowrap pt-0 pb-4 mb-4">
-        <TelerikGrid Data="@ListaRapporti_filtered" Pageable="true" PageSize="@PageSize" Class="table table-striped">
+        <TelerikGrid Data="@ListaRapporti" Pageable="true" PageSize="@PageSize" Class="table table-striped">
             <GridColumns>
-                <GridColumn Field=@nameof(RapportoDto.ServicePartner.RagioneSociale) Width="15%" Title=@Localizer["ServicePartner"].Value.ToUpper() />
+                <GridColumn Field=@nameof(RapportoDto.Utente.ServicePartner.RagioneSociale) Width="15%" Title=@Localizer["ServicePartner"].Value.ToUpper() />
                 <GridColumn Field=@nameof(RapportoDto.Stato) Width="15%" Title=@Localizer["Stato"].Value.ToUpper() />
                 <GridColumn Field=@nameof(RapportoDto.Data) Width="15%" Title=@Localizer["Data"].Value.ToUpper() />
                 <GridColumn Field=@nameof(RapportoDto.Cliente) Width="15%" Title=@Localizer["Cliente"].Value.ToUpper() />
@@ -65,7 +73,7 @@ else
                 <GridColumn Field=@nameof(RapportoDto.Email) Width="15%" Title=@Localizer["Email"].Value.ToUpper() />
 
                 <GridCommandColumn Context="rep" Width="3%">
-                    @{ 
+                    @{
                         var rapportoDto = rep as RapportoDto;
                         // Modify Icon Url
                         <GridCommandButton Class="btnIcon bgBianco white" Command="ViewRapporto" ImageUrl="/img/Icons/edit.svg" OnClick="@(() => ViewRapporto(rapportoDto.Id) )" />
@@ -75,3 +83,13 @@ else
         </TelerikGrid>
     </div>
 }
+
+<TelerikWindow Class="modal-app dialogBox" Width="500px" Height="auto" Centered="true" @bind-Visible=@ShowAddDialog Modal="true">
+    <WindowActions>
+        <WindowAction Name="Close" IconClass="k-icon k-i-close text-dark" />
+    </WindowActions>
+
+    <WindowContent>
+        <div class="dialogForm"><AddRapportoDialog OnClose="@(() => ShowAddDialog = false)" OnSave="CloseAndRefresh" /> </div>
+    </WindowContent>
+</TelerikWindow>

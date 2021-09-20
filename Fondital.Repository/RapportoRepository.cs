@@ -19,7 +19,7 @@ namespace Fondital.Repository
 
         public async Task<Rapporto> GetRapportoByIdAsync(int Id)
         {
-            return await Db.Rapporti.Include(x => x.ServicePartner).Include(x => x.Utente).SingleOrDefaultAsync(x => x.Id == Id);
+            return await Db.Rapporti.Include(x => x.Utente).ThenInclude(x => x.ServicePartner.RagioneSociale).SingleOrDefaultAsync(x => x.Id == Id);
         }
     }
 }

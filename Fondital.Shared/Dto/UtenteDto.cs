@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace Fondital.Shared.Dto
@@ -18,5 +19,7 @@ namespace Fondital.Shared.Dto
         public string Cognome { get; set; } = "";
         public DateTime Pw_LastChanged { get; set; } = DateTime.Now;
         public bool Pw_MustChange { get; set; } = true;
+        public List<RapportoDto> Rapporti { get; set; } = new List<RapportoDto>();
+
     }
 }
