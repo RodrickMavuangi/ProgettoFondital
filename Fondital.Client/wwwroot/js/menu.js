@@ -2,6 +2,7 @@
 
 function manipulateActiveLink(firstRender, uri)
 {
+    console.log(uri);
     if (!firstRender)
         return;
 
@@ -9,7 +10,7 @@ function manipulateActiveLink(firstRender, uri)
     let activeAnchor = document.querySelector("[href='" + actualUri + "']");
     if (activeAnchor === null)
     {
-        activeAnchor = document.QuerySelector("[href='" + actualUri + "']");
+        activeAnchor = document.querySelector('a.active');
     }
 
     activeAnchor.parentElement.classList.add('bg_active');
