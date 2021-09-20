@@ -98,7 +98,7 @@ else
     </WindowActions>
 
     <WindowContent>
-        <div class="dialogForm"><AddSPDialog OnClose="@(() => ShowAddDialog = false)" OnSave="CloseAndRefresh" /></div>
+        <div class="dialogForm"><AddSPDialog OnClose="CloseAndRefresh" OnSave="CloseAndRefresh" /></div>
     </WindowContent>
 
 </TelerikWindow>
@@ -109,7 +109,7 @@ else
     </WindowActions>
 
     <WindowContent>
-        <div class="dialogForm"><EditSPDialog SPToUpdate="SpSelected" OnClose="@(() => ShowEditDialog = false)" OnSave="CloseAndRefresh" /> </div>
+        <div class="dialogForm"><EditSPDialog SPToUpdate="SpSelected" OnClose="CloseAndRefresh" OnSave="CloseAndRefresh" /> </div>
     </WindowContent>
 </TelerikWindow>
 

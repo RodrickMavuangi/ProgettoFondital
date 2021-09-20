@@ -30,9 +30,9 @@ namespace Fondital.Client.Pages
 
             await RefreshVociCosto();
         }
-        public List<VoceCostoDto> ListaLavorazioni_filtered => CurrentCulture == "ru-RU" ?
-            ListaVociCosto.Where<VoceCostoDto>(x => x.NomeRusso.ToLower().Contains(SearchText.ToLower())).ToList() :
-            ListaVociCosto.Where<VoceCostoDto>(x => x.NomeItaliano.ToLower().Contains(SearchText.ToLower())).ToList();
+        public List<VoceCostoDto> ListaLavorazioniFiltered => CurrentCulture == "ru-RU" ?
+            ListaVociCosto.Where(x => x.NomeRusso.Contains(SearchText, StringComparison.InvariantCultureIgnoreCase)).ToList() :
+            ListaVociCosto.Where(x => x.NomeItaliano.Contains(SearchText, StringComparison.InvariantCultureIgnoreCase)).ToList();
 
         protected async Task RefreshVociCosto()
         {

@@ -32,9 +32,9 @@ namespace Fondital.Client.Pages
             await RefreshLavorazioni();
         }
 
-        public List<LavorazioneDto> ListaLavorazioni_filtered => CurrentCulture == "ru-RU" ?
-            ListaLavorazioni.Where<LavorazioneDto>(x => x.NomeRusso.ToLower().Contains(SearchText.ToLower())).ToList() :
-            ListaLavorazioni.Where<LavorazioneDto>(x => x.NomeItaliano.ToLower().Contains(SearchText.ToLower())).ToList();
+        public List<LavorazioneDto> ListaLavorazioniFiltered => CurrentCulture == "ru-RU" ?
+            ListaLavorazioni.Where(x => x.NomeRusso.Contains(SearchText, StringComparison.InvariantCultureIgnoreCase)).ToList() :
+            ListaLavorazioni.Where(x => x.NomeItaliano.Contains(SearchText, StringComparison.InvariantCultureIgnoreCase)).ToList();
 
         protected async Task RefreshLavorazioni()
         {

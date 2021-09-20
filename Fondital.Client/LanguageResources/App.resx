@@ -385,4 +385,25 @@
     <value>Errore: verificare che la vecchia password sia corretta.
 La nuova password deve essere lunga almeno 8 caratteri e contenere minuscole, maiuscole, numeri e simboli.</value>
   </data>
+  <data name="CercaListini" xml:space="preserve">
+    <value>Cerca Listini</value>
+  </data>
+  <data name="CercaPerRaggruppamento" xml:space="preserve">
+    <value>Cerca per Raggruppamento</value>
+  </data>
+  <data name="CercaPerServicePartner" xml:space="preserve">
+    <value>Cerca per Service Partner</value>
+  </data>
+  <data name="CercaPerVoceCosto" xml:space="preserve">
+    <value>Cerca per Voce di Costo</value>
+  </data>
+  <data name="Listini" xml:space="preserve">
+    <value>Listini</value>
+  </data>
+  <data name="Raggruppamento" xml:space="preserve">
+    <value>Raggruppamento</value>
+  </data>
+  <data name="Valore" xml:space="preserve">
+    <value>Valore</value>
+  </data>
 </root>

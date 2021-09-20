@@ -76,9 +76,9 @@ namespace Fondital.Client.Pages
 		}
 
 
-		public List<UtenteDto> FilteredUtenti => servicePartnersWithUtenti.Utenti.Where<UtenteDto>(x => x.Email.ToLower().Contains(SearchText.ToLower())).ToList();
-		public List<UtenteDto> FilterdUtenti_Abilitati => servicePartnersWithUtenti.Utenti.Where<UtenteDto>(x => x.Email.ToLower().Contains(SearchText.ToLower()) && x.IsAbilitato == true).ToList();
-		public List<UtenteDto> FilterdUtenti_Disabilitati => servicePartnersWithUtenti.Utenti.Where<UtenteDto>(x => x.Email.ToLower().Contains(SearchText.ToLower()) && x.IsAbilitato == false).ToList();
+		public List<UtenteDto> FilteredUtenti => servicePartnersWithUtenti.Utenti.Where(x => x.UserName.Contains(SearchText, StringComparison.InvariantCultureIgnoreCase)).ToList();
+		public List<UtenteDto> FilterdUtenti_Abilitati => servicePartnersWithUtenti.Utenti.Where(x => x.UserName.Contains(SearchText, StringComparison.InvariantCultureIgnoreCase) && x.IsAbilitato == true).ToList();
+		public List<UtenteDto> FilterdUtenti_Disabilitati => servicePartnersWithUtenti.Utenti.Where(x => x.UserName.Contains(SearchText, StringComparison.InvariantCultureIgnoreCase) && x.IsAbilitato == false).ToList();
 
 
 		protected async Task CloseAndRefresh()

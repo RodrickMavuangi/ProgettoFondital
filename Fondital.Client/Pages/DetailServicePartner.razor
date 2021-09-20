@@ -187,7 +187,7 @@ else
         <WindowAction Name="Close" IconClass="k-icon k-i-close text-dark" />
     </WindowActions>
     <WindowContent>
-        <EditSPDialog SPToUpdate="SpSelected" OnClose="@(() => ShowEditSpDialog = false)" OnSave="CloseAndRefresh" />
+        <EditSPDialog SPToUpdate="SpSelected" OnClose="CloseAndRefresh" OnSave="CloseAndRefresh" />
     </WindowContent>
 </TelerikWindow>
 
@@ -196,7 +196,7 @@ else
         <WindowAction Name="Close" IconClass="k-icon k-i-close text-dark" />
     </WindowActions>
     <WindowContent>
-        <EditUserDialog UtenteToUpdate="UserSelected" OnClose="@(() => ShowEditUserDialog = false)" OnSave="CloseAndRefresh" />
+        <EditUserDialog UtenteToUpdate="UserSelected" OnClose="CloseAndRefresh" OnSave="CloseAndRefresh" />
     </WindowContent>
 </TelerikWindow>
 
