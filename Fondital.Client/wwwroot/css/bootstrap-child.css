@@ -1225,6 +1225,9 @@ a:not([href]):not([tabindex]) {
     border-radius: 0;
     background-color: transparent !important;
 }
+    .k-grid-table .k-command-cell .k-button.k-button-icon.bgBianco:hover {
+        background-color: #ebebeb!important;
+    }
 
     .k-grid-table .k-command-cell .k-button.k-button-icon.bgBluOn {
         background-color: #007BFF !important;
