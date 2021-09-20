@@ -11,13 +11,12 @@ using Telerik.Blazor;
 
 namespace Fondital.Client.Pages
 {
-    public partial class DetailServicePartner
+	public partial class DetailServicePartner
 	{
-		public string SearchText = "";	
-		public StatoUtente ConStato { get; set; } = new StatoUtente();
+		public string SearchText = "";
+		public StatoUtente ConStato { get; set; } = new();
 		[CascadingParameter]
 		public DialogFactory Dialogs { get; set; }
-		UtenteDto DatiUtente = new UtenteDto();
 		public List<string> ListaScelta { get; set; } = new List<string>() { };
 		public string SceltaCorrente = string.Empty;
 		[Parameter]
@@ -39,9 +38,9 @@ namespace Fondital.Client.Pages
 			await RefreshUtenti();
 		}
 
-		public List<UtenteDto> ListaUtenti_Filtered => ConStato.Abilitati == true ? ListaUtenti.Where<UtenteDto>(x => x.Email.ToLower().Contains(SearchText.ToLower()) && x.IsAbilitato == true).ToList() :
-													   ConStato.Disabilitati == true ? ListaUtenti.Where<UtenteDto>(x => x.Email.ToLower().Contains(SearchText.ToLower()) && x.IsAbilitato == false).ToList() :
-													   ListaUtenti.Where<UtenteDto>(x => x.Email.ToLower().Contains(SearchText.ToLower())).ToList();
+		public List<UtenteDto> ListaUtenti_Filtered => ConStato == StatoUtente.Abilitati ? ListaUtenti.Where(x => x.Email.ToLower().Contains(SearchText.ToLower()) && x.IsAbilitato == true).ToList() :
+													   ConStato == StatoUtente.Disabilitati ? ListaUtenti.Where(x => x.Email.ToLower().Contains(SearchText.ToLower()) && x.IsAbilitato == false).ToList() :
+													   ListaUtenti.Where(x => x.Email.ToLower().Contains(SearchText.ToLower())).ToList();
 
 		protected async Task CloseAndRefresh()
 		{
@@ -52,7 +51,8 @@ namespace Fondital.Client.Pages
 
 		protected async Task RefreshUtenti()
 		{
-			ListaUtenti = (List<UtenteDto>) await utenteClient.GetUtenti();
+			ListaUtenti = (List<UtenteDto>)await utenteClient.GetUtenti();
+			SpSelected = await servicePartnerClient.GetServicePartnerWithUtenti(int.Parse(servicePId));
 			StateHasChanged();
 		}
 
@@ -64,10 +64,9 @@ namespace Fondital.Client.Pages
 
 		protected async Task EditSp(int SpId)
 		{
-			SpSelected = await  servicePartnerClient.GetServicePartnerWithUtenti(int.Parse(servicePId));
+			SpSelected = await servicePartnerClient.GetServicePartnerWithUtenti(int.Parse(servicePId));
 			ShowEditDialog = true;
 		}
-
 
 		protected async Task sendMail(int utenteId)
 		{
@@ -86,7 +85,6 @@ namespace Fondital.Client.Pages
 				await Dialogs.AlertAsync($"{@localizer["MailInviata"]} {UtenteToSendMail.Email} {@localizer["ResetPassword"]}");
 			}
 		}
-
 
 		protected async Task UpdateEnableUtente(int Id)
 		{
@@ -116,33 +114,27 @@ namespace Fondital.Client.Pages
 			}
 		}
 
-
 		public async Task MyValueChangeHandler(string theUserChoice)
 		{
 			switch (theUserChoice)
 			{
 				case "Tutti":
-					ConStato = new StatoUtente() { Tutti = true, Abilitati = false, Disabilitati = false };
+					ConStato = StatoUtente.Tutti;
 					break;
 				case "Abilitati":
-					ConStato = new StatoUtente() { Tutti = false, Abilitati = true, Disabilitati = false };
+					ConStato = StatoUtente.Abilitati;
 					break;
 				case "Disabilitati":
-					ConStato = new StatoUtente() { Tutti = false, Abilitati = false, Disabilitati = true };
+					ConStato = StatoUtente.Disabilitati;
 					break;
 			}
 		}
 
-
-		public class StatoUtente
+		public enum StatoUtente
 		{
-
-			public bool Tutti { get; set; } = false;
-			public bool Abilitati { get; set; } = false;
-			public bool Disabilitati { get; set; } = false;
-
+			Tutti = 0,
+			Abilitati,
+			Disabilitati 
 		}
-
-
 	}
 }
