@@ -1,13 +1,13 @@
-﻿using Fondital.Shared.Dto;
-using Fondital.Shared.Enums;
+﻿using Fondital.Shared.Enums;
+using Fondital.Shared.Models.Auth;
 using System;
 
 namespace Fondital.Shared.Models
 {
     public class Rapporto
     {
-        public ServicePartnerDto ServicePartner { get; set; }
-        public UtenteDto Utente { get; set; }
+        public ServicePartner ServicePartner { get; set; }
+        public Utente Utente { get; set; }
         public StatoRapporto Stato { get; set; }
         public DateTime Data { get; set; }
         public string Cliente { get; set; }
