@@ -58,7 +58,7 @@
         <WindowAction Name="Close" IconClass="k-icon k-i-close text-dark" />
     </WindowActions>
     <WindowContent>
-        <EditSPDialog SPToUpdate="SpSelected" OnClose="@(() => ShowEditDialog = false)" OnSave="CloseAndRefresh" />
+        <EditSPDialog SPToUpdate="SpSelected" OnClose="CloseAndRefresh" OnSave="CloseAndRefresh" />
     </WindowContent>
 </TelerikWindow>
 
@@ -67,7 +67,7 @@
         <WindowAction Name="Close" IconClass="k-icon k-i-close text-dark" />
     </WindowActions>
     <WindowContent>
-        <EditUtenteDialog UtenteToUpdate="UtenteSelected" OnClose="@(() => ShowEditDialog = false)" OnSave="CloseAndRefresh" />
+        <EditUtenteDialog UtenteToUpdate="UtenteSelected" OnClose="CloseAndRefresh" OnSave="CloseAndRefresh" />
     </WindowContent>
 </TelerikWindow>
 
@@ -76,7 +76,7 @@
         <WindowAction Name="Close" IconClass="k-icon k-i-close text-dark" />
     </WindowActions>
     <WindowContent>
-        <AddUserDialog SPToUpdate="@SpSelected" OnClose="@(() => ShowAddDialog = false)" OnSave="CloseAndRefresh" />
+        <AddUserDialog SPToUpdate="@SpSelected" OnClose="CloseAndRefresh" OnSave="CloseAndRefresh" />
     </WindowContent>
 </TelerikWindow>
 
