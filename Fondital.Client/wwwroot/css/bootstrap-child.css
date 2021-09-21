@@ -469,15 +469,32 @@ a:not([href]):not([tabindex]) {
     }
 
 
-    .k-menu-popup .k-menu-link .navLink {
-        /*    padding: 0.6rem 2.7rem !important;*/
-        color: #212529 !important;
-    }
+   
 
-    .k-menu-popup .k-menu-link .active {
-        /*    padding: 0.6rem 2.7rem !important;*/
-        color: #fff !important;
+    .k-menu-popup .k-menu-link {
+        padding: 0 0 0 0 !important;
+        
     }
+        .k-menu-popup .k-menu-link .navLink {
+            padding: 0.6rem 2.7rem !important;
+            color: #212529 !important;
+            text-transform: uppercase !important;
+            margin-right: 0;
+            border: 0 !important;
+            font-size: 14px !important;
+            line-height: 21px !important;
+            display:inline-block!important;
+            width:100%!important;
+        }
+
+        .k-menu-popup .k-menu-link .active {
+            /*    padding: 0.6rem 2.7rem !important;*/
+            color: #fff !important;
+            background-color: #ED0F0F !important;
+            font-weight:bold!important;
+        }
+
+
 
 
 
@@ -508,7 +525,7 @@ a:not([href]):not([tabindex]) {
     list-style: none !important;
     padding: 0 0 0 0 !important;
     margin-right: 1.5em;
-    margin-top: 4px;
+    margin-top: 2px;
 }
 
     .profilo li.nomeUtente {
@@ -520,11 +537,19 @@ a:not([href]):not([tabindex]) {
     .profilo li.ruoloUtente {
         font-size: 12px;
         font-weight: 700;
-        color: #212529;
+        color: #0D0341;
         font-family: 'Open Sans Condensed', sans-serif !important;
         letter-spacing: 1.5px;
         text-align: right;
     }
+
+ul.dropdownMenu {
+    list-style: none;
+    display: inline-block;
+    padding: 0 0 0 0;
+    margin: 0 0 0 0;
+    float: left;
+}
 
 .nomeCircle {
     width: 1.5em;
@@ -532,7 +557,7 @@ a:not([href]):not([tabindex]) {
     box-sizing: initial;
     background: #F4F4F4;
     border: 0.1em solid #F4F4F4;
-    color: #007BFF;
+    
     text-align: center;
     border-radius: 50%;
     line-height: 1.5em;
@@ -541,23 +566,34 @@ a:not([href]):not([tabindex]) {
     padding: 5px 5px 5px 5px;
     display: inline-block;
     float: left;
-    margin: 5px 0 0 0;
+    margin: 2px 0 0 0;
 }
-
-.fontProfilo {
-    font-size: 16px;
-    font-weight: bold;
+a:hover .nomeCircle {
+    background: #0D0341;
 }
-
-.menuProfilo {
-    display: inline-block;
-    float: left;
-}
-
-    .menuProfilo li.k-item {
-        margin: 0 0 0 0 !important;
+    a .nomeCircle {
+        color: #007BFF !important;
+        text-decoration: none !important;
+    }
+    .fontProfilo {
+        font-size: 16px;
+        font-weight: bold;
     }
 
+
+
+.menuProfilo {
+    /*    display: inline-block;
+    float: left;*/
+    float: left;
+    padding: 0 0 0 10px;
+    margin: 0px 0 0 0px;
+}
+
+/*    .menuProfilo li.k-item {
+        margin: 0 0 0 0 !important;
+    }
+    
         .menuProfilo li.k-item .k-menu-link {
             margin: 0 0 0 10px !important;
             background: none;
@@ -566,11 +602,68 @@ a:not([href]):not([tabindex]) {
             display: flex !important;
             height: 47px;
         }
+    .menuProfilo .k-menu-popup .k-menu-link {
+        padding: 10px 10px !important;
+    }
 
             .menuProfilo li.k-item .k-menu-link .k-menu-expand-arrow {
                 color: #fff;
+            }*/
+    .menuProfilo a {
+        list-style: none !important;
+        height: 43px;
+        display: flex;
+        align-content: center;
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        list-style: none !important;
+    }
+
+    
+        .menuProfilo  a {
+            list-style: none !important;
+            text-decoration:none!important;
+        }
+        .menuProfilo a .k-menu-expand-arrow {
+            color: #fff;
+        }
+            .menuProfilo a .k-menu-expand-arrow:hover {
+                color: #D7D7D7;
             }
 
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 200px;
+    box-shadow: 0px 8px 16px 0px rgb(0 0 0 / 20%);
+    z-index: 1;
+    right: -5px;
+    top: 40px;
+}
+
+
+
+    .dropdown-content a {
+        color: black;
+        padding: 0.6rem 2.7rem !important;
+        text-decoration: none;
+        display: block;
+        text-align: right;
+        border-bottom: 1px solid #dee2e6 !important;
+    }
+        .dropdown-content a.noborder {
+            border-bottom:none!important;
+        }
+
+        .dropdown-content a:hover {
+            background-color: #f1f1f1;
+        }
+
+.dropdown:hover .dropdown-content {
+    display: block;
+}
 
 /*************** FORM. INPUT ******************/
 

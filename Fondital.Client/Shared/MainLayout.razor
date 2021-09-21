@@ -20,10 +20,11 @@
 
     }
 
-    protected override void OnAfterRender(bool firstRender)
+    protected override async Task OnAfterRenderAsync(bool firstRender)
     {
         JS.InvokeVoidAsync("manipulateActiveLink",
             firstRender,
             FonditalNavigationManager.ToBaseRelativePath(FonditalNavigationManager.Uri));
     }
 }
+
