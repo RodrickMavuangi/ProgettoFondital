@@ -77,7 +77,7 @@ else
                 <GridColumn Field=@nameof(ListinoDto.VoceCosto.NomeItaliano) Width="12%" Title=@localizer["VoceCosto"].Value.ToUpper() Visible="@(CurrentCulture == "it-IT")" />
                 <GridColumn Field=@nameof(ListinoDto.VoceCosto.NomeRusso) Width="12%" Title=@localizer["VoceCosto"].Value.ToUpper() Visible="@(CurrentCulture == "ru-RU")" />
                 <GridColumn Field=@nameof(ListinoDto.Raggruppamento) Title=@localizer["Raggruppamento"].Value.ToUpper() Width="12%" />
-                <GridColumn Field=@nameof(ListinoDto.Valore) Title=@localizer["Valore"].Value.ToUpper() Width="15%" DisplayFormat="{0:₽0.##}" />
+                <GridColumn Field=@nameof(ListinoDto.Valore) Title=@localizer["Valore"].Value.ToUpper() Width="15%" DisplayFormat="{0:₽ 0.##}" />
                 <GridCommandColumn Width="3%">
                     @{
                         var listinoDto = (ListinoDto)context;

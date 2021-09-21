@@ -15,22 +15,22 @@ namespace Fondital.Client.Dialogs
         protected ListinoDto NuovoListino { get; set; } = new();
         protected List<ServicePartnerDto> ServicePartners = new();
         protected List<VoceCostoDto> VociCosto = new();
-        protected int SpIdSelected { get => NuovoListino.ServicePartner.Id; set { UpdateSelectedSp(value); } }
-        protected int VcIdSelected { get => NuovoListino.VoceCosto.Id; set { UpdateSelectedVc(value); } }
+        protected int SpIdSelected { get => NuovoListino.ServicePartner?.Id ?? 0; set { UpdateSelectedSp(value); } }
+        protected int VcIdSelected { get => NuovoListino.VoceCosto?.Id ?? 0; set { UpdateSelectedVc(value); } }
         private string CurrentCulture { get; set; }
         protected bool isSubmitting = false;
         protected string ErrorMessage = "";
 
         protected override async Task OnInitializedAsync()
         {
-            var js = (IJSInProcessRuntime)JSRuntime;
-            CurrentCulture = await js.InvokeAsync<string>("blazorCulture.get");
-
             ServicePartners = (List<ServicePartnerDto>)await spClient.GetAllServicePartners();
             VociCosto = (List<VoceCostoDto>)await vcClient.GetAllVociCosto();
 
             NuovoListino.ServicePartner = ServicePartners.First();
             NuovoListino.VoceCosto = VociCosto.First();
+
+            var js = (IJSInProcessRuntime)JSRuntime;
+            CurrentCulture = await js.InvokeAsync<string>("blazorCulture.get");
         }
 
         protected async Task SalvaListino()

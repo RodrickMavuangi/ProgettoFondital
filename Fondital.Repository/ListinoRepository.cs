@@ -23,5 +23,17 @@ namespace Fondital.Repository
         {
             return await Db.Listini.Include(x => x.ServicePartner).Include(x => x.VoceCosto).SingleOrDefaultAsync(x => x.Id == Id);
         }
+
+        public async Task<List<Listino>> GetAllListiniAsync()
+        {
+            return await Db.Listini.Include(x => x.ServicePartner).Include(x => x.VoceCosto).ToListAsync();
+        }
+
+        public async Task AddListino(Listino listino)
+        {
+            await Db.Listini.AddAsync(listino);
+            Db.Entry(listino.ServicePartner).State = EntityState.Unchanged;
+            Db.Entry(listino.VoceCosto).State = EntityState.Unchanged;
+        }
     }
 }
