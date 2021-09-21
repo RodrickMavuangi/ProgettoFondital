@@ -1485,6 +1485,9 @@ a:not([href]):not([tabindex]) {
         max-width: 120px !important;
         min-width: 120px !important;
     }
+    .table .k-command-cell span.k-switch-container {
+        left: 20px !important;
+    }
 }
 
 
