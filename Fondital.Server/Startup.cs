@@ -21,6 +21,7 @@ using AutoMapper;
 using Fondital.Server.Automapper;
 using Fondital.Repository;
 using Fondital.Shared.Settings;
+using Serilog;
 
 namespace Fondital.Server
 {
@@ -36,7 +37,7 @@ namespace Fondital.Server
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {   
-            services.AddDbContext<FonditalDbContext>(options => options.UseSqlServer(Configuration["Database:ConnectionString"]));
+            services.AddDbContext<FonditalDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("Database")));
 
             services.AddDefaultIdentity<Utente>(options =>
                 {
@@ -84,6 +85,9 @@ namespace Fondital.Server
 
             services.AddAutoMapper(cfg => cfg.AddProfile<MappingProfile>());
 
+            var logger = new LoggerConfiguration().ReadFrom.Configuration(Configuration).CreateLogger();
+
+            services.AddSingleton<ILogger>(logger);
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddTransient<IAuthService, AuthService>();
             services.AddTransient<IUtenteService, UtenteService>();
@@ -130,15 +134,18 @@ namespace Fondital.Server
             {
                 app.UseDeveloperExceptionPage();
                 app.UseWebAssemblyDebugging();
-                
-                app.UseSwagger();
-                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Fondital.Server v1"));
             }
             else
             {
                 app.UseExceptionHandler("/Error");
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
+            }
+
+            if (Configuration.GetValue<bool>("IsSwaggerEnabled"))
+            {
+                app.UseSwagger();
+                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Fondital.Server v1"));
             }
 
             app.UseCors("CorsPolicy");

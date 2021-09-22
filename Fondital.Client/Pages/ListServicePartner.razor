@@ -74,8 +74,9 @@ else
                     <Template>
                         @{
                             ServicePartnerDto sp = (ServicePartnerDto)context;
-                            <i class="bi bi-people-fill float-lg-left icoClienti blu" @onclick="@(() => navManager.NavigateTo($"/detailservicepartner/{sp.Id}"))"></i>
-                            <b>@(sp.Utenti.Count())</b>
+                            @*<i class="bi bi-people-fill float-lg-left icoClienti blu" @onclick="@(() => navManager.NavigateTo($"/detailservicepartner/{sp.Id}"))"></i>
+                            <b>@(sp.Utenti.Count())</b>*@
+                            <span class="link" @onclick="@(() => navManager.NavigateTo($"/detailservicepartner/{sp.Id}"))"><i class="bi bi-people-fill float-lg-left icoClienti blu"></i> <b>@(sp.Utenti.Count())</b></span>
                         }
                     </Template>
                 </GridColumn>
@@ -112,4 +113,3 @@ else
         <div class="dialogForm"><EditSPDialog SPToUpdate="SpSelected" OnClose="@(() => ShowEditDialog = false)" OnSave="CloseAndRefresh" /> </div>
     </WindowContent>
 </TelerikWindow>
-
