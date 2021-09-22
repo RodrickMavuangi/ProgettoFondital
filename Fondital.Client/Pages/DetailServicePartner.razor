@@ -30,7 +30,7 @@
     </div>	   <!--FINE TITLE PAGE-->
     <!--ROW BOTTONI-->
 
-    <div class="col-md-7 pb-4 ">
+    <div class="col-md-7 pb-4 pr-0">
 
         <div class="col  text-left d-inline-block  barraStrumenti">
             <i class="bi bi-people-fill float-lg-left  blu pt-1"></i>
@@ -39,14 +39,15 @@
             <span class="font18 rosso px-4">@localizer["Disabilitati"] / <b>@SpSelected.Utenti.Where(x => x.IsAbilitato == false).Count()</b></span>
         </div>
 
-        <div class="col-3  text-right d-inline-block float-lg-right p-0">
-            <TelerikButton Class="btn btn-primary btn-verde btn-lg mx-1" OnClick=@(()=> ShowAddDialog = true)>@localizer["AggiungiUtente"]</TelerikButton>
+        <div class="col-5  text-right d-inline-block float-lg-right p-0">
+            <a href="javascript: history.back()" Class="btn btn-grigio btn-lg mx-1"><i class="bi bi-arrow-return-left"></i></a>
+            <TelerikButton Class="btn btn-verde btn-lg mx-1" OnClick=@(()=> ShowAddDialog = true)>@localizer["AggiungiUtente"]</TelerikButton>
         </div>
+        
 
-
+        </div>
+        <!--FINE BUTTON TOP DX-->
     </div>
-    <!--FINE BUTTON TOP DX-->
-</div>
 <!--FINE ROW 1 . TITOLI + BUTTON DX-->
 
 
@@ -54,7 +55,7 @@
 <!-- BARRA FILTRI-->
 <div class="row-2 d-inline w-100 mb-4 pt-0 pb-4 pt-4 border-bottom barraFiltri">
 
-    <div class="col-md-12 ms-sm-auto col-lg-12 fit-content">
+    <div class="col-md-12 ms-sm-auto col-lg-12 fit-content pr-0">
 
         <div class="col  text-left d-inline-block  float-lg-left pt-2 mr-80">
             <span class="font12 grigio px-2">@localizer["CodiceFornitore"]:</span>  <span class="font18 nero px-2"><b>@SpSelected.CodiceFornitore</b></span>

@@ -516,6 +516,12 @@ a:not([href]):not([tabindex]) {
         text-align: right !important;
         display: inline-block !important;
     }
+    
+    .k-list .k-item.k-state-selected,
+    .k-list-optionlabel.k-state-selected {
+        color: #ffffff !important;
+        background-color: #ED0F0F !important;
+    }
 
 
 /*************** PROFILO ******************/
@@ -568,13 +574,16 @@ ul.dropdownMenu {
     float: left;
     margin: 2px 0 0 0;
 }
-a:hover .nomeCircle {
-    background: #0D0341;
-}
+
     a .nomeCircle {
         color: #007BFF !important;
         text-decoration: none !important;
     }
+a:hover .nomeCircle {
+    background: #0D0341;
+    color: #fff !important;
+}
+
     .fontProfilo {
         font-size: 16px;
         font-weight: bold;
@@ -862,6 +871,19 @@ a:hover .nomeCircle {
         background-color: #395D2A !important;
         border-color: #395D2A !important;
         color: #fff !important;
+    }
+
+.btn-grigio {
+    background-color: #868E96 !important;
+    border-color: #868E96 !important;
+    color: #fff !important;
+    
+}
+
+    .btn-grigio:hover {
+        background-color: #D7D7D7 !important;
+        border-color: #D7D7D7 !important;
+        text-decoration: none !important;
     }
 
 .btnIcon {
@@ -1195,8 +1217,8 @@ a:hover .nomeCircle {
     }
 
 .k-dialog-buttongroup .k-button {
-    background-color: #D7D7D7 !important;
-    border-color: #D7D7D7 !important;
+    background-color: #868E96 !important;
+    border-color: #868E96 !important;
     color: #fff !important;
     display: inline-block;
     text-align: center;

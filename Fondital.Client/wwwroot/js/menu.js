@@ -11,17 +11,22 @@ function manipulateActiveLink(firstRender, uri)
     if (activeAnchor === null)
     {
         activeAnchor = document.querySelector('a.active');
+        //activeAnchor = document.querySelector("span.k-menu-link > a.active");
     }
 
     activeAnchor.parentElement.classList.add('bg_active');
+    
 
     let anagraficaLiElement = document.querySelector("[aria-haspopup=true]");
+    
+
 
     anagraficaLiElement.addEventListener('mouseenter', e => {
         OnClickHandler({ url: actualUri });
     });
 
     anagraficaLiElement.addEventListener('mouseleave', e => {
+        
         OnClickHandler({ url: actualUri });
     });
 }
