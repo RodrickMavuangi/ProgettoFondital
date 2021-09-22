@@ -45,11 +45,14 @@
         </div>
         
 
-        </div>
-        <!--FINE BUTTON TOP DX-->
-    </div>
-<!--FINE ROW 1 . TITOLI + BUTTON DX-->
-
+<TelerikWindow Class="modal-app dialogBox" Width="500px" Height="auto" Centered="true" @bind-Visible=@ShowEditDialog_SP Modal="true">
+    <WindowActions>
+        <WindowAction Name="Close" IconClass="k-icon k-i-close text-dark" />
+    </WindowActions>
+    <WindowContent>
+        <EditSPDialog SPToUpdate="SpSelected" OnClose="CloseAndRefresh" OnSave="CloseAndRefresh" />
+    </WindowContent>
+</TelerikWindow>
 
 
 <!-- BARRA FILTRI-->
@@ -102,7 +105,7 @@
         <GridCommandColumn Context="lav" Width="80px">
             @{
                 var utenteDto = lav as UtenteDto;
-                <GridCommandButton Class="btnIcon bgBianco white" Command="EditLavorazione" Icon="" ImageUrl="/img/Icons/edit.svg"  OnClick="@(() => EditUtente(utenteDto.Id))" />
+                <GridCommandButton Class="btnIcon bgBianco white" Command="EditUtente" Icon="" ImageUrl="/img/Icons/edit.svg" OnClick="@(() => EditUtente(utenteDto.Id))" />
             }
         </GridCommandColumn>
         <GridCommandColumn Context="lav" Width="80px">
@@ -118,32 +121,11 @@
     </GridColumns>
 </TelerikGrid>
 
-<TelerikWindow Class="modal-app dialogBox" Width="500px" Height="auto" Centered="true" @bind-Visible=@ShowEditDialog Modal="true">
-    <WindowActions>
-        <WindowAction Name="Close" IconClass="k-icon k-i-close text-dark" />
-    </WindowActions>
-    <WindowContent>
-        <div class="dialogForm"><EditSPDialog SPToUpdate="SpSelected" OnClose="@(() => ShowEditDialog = false)" OnSave="CloseAndRefresh" /></div>
-</WindowContent>
-</TelerikWindow>
-
-
-
-<TelerikWindow Class="modal-app dialogBox" Width="500px" Height="auto" Centered="true" @bind-Visible=@ShowEditDialog Modal="true">
+@*<TelerikWindow Class="modal-app dialogBox" Width="500px" Height="auto" Centered="true" @bind-Visible=@ShowEditDialog Modal="true">
     <WindowActions>
         <WindowAction Name="Close" IconClass="k-icon k-i-close text-dark" />
     </WindowActions>
     <WindowContent>
         <div class="dialogForm"><EditSPDialog SPToUpdate="SpSelected" OnClose="CloseAndRefresh" OnSave="CloseAndRefresh" /></div>
-</WindowContent>
-</TelerikWindow>
-
-
-<TelerikWindow Class="modal-app dialogBox" Width="500px" Height="auto" Centered="true" @bind-Visible=@ShowAddDialog Modal="true">
-    <WindowActions>
-        <WindowAction Name="Close" IconClass="k-icon k-i-close text-dark" />
-    </WindowActions>
-    <WindowContent>
-        <div class="dialogForm"><AddUserDialog SPToUpdate="@SpSelected" OnClose="CloseAndRefresh" OnSave="CloseAndRefresh" /></div>
-</WindowContent>
-</TelerikWindow>
+    </WindowContent>
+</TelerikWindow>*@

@@ -1,7 +1,6 @@
 ﻿using Fondital.Shared.Dto;
 using Fondital.Shared.Models;
 using Microsoft.AspNetCore.Components;
-using Microsoft.AspNetCore.Components.Forms;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,6 +23,7 @@ namespace Fondital.Client.Pages
 		private List<UtenteDto> ListaUtenti = new List<UtenteDto>();
 		protected bool ShowAddDialog { get; set; } = false;
 		protected bool ShowEditDialog { get; set; } = false;
+		protected bool ShowEditDialog_SP { get; set; } = false;
 		protected UtenteDto UtenteSelected { get; set; }
 		protected ServicePartnerDto SpSelected { get; set; } = new ServicePartnerDto() { CodiceCliente = "", CodiceFornitore = "", RagioneSociale = "" };
 
@@ -46,6 +46,7 @@ namespace Fondital.Client.Pages
 		{
 			ShowAddDialog = false;
 			ShowEditDialog = false;
+			ShowEditDialog_SP = false;
 			await RefreshUtenti();
 		}
 
@@ -65,7 +66,7 @@ namespace Fondital.Client.Pages
 		protected async Task EditSp(int SpId)
 		{
 			SpSelected = await servicePartnerClient.GetServicePartnerWithUtenti(int.Parse(servicePId));
-			ShowEditDialog = true;
+			ShowEditDialog_SP = true;
 		}
 
 		protected async Task sendMail(int utenteId)
@@ -78,7 +79,7 @@ namespace Fondital.Client.Pages
 				MailRequest mailRequest = new MailRequest()
 				{
 					ToEmail = UtenteToSendMail.UserName,
-					Subject = "Risetta la Password",
+					Subject = localizer["RisettaPassword"],
 				};
 
 				await mailClient.sendMail(mailRequest);
