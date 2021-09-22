@@ -3,6 +3,9 @@ using Fondital.Shared.Services;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Logging.AzureAppServices;
 using Fondital.Client.Authentication;
 using Microsoft.JSInterop;
 using System;
@@ -42,6 +45,8 @@ namespace Fondital.Client
             builder.Services.AddTelerikBlazor();
             builder.Services.AddLocalization(option => option.ResourcesPath = "LanguageResources");
 
+            ConfigureLogging(builder);
+
             var host = builder.Build();
 
             CultureInfo culture;
@@ -62,6 +67,19 @@ namespace Fondital.Client
             CultureInfo.DefaultThreadCurrentUICulture = culture;
 
             await host.RunAsync();
+        }
+
+        private static void ConfigureLogging(WebAssemblyHostBuilder builder, string section = "Logging")
+        {
+            builder.Logging.AddConfiguration(builder.Configuration.GetSection(section));
+            builder.Logging.ClearProviders();
+            builder.Logging.AddAzureWebAppDiagnostics();
+            builder.Services.Configure<AzureFileLoggerOptions>(options =>
+            {
+                options.FileName = "fondital-azure-diagnostics-client";
+                options.FileSizeLimit = 5 * 1024;
+                options.RetainedFileCountLimit = 5;
+            });
         }
     }
 }
