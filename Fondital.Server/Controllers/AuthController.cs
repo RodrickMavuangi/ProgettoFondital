@@ -26,9 +26,9 @@ namespace Fondital.Server.Controllers
         private readonly IConfigurazioneService _confService;
         private readonly IUtenteService _utenteService;
         private readonly SignInManager<Utente> _signinManager;
-        private readonly ILogger<AuthController> _logger;
+        private readonly Serilog.ILogger _logger;
 
-        public AuthController(ILogger<AuthController> logger, UserManager<Utente> userManager, RoleManager<Ruolo> roleManager, IOptionsSnapshot<JwtSettings> jwtSettings, IAuthService authService, IConfigurazioneService confService, IUtenteService utenteService, SignInManager<Utente> signInManager)
+        public AuthController(Serilog.ILogger logger, UserManager<Utente> userManager, RoleManager<Ruolo> roleManager, IOptionsSnapshot<JwtSettings> jwtSettings, IAuthService authService, IConfigurazioneService confService, IUtenteService utenteService, SignInManager<Utente> signInManager)
         {
             _userManager = userManager;
             _roleManager = roleManager;
@@ -56,6 +56,7 @@ namespace Fondital.Server.Controllers
         [AllowAnonymous]
         public async Task<IActionResult> LogIn([FromBody] LoginRequestDto loginRequest)
         {
+            _logger.Information("Log di prova per l'utente con email {LoginRequestEmail}", loginRequest.Email);
             LoginResponseDto response = new();
             try
             {
@@ -90,7 +91,7 @@ namespace Fondital.Server.Controllers
             }
             catch (Exception ex)
             {
-                _logger.LogInformation($"Login error: {ex.Message} - Email: {loginRequest.Email}");
+                _logger.Error("Login error: {Message} - Email: {LoginRequestEmail}", ex.Message, loginRequest.Email);
                 return BadRequest(ex.Message);
             }
         }
@@ -114,7 +115,7 @@ namespace Fondital.Server.Controllers
             }
             catch (Exception ex)
             {
-                _logger.LogInformation($"Change password error: {ex.Message} - Email: {ChangePwRequest.Email}");
+                _logger.Error($"Change password error: {ex.Message} - Email: {ChangePwRequest.Email}");
                 return BadRequest(ex.Message);
             }
         }
