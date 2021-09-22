@@ -38,9 +38,9 @@ namespace Fondital.Client.Pages
 			await RefreshUtenti();
 		}
 
-		public List<UtenteDto> ListaUtenti_Filtered => ConStato == StatoUtente.Abilitati ? ListaUtenti.Where(x => x.Email.ToLower().Contains(SearchText.ToLower()) && x.IsAbilitato == true).ToList() :
-													   ConStato == StatoUtente.Disabilitati ? ListaUtenti.Where(x => x.Email.ToLower().Contains(SearchText.ToLower()) && x.IsAbilitato == false).ToList() :
-													   ListaUtenti.Where(x => x.Email.ToLower().Contains(SearchText.ToLower())).ToList();
+		public List<UtenteDto> ListaUtenti_Filtered => ConStato == StatoUtente.Abilitati ? SpSelected.Utenti.Where(x => x.Email.ToLower().Contains(SearchText.ToLower()) && x.IsAbilitato == true).ToList() :
+													   ConStato == StatoUtente.Disabilitati ? SpSelected.Utenti.Where(x => x.Email.ToLower().Contains(SearchText.ToLower()) && x.IsAbilitato == false).ToList() :
+													   SpSelected.Utenti.Where(x => x.Email.ToLower().Contains(SearchText.ToLower())).ToList();
 
 		protected async Task CloseAndRefresh()
 		{

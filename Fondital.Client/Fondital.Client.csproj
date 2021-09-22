@@ -19,12 +19,10 @@
 
   <ItemGroup>
     <None Include="wwwroot\appsettings.Development.json">
-      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
       <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
       <CopyToPublishDirectory>Never</CopyToPublishDirectory>
     </None>
     <None Include="wwwroot\appsettings.json">
-      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
       <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
       <CopyToPublishDirectory>Never</CopyToPublishDirectory>
     </None>
@@ -43,7 +41,7 @@
     <PackageReference Include="Microsoft.AspNetCore.Mvc.RazorPages" Version="2.2.5" />
     <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="6.12.2" />
     <PackageReference Include="System.Net.Http.Json" Version="5.0.0" />
-    <PackageReference Include="Telerik.UI.for.Blazor.Trial" Version="2.25.0" />
+    <PackageReference Include="Telerik.UI.for.Blazor.Trial" Version="2.26.0" />
   </ItemGroup>
 
   <ItemGroup>

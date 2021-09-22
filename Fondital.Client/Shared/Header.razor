@@ -33,15 +33,34 @@
                                         </ul>
                                     </div>
                                     <div class="float-lg-left align-items-center">
+                                        <ul class="dropdownMenu">
 
-                                        <div class="nomeCircle fontProfilo">@UtenteCorrente?.Nome.First()@UtenteCorrente?.Cognome.First()</div>
+                                            <li class="dropdown">
 
-                                        <TelerikMenu Data="@MenuItems"
-                                                     UrlField="@nameof(MenuItem.Page)"
-                                                     ItemsField="@nameof(MenuItem.SubSectionList)"
-                                                     TextField="@nameof(MenuItem.Section)"
-                                                     Class="menuProfilo">
-                                        </TelerikMenu>
+                                                <a href="javascript:void(0)" class="dropbtn"> <div class="nomeCircle fontProfilo">@UtenteCorrente?.Nome.First()@UtenteCorrente?.Cognome.First()</div></a>
+
+                                                <div class="menuProfilo">
+                                                    <a href="javascript:void(0)" class="dropbtn"><span class="k-icon k-menu-expand-arrow k-i-arrow-60-down" role="presentation"></span></a>
+                                                </div>
+
+                                                <div class="dropdown-content">
+                                                    <a href="/profile" title="@localizer["Impostazioni"]">@localizer["Impostazioni"]</a>
+                                                    <a href="/account/logout" title="@localizer["Esci"]" class="noborder">@localizer["Esci"]</a>
+                                                </div>
+
+                                            </li>
+
+                                        </ul>
+                                       
+
+                                            @*<TelerikMenu Data="@MenuItems"
+                                                 UrlField="@nameof(MenuItem.Page)"
+                                                 ItemsField="@nameof(MenuItem.SubSectionList)"
+                                                 TextField="@nameof(MenuItem.Section)"
+                                                 Class="menuProfilo">
+                                            </TelerikMenu>*@
+
+                                            
 
                                     </div>
                                 </div>
