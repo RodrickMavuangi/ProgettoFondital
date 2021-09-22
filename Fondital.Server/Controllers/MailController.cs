@@ -1,16 +1,16 @@
 ﻿using Fondital.Shared.Models;
 using Fondital.Shared.Models.Auth;
 using Fondital.Shared.Services;
+using Fondital.Shared.Settings;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
+using System.Web;
 
 namespace Fondital.Server.Controllers
 {
@@ -22,12 +22,14 @@ namespace Fondital.Server.Controllers
         private readonly ILogger<MailController> _logger;
         private readonly IMailService _mailService;
         private readonly IServicePartnerService _spService;
-        public MailController(ILogger<MailController> logger, UserManager<Utente> userManager, IMailService mailService, IServicePartnerService spService)
+        private readonly JwtSettings _jwtSettings;
+        public MailController(ILogger<MailController> logger, UserManager<Utente> userManager, IMailService mailService, IServicePartnerService spService, IOptionsSnapshot<JwtSettings> jwtSettings)
         {
             _userManager = userManager;
             _logger = logger;
             _mailService = mailService;
             _spService = spService;
+            _jwtSettings = jwtSettings.Value;
         }
 
 
@@ -38,15 +40,9 @@ namespace Fondital.Server.Controllers
             {
                 var user = await _userManager.FindByEmailAsync(MailRequest.ToEmail);
                 var code = await _userManager.GeneratePasswordResetTokenAsync(user);
-
                 code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
-                var callbackUrl = Url.Page(
-                    "/Account/ResetPassword",
-                    pageHandler: null,
-                    values: new { area = "Identity", code },
-                    protocol: Request.Scheme);
-
-                MailRequest.Body = $"Inserisci una Nuova Passord per confermare l'account cliccando <a href='{callbackUrl}'>Account/Password</a>";
+                var urlConfirmation = $"{_jwtSettings.Audience}/account/resetpassword/{HttpUtility.UrlEncode(MailRequest.ToEmail)}/{HttpUtility.UrlEncode(code)}";
+                MailRequest.Body = $"Inserisci una Nuova Passord per confermare l'account cliccando <a href='{urlConfirmation}'>Account/Password</a>";
                 await _mailService.SendEmailAsync(MailRequest);
                 return Ok();
             }
@@ -75,17 +71,12 @@ namespace Fondital.Server.Controllers
 
                 var code = await _userManager.GeneratePasswordResetTokenAsync(user);
                 code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
-                var callbackUrl = Url.Page(
-                    "/Account/ResetPassword",
-                    pageHandler: null,
-                    values: new { area = "Identity", code },
-                    protocol: Request.Scheme);
-
+                var urlConfirmation = $"{_jwtSettings.Audience}/account/resetpassword/{HttpUtility.UrlEncode(utente.Email)}/{HttpUtility.UrlEncode(code)}";
                 MailRequest _mailRequest = new MailRequest()
                 {
                     ToEmail = utente.Email,
                     Subject = "SETTARE LA PRIMA PASSWORD",
-                    Body = $"Inserisci la prima Passord per confermare l'account cliccando <a href='{callbackUrl}'>Account/Password</a>"
+                    Body = $"Inserisci la prima Passord per confermare l'account cliccando <a href='{urlConfirmation}'>Account/Password</a>"
                 };
                 await _mailService.SendEmailAsync(_mailRequest);
                 return Ok();

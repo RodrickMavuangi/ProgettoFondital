@@ -53,7 +53,7 @@
  </div>
 
 
-<TelerikWindow Class="modal-app dialogBox" Width="500px" Height="auto" Centered="true" @bind-Visible=@ShowEditDialog Modal="true">
+<TelerikWindow Class="modal-app dialogBox" Width="500px" Height="auto" Centered="true" @bind-Visible=@ShowEditDialog_SP Modal="true">
     <WindowActions>
         <WindowAction Name="Close" IconClass="k-icon k-i-close text-dark" />
     </WindowActions>
@@ -93,7 +93,7 @@
         <GridCommandColumn Context="lav">
             @{
                 var utenteDto = lav as UtenteDto;
-                <GridCommandButton Command="EditLavorazione" Icon="edit" OnClick="@(() => EditUtente(utenteDto.Id))" />
+                <GridCommandButton Command="EditUtente" Icon="edit" OnClick="@(() => EditUtente(utenteDto.Id))" />
             }
         </GridCommandColumn>
         <GridCommandColumn Context="lav">
@@ -109,11 +109,11 @@
     </GridColumns>
 </TelerikGrid>
 
-<TelerikWindow Class="modal-app dialogBox" Width="500px" Height="auto" Centered="true" @bind-Visible=@ShowEditDialog Modal="true">
+@*<TelerikWindow Class="modal-app dialogBox" Width="500px" Height="auto" Centered="true" @bind-Visible=@ShowEditDialog Modal="true">
     <WindowActions>
         <WindowAction Name="Close" IconClass="k-icon k-i-close text-dark" />
     </WindowActions>
     <WindowContent>
         <EditSPDialog SPToUpdate="SpSelected" OnClose="@(() => ShowEditDialog = false)" OnSave="CloseAndRefresh" />
     </WindowContent>
-</TelerikWindow>
+</TelerikWindow>*@
