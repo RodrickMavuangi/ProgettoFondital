@@ -13,7 +13,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Fondital.Data", "Fondital.D
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fondital.Services", "Fondital.Services\Fondital.Services.csproj", "{C80754B9-2EED-4E2B-9712-D66F90B93408}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fondital.Repository", "Fondital.Repository\Fondital.Repository.csproj", "{F629582E-CC79-493A-A6DD-02C0CA6D8DB4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Fondital.Repository", "Fondital.Repository\Fondital.Repository.csproj", "{F629582E-CC79-493A-A6DD-02C0CA6D8DB4}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

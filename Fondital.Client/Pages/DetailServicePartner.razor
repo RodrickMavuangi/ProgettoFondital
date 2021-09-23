@@ -121,11 +121,20 @@
     </GridColumns>
 </TelerikGrid>
 
-@*<TelerikWindow Class="modal-app dialogBox" Width="500px" Height="auto" Centered="true" @bind-Visible=@ShowEditDialog Modal="true">
+<TelerikWindow Class="modal-app dialogBox" Width="500px" Height="auto" Centered="true" @bind-Visible=@ShowEditDialog_SP Modal="true">
     <WindowActions>
         <WindowAction Name="Close" IconClass="k-icon k-i-close text-dark" />
     </WindowActions>
     <WindowContent>
-        <div class="dialogForm"><EditSPDialog SPToUpdate="SpSelected" OnClose="CloseAndRefresh" OnSave="CloseAndRefresh" /></div>
+        <EditSPDialog SPToUpdate="SpSelected" OnClose="CloseAndRefresh" OnSave="CloseAndRefresh" />
     </WindowContent>
-</TelerikWindow>*@
+</TelerikWindow>
+
+<TelerikWindow Class="modal-app dialogBox" Width="500px" Height="auto" Centered="true" @bind-Visible=@ShowEditUserDialog Modal="true">
+    <WindowActions>
+        <WindowAction Name="Close" IconClass="k-icon k-i-close text-dark" />
+    </WindowActions>
+    <WindowContent>
+        <EditUserDialog UtenteToUpdate="UserSelected" OnClose="CloseAndRefresh" OnSave="CloseAndRefresh" />
+    </WindowContent>
+</TelerikWindow>

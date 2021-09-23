@@ -32,9 +32,9 @@ namespace Fondital.Client.Pages
             await RefreshDifetti();
         }
 
-        public List<DifettoDto> ListaDifetti_filtered => CurrentCulture == "ru-RU" ?
-            ListaDifetti.Where<DifettoDto>(x => x.NomeRusso.ToLower().Contains(SearchText.ToLower())).ToList() :
-            ListaDifetti.Where<DifettoDto>(x => x.NomeItaliano.ToLower().Contains(SearchText.ToLower())).ToList();
+        public List<DifettoDto> ListaDifettiFiltered => CurrentCulture == "ru-RU" ?
+            ListaDifetti.Where(x => x.NomeRusso.Contains(SearchText, StringComparison.InvariantCultureIgnoreCase)).ToList() :
+            ListaDifetti.Where(x => x.NomeItaliano.Contains(SearchText, StringComparison.InvariantCultureIgnoreCase)).ToList();
 
         protected async Task RefreshDifetti()
         {

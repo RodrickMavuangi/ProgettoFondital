@@ -58,7 +58,7 @@ else
     </div><!--FINE BARRA FILTRI-->
 
     <div class="row-3 d-flex justify-content-between flex-wrap flex-md-nowrap  pt-0 pb-4 mb-4">
-        <TelerikGrid Data="@ListaLavorazioni_filtered" Pageable="true" PageSize="@PageSize" Class="table table-striped">
+        <TelerikGrid Data="@ListaLavorazioniFiltered" Pageable="true" PageSize="@PageSize" Class="table table-striped">
             <GridColumns>
                 <GridColumn Field=@nameof(LavorazioneDto.Id) Title="#" Width="10%" />
                 <GridColumn Field=@nameof(LavorazioneDto.NomeItaliano) Width="70%" Title="@localizer["Descrizione"].Value.ToUpper()" Visible="@(CurrentCulture == "it-IT")" />
@@ -88,7 +88,7 @@ else
                 <WindowAction Name="Close" IconClass="k-icon k-i-close text-dark" />
             </WindowActions>
             <WindowContent>
-                <div class="dialogForm"><AddLavorazioneDialog OnClose="@(() => ShowAddDialog = false)" OnSave="CloseAndRefresh"></AddLavorazioneDialog></div>
+                <div class="dialogForm"><AddLavorazioneDialog OnClose="CloseAndRefresh" OnSave="CloseAndRefresh"></AddLavorazioneDialog></div>
             </WindowContent>
         </TelerikWindow>
 
@@ -97,6 +97,6 @@ else
                 <WindowAction Name="Close" IconClass="k-icon k-i-close text-dark" />
             </WindowActions>
             <WindowContent>
-                <div class="dialogForm"> <EditLavorazioneDialog LavorazioneToUpdate="LavorazioneSelected" OnClose="@(() => ShowEditDialog = false)" OnSave="CloseAndRefresh" /></div>
+                <div class="dialogForm"> <EditLavorazioneDialog LavorazioneToUpdate="LavorazioneSelected" OnClose="CloseAndRefresh" OnSave="CloseAndRefresh" /></div>
             </WindowContent>
         </TelerikWindow>
