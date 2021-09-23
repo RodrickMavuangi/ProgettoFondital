@@ -74,8 +74,9 @@ else
                     <Template>
                         @{
                             ServicePartnerDto sp = (ServicePartnerDto)context;
-                            <i class="bi bi-people-fill float-lg-left icoClienti blu" @onclick="@(() => navManager.NavigateTo($"/detailservicepartner/{sp.Id}"))"></i>
-                            <b>@(sp.Utenti.Count())</b>
+                            @*<i class="bi bi-people-fill float-lg-left icoClienti blu" @onclick="@(() => navManager.NavigateTo($"/detailservicepartner/{sp.Id}"))"></i>
+                            <b>@(sp.Utenti.Count())</b>*@
+                            <span class="link" @onclick="@(() => navManager.NavigateTo($"/detailservicepartner/{sp.Id}"))"><i class="bi bi-people-fill float-lg-left icoClienti blu"></i> <b>@(sp.Utenti.Count())</b></span>
                         }
                     </Template>
                 </GridColumn>
@@ -112,32 +113,3 @@ else
         <div class="dialogForm"><EditSPDialog SPToUpdate="SpSelected" OnClose="CloseAndRefresh" OnSave="CloseAndRefresh" /> </div>
     </WindowContent>
 </TelerikWindow>
-
-@*OnEdit="@EditHandler"//*@
-<div class="row-3 d-flex justify-content-between flex-wrap flex-md-nowrap  pt-0 pb-4 mb-4">
-
-    <TelerikGrid Data="@ServicePartners_filtered" EditMode="@GridEditMode.Popup" Pageable="true"
-                 Class="table table-striped" OnUpdate="@UpdateHandler" Resizable="true" Sortable="true">
-        <GridColumns>
-            <GridColumn Field=@nameof(ServicePartnerDto.CodiceFornitore) Title=@localizer["CodiceFornitore"].Value.ToUpper() />
-            <GridColumn Field=@nameof(ServicePartnerDto.RagioneSociale) Title=@localizer["RagioneSociale"].Value.ToUpper() />
-            <GridColumn Field=@nameof(ServicePartnerDto.CodiceCliente) Title=@localizer["CodiceUtente"].Value.ToUpper() />
-            <GridColumn Field="N° UTENTI" Title="N° UTENTI" Id="utenti">
-                <Template>
-                    @{
-                        ServicePartnerDto sp = (ServicePartnerDto)context;
-                        <i class="bi bi-people-fill float-lg-left icoClienti blu gj-cursor-pointer" @onclick="@(() => navManager.NavigateTo($"/detailservicepartner/{sp.Id}"))"></i>
-
-                        <b>@(sp.Utenti.Count())</b>
-                    }
-                </Template>
-            </GridColumn>
-            <GridCommandColumn Width="80px" Context="sp">
-                @{
-                    var servicePartner = sp as ServicePartnerDto;
-                    <GridCommandButton Class="settingCol btnIcon bgBluOn white" Command="MyOwnCommand" Icon="" ShowInEdit="false" ImageUrl="/img/Icons/gear-fill.svg" OnClick="@(() => EditSp(servicePartner.Id))"></GridCommandButton>
-                }
-            </GridCommandColumn>
-        </GridColumns>
-    </TelerikGrid>
-</div>

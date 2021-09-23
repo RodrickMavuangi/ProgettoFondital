@@ -405,5 +405,28 @@ La nuova password deve essere lunga almeno 8 caratteri e contenere minuscole, ma
   </data>
   <data name="Valore" xml:space="preserve">
     <value>Valore</value>
+  <data name="MailInviata" xml:space="preserve">
+    <value>è stata inviata una mail a </value>
+  </data>
+  <data name="ResetPassword" xml:space="preserve">
+    <value>Per Risettare la password ?</value>
+  </data>
+  <data name="InviaMail" xml:space="preserve">
+    <value>Vuoi mandare una mail all'utente</value>
+  </data>
+  <data name="SettaPassword" xml:space="preserve">
+    <value>Per settare la prima Password</value>
+  </data>
+  <data name="ConfermaPasswordR" xml:space="preserve">
+    <value>Conferma Password</value>
+  </data>
+  <data name="ErroreEmail" xml:space="preserve">
+    <value>Verificare che l'Email inserita sia corretta</value>
+  </data>
+  <data name="RitrovaAccount" xml:space="preserve">
+    <value>Inserisci l'Email per cercare il tuo Account</value>
+  </data>
+  <data name="RisettaPassword" xml:space="preserve">
+    <value>Risetta la Passowrd</value>
   </data>
 </root>

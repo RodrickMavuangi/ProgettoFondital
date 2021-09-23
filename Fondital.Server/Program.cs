@@ -1,12 +1,10 @@
+using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using Microsoft.Extensions.Logging.AzureAppServices;
+using Serilog;
 
 namespace Fondital.Server
 {
@@ -14,16 +12,34 @@ namespace Fondital.Server
     {
         public static void Main(string[] args)
         {
-            var host = CreateHostBuilder(args).Build();
+            var host = CreateWebHostBuilder(args).Build();
 
             host.Run();
         }
 
-        public static IHostBuilder CreateHostBuilder(string[] args) =>
-            Host.CreateDefaultBuilder(args)
-                .ConfigureWebHostDefaults(webBuilder =>
+        public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
+            WebHost.CreateDefaultBuilder(args)
+            .ConfigureLogging(logging =>
+            {
+                logging.ClearProviders();
+                logging.AddConsole();
+                logging.AddDebug();
+                logging.AddAzureWebAppDiagnostics();
+                logging.AddSerilog();
+            })
+            .ConfigureServices(services =>
+            {
+                services.Configure<AzureFileLoggerOptions>(options =>
                 {
-                    webBuilder.UseStartup<Startup>();
+                    options.FileName = "fondital-azure-diagnostics";
+                    options.FileSizeLimit = 5 * 1024;
+                    options.RetainedFileCountLimit = 5;
                 });
+            })
+            .UseStartup<Startup>();
+        //  .ConfigureWebHostDefaults(webBuilder =>
+        //  {
+        //      webBuilder.UseStartup<Startup>();
+        //  });
     }
 }
