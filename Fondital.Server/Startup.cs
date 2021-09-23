@@ -22,6 +22,7 @@ using Fondital.Server.Automapper;
 using Fondital.Repository;
 using Fondital.Shared.Settings;
 using Serilog;
+using Fondital.Server.Controllers;
 
 namespace Fondital.Server
 {
@@ -98,6 +99,9 @@ namespace Fondital.Server
             services.AddTransient<IListinoService, ListinoService>();
             services.AddTransient<IMailService, MailService>();
             services.AddTransient<ILavorazioneService, LavorazioneService>();
+
+            services.AddHttpClient<RestExternalServiceController>();
+            services.Configure<RestClientSettings>(Configuration.GetSection("RestClientSettings"));
 
             services.AddSwaggerGen(c =>
             {
