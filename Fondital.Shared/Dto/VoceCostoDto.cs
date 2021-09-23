@@ -18,5 +18,6 @@ namespace Fondital.Shared.Dto
         public TipologiaVoceCosto Tipologia { get; set; } = TipologiaVoceCosto.Forfettario;
         public bool IsAbilitato { get; set; } = true;
         public List<ListinoDto> Listini { get; set; } = new List<ListinoDto>();
+        public List<RapportoDto> Rapporti { get; set; } = new List<RapportoDto>();
     }
 }

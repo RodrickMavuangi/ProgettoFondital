@@ -1,6 +1,5 @@
 ﻿using Fondital.Shared.Enums;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 
 namespace Fondital.Shared.Models
 {
@@ -12,5 +11,6 @@ namespace Fondital.Shared.Models
         public TipologiaVoceCosto Tipologia { get; set; } = TipologiaVoceCosto.Forfettario;
         public bool IsAbilitato { get; set; } = true;
         public List<Listino> Listini { get; set; } = new List<Listino>();
+        public List<Rapporto> Rapporti { get; set; } = new List<Rapporto>();
     }
 }

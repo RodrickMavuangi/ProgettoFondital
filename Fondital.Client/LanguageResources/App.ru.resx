@@ -421,4 +421,43 @@ La nuova password deve essere lunga almeno 8 caratteri e contenere minuscole, ma
   <data name="Data" xml:space="preserve">
     <value>Data RU</value>
   </data>
+  <data name="Modifiche" xml:space="preserve">
+    <value>Modifiche RU</value>
+  </data>
+  <data name="Rapporto" xml:space="preserve">
+    <value>Rapporto RU</value>
+  </data>
+  <data name="DatiAnagrafici" xml:space="preserve">
+    <value>Dati Anagrafici RU</value>
+  </data>
+  <data name="DatiCaldaia" xml:space="preserve">
+    <value>Dati Caldaia RU</value>
+  </data>
+  <data name="Intervento" xml:space="preserve">
+    <value>Intervento RU</value>
+  </data>
+  <data name="Avanti" xml:space="preserve">
+    <value>Avanti RU</value>
+  </data>
+  <data name="Indietro" xml:space="preserve">
+    <value>Indietro RU</value>
+  </data>
+  <data name="Citta" xml:space="preserve">
+    <value>Città RU</value>
+  </data>
+  <data name="NumCivico" xml:space="preserve">
+    <value>Numero RU</value>
+  </data>
+  <data name="Via" xml:space="preserve">
+    <value>Via RU</value>
+  </data>
+  <data name="Modello" xml:space="preserve">
+    <value>Modello RU</value>
+  </data>
+  <data name="NumTelefono" xml:space="preserve">
+    <value>Numero Telefonico RU</value>
+  </data>
+  <data name="Versione" xml:space="preserve">
+    <value>Versione RU</value>
+  </data>
 </root>

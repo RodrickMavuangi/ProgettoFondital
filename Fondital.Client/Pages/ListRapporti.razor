@@ -16,10 +16,9 @@
     <!--FINE TITLE PAGE-->
     <!--ROW BOTTONI-->
     <div class="col-md-7 pb-4 border-bottom pr-0">
-
         <div class="col  text-left d-none barraStrumenti "> </div>
         <div class="col  text-right d-inline-block float-lg-right p-0">
-            <TelerikButton Class="btn btn-primary btn-verde btn-lg mx-1" OnClick=@(()=> ShowAddDialog = true)>Nuovo Rapporto</TelerikButton>
+            <TelerikButton Class="btn btn-primary btn-verde btn-lg mx-1" OnClick=@(() => NavigationManager.NavigateTo("/reportDetail"))>@Localizer["Inserisci"] @Localizer["Rapporto"]</TelerikButton>
         </div>
     </div>
     <!--FINE BUTTON TOP DX-->
@@ -28,7 +27,7 @@
 
 @if (ListaRapporti == null)
 {
-    <div class="k-loader-container k-loader-container-md k-loader-top " style="" data-id="7d13dd9e-e016-4aec-8e1b-5253cd5131d5">
+    <div class="k-loader-container k-loader-container-md k-loader-top">
         <div class="k-loader-container-overlay k-overlay-light"></div>
         <div class="k-loader-container-inner ">
             <div class="k-loader k-loader-spinner-3 k-loader-lg k-loader-primary">
@@ -46,7 +45,6 @@ else
     <!--BARRA FILTRI-->
     <div class="row-2 d-inline w-100 mb-4  pt-0 pb-4 pt-4 border-bottom barraFiltri">
         <div class="form-group rowFiltri">
-            @*<img src="../img/Icons/search.svg" class="bi bi-search float-lg-right icoSearch blu" />*@
             <i class="bi bi-search float-lg-right icoSearch blu"></i>
             <input class="form-control float-lg-right filtriInput mx-1" @bind-value="SearchByEmail" @bind-value:event="oninput" placeholder=@Localizer["Email"] />
             <input class="form-control float-lg-right filtriInput mx-1" @bind-value="SearchByTelefono" @bind-value:event="oninput" placeholder=@Localizer["Telefono"] />
@@ -61,35 +59,25 @@ else
     <!--FINE BARRA FILTRI-->
 
     <div class="row-3 d-flex justify-content-between flex-wrap flex-md-nowrap pt-0 pb-4 mb-4">
-        <TelerikGrid Data="@ListaRapporti" Pageable="true" PageSize="@PageSize" Class="table table-striped">
+        <TelerikGrid Data="@ListaRapporti_filtered" Pageable="true" PageSize="@PageSize" Class="table table-striped">
             <GridColumns>
                 <GridColumn Field=@nameof(RapportoDto.Utente.ServicePartner.RagioneSociale) Width="15%" Title=@Localizer["ServicePartner"].Value.ToUpper() />
                 <GridColumn Field=@nameof(RapportoDto.Stato) Width="15%" Title=@Localizer["Stato"].Value.ToUpper() />
-                <GridColumn Field=@nameof(RapportoDto.Data) Width="15%" Title=@Localizer["Data"].Value.ToUpper() />
-                <GridColumn Field=@nameof(RapportoDto.Cliente) Width="15%" Title=@Localizer["Cliente"].Value.ToUpper() />
+                <GridColumn Field=@nameof(RapportoDto.DataRapporto) Width="15%" Title=@Localizer["Data"].Value.ToUpper() />
+                <GridColumn Field=@(nameof(RapportoDto.Cliente.Nome) + " " + nameof(RapportoDto.Cliente.Cognome)) Width="15%" Title=@Localizer["Cliente"].Value.ToUpper() />
                 <GridColumn Field=@nameof(RapportoDto.Id) Width="10%" Title=@Localizer["NumRapporto"].Value.ToUpper() />
-                <GridColumn Field=@nameof(RapportoDto.Matricola) Width="15%" Title=@Localizer["Matricola"].Value.ToUpper() />
-                <GridColumn Field=@nameof(RapportoDto.Telefono) Width="15%" Title=@Localizer["Telefono"].Value.ToUpper() />
-                <GridColumn Field=@nameof(RapportoDto.Email) Width="15%" Title=@Localizer["Email"].Value.ToUpper() />
+                <GridColumn Field=@nameof(RapportoDto.Caldaia.Matricola) Width="15%" Title=@Localizer["Matricola"].Value.ToUpper() />
+                <GridColumn Field=@nameof(RapportoDto.Cliente.NumTelefono) Width="15%" Title=@Localizer["Telefono"].Value.ToUpper() />
+                <GridColumn Field=@nameof(RapportoDto.Cliente.Email) Width="15%" Title=@Localizer["Email"].Value.ToUpper() />
 
                 <GridCommandColumn Context="rep" Width="3%">
                     @{
                         var rapportoDto = rep as RapportoDto;
                         // Modify Icon Url
-                        <GridCommandButton Class="btnIcon bgBianco white" Command="ViewRapporto" ImageUrl="/img/Icons/edit.svg" OnClick="@(() => ViewRapporto(rapportoDto.Id) )" />
+                        <GridCommandButton Class="btnIcon bgBianco white" Command="ViewRapporto" ImageUrl="/img/Icons/edit.svg" OnClick="@(() => ViewRapporto(rapportoDto.Id))" />
                     }
                 </GridCommandColumn>
             </GridColumns>
         </TelerikGrid>
     </div>
 }
-
-<TelerikWindow Class="modal-app dialogBox" Width="500px" Height="auto" Centered="true" @bind-Visible=@ShowAddDialog Modal="true">
-    <WindowActions>
-        <WindowAction Name="Close" IconClass="k-icon k-i-close text-dark" />
-    </WindowActions>
-
-    <WindowContent>
-        <div class="dialogForm"><AddRapportoDialog OnClose="@(() => ShowAddDialog = false)" OnSave="CloseAndRefresh" /> </div>
-    </WindowContent>
-</TelerikWindow>

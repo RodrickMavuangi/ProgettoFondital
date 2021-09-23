@@ -1,7 +1,4 @@
-﻿using System;
-using System.ComponentModel.DataAnnotations;
-
-namespace Fondital.Shared.Models
+﻿namespace Fondital.Shared.Models
 {
     public class Listino
     {
