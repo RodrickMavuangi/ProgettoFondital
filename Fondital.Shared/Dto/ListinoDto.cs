@@ -22,6 +22,10 @@ namespace Fondital.Shared.Dto
         [Display(Name = "Valore", ResourceType = typeof(Resources.Display))]
         [Required(ErrorMessageResourceName = "Required", ErrorMessageResourceType = typeof(Resources.Validation))]
         [Range(0, Int32.MaxValue, ErrorMessageResourceName = "OutOfBounds", ErrorMessageResourceType = typeof(Resources.Validation))]
+        //[DataType(DataType.Currency)]
+        //[DisplayFormat(DataFormatString = "{0:₽ 0.##}", ApplyFormatInEditMode = true)]
+        //[DisplayFormat(DataFormatString = "{0:C0}")]
+        //[DisplayFormat(DataFormatString = "{0:₽ 0.##}")]
         public int Valore { get; set; } = 0;
     }
 }

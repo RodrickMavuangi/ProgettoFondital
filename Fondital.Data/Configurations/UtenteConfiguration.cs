@@ -11,10 +11,11 @@ namespace Fondital.Data.Configurations
             builder.HasKey(a => a.Id);
             builder.Property(m => m.Id).UseIdentityColumn();
 
-            builder.Property(m => m.UserName).IsRequired();
-            builder.HasIndex(m => m.UserName).IsUnique();
-            builder.Property(m => m.Nome).IsRequired();
-            builder.Property(m => m.Cognome).IsRequired();
+            builder.Property(u => u.UserName).IsRequired();
+            builder.HasIndex(u => u.UserName).IsUnique();
+            builder.Property(u => u.Nome).IsRequired();
+            builder.Property(u => u.Cognome).IsRequired();
+            builder.Property(u => u.Email).IsRequired();
 
             builder.HasOne(m => m.ServicePartner).WithMany(s => s.Utenti).IsRequired();
 

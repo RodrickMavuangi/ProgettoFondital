@@ -1,6 +1,7 @@
 ﻿using Fondital.Shared.Dto;
 using Fondital.Shared.Models;
 using Microsoft.AspNetCore.Components.Forms;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -13,10 +14,10 @@ namespace Fondital.Client.Pages
 		public List<ServicePartnerDto> ServicePartners { get; set; } = new List<ServicePartnerDto>();
 		public ServicePartnerDto ServicePartnerModel { get; set; } = new ServicePartnerDto();
 		public bool WindowVisible { get; set; }
-		public bool ValidSubmit { get; set; } = false;
+		//public bool ValidSubmit { get; set; } = false;
 		public EditContext myEditContext { get; set; }
-		public EditContext myEditContext_UpdateSP { get; set; }
-		public ServicePartnerDto ServicePartnerModel_UpdateSP { get; set; } = new ServicePartnerDto() { CodiceCliente = "", CodiceFornitore = "", RagioneSociale = "" };
+		//public EditContext myEditContext_UpdateSP { get; set; }
+		//public ServicePartnerDto ServicePartnerModel_UpdateSP { get; set; } = new ServicePartnerDto() { CodiceCliente = "", CodiceFornitore = "", RagioneSociale = "" };
 
 		public List<string> SearchableFields = new List<string> { "RagioneSociale" };
 
@@ -24,7 +25,7 @@ namespace Fondital.Client.Pages
 		public bool myEditTemplate { get; set; } = false;
 
 		ServicePartnerDto DatiSP = new ServicePartnerDto();
-		public ServicePartnerDto ServicePartnerToSave { get; set; } = new ServicePartnerDto();
+		//public ServicePartnerDto ServicePartnerToSave { get; set; } = new ServicePartnerDto();
 
 
 		protected ServicePartnerDto SpSelected { get; set; }
@@ -40,7 +41,7 @@ namespace Fondital.Client.Pages
 
 			//myEditContext_UpdateSP = new EditContext(ServicePartnerModel_UpdateSP);
 		}
-		public List<ServicePartnerDto> ServicePartners_filtered => ServicePartners.Where<ServicePartnerDto>(x => x.RagioneSociale.ToLower().Contains(SearchText.ToLower())).ToList();
+		public List<ServicePartnerDto> ServicePartners_filtered => ServicePartners.Where(x => x.RagioneSociale.Contains(SearchText, StringComparison.InvariantCultureIgnoreCase)).ToList();
 
 
 		protected async Task RefreshSP()
@@ -63,33 +64,33 @@ namespace Fondital.Client.Pages
         }
 
 
-		public async Task EditHandler(GridCommandEventArgs args)
-		{
-			myEditTemplate = true;
-			DatiSP = (ServicePartnerDto)args.Item;
-			ServicePartnerModel_UpdateSP = await servicePartnerClient.GetServicePartnerWithUtenti(DatiSP.Id);
-			ServicePartnerModel_UpdateSP.RagioneSociale = DatiSP.RagioneSociale;
-			ServicePartnerModel_UpdateSP.CodiceCliente = DatiSP.CodiceCliente;
-			ServicePartnerModel_UpdateSP.CodiceFornitore = DatiSP.CodiceFornitore;
-		}
+		//public async Task EditHandler(GridCommandEventArgs args)
+		//{
+		//	myEditTemplate = true;
+		//	DatiSP = (ServicePartnerDto)args.Item;
+		//	ServicePartnerModel_UpdateSP = await servicePartnerClient.GetServicePartnerWithUtenti(DatiSP.Id);
+		//	ServicePartnerModel_UpdateSP.RagioneSociale = DatiSP.RagioneSociale;
+		//	ServicePartnerModel_UpdateSP.CodiceCliente = DatiSP.CodiceCliente;
+		//	ServicePartnerModel_UpdateSP.CodiceFornitore = DatiSP.CodiceFornitore;
+		//}
 
-		public async Task EditSP_UpdateHandler(EditContext editContext)
-		{
-			bool isFormValid = editContext.Validate();
-			if (isFormValid)
-			{
-				ServicePartnerDto ServicePartnerToSave = (ServicePartnerDto)editContext.Model;
+		//public async Task EditSP_UpdateHandler(EditContext editContext)
+		//{
+		//	bool isFormValid = editContext.Validate();
+		//	if (isFormValid)
+		//	{
+		//		ServicePartnerDto ServicePartnerToSave = (ServicePartnerDto)editContext.Model;
 
-				await servicePartnerClient.UpdateServicePartner(DatiSP.Id, ServicePartnerToSave);
-				DatiSP = new ServicePartnerDto();
-				await Refresh();
-			}
+		//		await servicePartnerClient.UpdateServicePartner(DatiSP.Id, ServicePartnerToSave);
+		//		DatiSP = new ServicePartnerDto();
+		//		await Refresh();
+		//	}
 
-			else
-			{
+		//	else
+		//	{
 
-			}
-		}
+		//	}
+		//}
 
 
 		public async Task UpdateHandler(GridCommandEventArgs args)
@@ -105,22 +106,22 @@ namespace Fondital.Client.Pages
 			await OnInitializedAsync();
 		}
 
-		public async Task OnSubmitHandlerAsync(EditContext editContext)
-		{
-			bool isFormValid = editContext.Validate();
+		//public async Task OnSubmitHandlerAsync(EditContext editContext)
+		//{
+		//	bool isFormValid = editContext.Validate();
 
-			if (isFormValid)
-			{
-				ServicePartnerToSave = (ServicePartnerDto)editContext.Model;
-				await servicePartnerClient.CreateServicePartner(ServicePartnerToSave);
-				ServicePartnerModel = new ServicePartnerDto();
-				ServicePartnerToSave = new ServicePartnerDto();
-				await Refresh();
-			}
-			else
-			{
-				//apply some custom logic when the form is not valid
-			}
-		}
+		//	if (isFormValid)
+		//	{
+		//		ServicePartnerToSave = (ServicePartnerDto)editContext.Model;
+		//		await servicePartnerClient.CreateServicePartner(ServicePartnerToSave);
+		//		ServicePartnerModel = new ServicePartnerDto();
+		//		ServicePartnerToSave = new ServicePartnerDto();
+		//		await Refresh();
+		//	}
+		//	else
+		//	{
+		//		//apply some custom logic when the form is not valid
+		//	}
+		//}
 	}
 }

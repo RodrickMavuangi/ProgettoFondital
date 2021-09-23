@@ -11,17 +11,21 @@ namespace Fondital.Client.AuthPages
         LoginRequestDto Model { get; set; } = new();
         LoginResponseDto LoginResponse = new();
         protected string Error { get; set; }
+        protected bool IsSubmitting = false;
 
         public async Task UserLogin()
         {
             try
             {
+                IsSubmitting = true;
                 LoginResponse = await authClient.Login(Model);
                 await loginService.Login(LoginResponse.Token);
+                StateHasChanged();
                 navManager.NavigateTo("");
             }
             catch (Exception e)
             {
+                IsSubmitting = false;
                 if (e.Message == "PasswordMustChange")
                     navManager.NavigateTo($"/account/changepassword/{Model.Email}");
                 else

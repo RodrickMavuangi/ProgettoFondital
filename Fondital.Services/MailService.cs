@@ -21,72 +21,30 @@ namespace Fondital.Services
         }
 
         public async Task SendEmailAsync(MailRequest mailRequest)
-        {
-			//try
-			//{
-			//	var email = new MimeMessage();
-			//	email.Sender = MailboxAddress.Parse(_mailSettings.Mail);
-			//	email.To.Add(MailboxAddress.Parse(mailRequest.ToEmail));
-			//	email.Subject = mailRequest.Subject;
-			//	var builder = new BodyBuilder();
-			//	//if (mailRequest.Attachments != null)
-			//	//{
-			//	//	byte[] fileBytes;
-			//	//	foreach (var file in mailRequest.Attachments)
-			//	//	{
-			//	//		if (file.Length > 0)
-			//	//		{
-			//	//			using (var ms = new MemoryStream())
-			//	//			{
-			//	//				file.CopyTo(ms);
-			//	//				fileBytes = ms.ToArray();
-			//	//			}
-			//	//			builder.Attachments.Add(file.FileName, fileBytes, ContentType.Parse(file.ContentType));
-			//	//		}
-			//	//	}
-			//	//}
-			//	builder.HtmlBody = mailRequest.Body;
-			//	email.Body = builder.ToMessageBody();
-			//	using var smtp = new SmtpClient();
-			//	smtp.Connect(_mailSettings.Host, _mailSettings.Port, SecureSocketOptions.None);
-			//	//smtp.Authenticate(_mailSettings.Mail, _mailSettings.Password);
-			//	await smtp.SendAsync(email);
-			//	smtp.Disconnect(true);
-			//}
-			//catch (Exception e)
-			//{
-
-			//}
+		{ 
 
 			try
 			{
 				MailMessage msg = new MailMessage();
 				msg.To.Add(new MailAddress(mailRequest.ToEmail));
-				msg.From = new MailAddress(_mailSettings.Mail, "You");
-				msg.Subject = "This is a Test Mail";
-				msg.Body = "This is a test message using Exchange OnLine";
+				msg.From = new MailAddress(_mailSettings.Mail, _mailSettings.DisplayName);
+				msg.Subject = mailRequest.Subject;
+				msg.Body = mailRequest.Body;
 				msg.IsBodyHtml = true;
 
 				SmtpClient client = new SmtpClient();
 				client.UseDefaultCredentials = false;
-				client.Credentials = new System.Net.NetworkCredential(_mailSettings.DisplayName,_mailSettings.Password);
-				client.Port = 587; // You can use Port 25 if 587 is blocked (mine is!)
-				client.Host = _mailSettings.Host;// "smtp.office365.com";
+				client.Credentials = new System.Net.NetworkCredential(_mailSettings.Mail,_mailSettings.Password);
+				client.Port = int.Parse(_mailSettings.Port); 
+				client.Host = _mailSettings.Host;
 				client.DeliveryMethod = SmtpDeliveryMethod.Network;
 				client.EnableSsl = true;
-				try
-				{
-					client.Send(msg);
-					 //"Message Sent Succesfully";
-				}
-				catch (Exception ex)
-				{
-					var res = ex.ToString();
-				}
+
+				client.Send(msg);
 			}
 			catch(Exception e)
 			{
-				var res1 = e.ToString();
+				throw;
 			}
 
 			

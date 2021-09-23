@@ -10,8 +10,9 @@ namespace Fondital.Client.AuthPages
         [Parameter]
         public string Email { get; set; }
         private LoginResponseDto LoginResponse { get; set; }
-        public ChangePwRequestDto ChangeForm { get; set; } = new ChangePwRequestDto();
-        public string Error { get; set; }
+        protected ChangePwRequestDto ChangeForm { get; set; } = new ChangePwRequestDto();
+        protected string Error { get; set; }
+        protected bool IsSubmitting = false;
 
         protected override async Task OnInitializedAsync()
         {
@@ -21,9 +22,10 @@ namespace Fondital.Client.AuthPages
 
         protected async Task ChangePw()
         {
-
             try
             {
+                IsSubmitting = true;
+
                 if (ChangeForm.NewPassword == ChangeForm.ConfirmPassword && ChangeForm.OldPassword != ChangeForm.NewPassword)
                 {
                     await authClient.ChangePassword(ChangeForm);
@@ -38,6 +40,8 @@ namespace Fondital.Client.AuthPages
             }
             catch (Exception e)
             {
+                IsSubmitting = false;
+
                 if (e.Message == "ErroreConfermaPassword")
                     Error = e.Message;
                 else

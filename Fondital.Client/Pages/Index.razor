@@ -7,14 +7,14 @@
 
 <AuthorizeView>
     <Authorized>
-        <div class="row-1 d-flex justify-content-between flex-wrap flex-md-nowrap  pt-0 mb-64">
+        <div class="row-1 d-flex justify-content-between flex-wrap flex-md-nowrap  pt-0 mb-64 border-bottom">
             <!--TITOLO PAGINA-->
-            <div class="col-md-5  text-left pb-4 border-bottom">
+            <div class="col-md-5  text-left pb-4">
                 <div class="col  text-left d-inline-block ">
                     <div class="page-header">
                         @if (UtenteCorrente != null)
                         {
-                            <h3>@localizer["Benvenuto"] @UtenteCorrente?.Nome.</h3>
+                            <h3>@localizer["Benvenuto"] <b>@UtenteCorrente?.Nome.</b></h3>
                         }
                         else
                         {

@@ -16,12 +16,12 @@ namespace Fondital.Services
 
         public async Task<IEnumerable<Listino>> GetAllListini()
         {
-            return await _unitOfWork.Listini.GetAllAsync();
+            return await _unitOfWork.Listini.GetAllListiniAsync();
         }
 
         public async Task<Listino> GetListinoById(int id)
         {
-            return await _unitOfWork.Listini.GetByIdAsync(id);
+            return await _unitOfWork.Listini.GetListinoByIdAsync(id);
         }
 
         public async Task UpdateListino(int listinoId, Listino listino)
@@ -34,7 +34,7 @@ namespace Fondital.Services
 
         public async Task AddListino(Listino listino)
         {
-            await _unitOfWork.Listini.AddAsync(listino);
+            await _unitOfWork.Listini.AddListino(listino);
             await _unitOfWork.CommitAsync();
         }
     }
