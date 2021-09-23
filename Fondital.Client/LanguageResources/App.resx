@@ -403,8 +403,9 @@ La nuova password deve essere lunga almeno 8 caratteri e contenere minuscole, ma
   <data name="Raggruppamento" xml:space="preserve">
     <value>Raggruppamento</value>
   </data>
-  <data name="Valore" xml:space="preserve">
+	<data name="Valore" xml:space="preserve">
     <value>Valore</value>
+	  </data>
   <data name="MailInviata" xml:space="preserve">
     <value>è stata inviata una mail a </value>
   </data>
