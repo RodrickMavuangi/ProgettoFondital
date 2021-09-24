@@ -115,7 +115,7 @@ namespace Fondital.Client.Pages
 			}
 		}
 
-		public async Task MyValueChangeHandler(string theUserChoice)
+		public void MyValueChangeHandler(string theUserChoice)
 		{
 			switch (theUserChoice)
 			{

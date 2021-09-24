@@ -22,7 +22,7 @@
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
-        JS.InvokeVoidAsync("manipulateActiveLink",
+        await JS.InvokeVoidAsync("manipulateActiveLink",
             firstRender,
             FonditalNavigationManager.ToBaseRelativePath(FonditalNavigationManager.Uri));
     }
