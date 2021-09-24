@@ -1,6 +1,7 @@
 ﻿using Fondital.Shared.Dto;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Authorization;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -23,11 +24,13 @@ namespace Fondital.Client.Shared
 
         protected override async Task OnInitializedAsync()
         {
-            var authState = await AuthStateTask;
-            if (authState.User.Identity.IsAuthenticated)
-                UtenteCorrente = await utClient.GetUtente(authState.User.Identity.Name);
+            try
+            {
+                var authState = await AuthStateTask;
+                if (authState.User.Identity.IsAuthenticated)
+                    UtenteCorrente = await utClient.GetUtente(authState.User.Identity.Name);
 
-            MenuItems = new List<MenuItem>()
+                MenuItems = new List<MenuItem>()
             {
             new MenuItem()
                 {
@@ -48,7 +51,12 @@ namespace Fondital.Client.Shared
                 }
             };
 
-            await base.OnInitializedAsync();
+                await base.OnInitializedAsync();
+            }
+            catch (Exception e)
+            {
+                throw new Exception("Eccezione header.razor");
+            }
         }
 
         public void ToggleUserMenu()
