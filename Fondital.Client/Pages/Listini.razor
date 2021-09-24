@@ -1,5 +1,5 @@
-﻿@page "/defects"
-@inject DifettoClient httpClient
+﻿@page "/priceLists"
+@inject ListinoClient httpClient
 @inject IJSRuntime JSRuntime
 @inject IStringLocalizer<App> localizer
 @inject IConfiguration config
@@ -10,7 +10,7 @@
     <div class="col-md-5  text-left pb-4 border-bottom">
         <div class="col  text-left d-inline-block ">
             <div class="page-header">
-                <h1 class="h1"><b>@localizer["Anagrafiche"]</b> @localizer["Difetti"]</h1>
+                <h1 class="h1"><b>@localizer["Anagrafiche"]</b> @localizer["Listini"]</h1>
             </div>
         </div>
     </div>
@@ -20,7 +20,7 @@
 
         <div class="col  text-left d-none barraStrumenti "> </div>
         <div class="col  text-right d-inline-block float-lg-right p-0">
-            <button class="btn btn-primary btn-verde btn-lg mx-1" @onclick="(() => ShowAddDialog = true)">@localizer["Nuovo"] @localizer["Difetto"]</button>
+            <button class="btn btn-primary btn-verde btn-lg mx-1" @onclick="(() => ShowAddDialog = true)">@localizer["Nuovo"] @localizer["Listino"]</button>
         </div>
     </div>
     <!--FINE BUTTON TOP DX-->
@@ -29,7 +29,7 @@
 
 
 
-@if (ListaDifetti == null)
+@if (ListaListini == null)
 {
     @*<p><em>@localizer["Caricamento"]...</em></p>*@
     <!--CARICO IL LOADER-->
@@ -51,15 +51,20 @@ else
 {
     <div class="row-2 d-inline w-100 mb-4  pt-0 pb-4 pt-4 border-bottom barraFiltri">
         <div class="form-group rowFiltri">
-            @*<img src="../img/Icons/search.svg" class="bi bi-search float-lg-right icoSearch blu" />*@
             <i class="bi bi-search float-lg-right icoSearch blu"></i>
-            <input class="form-control float-lg-right filtriInput mx-1" @bind-value="SearchText" @bind-value:event="oninput" placeholder=@localizer["CercaDifetti"] />
+            <input class="form-control float-lg-right filtriInput mx-1" @bind-value="SearchRaggruppamentoText" @bind-value:event="oninput" placeholder=@localizer["CercaPerRaggruppamento"] />
+        </div>
+        <div class="form-group rowFiltri">
+            <input class="form-control float-lg-right filtriInput mx-1" @bind-value="SearchVoceCostoText" @bind-value:event="oninput" placeholder=@localizer["CercaPerVoceCosto"] />
+        </div>
+        <div class="form-group rowFiltri">
+            <input class="form-control float-lg-right filtriInput mx-1" @bind-value="SearchSPText" @bind-value:event="oninput" placeholder=@localizer["CercaPerServicePartner"] />
         </div>
     </div><!--FINE BARRA FILTRI-->
 
 
     <div class="row-3 d-flex justify-content-between flex-wrap flex-md-nowrap  pt-0 pb-4 mb-4">
-        <TelerikGrid Data=@ListaDifettiFiltered Pageable="true" PageSize="@PageSize" Class="table table-striped">
+        <TelerikGrid Data=@ListiniFiltered Pageable="true" PageSize="@PageSize" Class="table table-striped">
 
             <!--<GridToolBar>
             <span class="k-toolbar-spacer"></span>-->
@@ -68,19 +73,15 @@ else
             </GridToolBar>-->
 
             <GridColumns>
-                <GridColumn Field=@nameof(DifettoDto.Id) Title="#" Width="10%" />
-                <GridColumn Field=@nameof(DifettoDto.NomeItaliano) Width="70%" Title=@localizer["Descrizione"].Value.ToUpper() Visible="@(CurrentCulture == "it-IT")" />
-                <GridColumn Field=@nameof(DifettoDto.NomeRusso) Width="70%" Title=@localizer["Descrizione"].Value.ToUpper() Visible="@(CurrentCulture == "ru-RU")" />
-                <GridCommandColumn Context="dif" Width="3%">
+                <GridColumn Field=ServicePartner.RagioneSociale Title=@localizer["ServicePartner"].Value.ToUpper() Width="12%" />
+                <GridColumn Field=VoceCosto.NomeItaliano Width="12%" Title=@localizer["VoceCosto"].Value.ToUpper() Visible="@(CurrentCulture == "it-IT")" />
+                <GridColumn Field=VoceCosto.NomeRusso Width="12%" Title=@localizer["VoceCosto"].Value.ToUpper() Visible="@(CurrentCulture == "ru-RU")" />
+                <GridColumn Field=@nameof(ListinoDto.Raggruppamento) Title=@localizer["Raggruppamento"].Value.ToUpper() Width="12%" />
+                <GridColumn Field=@nameof(ListinoDto.Valore) Title=@localizer["Valore"].Value.ToUpper() Width="15%" DisplayFormat="{0:₽ 0.##}" />
+                <GridCommandColumn Width="3%">
                     @{
-                        var difettoDto = dif as DifettoDto;
-                        <GridCommandButton Class=" btnIcon bgBianco white" Command="EditDifetto" Icon="" ImageUrl="/img/Icons/edit.svg" OnClick="@(() => EditDifetto(difettoDto.Id))" />
-                    }
-                </GridCommandColumn>
-                <GridCommandColumn Context="dif" Width="3%">
-                    @{
-                        var difetto = dif as DifettoDto;
-                                       <TelerikSwitch Class="switch_white" OffLabel=" " OnLabel=" " OnChange="@(() => UpdateEnableDifetto(difetto.Id))" @bind-Value="@difetto.IsAbilitato"></TelerikSwitch>
+                        var listinoDto = (ListinoDto)context;
+                        <GridCommandButton Class=" btnIcon bgBianco white" Command="EditListino" Icon="" ImageUrl="/img/Icons/edit.svg" OnClick="@(() => EditListino(listinoDto.Id))" />
                     }
                 </GridCommandColumn>
             </GridColumns>
@@ -95,7 +96,7 @@ else
         <WindowAction Name="Close" IconClass="k-icon k-i-close text-dark" />
     </WindowActions>
     <WindowContent>
-        <div class="dialogForm"> <AddDifettoDialog OnClose="CloseAndRefresh" OnSave="CloseAndRefresh" /></div>
+        <div class="dialogForm"> <AddListinoDialog OnClose="CloseAndRefresh" OnSave="CloseAndRefresh" /></div>
     </WindowContent>
 </TelerikWindow>
 
@@ -104,6 +105,6 @@ else
         <WindowAction Name="Close" IconClass="k-icon k-i-close text-dark" />
     </WindowActions>
     <WindowContent>
-        <div class="dialogForm"> <EditDifettoDialog DifettoToUpdate="DifettoSelected" OnClose="CloseAndRefresh" OnSave="CloseAndRefresh" /></div>
+        <div class="dialogForm"> <EditListinoDialog ListinoToUpdate="ListinoSelected" OnClose="CloseAndRefresh" OnSave="CloseAndRefresh" /></div>
     </WindowContent>
 </TelerikWindow>

@@ -1,4 +1,5 @@
 ﻿using Fondital.Shared.Dto;
+using Fondital.Shared.Models;
 using System;
 using System.Net.Http;
 using System.Net.Http.Json;
@@ -30,6 +31,21 @@ namespace Fondital.Client.Clients
         {
             var response = await httpClient.PostAsJsonAsync($"authControl/changepw", ChangeRequest, JsonSerializerOpts.JsonOpts);
 
+            if (!response.IsSuccessStatusCode)
+                throw new Exception(response.Content.ReadAsStringAsync().Result);
+        }
+
+        public async Task ResetPassword(ResetPwRequestDto ResetRequest)
+        {
+            var response = await httpClient.PostAsJsonAsync($"authControl/resetpw", ResetRequest, JsonSerializerOpts.JsonOpts);
+            if (!response.IsSuccessStatusCode)
+                throw new Exception(response.Content.ReadAsStringAsync().Result);
+        }
+        
+        public async Task ForgotPassword(ForgotPwRequestDto ForgotRequest)
+        {
+            MailRequest _mailRequest = new MailRequest() { Subject = "PASSWORD DIMENTICATA" , ToEmail = ForgotRequest.Email};
+            var response = await httpClient.PostAsJsonAsync($"MailController", _mailRequest, JsonSerializerOpts.JsonOpts);
             if (!response.IsSuccessStatusCode)
                 throw new Exception(response.Content.ReadAsStringAsync().Result);
         }

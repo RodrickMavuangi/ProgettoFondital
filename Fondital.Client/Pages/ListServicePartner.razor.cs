@@ -1,6 +1,7 @@
 ﻿using Fondital.Shared.Dto;
 using Fondital.Shared.Models;
 using Microsoft.AspNetCore.Components.Forms;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -40,7 +41,7 @@ namespace Fondital.Client.Pages
 
 			//myEditContext_UpdateSP = new EditContext(ServicePartnerModel_UpdateSP);
 		}
-		public List<ServicePartnerDto> ServicePartners_filtered => ServicePartners.Where<ServicePartnerDto>(x => x.RagioneSociale.ToLower().Contains(SearchText.ToLower())).ToList();
+		public List<ServicePartnerDto> ServicePartners_filtered => ServicePartners.Where(x => x.RagioneSociale.Contains(SearchText, StringComparison.InvariantCultureIgnoreCase)).ToList();
 
 
 		protected async Task RefreshSP()

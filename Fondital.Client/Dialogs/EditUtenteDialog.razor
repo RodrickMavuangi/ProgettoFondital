@@ -6,21 +6,21 @@
 
     <div>@ErrorMessage</div>
     <div class="form-field">
-        <label class="text-capitalize">@localizer["RagioneSociale"]</label>
+        <label class="text-capitalize">@localizer["Email"]</label>
         <div>
-            <InputText Class="form-control form-control-lg w100" @bind-Value="UtenteToUpdate.Email" />
+            <TelerikTextBox Class="form-control form-control-lg w100" @bind-Value="UtenteToUpdate.Email" Enabled="false"/>
             <ValidationMessage For="() => UtenteToUpdate.Email" />
         </div>
     </div>
     <div class="form-field mt-4">
-        <label class="text-capitalize">@localizer["CodiceFornitore"]</label>
+        <label class="text-capitalize">@localizer["Nome"]</label>
         <div>
             <InputText Class="form-control form-control-lg w100" @bind-Value="UtenteToUpdate.Nome" />
             <ValidationMessage For="() => UtenteToUpdate.Nome" />
         </div>
     </div>
     <div class="form-field mt-4">
-        <label class="text-capitalize">@localizer["CodiceCliente"]</label>
+        <label class="text-capitalize">@localizer["Cognome"]</label>
         <div>
             <InputText Class="form-control form-control-lg w100" @bind-Value="UtenteToUpdate.Cognome" />
             <ValidationMessage For="() => UtenteToUpdate.Cognome" />
