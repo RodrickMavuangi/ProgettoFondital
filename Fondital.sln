@@ -3,15 +3,15 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.31515.178
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fondital.Client", "Fondital.Client\Fondital.Client.csproj", "{157BC579-DE01-4C6A-8C89-BDDBC58B35A3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Fondital.Client", "Fondital.Client\Fondital.Client.csproj", "{157BC579-DE01-4C6A-8C89-BDDBC58B35A3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fondital.Shared", "Fondital.Shared\Fondital.Shared.csproj", "{2D9CBDC8-E4DD-4A3C-8A38-BE35853DC6DB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Fondital.Shared", "Fondital.Shared\Fondital.Shared.csproj", "{2D9CBDC8-E4DD-4A3C-8A38-BE35853DC6DB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fondital.Server", "Fondital.Server\Fondital.Server.csproj", "{11F069E3-13DC-4A36-8E42-68ADA07B5F2E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Fondital.Server", "Fondital.Server\Fondital.Server.csproj", "{11F069E3-13DC-4A36-8E42-68ADA07B5F2E}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Fondital.Data", "Fondital.Data\Fondital.Data.csproj", "{DC9945F1-0232-43EC-B417-8E80B091082E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fondital.Services", "Fondital.Services\Fondital.Services.csproj", "{C80754B9-2EED-4E2B-9712-D66F90B93408}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Fondital.Services", "Fondital.Services\Fondital.Services.csproj", "{C80754B9-2EED-4E2B-9712-D66F90B93408}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Fondital.Repository", "Fondital.Repository\Fondital.Repository.csproj", "{F629582E-CC79-493A-A6DD-02C0CA6D8DB4}"
 EndProject

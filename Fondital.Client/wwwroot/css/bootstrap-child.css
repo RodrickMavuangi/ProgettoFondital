@@ -48,6 +48,11 @@ html, body {
 .stepperEp .k-step-link .k-step-label {
     background-color: #FFF;
     padding: 0 1rem;
+    max-width: max-content;
+}
+
+.stepperEp .k-step-link .k-step-label .k-step-text {
+    max-width: max-content;
 }
 
 .stepperEp .k-state-selected {
@@ -57,6 +62,31 @@ html, body {
 
 .stepperEp .k-progressbar {
     grid-column-end: 7 !important;
+}
+
+
+.datePickerEp {
+    height: 48px;
+}
+
+.datePickerEp > span > .k-widget {
+    padding: .7rem 0 .7rem 1rem;
+}
+
+.datePickerEp > span > .k-select {
+    width: 50px;
+}
+
+.headerFormRicambiEp {
+    background-color: #ffc107;
+    border-radius: 5px;
+    padding: 0.7rem 0;
+    display: inline-block;
+    height: 48px;
+}
+
+.headerFormRicambiEp > label {
+    color: #FFF;
 }
 
 

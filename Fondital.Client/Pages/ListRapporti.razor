@@ -51,7 +51,7 @@ else
             <input class="form-control float-lg-right filtriInput mx-1" @bind-value="SearchByMatricola" @bind-value:event="oninput" placeholder=@Localizer["Matricola"] />
             <input class="form-control float-lg-right filtriInput mx-1" @bind-value="SearchById" @bind-value:event="oninput" placeholder=@Localizer["NumRapporto"] />
             <input class="form-control float-lg-right filtriInput mx-1" @bind-value="SearchByCliente" @bind-value:event="oninput" placeholder=@Localizer["Cliente"] />
-            <input class="form-control float-lg-right filtriInput mx-1" @bind-value="SearchText" @bind-value:event="oninput" placeholder=@Localizer["DataDaA"] />
+            <input class="form-control float-lg-right filtriInput mx-1" @bind-value="SearchByDate" @bind-value:event="oninput" placeholder=@Localizer["DataDaA"] />
             <input class="form-control float-lg-right filtriInput mx-1" @bind-value="SearchByStato" @bind-value:event="oninput" placeholder=@Localizer["Stato"] />
             <input class="form-control float-lg-right filtriInput mx-1" @bind-value="SearchBySp" @bind-value:event="oninput" placeholder=@Localizer["ServicePartner"] />
         </div>
@@ -59,21 +59,20 @@ else
     <!--FINE BARRA FILTRI-->
 
     <div class="row-3 d-flex justify-content-between flex-wrap flex-md-nowrap pt-0 pb-4 mb-4">
-        <TelerikGrid Data="@ListaRapporti_filtered" Pageable="true" PageSize="@PageSize" Class="table table-striped">
+        <TelerikGrid Data="@ListaRapportiFiltered" Class="table table-striped">
             <GridColumns>
-                <GridColumn Field=@nameof(RapportoDto.Utente.ServicePartner.RagioneSociale) Width="15%" Title=@Localizer["ServicePartner"].Value.ToUpper() />
+                <GridColumn Field=Utente.ServicePartner.RagioneSociale Width="15%" Title=@Localizer["ServicePartner"].Value.ToUpper() />
                 <GridColumn Field=@nameof(RapportoDto.Stato) Width="15%" Title=@Localizer["Stato"].Value.ToUpper() />
                 <GridColumn Field=@nameof(RapportoDto.DataRapporto) Width="15%" Title=@Localizer["Data"].Value.ToUpper() />
-                <GridColumn Field=@(nameof(RapportoDto.Cliente.Nome) + " " + nameof(RapportoDto.Cliente.Cognome)) Width="15%" Title=@Localizer["Cliente"].Value.ToUpper() />
+                <GridColumn Field=Cliente.FullName Width="15%" Title=@Localizer["Cliente"].Value.ToUpper() />
                 <GridColumn Field=@nameof(RapportoDto.Id) Width="10%" Title=@Localizer["NumRapporto"].Value.ToUpper() />
-                <GridColumn Field=@nameof(RapportoDto.Caldaia.Matricola) Width="15%" Title=@Localizer["Matricola"].Value.ToUpper() />
-                <GridColumn Field=@nameof(RapportoDto.Cliente.NumTelefono) Width="15%" Title=@Localizer["Telefono"].Value.ToUpper() />
-                <GridColumn Field=@nameof(RapportoDto.Cliente.Email) Width="15%" Title=@Localizer["Email"].Value.ToUpper() />
+                <GridColumn Field=Caldaia.Matricola Width="15%" Title=@Localizer["Matricola"].Value.ToUpper() />
+                <GridColumn Field=Cliente.NumTelefono Width="15%" Title=@Localizer["Telefono"].Value.ToUpper() />
+                <GridColumn Field=Cliente.Email Width="15%" Title=@Localizer["Email"].Value.ToUpper() />
 
                 <GridCommandColumn Context="rep" Width="3%">
                     @{
                         var rapportoDto = rep as RapportoDto;
-                        // Modify Icon Url
                         <GridCommandButton Class="btnIcon bgBianco white" Command="ViewRapporto" ImageUrl="/img/Icons/edit.svg" OnClick="@(() => ViewRapporto(rapportoDto.Id))" />
                     }
                 </GridCommandColumn>

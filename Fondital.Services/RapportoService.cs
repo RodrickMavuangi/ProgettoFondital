@@ -16,7 +16,7 @@ namespace Fondital.Services
 
         public async Task<IEnumerable<Rapporto>> GetAllRapporti()
         {
-            return await _unitOfWork.Rapporti.GetAllAsync();
+            return await _unitOfWork.Rapporti.GetAllRapporti();
         }
 
         public async Task<Rapporto> GetRapportoById(int id)
@@ -34,7 +34,7 @@ namespace Fondital.Services
 
         public async Task AddRapporto(Rapporto rapporto)
         {
-            await _unitOfWork.Rapporti.AddAsync(rapporto);
+            await _unitOfWork.Rapporti.AddRapporto(rapporto);
             await _unitOfWork.CommitAsync();
         }
     }

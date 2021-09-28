@@ -174,8 +174,8 @@
   <data name="ConfigurazioniGenerali" xml:space="preserve">
     <value>Configurazioni Generali</value>
   </data>
-  <data name="DESCRIZIONE" xml:space="preserve">
-    <value>DESCRIZIONE</value>
+  <data name="Descrizione" xml:space="preserve">
+    <value>Descrizione</value>
   </data>
   <data name="Difetti" xml:space="preserve">
     <value>Difetti</value>
@@ -273,8 +273,8 @@
   <data name="Salva" xml:space="preserve">
     <value>Salva</value>
   </data>
-  <data name="TIPOLOGIA" xml:space="preserve">
-    <value>TIPOLOGIA</value>
+  <data name="Tipologia" xml:space="preserve">
+    <value>Tipologia</value>
   </data>
   <data name="VoceCosto" xml:space="preserve">
     <value>Voce di Costo</value>
@@ -401,7 +401,7 @@ La nuova password deve essere lunga almeno 8 caratteri e contenere minuscole, ma
     <value>Matricola</value>
   </data>
   <data name="NumRapporto" xml:space="preserve">
-    <value>N° Rapportino</value>
+    <value>N° Rapporto</value>
   </data>
   <data name="Stato" xml:space="preserve">
     <value>Stato</value>
@@ -450,5 +450,38 @@ La nuova password deve essere lunga almeno 8 caratteri e contenere minuscole, ma
   </data>
   <data name="Versione" xml:space="preserve">
     <value>Versione</value>
+  </data>
+  <data name="DataIntervento" xml:space="preserve">
+    <value>Data Intervento</value>
+  </data>
+  <data name="DittaPrimoAvvio" xml:space="preserve">
+    <value>Ditta Prima Accensione</value>
+  </data>
+  <data name="MotivoIntervento" xml:space="preserve">
+    <value>Motivo Intervento</value>
+  </data>
+  <data name="NomeTecnico" xml:space="preserve">
+    <value>Nome Tecnico</value>
+  </data>
+  <data name="NumeroCertTecnico" xml:space="preserve">
+    <value>Numero Certificato Tecnico</value>
+  </data>
+  <data name="TipologiaLavoro" xml:space="preserve">
+    <value>Tipologia di Lavoro</value>
+  </data>
+  <data name="TecnicoPrimaAccensione" xml:space="preserve">
+    <value>Tecnico Prima Accensione</value>
+  </data>
+  <data name="AddRicambio" xml:space="preserve">
+    <value>Aggiungi Ricambio</value>
+  </data>
+  <data name="Costo" xml:space="preserve">
+    <value>Costo</value>
+  </data>
+  <data name="OutOfBounds" xml:space="preserve">
+    <value>Il campo Quantità deve essere un intero.</value>
+  </data>
+  <data name="Inserisci" xml:space="preserve">
+    <value>Inserisci</value>
   </data>
 </root>

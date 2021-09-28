@@ -8,6 +8,7 @@ using IdentityServer4.EntityFramework.Options;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
+using System.Reflection;
 using System.Threading.Tasks;
 
 namespace Fondital.Data
@@ -29,6 +30,7 @@ namespace Fondital.Data
         public DbSet<Listino> Listini { get; set; }
         public DbSet<Lavorazione> Lavorazioni { get; set; }
         public DbSet<Rapporto> Rapporti { get; set; }
+        public DbSet<RapportoVoceCosto> RapportiVociCosto { get; set; }
 
         public DbSet<PersistedGrant> PersistedGrants { get; set; }
         public DbSet<DeviceFlowCodes> DeviceFlowCodes { get; set; }
@@ -37,14 +39,7 @@ namespace Fondital.Data
         {
             base.OnModelCreating(builder);
 
-            builder.ApplyConfiguration(new UtenteConfiguration());
-            builder.ApplyConfiguration(new ServicePartnerConfiguration());
-            builder.ApplyConfiguration(new ConfigurazioneConfiguration());
-            builder.ApplyConfiguration(new DifettoConfiguration());
-            builder.ApplyConfiguration(new VoceCostoConfiguration());
-            builder.ApplyConfiguration(new ListinoConfiguration());
-            builder.ApplyConfiguration(new LavorazioneConfiguration());
-            builder.ApplyConfiguration(new RapportoConfiguration());
+            builder.ApplyConfigurationsFromAssembly(Assembly.GetAssembly(typeof(UtenteConfiguration)));
 
             builder.ConfigurePersistedGrantContext(_operationalStoreOptions.Value);
         }

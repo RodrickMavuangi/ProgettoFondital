@@ -41,6 +41,9 @@ namespace Fondital.Server.Automapper
 
             CreateMap<Caldaia, CaldaiaDto>();
             CreateMap<CaldaiaDto, Caldaia>();
+
+            CreateMap<RapportoVoceCosto, RapportoVoceCostoDto>();
+            CreateMap<RapportoVoceCostoDto, RapportoVoceCosto>();
         }
     }
 }

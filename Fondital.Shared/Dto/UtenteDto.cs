@@ -12,11 +12,11 @@ namespace Fondital.Shared.Dto
 
         [Display(Name = "Nome", ResourceType = typeof(Resources.Display))]
         [Required(ErrorMessageResourceName = "Required", ErrorMessageResourceType = typeof(Resources.Validation))]
-        public string Nome { get; set; } = "";
+        public string Nome { get; set; }
 
         [Display(Name = "Cognome", ResourceType = typeof(Resources.Display))]
         [Required(ErrorMessageResourceName = "Required", ErrorMessageResourceType = typeof(Resources.Validation))]
-        public string Cognome { get; set; } = "";
+        public string Cognome { get; set; }
         public DateTime Pw_LastChanged { get; set; } = DateTime.Now;
         public bool Pw_MustChange { get; set; } = true;
         public List<RapportoDto> Rapporti { get; set; } = new List<RapportoDto>();

@@ -5,6 +5,7 @@ using Fondital.Shared.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using RouteAttribute = Microsoft.AspNetCore.Mvc.RouteAttribute;
@@ -49,8 +50,16 @@ namespace Fondital.Server.Controllers
         [HttpPost]
         public async Task CreateRapporto([FromBody] RapportoDto rapportoDto)
         {
-            Rapporto newRapporto = _mapper.Map<Rapporto>(rapportoDto);
-            await _rapportoService.AddRapporto(newRapporto);
+            try
+            {
+                Rapporto newRapporto = _mapper.Map<Rapporto>(rapportoDto);
+                await _rapportoService.AddRapporto(newRapporto);
+            }
+            catch (Exception e)
+            {
+                _logger.LogError("Eccezione {Action} {Object}: {ExceptionMessage}", "creazione", "rapporto", e.Message);
+                throw;
+            }
         }
     }
 }

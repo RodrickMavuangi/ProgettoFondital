@@ -8,20 +8,21 @@ namespace Fondital.Shared.Dto
     {
         // Dati Generali
         public int Id { get; set; }
-        public UtenteDto Utente { get; set; } = new UtenteDto();
-        public StatoRapporto Stato { get; set; }
-        public List<VoceCostoDto> VociDiCosto { get; set; } = new List<VoceCostoDto>();
-        public List<RicambioDto> Ricambi { get; set; } = new List<RicambioDto>();
-        public DateTime DataRapporto { get; set; }
+        public UtenteDto Utente { get; set; } = new();
+        public StatoRapporto Stato { get; set; } = 0;
+        public List<RapportoVoceCostoDto> VociDiCosto { get; set; } = new();
+        public List<RicambioDto> Ricambi { get; set; } = new();
+        public DateTime? DataRapporto { get; set; }
+        public string NomeTecnico { get; set; }
 
         // Dati Anagrafici
-        public ClienteDto Cliente { get; set; } = new ClienteDto();
+        public ClienteDto Cliente { get; set; } = new();
 
         // Dati Caldaia
-        public CaldaiaDto Caldaia { get; set; } = new CaldaiaDto();
+        public CaldaiaDto Caldaia { get; set; } = new();
 
         // Dati Intervento
-        public DateTime DataIntervento { get; set; }
+        public DateTime? DataIntervento { get; set; }
         public string MotivoIntervento { get; set; }
         public string TipoLavoro { get; set; }
     }

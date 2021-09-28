@@ -4,14 +4,16 @@ using Fondital.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
-namespace Fondital.Server.Migrations
+namespace Fondital.Data.Migrations
 {
     [DbContext(typeof(FonditalDbContext))]
-    partial class FonditalDBContextModelSnapshot : ModelSnapshot
+    [Migration("20210923130904_Rapporti_addedNomeTecnico")]
+    partial class Rapporti_addedNomeTecnico
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -261,10 +263,10 @@ namespace Fondital.Server.Migrations
                         .HasAnnotation("SqlServer:IdentitySeed", 1)
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<DateTime?>("DataIntervento")
+                    b.Property<DateTime>("DataIntervento")
                         .HasColumnType("datetime2");
 
-                    b.Property<DateTime?>("DataRapporto")
+                    b.Property<DateTime>("DataRapporto")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("MotivoIntervento")
@@ -289,31 +291,11 @@ namespace Fondital.Server.Migrations
                     b.ToTable("Rapporti");
                 });
 
-            modelBuilder.Entity("Fondital.Shared.Models.RapportoVoceCosto", b =>
-                {
-                    b.Property<int>("RapportoId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("VoceCostoId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Quantita")
-                        .HasColumnType("int");
-
-                    b.HasKey("RapportoId", "VoceCostoId");
-
-                    b.HasIndex("VoceCostoId");
-
-                    b.ToTable("RapportiVociCosto");
-                });
-
             modelBuilder.Entity("Fondital.Shared.Models.Ricambio", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
-                        .HasAnnotation("SqlServer:IdentityIncrement", 1)
-                        .HasAnnotation("SqlServer:IdentitySeed", 1)
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<int>("Costo")
@@ -332,7 +314,7 @@ namespace Fondital.Server.Migrations
 
                     b.HasIndex("RapportoId");
 
-                    b.ToTable("Ricambi");
+                    b.ToTable("Ricambio");
                 });
 
             modelBuilder.Entity("Fondital.Shared.Models.ServicePartner", b =>
@@ -612,6 +594,21 @@ namespace Fondital.Server.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
+            modelBuilder.Entity("RapportoVoceCosto", b =>
+                {
+                    b.Property<int>("RapportiId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("VociDiCostoId")
+                        .HasColumnType("int");
+
+                    b.HasKey("RapportiId", "VociDiCostoId");
+
+                    b.HasIndex("VociDiCostoId");
+
+                    b.ToTable("RapportoVoceCosto");
+                });
+
             modelBuilder.Entity("Fondital.Shared.Models.Auth.Utente", b =>
                 {
                     b.HasOne("Fondital.Shared.Models.ServicePartner", "ServicePartner")
@@ -657,15 +654,15 @@ namespace Fondital.Server.Migrations
                                 .HasColumnType("int")
                                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                            b1.Property<DateTime?>("DataAvvio")
+                            b1.Property<DateTime>("DataAvvio")
                                 .HasColumnType("datetime2")
                                 .HasColumnName("DataAvvioCaldaia");
 
-                            b1.Property<DateTime?>("DataMontaggio")
+                            b1.Property<DateTime>("DataMontaggio")
                                 .HasColumnType("datetime2")
                                 .HasColumnName("DataMontaggioCaldaia");
 
-                            b1.Property<DateTime?>("DataVendita")
+                            b1.Property<DateTime>("DataVendita")
                                 .HasColumnType("datetime2")
                                 .HasColumnName("DataVenditaCaldaia");
 
@@ -751,25 +748,6 @@ namespace Fondital.Server.Migrations
                     b.Navigation("Utente");
                 });
 
-            modelBuilder.Entity("Fondital.Shared.Models.RapportoVoceCosto", b =>
-                {
-                    b.HasOne("Fondital.Shared.Models.Rapporto", "Rapporto")
-                        .WithMany("VociCostoRapporti")
-                        .HasForeignKey("RapportoId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Fondital.Shared.Models.VoceCosto", "VoceCosto")
-                        .WithMany("VociCostoRapporti")
-                        .HasForeignKey("VoceCostoId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Rapporto");
-
-                    b.Navigation("VoceCosto");
-                });
-
             modelBuilder.Entity("Fondital.Shared.Models.Ricambio", b =>
                 {
                     b.HasOne("Fondital.Shared.Models.Rapporto", "Rapporto")
@@ -830,6 +808,21 @@ namespace Fondital.Server.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("RapportoVoceCosto", b =>
+                {
+                    b.HasOne("Fondital.Shared.Models.Rapporto", null)
+                        .WithMany()
+                        .HasForeignKey("RapportiId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Fondital.Shared.Models.VoceCosto", null)
+                        .WithMany()
+                        .HasForeignKey("VociDiCostoId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("Fondital.Shared.Models.Auth.Utente", b =>
                 {
                     b.Navigation("Rapporti");
@@ -838,8 +831,6 @@ namespace Fondital.Server.Migrations
             modelBuilder.Entity("Fondital.Shared.Models.Rapporto", b =>
                 {
                     b.Navigation("Ricambi");
-
-                    b.Navigation("VociCostoRapporti");
                 });
 
             modelBuilder.Entity("Fondital.Shared.Models.ServicePartner", b =>
@@ -852,8 +843,6 @@ namespace Fondital.Server.Migrations
             modelBuilder.Entity("Fondital.Shared.Models.VoceCosto", b =>
                 {
                     b.Navigation("Listini");
-
-                    b.Navigation("VociCostoRapporti");
                 });
 #pragma warning restore 612, 618
         }

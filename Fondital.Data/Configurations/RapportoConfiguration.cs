@@ -44,7 +44,7 @@ namespace Fondital.Data.Configurations
 
             builder.HasOne(m => m.Utente).WithMany(s => s.Rapporti).IsRequired();
 
-            builder.HasMany(m => m.VociDiCosto).WithMany(x => x.Rapporti);
+            builder.HasMany(m => m.VociCostoRapporti).WithOne(v => v.Rapporto).HasForeignKey(m => m.RapportoId);
 
             builder.ToTable("Rapporti");
         }
