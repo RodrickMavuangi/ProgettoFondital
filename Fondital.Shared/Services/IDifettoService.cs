@@ -9,6 +9,6 @@ namespace Fondital.Shared.Services
         Task<IEnumerable<Difetto>> GetAllDifetti(bool? isAbilitato = null);
         Task<Difetto> GetDifettoById(int id);
         Task UpdateDifetto(int difettoId, Difetto difetto);
-        Task AddDifetto(Difetto difetto);
+        Task<int> AddDifetto(Difetto difetto);
     }
 }

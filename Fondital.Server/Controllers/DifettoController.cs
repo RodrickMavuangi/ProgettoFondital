@@ -4,7 +4,6 @@ using Fondital.Shared.Models;
 using Fondital.Shared.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,11 +17,11 @@ namespace Fondital.Server.Controllers
     [Authorize]
     public class DifettoController : ControllerBase
     {
-        private readonly ILogger<DifettoController> _logger;
+        private readonly Serilog.ILogger _logger;
         private readonly IDifettoService _difettoService;
         private readonly IMapper _mapper;
 
-        public DifettoController(ILogger<DifettoController> logger, IDifettoService difettoService, IMapper mapper)
+        public DifettoController(Serilog.ILogger logger, IDifettoService difettoService, IMapper mapper)
         {
             _logger = logger;
             _difettoService = difettoService;
@@ -39,7 +38,17 @@ namespace Fondital.Server.Controllers
         public async Task UpdateDifetto([FromBody] DifettoDto difettoDto, int difettoId)
         {
             Difetto difettoToUpdate = _mapper.Map<Difetto>(difettoDto);
-            await _difettoService.UpdateDifetto(difettoId, difettoToUpdate);
+
+            try
+            {
+                await _difettoService.UpdateDifetto(difettoId, difettoToUpdate);
+                _logger.Information("Info: {Action} {Object} {ObjectId} effettuato con successo", "UPDATE", "Difetto", difettoId);
+            }
+            catch (Exception ex)
+            {
+                _logger.Error("Eccezione {Action} {Object} {ObjectId}: {ExceptionMessage}", "UPDATE", "Difetto", difettoId, ex.Message);
+                throw;
+            }
         }
 
         [HttpPost]
@@ -48,15 +57,16 @@ namespace Fondital.Server.Controllers
             Difetto difetto = _mapper.Map<Difetto>(difettoDto);
             try
             {
-                await _difettoService.AddDifetto(difetto);
+                int difettoId = await _difettoService.AddDifetto(difetto);
+                _logger.Information("Info: {Action} {Object} {ObjectId} effettuato con successo", "CREATE", "Difetto", difettoId);
                 return Ok();
             }
             catch (Exception ex)
             {
                 if (ex.InnerException != null)
-                    _logger.LogError($"{ex.Message} - INNER EXCEPTION: {ex.InnerException.Message}");
+                    _logger.Error("Eccezione {Action} {Object}: {ExceptionMessage} - INNER EXCEPTION: {InnerException}", "CREATE", "Difetto", ex.Message, ex.InnerException.Message);
                 else
-                    _logger.LogError(ex.Message);
+                    _logger.Error("Eccezione {Action} {Object}: {ExceptionMessage}", "CREATE", "Difetto", ex.Message);
 
                 List<Difetto> lista = (List<Difetto>)await _difettoService.GetAllDifetti();
 

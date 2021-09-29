@@ -9,6 +9,6 @@ namespace Fondital.Shared.Services
         Task<IEnumerable<VoceCosto>> GetAllVociCosto(bool? isAbilitato = null);
         Task<VoceCosto> GetVoceCostoById(int id);
         Task UpdateVoceCosto(int difettoId, VoceCosto difetto);
-        Task AddVoceCosto(VoceCosto difetto);
+        Task<int> AddVoceCosto(VoceCosto difetto);
     }
 }

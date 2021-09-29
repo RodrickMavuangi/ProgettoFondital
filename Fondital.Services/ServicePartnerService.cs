@@ -15,13 +15,13 @@ namespace Fondital.Services
             this._unitOfWork = unitOfWork;
         }
 
-        public async Task<ServicePartner> CreateServicePartner(ServicePartner newSp)
+        public async Task<int> CreateServicePartner(ServicePartner newSp)
         {
             await _unitOfWork.ServicePartners
                 .AddAsync(newSp);
             await _unitOfWork.CommitAsync();
 
-            return newSp;
+            return newSp.Id;
         }
 
         public async Task DeleteServicePartner(ServicePartner sp)

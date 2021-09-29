@@ -9,6 +9,6 @@ namespace Fondital.Shared.Services
         Task<IEnumerable<Lavorazione>> GetAllLavorazioni(bool? isAbilitato = null);
         Task<Lavorazione> GetLavorazioneById(int id);
         Task UpdateLavorazione(int lavorazioneId, Lavorazione lavorazione);
-        Task AddLavorazione(Lavorazione lavorazione);
+        Task<int> AddLavorazione(Lavorazione lavorazione);
     }
 }

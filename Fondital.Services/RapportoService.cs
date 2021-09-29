@@ -32,10 +32,12 @@ namespace Fondital.Services
             await _unitOfWork.CommitAsync();
         }
 
-        public async Task AddRapporto(Rapporto rapporto)
+        public async Task<int> AddRapporto(Rapporto rapporto)
         {
             await _unitOfWork.Rapporti.AddRapporto(rapporto);
             await _unitOfWork.CommitAsync();
+
+            return rapporto.Id;
         }
     }
 }

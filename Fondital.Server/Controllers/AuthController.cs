@@ -7,7 +7,6 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.WebUtilities;
-using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using System;
 using System.Collections.Generic;
@@ -58,7 +57,6 @@ namespace Fondital.Server.Controllers
         [AllowAnonymous]
         public async Task<IActionResult> LogIn([FromBody] LoginRequestDto loginRequest)
         {
-            _logger.Information("Log di prova per l'utente con email {LoginRequestEmail}", loginRequest.Email);
             LoginResponseDto response = new();
             try
             {
@@ -66,6 +64,7 @@ namespace Fondital.Server.Controllers
 
                 if (!result.Succeeded)
                 {
+                    _logger.Information("Login failure: {Action} {Object} {ObjectId} fallito per {LoginFailureReason}", "LOGIN", "Utente", loginRequest.Email, "credenziali errate");
                     return BadRequest("ErroreUserPassword");
                 }
 
@@ -75,6 +74,7 @@ namespace Fondital.Server.Controllers
 
                 if (user.Pw_MustChange || (DateTime.Now - user.Pw_LastChanged).TotalDays > durataPasswordInGiorni)
                 {
+                    _logger.Information("Login failure: {Action} {Object} {ObjectId} fallito per {LoginFailureReason}", "LOGIN", "Utente", loginRequest.Email, "password scaduta");
                     return BadRequest("PasswordMustChange");
                 }
 
@@ -89,11 +89,13 @@ namespace Fondital.Server.Controllers
                 }
 
                 response.Token = GenerateJwt(user, roles, _jwtSettings);
+
+                _logger.Information("Login success: {Action} {Object} {ObjectId} effettuato con successo", "LOGIN", "Utente", loginRequest.Email);
                 return Ok(response);
             }
             catch (Exception ex)
             {
-                _logger.Error("Login error: {Message} - Email: {LoginRequestEmail}", ex.Message, loginRequest.Email);
+                _logger.Error("Eccezione {Action} {Object} {ObjecId}: {ExceptionMessage}", "LOGIN", "Utente", loginRequest.Email, ex.Message);
                 return BadRequest(ex.Message);
             }
         }
@@ -111,13 +113,16 @@ namespace Fondital.Server.Controllers
 
                 var task = await _userManager.ChangePasswordAsync(user, ChangePwRequest.OldPassword, ChangePwRequest.NewPassword);
                 if (task.Succeeded)
+                {
+                    _logger.Information("Info: {Action} {Object} {ObjectId} effettuato con successo", "CHANGEPWD", "Utente", ChangePwRequest.Email);
                     return Ok();
+                }
                 else
                     return BadRequest(task.Errors);
             }
             catch (Exception ex)
             {
-                _logger.Error($"Change password error: {ex.Message} - Email: {ChangePwRequest.Email}");
+                _logger.Error("Eccezione {Action} {Object} {ObjectId}: {ExceptionMessage}", "CHANGEPWD", "Utente", ChangePwRequest.Email, ex.Message);
                 return BadRequest(ex.Message);
             }
         }
@@ -137,13 +142,19 @@ namespace Fondital.Server.Controllers
                 string Token = Encoding.UTF8.GetString(WebEncoders.Base64UrlDecode(resetPasswordRequest.Token));
                 var task = await _userManager.ResetPasswordAsync(user, Token, resetPasswordRequest.ConfirmPassword);
                 if (task.Succeeded)
+                {
+                    _logger.Information("Info: {Action} {Object} {ObjectId} effettuato con successo", "RESETPWD", "Utente", resetPasswordRequest.Email);
                     return Ok();
+                }
                 else
                     return BadRequest(task.Errors);
             }
-            catch (Exception e) { throw; }
+            catch (Exception ex)
+            {
+                _logger.Error("Eccezione {Action} {Object} {ObjectId}: {ExceptionMessage}", "RESETPWD", "Utente", resetPasswordRequest.Email, ex.Message);
+                return BadRequest(ex.Message);
+            }
         }
-
 
         //[HttpPost("Roles")]
         //public async Task<IActionResult> CreateRole(string roleName)

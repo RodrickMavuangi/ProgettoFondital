@@ -9,6 +9,6 @@ namespace Fondital.Shared.Services
         Task<IEnumerable<Rapporto>> GetAllRapporti();
         Task<Rapporto> GetRapportoById(int id);
         Task UpdateRapporto(int rapportoId, Rapporto rapporto);
-        Task AddRapporto(Rapporto rapporto);
+        Task<int> AddRapporto(Rapporto rapporto);
     }
 }

@@ -33,10 +33,12 @@ namespace Fondital.Services
             await _unitOfWork.CommitAsync();
         }
 
-        public async Task AddVoceCosto(VoceCosto voceCosto)
+        public async Task<int> AddVoceCosto(VoceCosto voceCosto)
         {
             await _unitOfWork.VociCosto.AddAsync(voceCosto);
             await _unitOfWork.CommitAsync();
+
+            return voceCosto.Id;
         }
     }
 }

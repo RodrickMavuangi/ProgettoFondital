@@ -32,10 +32,12 @@ namespace Fondital.Services
             await _unitOfWork.CommitAsync();
         }
 
-        public async Task AddLavorazione(Lavorazione lavorazione)
+        public async Task<int> AddLavorazione(Lavorazione lavorazione)
         {
             await _unitOfWork.Lavorazioni.AddAsync(lavorazione);
             await _unitOfWork.CommitAsync();
+
+            return lavorazione.Id;
         }
     }
 }

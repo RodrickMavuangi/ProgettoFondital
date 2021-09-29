@@ -4,7 +4,6 @@ using Fondital.Shared.Models;
 using Fondital.Shared.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -14,14 +13,14 @@ namespace Fondital.Server.Controllers
 {
     [ApiController]
     [Route("rapportiControl")]
-    //[Authorize]
+    [Authorize]
     public class RapportoController : ControllerBase
     {
-        private readonly ILogger<RapportoController> _logger;
+        private readonly Serilog.ILogger _logger;
         private readonly IRapportoService _rapportoService;
         private readonly IMapper _mapper;
 
-        public RapportoController(ILogger<RapportoController> logger, IRapportoService rapportoService, IMapper mapper)
+        public RapportoController(Serilog.ILogger logger, IRapportoService rapportoService, IMapper mapper)
         {
             _logger = logger;
             _rapportoService = rapportoService;
@@ -37,14 +36,32 @@ namespace Fondital.Server.Controllers
         [HttpGet("{id}")]
         public async Task<RapportoDto> GetById(int id)
         {
-            return _mapper.Map<RapportoDto>(await _rapportoService.GetRapportoById(id));
+            try
+            {
+                return _mapper.Map<RapportoDto>(await _rapportoService.GetRapportoById(id));
+            }
+            catch (Exception ex)
+            {
+                _logger.Error("Eccezione {Action} {Object} {ObjectId}: {ExceptionMessage}", "GET", "Rapporto", id, ex.Message);
+                throw;
+            }
         }
 
         [HttpPost("update/{rapportoId}")]
         public async Task UpdateRapporto([FromBody] RapportoDto rapportoDto, int rapportoId)
         {
             Rapporto rapportoToUpdate = _mapper.Map<Rapporto>(rapportoDto);
-            await _rapportoService.UpdateRapporto(rapportoId, rapportoToUpdate);
+
+            try
+            {
+                await _rapportoService.UpdateRapporto(rapportoId, rapportoToUpdate);
+                _logger.Information("Info: {Action} {Object} {ObjectId} effettuato con successo", "UPDATE", "Rapporto", rapportoId);
+            }
+            catch (Exception ex)
+            {
+                _logger.Error("Eccezione {Action} {Object} {ObjectId}: {ExceptionMessage}", "UPDATE", "Rapporto", rapportoId, ex.Message);
+                throw;
+            }
         }
 
         [HttpPost]
@@ -53,11 +70,12 @@ namespace Fondital.Server.Controllers
             try
             {
                 Rapporto newRapporto = _mapper.Map<Rapporto>(rapportoDto);
-                await _rapportoService.AddRapporto(newRapporto);
+                int rapportoId = await _rapportoService.AddRapporto(newRapporto);
+                _logger.Information("Info: {Action} {Object} {ObjectId} effettuato con successo", "CREATE", "Rapporto", rapportoId);
             }
-            catch (Exception e)
+            catch (Exception ex)
             {
-                _logger.LogError("Eccezione {Action} {Object}: {ExceptionMessage}", "creazione", "rapporto", e.Message);
+                _logger.Error("Eccezione {Action} {Object}: {ExceptionMessage}", "CREATE", "Rapporto", ex.Message);
                 throw;
             }
         }

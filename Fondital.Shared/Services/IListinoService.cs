@@ -9,6 +9,6 @@ namespace Fondital.Shared.Services
         Task<IEnumerable<Listino>> GetAllListini();
         Task<Listino> GetListinoById(int id);
         Task UpdateListino(int listinoId, Listino listino);
-        Task AddListino(Listino listino);
+        Task<int> AddListino(Listino listino);
     }
 }

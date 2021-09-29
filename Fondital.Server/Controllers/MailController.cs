@@ -5,7 +5,6 @@ using Fondital.Shared.Settings;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.WebUtilities;
-using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using System;
 using System.Text;
@@ -19,11 +18,12 @@ namespace Fondital.Server.Controllers
     public class MailController : ControllerBase
     {
         private readonly UserManager<Utente> _userManager;
-        private readonly ILogger<MailController> _logger;
+        private readonly Serilog.ILogger _logger;
         private readonly IMailService _mailService;
         private readonly IServicePartnerService _spService;
         private readonly JwtSettings _jwtSettings;
-        public MailController(ILogger<MailController> logger, UserManager<Utente> userManager, IMailService mailService, IServicePartnerService spService, IOptionsSnapshot<JwtSettings> jwtSettings)
+
+        public MailController(Serilog.ILogger logger, UserManager<Utente> userManager, IMailService mailService, IServicePartnerService spService, IOptionsSnapshot<JwtSettings> jwtSettings)
         {
             _userManager = userManager;
             _logger = logger;
@@ -31,7 +31,6 @@ namespace Fondital.Server.Controllers
             _spService = spService;
             _jwtSettings = jwtSettings.Value;
         }
-
 
         [HttpPost]
         public async Task<IActionResult> SendMail([FromBody] MailRequest MailRequest)
@@ -43,22 +42,23 @@ namespace Fondital.Server.Controllers
                 code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
                 var urlConfirmation = $"{_jwtSettings.Audience}/account/resetpassword/{HttpUtility.UrlEncode(MailRequest.ToEmail)}/{HttpUtility.UrlEncode(code)}";
                 MailRequest.Body = $"Inserisci una Nuova Passord per confermare l'account cliccando <a href='{urlConfirmation}'>Account/Password</a>";
-                await _mailService.SendEmailAsync(MailRequest);
+                _mailService.SendEmailAsync(MailRequest);
+
+                _logger.Information("Info: {Action} {Object} {ObjectId} effettuato con successo", "SENDMAIL", "Utente", MailRequest.ToEmail);
                 return Ok();
             }
             catch (Exception ex)
             {
+                _logger.Error("Eccezione {Action} {Object} {ObjectId}: {ExceptionMessage}", "SENDMAIL", "Utente", MailRequest.ToEmail, ex.Message);
                 throw;
             }
         }
-
 
         [HttpPost("{servicePartnerId}")]
         public async Task<IActionResult> addUtente(int servicePartnerId, [FromBody] Utente utente)
         {
             try
             {
-
                 ServicePartner _servicePartner = new ServicePartner();
                 _servicePartner = await _spService.GetServicePartnerById(servicePartnerId);
                 utente.ServicePartner = _servicePartner;
@@ -78,10 +78,16 @@ namespace Fondital.Server.Controllers
                     Subject = "SETTARE LA PRIMA PASSWORD",
                     Body = $"Inserisci la prima Passord per confermare l'account cliccando <a href='{urlConfirmation}'>Account/Password</a>"
                 };
-                await _mailService.SendEmailAsync(_mailRequest);
+                _mailService.SendEmailAsync(_mailRequest);
+
+                _logger.Information("Info: {Action} {Object} {ObjectId} effettuato con successo", "CREATE", "Utente", utente.UserName);
                 return Ok();
             }
-            catch (Exception e) { throw; }
+            catch (Exception ex)
+            {
+                _logger.Error("Eccezione {Action} {Object} {ObjectId}: {ExceptionMessage}", "CREATE", "Utente", utente.UserName, ex.Message);
+                throw;
+            }
         }
     }
 }

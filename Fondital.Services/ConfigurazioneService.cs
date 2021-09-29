@@ -1,9 +1,8 @@
-﻿using System.Collections.Generic;
-using System.Threading.Tasks;
-using Fondital.Shared;
+﻿using Fondital.Shared;
 using Fondital.Shared.Models;
-using Fondital.Shared.Models.Auth;
 using Fondital.Shared.Services;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Fondital.Services
 {
@@ -23,7 +22,7 @@ namespace Fondital.Services
         public async Task<string> GetValoreByChiave(string chiave)
         {
             var config = await _unitOfWork.Configurazioni.SingleOrDefaultAsync(c => c.Chiave == chiave);
-            return config.Valore;            
+            return config.Valore;
         }
 
         public async Task UpdateValore(Configurazione config)
