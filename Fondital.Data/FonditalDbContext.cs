@@ -8,6 +8,7 @@ using IdentityServer4.EntityFramework.Options;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
+using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
 
@@ -42,6 +43,11 @@ namespace Fondital.Data
             builder.ApplyConfigurationsFromAssembly(Assembly.GetAssembly(typeof(UtenteConfiguration)));
 
             builder.ConfigurePersistedGrantContext(_operationalStoreOptions.Value);
+
+            foreach (var relationship in builder.Model.GetEntityTypes().SelectMany(e => e.GetForeignKeys()))
+            {
+                relationship.DeleteBehavior = DeleteBehavior.Restrict;
+            }
         }
 
         Task<int> IPersistedGrantDbContext.SaveChangesAsync() => base.SaveChangesAsync();
