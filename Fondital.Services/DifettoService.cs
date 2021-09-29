@@ -32,10 +32,12 @@ namespace Fondital.Services
             await _unitOfWork.CommitAsync();
         }
 
-        public async Task AddDifetto(Difetto difetto)
+        public async Task<int> AddDifetto(Difetto difetto)
         {
             await _unitOfWork.Difetti.AddAsync(difetto);
             await _unitOfWork.CommitAsync();
+
+            return difetto.Id;
         }
     }
 }

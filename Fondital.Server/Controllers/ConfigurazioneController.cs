@@ -2,7 +2,7 @@
 using Fondital.Shared.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using RouteAttribute = Microsoft.AspNetCore.Mvc.RouteAttribute;
@@ -14,10 +14,10 @@ namespace Fondital.Server.Controllers
     [Authorize]
     public class ConfigurazioneController : ControllerBase
     {
-        private readonly ILogger<ConfigurazioneController> _logger;
+        private readonly Serilog.ILogger _logger;
         private readonly IConfigurazioneService _confService;
 
-        public ConfigurazioneController(ILogger<ConfigurazioneController> logger, IConfigurazioneService confService)
+        public ConfigurazioneController(Serilog.ILogger logger, IConfigurazioneService confService)
         {
             _logger = logger;
             _confService = confService;
@@ -32,7 +32,16 @@ namespace Fondital.Server.Controllers
         [HttpPost("update")]
         public async Task UpdateConfigurazione([FromBody] Configurazione config)
         {
-            await _confService.UpdateValore(config);
+            try
+            {
+                await _confService.UpdateValore(config);
+                _logger.Information("Info: {Action} {Object} {ObjectId} effettuato con successo", "UPDATE", "Configurazione", config.Chiave);
+            }
+            catch (Exception ex)
+            {
+                _logger.Error("Eccezione {Action} {Object} {ObjectId}: {ExceptionMessage}", "UPDATE", "Configurazione", config.Chiave, ex.Message);
+                throw;
+            }
         }
     }
 }
