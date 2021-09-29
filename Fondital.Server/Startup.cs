@@ -72,8 +72,11 @@ namespace Fondital.Server
                     opts.JsonSerializerOptions.PropertyNamingPolicy = null; // prevent camel case
                 });
             services.AddRazorPages();
-            services.Configure<MailSettings>(Configuration.GetSection("MailSettings"));
 
+            services.Configure<MailSettings>(Configuration.GetSection("MailSettings"));
+            services.Configure<RestClientSettings>(Configuration.GetSection("RestClientSettings"));
+            services.AddHttpClient<RestExternalServiceController>();
+            
             services.AddCors(options =>
             {
                 options.AddPolicy("CorsPolicy",
@@ -99,9 +102,6 @@ namespace Fondital.Server
             services.AddTransient<IListinoService, ListinoService>();
             services.AddTransient<IMailService, MailService>();
             services.AddTransient<ILavorazioneService, LavorazioneService>();
-
-            services.AddHttpClient<RestExternalServiceController>();
-            services.Configure<RestClientSettings>(Configuration.GetSection("RestClientSettings"));
 
             services.AddSwaggerGen(c =>
             {

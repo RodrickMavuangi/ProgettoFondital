@@ -412,9 +412,9 @@ La nuova password deve essere lunga almeno 8 caratteri e contenere minuscole, ma
   <data name="Raggruppamento" xml:space="preserve">
     <value>Raggruppamento RU</value>
   </data>
-	<data name="Valore" xml:space="preserve">
+  <data name="Valore" xml:space="preserve">
     <value>Valore RU</value>
-	  </data>
+  </data>
   <data name="MailInviata" xml:space="preserve">
     <value>è stata inviata una mail a RU</value>
   </data>
@@ -438,5 +438,11 @@ La nuova password deve essere lunga almeno 8 caratteri e contenere minuscole, ma
   </data>
   <data name="RisettaPassword" xml:space="preserve">
     <value>Risetta la Passowrd RU</value>
+  </data>
+  <data name="ModificaValore" xml:space="preserve">
+    <value>Modifica Valore RU</value>
+  </data>
+  <data name="UtenzeDirezione" xml:space="preserve">
+    <value>Utenze Direzione RU</value>
   </data>
 </root>

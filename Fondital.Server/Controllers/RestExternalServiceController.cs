@@ -41,7 +41,7 @@ namespace Fondital.Server.Controllers
 			return Ok(); ;
 		}
 
-		[HttpGet("prezzoPezzoRicambio")]
+		[HttpGet("pezzoRicambio")]
 		[AllowAnonymous]
 		public async Task<IActionResult> GetServiceRicambio()
 		{
