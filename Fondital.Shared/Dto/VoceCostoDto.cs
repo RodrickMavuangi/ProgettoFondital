@@ -10,13 +10,14 @@ namespace Fondital.Shared.Dto
 
         [Display(Name = "NomeItaliano", ResourceType = typeof(Resources.Display))]
         [Required(ErrorMessageResourceName = "Required", ErrorMessageResourceType = typeof(Resources.Validation))]
-        public string NomeItaliano { get; set; } = "";
+        public string NomeItaliano { get; set; }
 
         [Display(Name = "NomeRusso", ResourceType = typeof(Resources.Display))]
         [Required(ErrorMessageResourceName = "Required", ErrorMessageResourceType = typeof(Resources.Validation))]
-        public string NomeRusso { get; set; } = "";
+        public string NomeRusso { get; set; }
         public TipologiaVoceCosto Tipologia { get; set; } = TipologiaVoceCosto.Forfettario;
         public bool IsAbilitato { get; set; } = true;
         public List<ListinoDto> Listini { get; set; } = new List<ListinoDto>();
+        public List<RapportoDto> Rapporti { get; set; } = new List<RapportoDto>();
     }
 }

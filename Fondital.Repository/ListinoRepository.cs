@@ -3,7 +3,6 @@ using Fondital.Shared.Models;
 using Fondital.Shared.Repositories;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace Fondital.Repository

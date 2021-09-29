@@ -17,7 +17,7 @@ namespace Fondital.Shared.Dto
 
         [Display(Name = "Raggruppamento", ResourceType = typeof(Resources.Display))]
         [Required(ErrorMessageResourceName = "Required", ErrorMessageResourceType = typeof(Resources.Validation))]
-        public string Raggruppamento { get; set; } = "";
+        public string Raggruppamento { get; set; }
 
         [Display(Name = "Valore", ResourceType = typeof(Resources.Display))]
         [Required(ErrorMessageResourceName = "Required", ErrorMessageResourceType = typeof(Resources.Validation))]

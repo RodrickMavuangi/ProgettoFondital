@@ -1,9 +1,12 @@
 using Fondital.Data;
+using Fondital.Repository;
+using Fondital.Server.Automapper;
 using Fondital.Services;
 using Fondital.Shared;
 using Fondital.Shared.Models.Auth;
 using Fondital.Shared.Models.Settings;
 using Fondital.Shared.Services;
+using Fondital.Shared.Settings;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -98,6 +101,7 @@ namespace Fondital.Server
             services.AddTransient<IListinoService, ListinoService>();
             services.AddTransient<IMailService, MailService>();
             services.AddTransient<ILavorazioneService, LavorazioneService>();
+            services.AddTransient<IRapportoService, RapportoService>();
 
             services.AddSwaggerGen(c =>
             {

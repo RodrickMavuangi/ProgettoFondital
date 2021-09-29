@@ -65,7 +65,7 @@ namespace Fondital.Client.Shared
                 new MenuItem()
                 {
                     Text = localizer["GestioneRapporti"],
-                    Url = "reportManagement"
+                    Url = "reports"
                 },
                 new MenuItem()
                 {

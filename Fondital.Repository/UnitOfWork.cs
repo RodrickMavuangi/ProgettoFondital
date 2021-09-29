@@ -16,6 +16,7 @@ namespace Fondital.Repository
         private VoceCostoRepository _voceCostoRepository;
         private ListinoRepository _listinoRepository;
         private LavorazioneRepository _lavorazioneRepository;
+        private RapportoRepository _rapportoRepository;
 
         public UnitOfWork(FonditalDbContext context)
         {
@@ -29,6 +30,7 @@ namespace Fondital.Repository
         public IVoceCostoRepository VociCosto => _voceCostoRepository ??= new VoceCostoRepository(_context);
         public IListinoRepository Listini => _listinoRepository ??= new ListinoRepository(_context);
         public ILavorazioneRepository Lavorazioni => _lavorazioneRepository ??= new LavorazioneRepository(_context);
+        public IRapportoRepository Rapporti => _rapportoRepository ??= new RapportoRepository(_context);
 
         public void Update<T>(T oldItem, T newItem) where T : class
         {
