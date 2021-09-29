@@ -25,8 +25,72 @@ html, body {
     font-family: 'Open Sans', Helvetica, Arial, sans-serif !important;
 }
 
-/*************** COLORI ******************/
+.stepperEp .k-step-link {
+    margin: 0;
+    -ms-flex-direction: row;
+    flex-direction: row;
+    max-width: max-content;
+    background-color: white;
+    padding-left: 1rem;
+    text-decoration: none !important;
+}
 
+.stepperEp .k-step-current .k-step-link .k-step-indicator {
+    background-color: dodgerblue;
+    border-color: dodgerblue;
+}
+
+.stepperEp .k-step-done .k-step-link .k-step-indicator {
+    background-color: dodgerblue;
+    border-color: dodgerblue;
+}
+
+.stepperEp .k-step-link .k-step-label {
+    background-color: #FFF;
+    padding: 0 1rem;
+    max-width: max-content;
+}
+
+.stepperEp .k-step-link .k-step-label .k-step-text {
+    max-width: max-content;
+}
+
+.stepperEp .k-state-selected {
+    background-color: dodgerblue;
+    border-color: dodgerblue;
+}
+
+.stepperEp .k-progressbar {
+    grid-column-end: 7 !important;
+}
+
+
+.datePickerEp {
+    height: 48px;
+}
+
+.datePickerEp > span > .k-widget {
+    padding: .7rem 0 .7rem 1rem;
+}
+
+.datePickerEp > span > .k-select {
+    width: 50px;
+}
+
+.headerFormRicambiEp {
+    background-color: #ffc107;
+    border-radius: 5px;
+    padding: 0.7rem 0;
+    display: inline-block;
+    height: 48px;
+}
+
+.headerFormRicambiEp > label {
+    color: #FFF;
+}
+
+
+/*************** COLORI ******************/
 .blu {
     color: #007BFF !important;
 }
