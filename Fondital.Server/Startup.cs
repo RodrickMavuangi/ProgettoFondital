@@ -25,6 +25,7 @@ using Fondital.Server.Automapper;
 using Fondital.Repository;
 using Fondital.Shared.Settings;
 using Serilog;
+using Fondital.Server.Controllers;
 
 namespace Fondital.Server
 {
@@ -74,8 +75,11 @@ namespace Fondital.Server
                     opts.JsonSerializerOptions.PropertyNamingPolicy = null; // prevent camel case
                 });
             services.AddRazorPages();
-            services.Configure<MailSettings>(Configuration.GetSection("MailSettings"));
 
+            services.Configure<MailSettings>(Configuration.GetSection("MailSettings"));
+            services.Configure<RestClientSettings>(Configuration.GetSection("RestClientSettings"));
+            services.AddHttpClient<RestExternalServiceController>();
+            
             services.AddCors(options =>
             {
                 options.AddPolicy("CorsPolicy",

@@ -361,3 +361,5 @@ MigrationBackup/
 
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
+/Fondital.Client/Pages/UtenzeDirezione.razor
+/Fondital.Client/Pages/UtenzeDirezione.razor.cs

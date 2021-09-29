@@ -42,7 +42,8 @@
     <div class="form-field mt-4">
         <label class="text-capitalize">@localizer["Valore"]</label>
         <div>
-            <InputNumber Class="form-control form-control-lg w100" @bind-Value="NuovoListino.Valore"></InputNumber>
+            <TelerikNumericTextBox Arrows=false Class="form-control form-control-lg w100" Format="₽ #" @bind-Value="NuovoListino.Valore" ></TelerikNumericTextBox>
+            @*<InputNumber Class="form-control form-control-lg w100" @bind-Value="NuovoListino.Valore"></InputNumber>*@
             <ValidationMessage For="() => NuovoListino.Valore" />
         </div>
     </div>
