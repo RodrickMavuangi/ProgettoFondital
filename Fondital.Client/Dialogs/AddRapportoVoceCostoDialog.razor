@@ -1,0 +1,49 @@
+﻿@inject IStringLocalizer<App> localizer
+
+<EditForm Model="NewRapportoVoceCosto" OnValidSubmit="Done">
+    <DataAnnotationsValidator />
+
+    <div class="form-field">
+        <label>@localizer["NomeItaliano"]</label>
+        <div>
+            <InputText Class="form-control form-control-lg w100" @bind-Value="NewRapportoVoceCosto.VoceCosto.NomeItaliano" />
+            <ValidationMessage For="() => NewRapportoVoceCosto.VoceCosto.NomeItaliano" />
+        </div>
+    </div>
+
+    <div class="form-field">
+        <label class="text-capitalize">@localizer["NomeRusso"]</label>
+        <div>
+            <InputText Class="form-control form-control-lg w100" @bind-Value="NewRapportoVoceCosto.VoceCosto.NomeRusso" />
+            <ValidationMessage For="() => NewRapportoVoceCosto.VoceCosto.NomeRusso" />
+        </div>
+    </div>
+
+    <div class="form-field">
+        <label class="pb-3" style="color: #8E8E8E !important; text-transform: capitalize !important; ">@localizer["Tipologia"]</label>
+
+        <div class="form-field">
+            <InputRadioGroup TValue="TipologiaVoceCosto" @bind-Value="NewRapportoVoceCosto.VoceCosto.Tipologia">
+                <div class="form-field mb-1">
+                    <InputRadio Value="TipologiaVoceCosto.Forfettario" class="inputCheck" /> <span class="labelCheck">@localizer["Forfettario"].Value.ToUpper()</span>
+                </div>
+                <div class="form-field">
+                    <InputRadio Value="TipologiaVoceCosto.Quantita" class="inputCheck" /> <span class="labelCheck">@localizer["Quantita"].Value.ToUpper()</span>
+                </div>
+            </InputRadioGroup>
+            <ValidationMessage For="@(() => NewRapportoVoceCosto.VoceCosto.Tipologia)" />
+        </div>
+    </div>
+
+    <div class="form-field mb-0">
+        <label class="text-capitalize">@localizer["Quantita"]</label>
+        <div>
+            <InputNumber Class="form-control form-control-lg w100" @bind-Value="NewRapportoVoceCosto.Quantita" />
+            <ValidationMessage For="() => NewRapportoVoceCosto.Quantita" />
+        </div>
+    </div>
+
+    <div class="form-field">
+        <TelerikButton ButtonType="ButtonType.Submit" Class="btn btn-primary ml-auto w-100 mt-5" Enabled="@(NewRapportoVoceCosto.Quantita>0)">@localizer["Salva"]</TelerikButton>
+    </div>
+</EditForm>

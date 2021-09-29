@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Fondital.Shared.Models;
-using Fondital.Shared.Models.Auth;
+﻿using Fondital.Shared.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -22,6 +16,8 @@ namespace Fondital.Data.Configurations
             builder.Property(m => m.NomeRusso).IsRequired();
             builder.HasIndex(m => m.NomeRusso).IsUnique();
             builder.Property(m => m.Tipologia).IsRequired();
+
+            builder.HasMany(m => m.VociCostoRapporti).WithOne(v => v.VoceCosto).HasForeignKey(m => m.VoceCostoId);
 
             builder.ToTable("VociCosto");
         }

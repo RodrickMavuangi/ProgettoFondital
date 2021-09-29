@@ -69,6 +69,7 @@ namespace Fondital.Server.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Email")
+                        .IsRequired()
                         .HasMaxLength(256)
                         .HasColumnType("nvarchar(256)");
 
@@ -249,6 +250,89 @@ namespace Fondital.Server.Migrations
                     b.HasIndex("VoceCostoId");
 
                     b.ToTable("Listini");
+                });
+
+            modelBuilder.Entity("Fondital.Shared.Models.Rapporto", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:IdentityIncrement", 1)
+                        .HasAnnotation("SqlServer:IdentitySeed", 1)
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<DateTime?>("DataIntervento")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("DataRapporto")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("MotivoIntervento")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("NomeTecnico")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Stato")
+                        .HasColumnType("int");
+
+                    b.Property<string>("TipoLavoro")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("UtenteId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UtenteId");
+
+                    b.ToTable("Rapporti");
+                });
+
+            modelBuilder.Entity("Fondital.Shared.Models.RapportoVoceCosto", b =>
+                {
+                    b.Property<int>("RapportoId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("VoceCostoId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Quantita")
+                        .HasColumnType("int");
+
+                    b.HasKey("RapportoId", "VoceCostoId");
+
+                    b.HasIndex("VoceCostoId");
+
+                    b.ToTable("RapportiVociCosto");
+                });
+
+            modelBuilder.Entity("Fondital.Shared.Models.Ricambio", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:IdentityIncrement", 1)
+                        .HasAnnotation("SqlServer:IdentitySeed", 1)
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("Costo")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Descrizione")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Quantita")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("RapportoId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("RapportoId");
+
+                    b.ToTable("Ricambi");
                 });
 
             modelBuilder.Entity("Fondital.Shared.Models.ServicePartner", b =>
@@ -558,6 +642,143 @@ namespace Fondital.Server.Migrations
                     b.Navigation("VoceCosto");
                 });
 
+            modelBuilder.Entity("Fondital.Shared.Models.Rapporto", b =>
+                {
+                    b.HasOne("Fondital.Shared.Models.Auth.Utente", "Utente")
+                        .WithMany("Rapporti")
+                        .HasForeignKey("UtenteId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.OwnsOne("Fondital.Shared.Models.Caldaia", "Caldaia", b1 =>
+                        {
+                            b1.Property<int>("RapportoId")
+                                .ValueGeneratedOnAdd()
+                                .HasColumnType("int")
+                                .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                            b1.Property<DateTime?>("DataAvvio")
+                                .HasColumnType("datetime2")
+                                .HasColumnName("DataAvvioCaldaia");
+
+                            b1.Property<DateTime?>("DataMontaggio")
+                                .HasColumnType("datetime2")
+                                .HasColumnName("DataMontaggioCaldaia");
+
+                            b1.Property<DateTime?>("DataVendita")
+                                .HasColumnType("datetime2")
+                                .HasColumnName("DataVenditaCaldaia");
+
+                            b1.Property<string>("DittaPrimoAvvio")
+                                .HasColumnType("nvarchar(max)")
+                                .HasColumnName("DittaPrimoAvvioCaldaia");
+
+                            b1.Property<string>("Matricola")
+                                .HasColumnType("nvarchar(max)")
+                                .HasColumnName("MatricolaCaldaia");
+
+                            b1.Property<string>("Modello")
+                                .HasColumnType("nvarchar(max)")
+                                .HasColumnName("ModelloCaldaia");
+
+                            b1.Property<int>("NumCertificatoTecnico")
+                                .HasColumnType("int")
+                                .HasColumnName("NumCertificatoTecnicoCaldaia");
+
+                            b1.Property<string>("TecnicoPrimoAvvio")
+                                .HasColumnType("nvarchar(max)")
+                                .HasColumnName("TecnicoPrimoAvvioCaldaia");
+
+                            b1.Property<string>("Versione")
+                                .HasColumnType("nvarchar(max)")
+                                .HasColumnName("VersioneCaldaia");
+
+                            b1.HasKey("RapportoId");
+
+                            b1.ToTable("Rapporti");
+
+                            b1.WithOwner()
+                                .HasForeignKey("RapportoId");
+                        });
+
+                    b.OwnsOne("Fondital.Shared.Models.Cliente", "Cliente", b1 =>
+                        {
+                            b1.Property<int>("RapportoId")
+                                .ValueGeneratedOnAdd()
+                                .HasColumnType("int")
+                                .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                            b1.Property<string>("Citta")
+                                .HasColumnType("nvarchar(max)")
+                                .HasColumnName("CittaCliente");
+
+                            b1.Property<string>("Cognome")
+                                .HasColumnType("nvarchar(max)")
+                                .HasColumnName("CognomeCliente");
+
+                            b1.Property<string>("Email")
+                                .HasColumnType("nvarchar(max)")
+                                .HasColumnName("EmailCliente");
+
+                            b1.Property<string>("Nome")
+                                .HasColumnType("nvarchar(max)")
+                                .HasColumnName("NomeCliente");
+
+                            b1.Property<string>("NumCivico")
+                                .HasColumnType("nvarchar(max)")
+                                .HasColumnName("NumCivicoCliente");
+
+                            b1.Property<string>("NumTelefono")
+                                .HasColumnType("nvarchar(max)")
+                                .HasColumnName("NumTelefonoCliente");
+
+                            b1.Property<string>("Via")
+                                .HasColumnType("nvarchar(max)")
+                                .HasColumnName("ViaCliente");
+
+                            b1.HasKey("RapportoId");
+
+                            b1.ToTable("Rapporti");
+
+                            b1.WithOwner()
+                                .HasForeignKey("RapportoId");
+                        });
+
+                    b.Navigation("Caldaia");
+
+                    b.Navigation("Cliente");
+
+                    b.Navigation("Utente");
+                });
+
+            modelBuilder.Entity("Fondital.Shared.Models.RapportoVoceCosto", b =>
+                {
+                    b.HasOne("Fondital.Shared.Models.Rapporto", "Rapporto")
+                        .WithMany("VociCostoRapporti")
+                        .HasForeignKey("RapportoId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Fondital.Shared.Models.VoceCosto", "VoceCosto")
+                        .WithMany("VociCostoRapporti")
+                        .HasForeignKey("VoceCostoId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Rapporto");
+
+                    b.Navigation("VoceCosto");
+                });
+
+            modelBuilder.Entity("Fondital.Shared.Models.Ricambio", b =>
+                {
+                    b.HasOne("Fondital.Shared.Models.Rapporto", "Rapporto")
+                        .WithMany("Ricambi")
+                        .HasForeignKey("RapportoId");
+
+                    b.Navigation("Rapporto");
+                });
+
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<int>", b =>
                 {
                     b.HasOne("Fondital.Shared.Models.Auth.Ruolo", null)
@@ -609,6 +830,18 @@ namespace Fondital.Server.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("Fondital.Shared.Models.Auth.Utente", b =>
+                {
+                    b.Navigation("Rapporti");
+                });
+
+            modelBuilder.Entity("Fondital.Shared.Models.Rapporto", b =>
+                {
+                    b.Navigation("Ricambi");
+
+                    b.Navigation("VociCostoRapporti");
+                });
+
             modelBuilder.Entity("Fondital.Shared.Models.ServicePartner", b =>
                 {
                     b.Navigation("Listini");
@@ -619,6 +852,8 @@ namespace Fondital.Server.Migrations
             modelBuilder.Entity("Fondital.Shared.Models.VoceCosto", b =>
                 {
                     b.Navigation("Listini");
+
+                    b.Navigation("VociCostoRapporti");
                 });
 #pragma warning restore 612, 618
         }

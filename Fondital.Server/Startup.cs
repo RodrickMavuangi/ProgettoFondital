@@ -1,9 +1,12 @@
 using Fondital.Data;
+using Fondital.Repository;
+using Fondital.Server.Automapper;
 using Fondital.Services;
 using Fondital.Shared;
 using Fondital.Shared.Models.Auth;
 using Fondital.Shared.Models.Settings;
 using Fondital.Shared.Services;
+using Fondital.Shared.Settings;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -22,6 +25,7 @@ using Fondital.Server.Automapper;
 using Fondital.Repository;
 using Fondital.Shared.Settings;
 using Serilog;
+using Fondital.Server.Controllers;
 
 namespace Fondital.Server
 {
@@ -71,8 +75,11 @@ namespace Fondital.Server
                     opts.JsonSerializerOptions.PropertyNamingPolicy = null; // prevent camel case
                 });
             services.AddRazorPages();
-            services.Configure<MailSettings>(Configuration.GetSection("MailSettings"));
 
+            services.Configure<MailSettings>(Configuration.GetSection("MailSettings"));
+            services.Configure<RestClientSettings>(Configuration.GetSection("RestClientSettings"));
+            services.AddHttpClient<RestExternalServiceController>();
+            
             services.AddCors(options =>
             {
                 options.AddPolicy("CorsPolicy",
@@ -98,6 +105,7 @@ namespace Fondital.Server
             services.AddTransient<IListinoService, ListinoService>();
             services.AddTransient<IMailService, MailService>();
             services.AddTransient<ILavorazioneService, LavorazioneService>();
+            services.AddTransient<IRapportoService, RapportoService>();
 
             services.AddSwaggerGen(c =>
             {

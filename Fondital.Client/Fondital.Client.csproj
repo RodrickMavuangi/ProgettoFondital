@@ -21,11 +21,29 @@
     <PackageReference Include="Microsoft.AspNetCore.Mvc.RazorPages" Version="2.2.5" />
     <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="6.12.2" />
     <PackageReference Include="System.Net.Http.Json" Version="5.0.0" />
-    <PackageReference Include="Telerik.UI.for.Blazor.Trial" Version="2.25.0" />
+    <PackageReference Include="Telerik.UI.for.Blazor.Trial" Version="2.27.0" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\Fondital.Shared\Fondital.Shared.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="LanguageResources\App.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>App.resx</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Update="LanguageResources\App.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>App.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="LanguageResources\App.ru.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+    </EmbeddedResource>
   </ItemGroup>
 
 </Project>

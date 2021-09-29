@@ -1,6 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using Fondital.Shared.Models;
+using System.Collections.Generic;
 using System.Threading.Tasks;
-using Fondital.Shared.Models;
 
 namespace Fondital.Shared.Services
 {

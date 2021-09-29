@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using System;
+using System.Collections.Generic;
 
 namespace Fondital.Shared.Models.Auth
 {
@@ -11,5 +12,7 @@ namespace Fondital.Shared.Models.Auth
         public string Cognome { get; set; } = "";
         public DateTime Pw_LastChanged { get; set; } = DateTime.Now;
         public bool Pw_MustChange { get; set; } = true;
+        public List<Rapporto> Rapporti { get; set; } = new List<Rapporto>();
+
     }
 }

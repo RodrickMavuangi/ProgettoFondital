@@ -394,49 +394,115 @@ La nuova password deve essere lunga almeno 8 caratteri e contenere minuscole, ma
   <data name="ModificaServicePartner" xml:space="preserve">
     <value>Modifica ServicePartner</value>
   </data>
-  <data name="CercaListini" xml:space="preserve">
-    <value>Cerca Listini RU</value>
+  <data name="Gestione" xml:space="preserve">
+    <value>Gestione RU</value>
   </data>
-  <data name="CercaPerRaggruppamento" xml:space="preserve">
-    <value>Cerca per Raggruppamento RU</value>
+  <data name="Rapporti" xml:space="preserve">
+    <value>Rapporti RU</value>
   </data>
-  <data name="CercaPerServicePartner" xml:space="preserve">
-    <value>Cerca per Service Partner RU</value>
+  <data name="Cliente" xml:space="preserve">
+    <value>Cliente RU</value>
   </data>
-  <data name="CercaPerVoceCosto" xml:space="preserve">
-    <value>Cerca per Voce di Costo RU</value>
+  <data name="DataDaA" xml:space="preserve">
+    <value>Data da / a RU</value>
   </data>
-  <data name="Listini" xml:space="preserve">
-    <value>Listini RU</value>
+  <data name="Matricola" xml:space="preserve">
+    <value>Matricola RU</value>
   </data>
-  <data name="Raggruppamento" xml:space="preserve">
-    <value>Raggruppamento RU</value>
+  <data name="NumRapporto" xml:space="preserve">
+    <value>N° Rapporto RU</value>
   </data>
-	<data name="Valore" xml:space="preserve">
+  <data name="Valore" xml:space="preserve">
     <value>Valore RU</value>
-	  </data>
+  </data>
   <data name="MailInviata" xml:space="preserve">
     <value>è stata inviata una mail a RU</value>
   </data>
-  <data name="ResetPassword" xml:space="preserve">
-    <value>Per Risettare la password ? RU</value>
+  <data name="Stato" xml:space="preserve">
+    <value>Stato RU</value>
   </data>
-  <data name="InviaMail" xml:space="preserve">
-    <value>Vuoi mandare una mail all'utente</value>
+  <data name="Telefono" xml:space="preserve">
+    <value>Telefono RU</value>
   </data>
-  <data name="SettaPassword" xml:space="preserve">
-    <value>Per settare la prima Password RU</value>
+  <data name="Data" xml:space="preserve">
+    <value>Data RU</value>
   </data>
-  <data name="ConfermaPasswordR" xml:space="preserve">
-    <value>Conferma Password RU</value>
+  <data name="Modifiche" xml:space="preserve">
+    <value>Modifiche RU</value>
   </data>
-  <data name="ErroreEmail" xml:space="preserve">
-    <value>Verificare che l'Email inserita sia corretta RU</value>
+  <data name="Rapporto" xml:space="preserve">
+    <value>Rapporto RU</value>
   </data>
-  <data name="RitrovaAccount" xml:space="preserve">
-    <value>Inserisci l'Email per cercare il tuo Account RU</value>
+  <data name="DatiAnagrafici" xml:space="preserve">
+    <value>Dati Anagrafici RU</value>
   </data>
-  <data name="RisettaPassword" xml:space="preserve">
-    <value>Risetta la Passowrd RU</value>
+  <data name="DatiCaldaia" xml:space="preserve">
+    <value>Dati Caldaia RU</value>
+  </data>
+  <data name="Intervento" xml:space="preserve">
+    <value>Intervento RU</value>
+  </data>
+  <data name="Avanti" xml:space="preserve">
+    <value>Avanti RU</value>
+  </data>
+  <data name="Indietro" xml:space="preserve">
+    <value>Indietro RU</value>
+  </data>
+  <data name="Citta" xml:space="preserve">
+    <value>Città RU</value>
+  </data>
+  <data name="NumCivico" xml:space="preserve">
+    <value>Numero RU</value>
+  </data>
+  <data name="Via" xml:space="preserve">
+    <value>Via RU</value>
+  </data>
+  <data name="Modello" xml:space="preserve">
+    <value>Modello RU</value>
+  </data>
+  <data name="NumTelefono" xml:space="preserve">
+    <value>Numero Telefonico RU</value>
+  </data>
+  <data name="Versione" xml:space="preserve">
+    <value>Versione RU</value>
+  </data>
+  <data name="DataIntervento" xml:space="preserve">
+    <value>Data Intervento RU</value>
+  </data>
+  <data name="DittaPrimoAvvio" xml:space="preserve">
+    <value>Ditta Prima Accensione RU</value>
+  </data>
+  <data name="MotivoIntervento" xml:space="preserve">
+    <value>Motivo Intervento RU</value>
+  </data>
+  <data name="NomeTecnico" xml:space="preserve">
+    <value>Nome Tecnico RU</value>
+  </data>
+  <data name="NumeroCertTecnico" xml:space="preserve">
+    <value>Numero Certificato Tecnico RU</value>
+  </data>
+  <data name="TecnicoPrimaAccensione" xml:space="preserve">
+    <value>Tecnico Prima Accensione RU</value>
+  </data>
+  <data name="TipologiaLavoro" xml:space="preserve">
+    <value>Tipologia di Lavoro RU</value>
+  </data>
+  <data name="AddRicambio" xml:space="preserve">
+    <value>Aggiungi Ricambio RU</value>
+  </data>
+  <data name="Costo" xml:space="preserve">
+    <value>Costo RU</value>
+  </data>
+  <data name="OutOfBounds" xml:space="preserve">
+    <value>Il campo Quantità deve essere un intero. RU</value>
+  </data>
+  <data name="Inserisci" xml:space="preserve">
+    <value>Inserisci RU</value>
+  </data>
+  <data name="ModificaValore" xml:space="preserve">
+    <value>Modifica Valore RU</value>
+  </data>
+  <data name="UtenzeDirezione" xml:space="preserve">
+    <value>Utenze Direzione RU</value>
   </data>
 </root>
