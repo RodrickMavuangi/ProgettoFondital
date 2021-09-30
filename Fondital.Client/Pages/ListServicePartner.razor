@@ -1,10 +1,9 @@
 ﻿@page  "/servicePartners"
-@attribute [Authorize]
 
-@using Fondital.Shared.Models
 @inject ServicePartnerClient servicePartnerClient
 @inject IStringLocalizer<App> localizer
 @inject NavigationManager navManager
+@attribute [Authorize]
 
 <div class="row-1 d-flex justify-content-between flex-wrap flex-md-nowrap  pt-0">
     <!--TITOLO PAGINA-->
@@ -28,12 +27,10 @@
 </div>
 <!--FINE ROW 1 . TITOLI + BUTTON DX-->
 
-
 @if (ServicePartners == null)
 {
     @*<p><em>@localizer["Caricamento"]</em></p>*@
     <!--CARICO IL LOADER-->
-
     <div class="k-loader-container k-loader-container-md k-loader-top " style="" data-id="7d13dd9e-e016-4aec-8e1b-5253cd5131d5">
         <div class="k-loader-container-overlay k-overlay-light"></div>
         <div class="k-loader-container-inner ">
@@ -49,21 +46,17 @@
 }
 else
 {
-
     <!-- BARRA FILTRI-->
     <div class="row-2 d-inline w-100 mb-4 pt-0 pb-4 pt-4 border-bottom barraFiltri">
         <div class="form-group rowFiltri">
-
             @*<img src="../img/Icons/search.svg" class="bi bi-search float-lg-right icoSearch blu" />*@
             <i class="bi bi-search float-lg-right icoSearch blu"></i>
             <input class="form-control float-lg-right filtriInput mx-1" @bind-value="SearchText" @bind-value:event="oninput" placeholder=@localizer["CercaSP"] />
         </div>
     </div>
     <!--FINE BARRA FILTRI-->
-
     <!--LISTA-->
     <div class="row-3 d-flex justify-content-between flex-wrap flex-md-nowrap  pt-0 pb-4 mb-4">
-
         <TelerikGrid Data="@ServicePartners_filtered" EditMode="@GridEditMode.Popup" Pageable="true"
                      Class="table table-striped" OnUpdate="@UpdateHandler" Resizable="true" Sortable="true">
             <GridColumns>
@@ -75,7 +68,7 @@ else
                         @{
                             ServicePartnerDto sp = (ServicePartnerDto)context;
                             @*<i class="bi bi-people-fill float-lg-left icoClienti blu" @onclick="@(() => navManager.NavigateTo($"/detailservicepartner/{sp.Id}"))"></i>
-                            <b>@(sp.Utenti.Count())</b>*@
+                                <b>@(sp.Utenti.Count())</b>*@
                             <span class="link" @onclick="@(() => navManager.NavigateTo($"/detailservicepartner/{sp.Id}"))"><i class="bi bi-people-fill float-lg-left icoClienti blu"></i> <b>@(sp.Utenti.Count())</b></span>
                         }
                     </Template>
@@ -92,7 +85,6 @@ else
 }
 
 <!--DIALOGS-->
-
 <TelerikWindow Class="modal-app dialogBox" Width="500px" Height="auto" Centered="true" @bind-Visible=@ShowAddDialog Modal="true">
     <WindowActions>
         <WindowAction Name="Close" IconClass="k-icon k-i-close text-dark" />
