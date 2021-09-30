@@ -4,6 +4,7 @@
 @inject IStringLocalizer<App> Localizer
 @inject CurrentStateProvider StateProvider
 @inject RapportoClient HttpClient
+@inject RestExternalServiceClient RestClient
 @inject NavigationManager NavigationManager
 @attribute [Authorize]
 
@@ -91,7 +92,8 @@
                 </span>
                 <span style="width: 33%" class="ml-3">
                     <label>@Localizer["Modello"]</label>
-                    <InputText Class="form-control form-control-lg w100 mb-3" @bind-Value="Rapporto.Caldaia.Modello" />
+                    @*<InputText Class="form-control form-control-lg w100 mb-3" @bind-Value="Rapporto.Caldaia.Modello" />*@
+                    <label class="form-control form-control-lg w100 mb-3">@Modello</label>
                 </span>
                 <span style="width: 33%" class="ml-3">
                     <label>@Localizer["Versione"]</label>

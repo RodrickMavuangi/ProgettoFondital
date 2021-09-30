@@ -15,7 +15,7 @@ namespace Fondital.Client.Clients
 			this.httpClient = httpClient;
 		}
 
-		public async Task ModelloCaldaiaService()
+		public async Task<string> ModelloCaldaiaService()
 		{
 			try
 			{
@@ -23,7 +23,12 @@ namespace Fondital.Client.Clients
 				if(response.StatusCode.ToString().Equals("NotFound"))
 				{
 					// Restituire un feedback du errore
+					return "Not Found";
 				}
+                else
+                {
+					return response.Content.ToString();
+                }
 			}
 			catch (Exception e)
 			{

@@ -77,7 +77,6 @@ namespace Fondital.Server
             services.AddRazorPages();
 
             services.Configure<MailSettings>(Configuration.GetSection("MailSettings"));
-            services.Configure<RestClientSettings>(Configuration.GetSection("RestClientSettings"));
             services.AddHttpClient<RestExternalServiceController>();
             
             services.AddCors(options =>

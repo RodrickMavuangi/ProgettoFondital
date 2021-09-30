@@ -32,6 +32,7 @@ namespace Fondital.Client.Shared
             {
                 new MenuItem()
                 {
+                    ModifyOnClick = true,
                     Text = localizer["Anagrafiche"],
                     Items = new List<MenuItem>()
                     {
@@ -64,11 +65,13 @@ namespace Fondital.Client.Shared
                 },
                 new MenuItem()
                 {
+                    ModifyOnClick = false,
                     Text = localizer["GestioneRapporti"],
                     Url = "reports"
                 },
                 new MenuItem()
                 {
+                    ModifyOnClick = false,
                     Text = localizer["ConfigurazioniGenerali"],
                     Url = "generalConfigurations"
                 }
@@ -78,8 +81,9 @@ namespace Fondital.Client.Shared
 
     public partial class MenuItem
     {
+        public bool ModifyOnClick { get; set; }
         public string Text { get; set; }
         public string Url { get; set; }
-        public List<MenuItem> Items { get; set; }
+        public List<MenuItem>? Items { get; set; }
     }
 }

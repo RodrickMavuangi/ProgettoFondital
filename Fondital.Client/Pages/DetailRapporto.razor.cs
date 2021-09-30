@@ -1,5 +1,6 @@
 ﻿using Fondital.Shared.Dto;
 using Microsoft.AspNetCore.Components;
+using Microsoft.Extensions.Configuration;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -47,7 +48,6 @@ namespace Fondital.Client.Pages
 
         protected async Task Salva()
         {
-            //Rapporto.VociDiCosto.AddRange((IEnumerable<RapportoVoceCostoDto>)Enumerable.Repeat(NewRapportoVoceCosto.VoceCosto, NewRapportoVoceCosto.Quantita));
             RapportiVociCosto.Add(NewRapportoVoceCosto);
             await CloseAndRefresh();
         }
@@ -55,5 +55,7 @@ namespace Fondital.Client.Pages
         protected void EditVoceCosto(int Id)
         {
         }
+
+        public string Modello => RestClient.ModelloCaldaiaService().ToString();
     }
 }
