@@ -19,203 +19,212 @@
     <div class="col-md-7 pb-4 border-bottom pr-0">
         <div class="col text-left d-none barraStrumenti"> </div>
         <div class="col text-right d-inline-block float-lg-right p-0">
+
+            <a href="javascript: history.back()" Class="btn btn-grigio btn-lg mx-1"><i class="bi bi-arrow-return-left"></i></a>
+
             @if (CurrentStepIndex == 3)
             {
-                <TelerikButton Class="btn btn-primary btn-lg mx-1" OnClick="(() => ShowAddVoceCosto = true)">@Localizer["Inserisci"] @Localizer["VoceCosto"]</TelerikButton>
+                <TelerikButton Class="btn btn-primary btn-lg mx-1" OnClick="(() => ShowAddVoceCosto = true)">@Localizer["Inserisci"] @Localizer["VoceCosto"] </TelerikButton><i class="bi bi-plus icoPlus"></i>
             }
             <TelerikButton Class="btn btn-primary btn-verde btn-lg mx-1">@Localizer["Salva"] @Localizer["Modifiche"]</TelerikButton>
+
         </div>
     </div>
 
 </div>
 
-<div class="d-flex justify-content-between my-3">
-    <TelerikStepper Class="w-75 stepperEp" @bind-Value="@CurrentStepIndex" Linear="true">
-        <StepperSteps>
-            <StepperStep Label=@Localizer["DatiAnagrafici"] />
-            <StepperStep Label=@Localizer["DatiCaldaia"] />
-            <StepperStep Label=@Localizer["Intervento"] />
-            <StepperStep Label=@Localizer["Lavorazioni"] />
-        </StepperSteps>
-    </TelerikStepper>
-    <div>
-        <TelerikButton Class="btn btn-primary btn-lg mx-1" OnClick=@PreviousStep>@Localizer["Indietro"]</TelerikButton>
-        <TelerikButton Class="btn btn-primary btn-lg mx-1" OnClick=@NextStep>@Localizer["Avanti"]</TelerikButton>
+@*<div class="d-flex justify-content-between my-3">*@
+<div class="row-1 d-flex justify-content-between flex-wrap flex-md-nowrap pb-4 pt-4 pr-0 border-bottom barraFiltri mb-4">
+
+    <div class="col-md-8 p-0 pl-0 pr-0 d-inline">
+        <TelerikStepper Class="w-100 stepperEp" @bind-Value="@CurrentStepIndex" Linear="true">
+            <StepperSteps>
+                <StepperStep Label=@Localizer["DatiAnagrafici"] />
+                <StepperStep Label=@Localizer["DatiCaldaia"] />
+                <StepperStep Label=@Localizer["Intervento"] />
+                <StepperStep Label=@Localizer["Lavorazioni"] />
+            </StepperSteps>
+        </TelerikStepper>
     </div>
-</div>
+        <div class="col-md-4 p-0 pl-0 pr-0 d-inline text-right">
+            <TelerikButton Class="btn btn-primary-outline outline-icon-left btn-lg mx-1" OnClick=@PreviousStep><i class="bi bi-chevron-left icoBack"></i> @Localizer["Indietro"] </TelerikButton>
+            <TelerikButton Class="btn btn-primary-outline outline-icon-right btn-lg mx-1" OnClick=@NextStep>@Localizer["Avanti"] <i class="bi bi-chevron-right icoForward"></i></TelerikButton>
+        </div>
 
-<div>
-    <EditForm Model="Rapporto">
-        <DataAnnotationsValidator />
+    </div>
 
-        @if (CurrentStepIndex == 0)
-        {
-            <!--Dati Anagrafici-->
-            <div class="form-field my-4 d-flex justify-content-start w-100">
-                <span style="width: 33%">
-                    <label>@Localizer["Nome"]</label>
-                    <InputText Class="form-control form-control-lg w100 mb-3" @bind-Value="Rapporto.Cliente.Nome" />
-                </span>
-                <span style="width: 33%" class="ml-3">
-                    <label>@Localizer["Cognome"]</label>
-                    <InputText Class="form-control form-control-lg w100" @bind-Value="Rapporto.Cliente.Cognome" />
-                </span>
-            </div>
+    <div>
+        <EditForm Model="Rapporto">
+            <DataAnnotationsValidator />
 
-            <div class="form-field my-4 d-flex justify-content-start w-100">
-                <span style="width: 33%">
-                    <label>@Localizer["Citta"]</label>
-                    <InputText Class="form-control form-control-lg w100 mb-3" @bind-Value="Rapporto.Cliente.Citta" />
-                </span>
-                <span style="width: 33%" class="ml-3">
-                    <label>@Localizer["Via"]</label>
-                    <InputText Class="form-control form-control-lg w100 mb-3" @bind-Value="Rapporto.Cliente.Via" />
-                </span>
-                <span class="ml-3">
-                    <label>@Localizer["NumCivico"]</label>
-                    <InputText Class="form-control form-control-lg w100 mb-3" @bind-Value="Rapporto.Cliente.NumCivico" />
-                </span>
-            </div>
-
-            <div class="form-field my-4 d-flex justify-content-start w-100">
-                <span style="width: 33%">
-                    <label>@Localizer["NumTelefono"]</label>
-                    <InputText Class="form-control form-control-lg w100 mb-3" @bind-Value="Rapporto.Cliente.NumTelefono" />
-                </span>
-                <span style="width: 33%" class="ml-3">
-                    <label>@Localizer["Email"]</label>
-                    <InputText Class="form-control form-control-lg w100 mb-3" @bind-Value="Rapporto.Cliente.Email" />
-                </span>
-            </div>
-        }
-        else if (CurrentStepIndex == 1)
-        {
-            <!--Dati Caldaia-->
-            <div class="form-field my-4 d-flex justify-content-start w-100">
-                <span style="width: 33%">
-                    <label>@Localizer["Matricola"]</label>
-                    <InputText Class="form-control form-control-lg w100 mb-3" @bind-Value="Rapporto.Caldaia.Matricola" />
-                </span>
-                <span style="width: 33%" class="ml-3">
-                    <label>@Localizer["Modello"]</label>
-                    <InputText Class="form-control form-control-lg w100 mb-3" @bind-Value="Rapporto.Caldaia.Modello" />
-                </span>
-                <span style="width: 33%" class="ml-3">
-                    <label>@Localizer["Versione"]</label>
-                    <InputText Class="form-control form-control-lg w100 mb-3" @bind-Value="Rapporto.Caldaia.Versione" />
-                </span>
-            </div>
-
-            <div class="form-field my-4 d-flex justify-content-start w-100">
-                <span style="width: 33%">
-                    <label>@Localizer["DataVendita"]</label>
-                    <TelerikDatePicker Class="w100 mb-3 datePickerEp" @bind-Value="Rapporto.Caldaia.DataVendita" />
-                </span>
-                <span style="width: 33%" class="ml-3">
-                    <label>@Localizer["DataMontaggio"]</label>
-                    <TelerikDatePicker Class="w100 mb-3 datePickerEp" @bind-Value="Rapporto.Caldaia.DataMontaggio" />
-                </span>
-                <span style="width: 33%" class="ml-3">
-                    <label>@Localizer["DataAvvio"]</label>
-                    <TelerikDatePicker Class="w100 mb-3 datePickerEp" @bind-Value="Rapporto.Caldaia.DataAvvio" />
-                </span>
-            </div>
-
-            <div class="form-field my-4 d-flex justify-content-start w-100">
-                <span style="width: 33%">
-                    <label>@Localizer["TecnicoPrimaAccensione"]</label>
-                    <InputText Class="form-control form-control-lg w100 mb-3" @bind-Value="Rapporto.Caldaia.TecnicoPrimoAvvio" />
-                </span>
-                <span style="width: 33%" class="ml-3">
-                    <label>@Localizer["NumeroCertTecnico"]</label>
-                    <InputNumber Class="form-control form-control-lg w100 mb-3" @bind-Value="Rapporto.Caldaia.NumCertificatoTecnico" />
-                </span>
-                <span style="width: 33%" class="ml-3">
-                    <label>@Localizer["DittaPrimoAvvio"]</label>
-                    <InputText Class="form-control form-control-lg w100 mb-3" @bind-Value="Rapporto.Caldaia.DittaPrimoAvvio" />
-                </span>
-            </div>
-        }
-        else if (CurrentStepIndex == 2)
-        {
-            <!--Dati Intervento-->
-            <div class="form-field my-4 d-flex justify-content-start w-100">
-                <span style="width: 33%">
-                    <label>@Localizer["DataIntervento"]</label>
-                    <TelerikDatePicker Class="w100 mb-3 datePickerEp" @bind-Value="Rapporto.DataIntervento" />
-                </span>
-                <span style="width: 66%" class="ml-3">
-                    <label>@Localizer["MotivoIntervento"]</label>
-                    <InputText Class="form-control form-control-lg w100 mb-3" @bind-Value="Rapporto.MotivoIntervento" />
-                </span>
-            </div>
-
-            <div class="form-field my-4 d-flex justify-content-start w-100">
-                <span style="width: 33%">
-                    <label>@Localizer["TipologiaLavoro"]</label>
-                    <InputText Class="form-control form-control-lg w100 mb-3" @bind-Value="Rapporto.TipoLavoro" />
-                </span>
-                <span style="width: 33%" class="ml-3">
-                    <label>@Localizer["NomeTecnico"]</label>
-                    <InputText Class="form-control form-control-lg w100" @bind-Value="Rapporto.NomeTecnico" />
-                </span>
-            </div>
-
-            <div class="form-field my-4 w-100">
-                <div style="width: 100%">
-                    <span style="width: 75%" class="headerFormRicambiEp">
-                        <label style="width:15%">N°</label>
-                        <label style="width:25%">@Localizer["Costo"]</label>
-                        <label>@Localizer["Descrizione"]</label>
-                    </span>
-
-                    <TelerikButton Class="btn btn-primary btn-lg mx-1" OnClick="NuovoRicambio">@Localizer["AddRicambio"]</TelerikButton>
-                </div>
-
-                <div class="form-field my-1 d-flex justify-content-start flex-column w-100">
-                    @foreach (RicambioDto Ricambio in Rapporto.Ricambi)
-                    {
-                        <div class="d-flex">
-                            <InputNumber Class="form-control form-control-lg mb-3 mr-3" @bind-Value="Ricambio.Quantita" />
-                            <InputNumber Class="form-control form-control-lg mb-3 mr-3" @bind-Value="Ricambio.Costo" />
-                            <InputText Class="form-control form-control-lg" @bind-Value="Ricambio.Descrizione" />
-                        </div>
-                    }
-                </div>
-            </div>
-        }
-        else if (CurrentStepIndex == 3)
-        {
-            @if (Rapporto.VociDiCosto != null)
+            @if (CurrentStepIndex == 0)
             {
-                <div class="row-3 d-flex justify-content-between flex-wrap flex-md-nowrap  pt-0 pb-4 mb-4">
-                    <TelerikGrid Data="@Rapporto.VociDiCosto" Class="table table-striped">
-                        <GridColumns>
-                            <GridColumn Field=@nameof(RapportoVoceCostoDto.VoceCostoId) Width="10%" Title="#" />
-                            <GridColumn Field=VociDiCosto.VoceCosto.NomeItaliano Width="30%" Title="@Localizer["VociCosto"].Value.ToUpper()" Visible="@(CurrentCulture == "it-IT")" />
-                            <GridColumn Field=VoceCosto.NomeRusso Width="30%" Title="@Localizer["VociCosto"].Value.ToUpper()" Visible="@(CurrentCulture == "ru-RU")" />
-                            <GridColumn Field=VoceCosto.Tipologia Width="10%" Title="@Localizer["Tipologia"].Value.ToUpper()" />
-                            <GridColumn Field=Quantita Width="10%" Title="@Localizer["Quantita"].Value.ToUpper()" />
+                <!--Dati Anagrafici-->
+                <div class="form-field my-4 d-flex justify-content-start w-100">
+                    <span class="col-4">
+                        <label>@Localizer["Nome"]</label>
+                        <InputText Class="form-control form-control-lg w100 mb-3" @bind-Value="Rapporto.Cliente.Nome" />
+                    </span>
+                    <span class="col-4">
+                        <label>@Localizer["Cognome"]</label>
+                        <InputText Class="form-control form-control-lg w100" @bind-Value="Rapporto.Cliente.Cognome" />
+                    </span>
+                </div>
 
-                            <GridCommandColumn Context="voce" Width="3%">
-                                @{
-                                    var voceCosto = voce as RapportoVoceCostoDto;
-                                    <GridCommandButton Class=" btnIcon bgBianco white" Command="EditLavorazione" Icon="" ImageUrl="/img/Icons/edit.svg" OnClick="@(() => EditVoceCosto(voceCosto.VoceCosto.Id))" />
-                                }
-                            </GridCommandColumn>
-                        </GridColumns>
-                    </TelerikGrid>
+                <div class="form-field my-4 d-flex justify-content-start w-100">
+                    <span class="col-4">
+                        <label>@Localizer["Citta"]</label>
+                        <InputText Class="form-control form-control-lg w100 mb-3" @bind-Value="Rapporto.Cliente.Citta" />
+                    </span>
+                    <span class="col-4">
+                        <label>@Localizer["Via"]</label>
+                        <InputText Class="form-control form-control-lg w100 mb-3" @bind-Value="Rapporto.Cliente.Via" />
+                    </span>
+                    <span class="ml-3">
+                        <label>@Localizer["NumCivico"]</label>
+                        <InputText Class="form-control form-control-lg w100 mb-3" @bind-Value="Rapporto.Cliente.NumCivico" />
+                    </span>
+                </div>
+
+                <div class="form-field my-4 d-flex justify-content-start w-100">
+                    <span class="col-4">
+                        <label>@Localizer["NumTelefono"]</label>
+                        <InputText Class="form-control form-control-lg w100 mb-3" @bind-Value="Rapporto.Cliente.NumTelefono" />
+                    </span>
+                    <span class="col-4">
+                        <label>@Localizer["Email"]</label>
+                        <InputText Class="form-control form-control-lg w100 mb-3" @bind-Value="Rapporto.Cliente.Email" />
+                    </span>
                 </div>
             }
-        }
-    </EditForm>
-</div>
+            else if (CurrentStepIndex == 1)
+            {
+                <!--Dati Caldaia-->
+        <div class="form-field my-4 d-flex justify-content-start w-100">
+            <span class="col-4">
+                <label>@Localizer["Matricola"]</label>
+                <InputText Class="form-control form-control-lg w100 mb-3" @bind-Value="Rapporto.Caldaia.Matricola" />
+            </span>
+             <span class="col-4">
+                <label>@Localizer["Modello"]</label>
+                <InputText Class="form-control form-control-lg w100 mb-3" @bind-Value="Rapporto.Caldaia.Modello" />
+            </span>
+             <span class="col-4">
+                <label>@Localizer["Versione"]</label>
+                <InputText Class="form-control form-control-lg w100 mb-3" @bind-Value="Rapporto.Caldaia.Versione" />
+            </span>
+        </div>
 
-<TelerikWindow Class="modal-app dialogBox" Width="500px" Height="auto" Centered="true" Modal="true" @bind-Visible="ShowAddVoceCosto">
-    <WindowActions>
-        <WindowAction Name="Close" IconClass="k-icon k-i-close text-dark" />
-    </WindowActions>
-    <WindowContent>
-        <div class="dialogForm"><AddRapportoVoceCostoDialog @bind-NewRapportoVoceCosto="NewRapportoVoceCosto" OnSave="Salva" OnClose="CloseAndRefresh"/></div>
-    </WindowContent>
-</TelerikWindow>
+        <div class="form-field my-4 d-flex justify-content-start w-100">
+            <span class="col-4">
+                <label>@Localizer["DataVendita"]</label>
+                <TelerikDatePicker Class="w100 mb-3 datePickerEp"  @bind-Value="Rapporto.Caldaia.DataVendita" />
+            </span>
+            <span class="col-4">
+                <label>@Localizer["DataMontaggio"]</label>
+                <TelerikDatePicker Class="w100 mb-3 datePickerEp" @bind-Value="Rapporto.Caldaia.DataMontaggio" />
+            </span>
+             <span class="col-4">
+                <label>@Localizer["DataAvvio"]</label>
+                <TelerikDatePicker Class="w100 mb-3 datePickerEp" @bind-Value="Rapporto.Caldaia.DataAvvio" />
+            </span>
+        </div>
+
+        <div class="form-field my-4 d-flex justify-content-start w-100">
+            <span class="col-4">
+                <label>@Localizer["TecnicoPrimaAccensione"]</label>
+                <InputText Class="form-control form-control-lg w100 mb-3" @bind-Value="Rapporto.Caldaia.TecnicoPrimoAvvio" />
+            </span>
+            <span class="col-4">
+                <label>@Localizer["NumeroCertTecnico"]</label>
+                <InputNumber Class="form-control form-control-lg w100 mb-3" @bind-Value="Rapporto.Caldaia.NumCertificatoTecnico" />
+            </span>
+             <span class="col-4">
+                <label>@Localizer["DittaPrimoAvvio"]</label>
+                <InputText Class="form-control form-control-lg w100 mb-3" @bind-Value="Rapporto.Caldaia.DittaPrimoAvvio" />
+            </span>
+        </div>
+            }
+            else if (CurrentStepIndex == 2)
+            {
+                <!--Dati Intervento-->
+        <div class="form-field my-4 d-flex justify-content-start w-100">
+            <span class="col-4">
+                <label>@Localizer["DataIntervento"]</label>
+                <TelerikDatePicker Class="w100 mb-3 datePickerEp" @bind-Value="Rapporto.DataIntervento" />
+            </span>
+             <span class="col-8">
+                <label>@Localizer["MotivoIntervento"]</label>
+                <InputText Class="form-control form-control-lg w100 mb-3" @bind-Value="Rapporto.MotivoIntervento" />
+            </span>
+        </div>
+
+        <div class="form-field my-4 d-flex justify-content-start w-100">
+            <span class="col-4">
+                <label>@Localizer["TipologiaLavoro"]</label>
+                <InputText Class="form-control form-control-lg w100 mb-3" @bind-Value="Rapporto.TipoLavoro" />
+            </span>
+             <span class="col-4">
+                <label>@Localizer["NomeTecnico"]</label>
+                <InputText Class="form-control form-control-lg w100" @bind-Value="Rapporto.NomeTecnico" />
+            </span>
+        </div>
+
+                <div class="form-field my-4 w-100">
+                    <div cass="col-12">
+                        <span style="width: 75%" class="headerFormRicambiEp">
+                            <label style="width:15%">N°</label>
+                            <label style="width:25%">@Localizer["Costo"]</label>
+                            <label>@Localizer["Descrizione"]</label>
+                        </span>
+
+                        <TelerikButton Class="btn btn-primary btn-lg mx-1" OnClick="NuovoRicambio">@Localizer["AddRicambio"]</TelerikButton>
+                    </div>
+
+                    <div class="form-field my-1 d-flex justify-content-start flex-column w-100">
+                        @foreach (RicambioDto Ricambio in Rapporto.Ricambi)
+                        {
+                            <div class="d-flex">
+                                <InputNumber Class="form-control form-control-lg mb-3 mr-3" @bind-Value="Ricambio.Quantita" />
+                                <InputNumber Class="form-control form-control-lg mb-3 mr-3" @bind-Value="Ricambio.Costo" />
+                                <InputText Class="form-control form-control-lg" @bind-Value="Ricambio.Descrizione" />
+                            </div>
+                        }
+                    </div>
+                </div>
+            }
+            else if (CurrentStepIndex == 3)
+            {
+                @if (Rapporto.VociDiCosto != null)
+                {
+                    <div class="row-3 d-flex justify-content-between flex-wrap flex-md-nowrap  pt-0 pb-4 mb-4">
+                        <TelerikGrid Data="@Rapporto.VociDiCosto" Class="table table-striped">
+                            <GridColumns>
+                                <GridColumn Field=@nameof(RapportoVoceCostoDto.VoceCostoId) Width="10%" Title="#" />
+                                <GridColumn Field=VociDiCosto.VoceCosto.NomeItaliano Width="30%" Title="@Localizer["VociCosto"].Value.ToUpper()" Visible="@(CurrentCulture == "it-IT")" />
+                                <GridColumn Field=VoceCosto.NomeRusso Width="30%" Title="@Localizer["VociCosto"].Value.ToUpper()" Visible="@(CurrentCulture == "ru-RU")" />
+                                <GridColumn Field=VoceCosto.Tipologia Width="10%" Title="@Localizer["Tipologia"].Value.ToUpper()" />
+                                <GridColumn Field=Quantita Width="10%" Title="@Localizer["Quantita"].Value.ToUpper()" />
+
+                                <GridCommandColumn Context="voce" Width="3%">
+                                    @{
+                                        var voceCosto = voce as RapportoVoceCostoDto;
+                                        <GridCommandButton Class=" btnIcon bgBianco white" Command="EditLavorazione" Icon="" ImageUrl="/img/Icons/edit.svg" OnClick="@(() => EditVoceCosto(voceCosto.VoceCosto.Id))" />
+                                    }
+                                </GridCommandColumn>
+                            </GridColumns>
+                        </TelerikGrid>
+                    </div>
+                }
+            }
+        </EditForm>
+    </div>
+
+    <TelerikWindow Class="modal-app dialogBox" Width="500px" Height="auto" Centered="true" Modal="true" @bind-Visible="ShowAddVoceCosto">
+        <WindowActions>
+            <WindowAction Name="Close" IconClass="k-icon k-i-close text-dark" />
+        </WindowActions>
+        <WindowContent>
+            <div class="dialogForm"><AddRapportoVoceCostoDialog @bind-NewRapportoVoceCosto="NewRapportoVoceCosto" OnSave="Salva" OnClose="CloseAndRefresh" /></div>
+        </WindowContent>
+    </TelerikWindow>
