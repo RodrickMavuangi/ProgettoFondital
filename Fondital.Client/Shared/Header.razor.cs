@@ -1,6 +1,5 @@
 ﻿using Fondital.Shared.Dto;
 using Microsoft.AspNetCore.Components;
-using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -10,7 +9,7 @@ namespace Fondital.Client.Shared
     {
         bool ViewUserMenu = false;
         public List<MenuItem> MenuItems { get; set; }
-        protected UtenteDto UtenteCorrente { get; set; }
+        public UtenteDto UtenteCorrente { get; set; }
 
         public class MenuItem
         {
@@ -21,7 +20,7 @@ namespace Fondital.Client.Shared
 
         protected override async Task OnInitializedAsync()
         {
-            UtenteCorrente = await StateProvider.GetCurrentUser();
+            await PopolaUtente();
 
             MenuItems = new List<MenuItem>()
             {
@@ -43,6 +42,12 @@ namespace Fondital.Client.Shared
                     }
                 }
             };
+        }
+
+        public async Task PopolaUtente()
+        {
+            UtenteCorrente = await StateProvider.GetCurrentUser();
+            StateHasChanged();
         }
 
         public void ToggleUserMenu()
