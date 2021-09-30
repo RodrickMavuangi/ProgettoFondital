@@ -1,17 +1,12 @@
 ﻿using Fondital.Shared.Dto;
 using Microsoft.AspNetCore.Components;
-using Microsoft.AspNetCore.Components.Authorization;
-using Microsoft.JSInterop;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace Fondital.Client.Pages
 {
     public partial class DetailRapporto
     {
-        [CascadingParameter]
-        private Task<AuthenticationState> AuthStateTask { get; set; }
         private RapportoDto Rapporto { get; set; } = new();
         private List<RapportoVoceCostoDto> RapportiVociCosto { get; set; } = new();
         private RapportoVoceCostoDto NewRapportoVoceCosto { get; set; } = new();
@@ -23,13 +18,8 @@ namespace Fondital.Client.Pages
         protected override async Task OnInitializedAsync()
         {
             ShowAddVoceCosto = false;
-
-            var js = (IJSInProcessRuntime)JSRuntime;
-            CurrentCulture = await js.InvokeAsync<string>("blazorCulture.get");
-
-            var authState = await AuthStateTask;
-            if (authState.User.Identity.IsAuthenticated)
-                Rapporto.Utente = await utenteHttpClient.GetUtente(authState.User.Identity.Name);
+            CurrentCulture = await StateProvider.GetCurrentCulture();
+            Rapporto.Utente = await StateProvider.GetCurrentUser();
         }
 
         protected void PreviousStep()

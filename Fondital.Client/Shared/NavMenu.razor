@@ -19,11 +19,3 @@
         </TelerikMenu>
     </Authorized>
 </AuthorizeView>
-
-@*@code {
-    protected override async Task OnAfterRenderAsync(bool firstRender)
-    {
-        await JSRuntime.InvokeVoidAsync("manipulateActiveLink", firstRender, NavigationManager.Uri);
-    }
-}*@
-

@@ -1,13 +1,13 @@
 ﻿@page "/reportDetail"
 @page "/reportDetail/{id}"
+
 @inject IStringLocalizer<App> Localizer
-@inject IJSRuntime JSRuntime
+@inject CurrentStateProvider StateProvider
 @inject RapportoClient HttpClient
-@inject UtenteClient utenteHttpClient
 @inject NavigationManager NavigationManager
+@attribute [Authorize]
 
 <div class="row-1 d-flex justify-content-between flex-wrap flex-md-nowrap pt-0">
-
     <div class="col-md-5 text-left pb-4 border-bottom">
         <div class="col text-left d-inline-block ">
             <div class="page-header">
@@ -15,7 +15,6 @@
             </div>
         </div>
     </div>
-
     <div class="col-md-7 pb-4 border-bottom pr-0">
         <div class="col text-left d-none barraStrumenti"> </div>
         <div class="col text-right d-inline-block float-lg-right p-0">
@@ -26,9 +25,7 @@
             <TelerikButton Class="btn btn-primary btn-verde btn-lg mx-1">@Localizer["Salva"] @Localizer["Modifiche"]</TelerikButton>
         </div>
     </div>
-
 </div>
-
 <div class="d-flex justify-content-between my-3">
     <TelerikStepper Class="w-75 stepperEp" @bind-Value="@CurrentStepIndex" Linear="true">
         <StepperSteps>
@@ -43,11 +40,9 @@
         <TelerikButton Class="btn btn-primary btn-lg mx-1" OnClick=@NextStep>@Localizer["Avanti"]</TelerikButton>
     </div>
 </div>
-
 <div>
     <EditForm Model="Rapporto">
         <DataAnnotationsValidator />
-
         @if (CurrentStepIndex == 0)
         {
             <!--Dati Anagrafici-->
@@ -61,7 +56,6 @@
                     <InputText Class="form-control form-control-lg w100" @bind-Value="Rapporto.Cliente.Cognome" />
                 </span>
             </div>
-
             <div class="form-field my-4 d-flex justify-content-start w-100">
                 <span style="width: 33%">
                     <label>@Localizer["Citta"]</label>
@@ -76,7 +70,6 @@
                     <InputText Class="form-control form-control-lg w100 mb-3" @bind-Value="Rapporto.Cliente.NumCivico" />
                 </span>
             </div>
-
             <div class="form-field my-4 d-flex justify-content-start w-100">
                 <span style="width: 33%">
                     <label>@Localizer["NumTelefono"]</label>
@@ -105,7 +98,6 @@
                     <InputText Class="form-control form-control-lg w100 mb-3" @bind-Value="Rapporto.Caldaia.Versione" />
                 </span>
             </div>
-
             <div class="form-field my-4 d-flex justify-content-start w-100">
                 <span style="width: 33%">
                     <label>@Localizer["DataVendita"]</label>
@@ -120,7 +112,6 @@
                     <TelerikDatePicker Class="w100 mb-3 datePickerEp" @bind-Value="Rapporto.Caldaia.DataAvvio" />
                 </span>
             </div>
-
             <div class="form-field my-4 d-flex justify-content-start w-100">
                 <span style="width: 33%">
                     <label>@Localizer["TecnicoPrimaAccensione"]</label>
@@ -149,7 +140,6 @@
                     <InputText Class="form-control form-control-lg w100 mb-3" @bind-Value="Rapporto.MotivoIntervento" />
                 </span>
             </div>
-
             <div class="form-field my-4 d-flex justify-content-start w-100">
                 <span style="width: 33%">
                     <label>@Localizer["TipologiaLavoro"]</label>
@@ -160,7 +150,6 @@
                     <InputText Class="form-control form-control-lg w100" @bind-Value="Rapporto.NomeTecnico" />
                 </span>
             </div>
-
             <div class="form-field my-4 w-100">
                 <div style="width: 100%">
                     <span style="width: 75%" class="headerFormRicambiEp">
@@ -168,10 +157,8 @@
                         <label style="width:25%">@Localizer["Costo"]</label>
                         <label>@Localizer["Descrizione"]</label>
                     </span>
-
                     <TelerikButton Class="btn btn-primary btn-lg mx-1" OnClick="NuovoRicambio">@Localizer["AddRicambio"]</TelerikButton>
                 </div>
-
                 <div class="form-field my-1 d-flex justify-content-start flex-column w-100">
                     @foreach (RicambioDto Ricambio in Rapporto.Ricambi)
                     {

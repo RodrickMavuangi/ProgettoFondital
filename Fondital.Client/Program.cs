@@ -38,6 +38,7 @@ namespace Fondital.Client
             builder.Services.AddBlazoredLocalStorage();
             builder.Services.AddAuthorizationCore();
             builder.Services.AddScoped<FonditalAuthStateProvider>();
+            builder.Services.AddScoped<CurrentStateProvider>();
             builder.Services.AddScoped<AuthenticationStateProvider, FonditalAuthStateProvider>(provider => provider.GetRequiredService<FonditalAuthStateProvider>());
             builder.Services.AddScoped<ILoginService, FonditalAuthStateProvider>(provider => provider.GetRequiredService<FonditalAuthStateProvider>());
             builder.Services.AddOptions();
