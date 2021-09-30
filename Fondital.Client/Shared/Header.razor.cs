@@ -30,11 +30,11 @@ namespace Fondital.Client.Shared
                     Section = "",
                     SubSectionList = new List<MenuItem>()
                     {
-                        new MenuItem()
-                        {
-                            Section = @localizer["Impostazioni"],
-                            Page = "/profile"
-                        },
+                        //new MenuItem()
+                        //{
+                        //    Section = @localizer["Impostazioni"],
+                        //    Page = "/profile"
+                        //},
                         new MenuItem()
                         {
                             Section = @localizer["Esci"],
