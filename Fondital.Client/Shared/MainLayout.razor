@@ -3,9 +3,13 @@
 @inject IJSRuntime JS
 @inject NavigationManager FonditalNavigationManager
 
-<Header />
-<div class="main">
-    <div class="content px-4">
-        @Body
+
+<Header @ref="Header" />
+
+<CascadingValue Value="Header" IsFixed="true">
+    <div class="main">
+        <div class="content px-4">
+            @Body
+        </div>
     </div>
-</div>
+</CascadingValue>
