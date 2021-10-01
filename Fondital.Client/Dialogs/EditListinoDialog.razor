@@ -8,7 +8,7 @@
     <div class="form-field">
         <label>@localizer["Valore"]</label>
         <div>
-            <TelerikNumericTextBox  Arrows=false Class="form-control form-control-lg w100"  Format="₽ #" @bind-Value="ListinoToUpdate.Valore" Id="custom" Step="0"></TelerikNumericTextBox>
+            <TelerikNumericTextBox  Arrows=false Class="w100"  Format="₽ #" @bind-Value="ListinoToUpdate.Valore" Id="custom" Step="0"></TelerikNumericTextBox>
             <!--<InputNumber Class="form-control form-control-lg w100" @bind-Value="ListinoToUpdate.Valore"></InputNumber>-->  @*"{0:₽ 0.##}"*@  
             <ValidationMessage For="() => ListinoToUpdate.Valore" />
         </div>

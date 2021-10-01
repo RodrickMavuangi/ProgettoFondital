@@ -2,7 +2,7 @@
 Theme Name: Custom Telerik Blazor Child
 Description: This is a child theme for Telerik Blazor Librery.
 Template: Telerik Blazor
-Version: 1.5
+Version: 1.6
 */
 
 
@@ -25,72 +25,9 @@ html, body {
     font-family: 'Open Sans', Helvetica, Arial, sans-serif !important;
 }
 
-.stepperEp .k-step-link {
-    margin: 0;
-    -ms-flex-direction: row;
-    flex-direction: row;
-    max-width: max-content;
-    background-color: white;
-    padding-left: 1rem;
-    text-decoration: none !important;
-}
-
-.stepperEp .k-step-current .k-step-link .k-step-indicator {
-    background-color: dodgerblue;
-    border-color: dodgerblue;
-}
-
-.stepperEp .k-step-done .k-step-link .k-step-indicator {
-    background-color: dodgerblue;
-    border-color: dodgerblue;
-}
-
-.stepperEp .k-step-link .k-step-label {
-    background-color: #FFF;
-    padding: 0 1rem;
-    max-width: max-content;
-}
-
-.stepperEp .k-step-link .k-step-label .k-step-text {
-    max-width: max-content;
-}
-
-.stepperEp .k-state-selected {
-    background-color: dodgerblue;
-    border-color: dodgerblue;
-}
-
-.stepperEp .k-progressbar {
-    grid-column-end: 7 !important;
-}
-
-
-.datePickerEp {
-    height: 48px;
-}
-
-.datePickerEp > span > .k-widget {
-    padding: .7rem 0 .7rem 1rem;
-}
-
-.datePickerEp > span > .k-select {
-    width: 50px;
-}
-
-.headerFormRicambiEp {
-    background-color: #ffc107;
-    border-radius: 5px;
-    padding: 0.7rem 0;
-    display: inline-block;
-    height: 48px;
-}
-
-.headerFormRicambiEp > label {
-    color: #FFF;
-}
-
 
 /*************** COLORI ******************/
+
 .blu {
     color: #007BFF !important;
 }
@@ -366,7 +303,7 @@ span.link {
 }
 
 .mt-160 {
-    margin-top: 10rem;
+    margin-top: 10rem!important;
 }
 
 .mb-025 {
@@ -796,10 +733,20 @@ a:hover .nomeCircle {
         color: #B4B4B4 !important;
         font-size: 12px !important;
     }
-
+.k-numerictextbox .k-numeric-wrap {
+    border: none!important;
+}
 .form-control-lg {
     padding: .7rem 1rem !important;
     height: 48px;
+}
+
+.k-input:focus {
+    color: #495057 !important;
+    background-color: #fff !important;
+    border-color: #80bdff !important;
+    outline: 0 !important;
+    box-shadow: 0 0 0 0.2rem rgb(0 123 255 / 25%) !important;
 }
 
 .form-label {
@@ -857,6 +804,67 @@ a:hover .nomeCircle {
 
 .icoPsw {
     background-image: url('../img/Icons/solid/grigio/key-fill.svg');
+}
+
+.icoBack {
+    position: relative;
+    left: -18px;
+}
+.icoForward {
+    position: relative;
+    right: -18px;
+}
+
+.icoPlus {
+    position: relative;
+    top: 3px;
+    right: 20px;
+    background-color: #ffb52f;
+    padding: 4px 6px 4px 6px;
+    color: #fff;
+    font-size: 18px;
+    /* font-weight: bold; */
+    border-radius: 4px;
+}
+
+.icoDelete {
+    width: 2% !important;
+    min-width: 2% !important;
+}
+
+
+.k-datepicker .k-select, .k-timepicker .k-select, .k-datetimepicker .k-select, .k-dateinput .k-select {
+    color: #9E9E9E !important;
+    background-image: none !important;
+}
+.labelQt {
+    width: 10% !important;
+    min-width: 10% !important;
+    text-align: center;
+}
+
+.labelCosto {
+    width: 15% !important;
+    min-width: 15% !important;
+}
+
+.labelDescr {
+    width: 70% !important;
+    min-width: 70% !important;
+}
+.inputQt {
+    width: 5% !important;
+    min-width: 5% !important;
+}
+
+.inputCosto {
+    width: 10% !important;
+    min-width: 10% !important;
+}
+
+.inputDescr {
+    width: 80% !important;
+    min-width: 80% !important;
 }
 
 
@@ -949,6 +957,27 @@ a:hover .nomeCircle {
         border-color: #D7D7D7 !important;
         text-decoration: none !important;
     }
+
+.btn-primary-outline {
+    background-color: transparent !important;
+    border: 1px solid #0d6efd !important;
+    color: #0d6efd !important;
+    
+    text-transform: uppercase;
+    box-shadow: none;
+}
+    .btn-primary-outline:hover {
+        background-color: #0d6efd !important;
+        border: 1px solid #0d6efd !important;
+        color: #fff !important;
+       
+    }
+.outline-icon-left {
+    padding: .7rem 1.5rem .7rem 2rem !important;
+}
+.outline-icon-right {
+    padding: .7rem 2rem .7rem 1.5rem !important;
+}
 
 .btnIcon {
     width: 80px;
@@ -1072,7 +1101,7 @@ a:hover .nomeCircle {
 }
 
 .settingCol {
-    position: absolute;
+    position: relative;
     /*border-left: 1px solid #ECEEEF!important;
     border-bottom: 1px solid #ECEEEF!important;*/
 }
@@ -1129,10 +1158,12 @@ a:hover .nomeCircle {
     vertical-align: middle;
     border: none !important;
     border-bottom: none !important;
+    padding-bottom:20px!important;
 }
 
 .k-cell-inner > .k-link {
-    padding: 1rem 1em !important;
+/*    padding: 1rem 1em !important;*/
+    padding: 0 !important;
 }
 
 
@@ -1237,6 +1268,8 @@ a:hover .nomeCircle {
 
 .k-window-content {
     padding: 32px 32px !important;
+    font-size: 18px!important;
+    font-weight: bold!important;
 }
 
 .k-dialog-buttongroup {
@@ -1527,7 +1560,118 @@ a:hover .nomeCircle {
     border-color: none !important;
 }
 
-/*************** CUSTOM ******************/
+
+
+/*************** STEPPER ******************/
+
+.stepperEp .k-step-link {
+    margin: 0;
+    -ms-flex-direction: row;
+    flex-direction: row;
+    max-width: max-content;
+    background-color: white;
+    padding-left: 1rem;
+    text-decoration: none !important;
+}
+
+.stepperEp .k-step-current .k-step-link .k-step-indicator {
+    background-color: #007BFF !important;
+    border-color: #007BFF !important;
+}
+
+.stepperEp .k-step-done .k-step-link .k-step-indicator {
+    background-color: #007BFF !important;
+    border-color: #007BFF !important;
+}
+
+.stepperEp .k-step-link .k-step-label {
+    background-color: #FFF;
+    padding: 0 1rem;
+    max-width: max-content;
+}
+
+    .stepperEp .k-step-link .k-step-label .k-step-text {
+        max-width: max-content;
+        font-size: 16px!important;
+    }
+
+.k-stepper .k-step-label {
+    font-weight: normal!important;
+    color: #9E9E9E!important;
+}
+
+.k-stepper .k-step-current .k-step-label {
+    font-weight: bold!important;
+    color: #343a40!important;
+}
+.k-stepper .k-step-done .k-step-label {
+    font-weight: bold !important;
+    color: #007BFF !important;
+}
+    .stepperEp .k-state-selected {
+    background-color: #007BFF;
+    border-color: #007BFF;
+}
+
+.stepperEp .k-progressbar {
+    grid-column-end: 7 !important;
+}
+
+
+/*************** OVERRIDE GIAN ******************/
+.stepperEp {
+    grid-template-columns: repeat(7, 1fr) !important;
+    width: 100% !important;
+    margin-top: 5px;
+}
+.k-step-list-horizontal .k-step {
+    width:28%!important;
+}
+.k-step-list-horizontal .k-step-last {
+    width: 15% !important;
+}
+.stepperEp .k-progressbar {
+    grid-column-end: 7 !important;
+}
+.k-step-list-horizontal .k-step-indicator + .k-step-label {
+    margin-top: 0px!important;
+}
+.k-stepper .k-step-indicator {
+    border-color: #9E9E9E!important;
+    color: #fff!important;
+    background-color: #9E9E9E!important;
+}
+
+/*************** FINE GIAN ******************/
+.datePickerEp {
+    height: 48px;
+}
+
+    .datePickerEp > span > .k-widget {
+        padding: .7rem 0 .7rem 1rem;
+    }
+
+    .datePickerEp > span > .k-select {
+        width: 50px;
+    }
+
+.headerFormRicambiEp {
+    background-color: #ffb52f;
+    border-radius: 4px;
+    padding: 0.7rem 0;
+    display: inline-block;
+    height: 48px;
+    font-family: 'Open Sans Condensed';
+    font-size: 16px;
+    letter-spacing: 2px;
+    font-weight:bold;
+}
+
+    .headerFormRicambiEp > label {
+        color: #FFF;
+    }
+
+/*************** ALTRO ******************/
 
 .barraStrumenti {
     border-left: solid 1px #cccccc;
@@ -1635,6 +1779,10 @@ a:hover .nomeCircle {
     .rowFiltriRapportini .form-control, .rowFiltriRapportini .select .k-dropdown-wrap {
         min-width: 130px !important;
     }
+    .stepperEp .k-step-link {
+        display: inline-flex!important;
+    }
+
 }
 
 @media screen and (max-width: 1561px) {
