@@ -170,25 +170,26 @@
             </span>
         </div>
 
-                <div class="form-field my-4 w-100">
+                <div class="form-field my-4 w-100 mt-160">
                     <div cass="col-12">
-                        <span style="width: 75%" class="headerFormRicambiEp">
-                            <label style="width:15%">N°</label>
-                            <label style="width:25%">@Localizer["Costo"]</label>
-                            <label>@Localizer["Descrizione"]</label>
+                        <span class="col-8 headerFormRicambiEp">
+                            <label class="d-inline labelQt text-center">N°</label>
+                            <label class="d-inline labelCosto">@Localizer["Costo"]</label>
+                            <label class="d-inline labelDescr">@Localizer["Descrizione"]</label>
                         </span>
 
-                        <TelerikButton Class="btn btn-primary btn-lg mx-1" OnClick="NuovoRicambio">@Localizer["AddRicambio"]</TelerikButton>
+                        <TelerikButton Class="btn btn-primary btn-lg mx-1" OnClick="NuovoRicambio">@Localizer["AddRicambio"]</TelerikButton><i class="bi bi-plus icoPlus"></i>
                     </div>
 
-                    <div class="form-field my-1 d-flex justify-content-start flex-column w-100">
+                    <div class="form-field my-4 w-100">
                         @foreach (RicambioDto Ricambio in Rapporto.Ricambi)
                         {
-                            <div class="d-flex">
-                                <InputNumber Class="form-control form-control-lg mb-3 mr-3" @bind-Value="Ricambio.Quantita" />
-                                <InputNumber Class="form-control form-control-lg mb-3 mr-3" @bind-Value="Ricambio.Costo" />
-                                <InputText Class="form-control form-control-lg" @bind-Value="Ricambio.Descrizione" />
-                            </div>
+                        <div class="col-12 mt-3 mb-3">
+                            <InputNumber Class="form-control inputQt d-inline mr-3" @bind-Value="Ricambio.Quantita" />
+                            <InputNumber Class="form-control inputCosto d-inline mr-3" @bind-Value="Ricambio.Costo" />
+                            <InputText Class="form-control inputDescr d-inline" @bind-Value="Ricambio.Descrizione" />
+                            <a href="#" title="Elimina" class="icoDelete d-inline rosso text-center"><i class="bi bi-x-square"></i></a>
+                        </div>
                         }
                     </div>
                 </div>

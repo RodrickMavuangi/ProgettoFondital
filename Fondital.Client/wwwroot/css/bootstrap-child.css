@@ -303,7 +303,7 @@ span.link {
 }
 
 .mt-160 {
-    margin-top: 10rem;
+    margin-top: 10rem!important;
 }
 
 .mb-025 {
@@ -818,18 +818,59 @@ a:hover .nomeCircle {
 .icoPlus {
     position: relative;
     top: 3px;
-    right: 15px;
-    background-color: #FFC107;
+    right: 20px;
+    background-color: #ffb52f;
     padding: 4px 6px 4px 6px;
     color: #fff;
     font-size: 18px;
     /* font-weight: bold; */
+    border-radius: 4px;
 }
 
-.k-datepicker .k-select, .k-timepicker .k-select, .k-datetimepicker .k-select, .k-dateinput .k-select {
-    color: #9E9E9E!important;
-    background-image:none!important;
+.icoDelete {
+    width: 2% !important;
+    min-width: 2% !important;
 }
+
+
+.k-datepicker .k-select, .k-timepicker .k-select, .k-datetimepicker .k-select, .k-dateinput .k-select {
+    color: #9E9E9E !important;
+    background-image: none !important;
+}
+.labelQt {
+    width: 10% !important;
+    min-width: 10% !important;
+    text-align: center;
+}
+
+.labelCosto {
+    width: 15% !important;
+    min-width: 15% !important;
+}
+
+.labelDescr {
+    width: 70% !important;
+    min-width: 70% !important;
+}
+.inputQt {
+    width: 5% !important;
+    min-width: 5% !important;
+}
+
+.inputCosto {
+    width: 10% !important;
+    min-width: 10% !important;
+}
+
+.inputDescr {
+    width: 80% !important;
+    min-width: 80% !important;
+}
+
+
+
+
+
 
 /*************** BUTTON ******************/
 .btn {
@@ -1615,11 +1656,15 @@ a:hover .nomeCircle {
     }
 
 .headerFormRicambiEp {
-    background-color: #ffc107;
-    border-radius: 5px;
+    background-color: #ffb52f;
+    border-radius: 4px;
     padding: 0.7rem 0;
     display: inline-block;
     height: 48px;
+    font-family: 'Open Sans Condensed';
+    font-size: 16px;
+    letter-spacing: 2px;
+    font-weight:bold;
 }
 
     .headerFormRicambiEp > label {
