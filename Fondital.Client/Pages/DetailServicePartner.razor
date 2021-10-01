@@ -4,6 +4,7 @@
 @inject MailClient mailClient
 @inject UtenteClient utenteClient
 @inject ServicePartnerClient servicePartnerClient
+@inject IConfiguration config
 @attribute [Authorize]
 
 <div class="row-1 d-flex justify-content-between flex-wrap flex-md-nowrap  pt-0 fit-content">
@@ -64,6 +65,7 @@
 <TelerikGrid Data="@(ListaUtenti_Filtered)"
              EditMode="@GridEditMode.Popup"
              Pageable="true"
+             PageSize="@PageSize"
              Class="table table-striped"
              Resizable="true"
              Sortable="true">
