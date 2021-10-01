@@ -168,9 +168,6 @@
   <data name="Configurazioni" xml:space="preserve">
     <value>Configurazioni RU</value>
   </data>
-  <data name="ConfermaModificaLavorazione" xml:space="preserve">
-    <value>Sicuri di voler modificare la lavorazione # RU</value>
-  </data>
   <data name="ConfigurazioniGenerali" xml:space="preserve">
     <value>Configurazioni Generali RU</value>
   </data>
@@ -305,12 +302,6 @@
   </data>
   <data name="CodiceFornitore" xml:space="preserve">
     <value>CODICE FORNITORE RU</value>
-  </data>
-  <data name="ConfermaModificaUtente" xml:space="preserve">
-    <value>Si è Sicuro di volere Disabilitare l'utente RU</value>
-  </data>
-  <data name="ConfermaModificaUtenteAb" xml:space="preserve">
-    <value>Si è Sicuro di volere Abilitare l'utente RU</value>
   </data>
   <data name="Disabilitati" xml:space="preserve">
     <value>Disabilitati RU</value>
@@ -504,5 +495,11 @@ La nuova password deve essere lunga almeno 8 caratteri e contenere minuscole, ma
   </data>
   <data name="UtenzeDirezione" xml:space="preserve">
     <value>Utenze Direzione RU</value>
+  </data>
+  <data name="ConfermaAbilitazione" xml:space="preserve">
+    <value>Si è sicuri di voler abilitare l'elemento RU</value>
+  </data>
+  <data name="ConfermaDisabilitazione" xml:space="preserve">
+    <value>Si è sicuri di voler disabilitare l'elemento RU</value>
   </data>
 </root>

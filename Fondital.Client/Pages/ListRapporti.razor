@@ -1,8 +1,10 @@
 ﻿@page "/reports"
+
 @inject IStringLocalizer<App> Localizer
 @inject IConfiguration Config
 @inject RapportoClient HttpClient
 @inject NavigationManager NavigationManager
+@attribute [Authorize]
 
 <div class="row-1 d-flex justify-content-between flex-wrap flex-md-nowrap  pt-0">
     <!--TITOLO PAGINA-->
@@ -58,7 +60,6 @@ else
         </div>
     </div>
     <!--FINE BARRA FILTRI-->
-
     <div class="row-3 d-flex justify-content-between flex-wrap flex-md-nowrap pt-0 pb-4 mb-4">
         <TelerikGrid Data="@ListaRapportiFiltered" Class="table table-striped">
             <GridColumns>

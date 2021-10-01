@@ -1,6 +1,5 @@
 ﻿using Fondital.Shared.Dto;
 using Microsoft.AspNetCore.Components;
-using Microsoft.JSInterop;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,13 +19,11 @@ namespace Fondital.Client.Pages
         protected bool ShowAddDialog { get; set; } = false;
         protected bool ShowEditDialog { get; set; } = false;
         protected DifettoDto DifettoSelected { get; set; }
-
         public string SearchText = "";
 
         protected override async Task OnInitializedAsync()
         {
-            var js = (IJSInProcessRuntime)JSRuntime;
-            CurrentCulture = await js.InvokeAsync<string>("blazorCulture.get");
+            CurrentCulture = await StateProvider.GetCurrentCulture();
             PageSize = Convert.ToInt32(config["PageSize"]);
 
             await RefreshDifetti();
@@ -57,7 +54,10 @@ namespace Fondital.Client.Pages
 
         protected async Task UpdateEnableDifetto(int Id)
         {
-            bool isConfirmed = await Dialogs.ConfirmAsync($"{localizer["ConfermaModificaDifetto"]} {Id}", localizer["Modifica"] + " " + localizer["Difetto"]);
+            bool isAbilitato = ListaDifettiFiltered.Single(x => x.Id == Id).IsAbilitato;
+            bool isConfirmed = false;
+            if (isAbilitato) isConfirmed = await Dialogs.ConfirmAsync($"{localizer["ConfermaAbilitazione"]} {localizer["Difetto"]} # {Id}?", " ");
+            else isConfirmed = await Dialogs.ConfirmAsync($"{localizer["ConfermaDisabilitazione"]} {localizer["Difetto"]} # {Id}?", " ");
 
             if (isConfirmed)
             {
