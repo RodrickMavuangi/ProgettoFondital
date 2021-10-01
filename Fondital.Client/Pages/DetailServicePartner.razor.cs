@@ -13,6 +13,7 @@ namespace Fondital.Client.Pages
     public partial class DetailServicePartner
     {
         public string SearchText = "";
+        private int PageSize { get; set; }
         public StatoUtente ConStato { get; set; } = new();
         [CascadingParameter]
         public DialogFactory Dialogs { get; set; }
@@ -28,6 +29,7 @@ namespace Fondital.Client.Pages
 
         protected override async Task OnInitializedAsync()
         {
+            PageSize = Convert.ToInt32(config["PageSize"]);
             ListaScelta = new List<string>() { @localizer["Tutti"], @localizer["Abilitati"], @localizer["Disabilitati"] };
             SpSelected = await servicePartnerClient.GetServicePartnerWithUtenti(int.Parse(servicePId));
 
@@ -71,7 +73,7 @@ namespace Fondital.Client.Pages
         {
             UtenteSelected = SpSelected.Utenti.Single(x => x.Id == utenteId);
             UtenteDto UtenteToSendMail = SpSelected.Utenti.Single(x => x.Id == utenteId);
-            bool isConfirmed = await Dialogs.ConfirmAsync($"{@localizer["InviaMail"]} {UtenteToSendMail.Nome} {UtenteToSendMail.Cognome} {localizer["ResetPassword"]}");
+            bool isConfirmed = await Dialogs.ConfirmAsync($"{@localizer["InviaMail"]} {UtenteToSendMail.Nome} {UtenteToSendMail.Cognome} {localizer["ResetPassword"]}", " ");
             if (isConfirmed)
             {
                 MailRequest mailRequest = new MailRequest()
@@ -81,7 +83,7 @@ namespace Fondital.Client.Pages
                 };
 
                 await mailClient.sendMail(mailRequest);
-                await Dialogs.AlertAsync($"{@localizer["MailInviata"]} {UtenteToSendMail.Email} {@localizer["ResetPassword"]}");
+                await Dialogs.AlertAsync($"{@localizer["MailInviata"]} {UtenteToSendMail.Email} {@localizer["ResetPassword"]}", " ");
             }
         }
 
@@ -89,8 +91,8 @@ namespace Fondital.Client.Pages
         {
             UtenteDto ut = ListaUtenti_Filtered.Single(x => x.Id == Id);
             bool isConfirmed = false;
-            if (ut.IsAbilitato) isConfirmed = await Dialogs.ConfirmAsync($"{@localizer["ConfermaModificaUtenteAb"]} {ut.Nome} {ut.Cognome} ?", @localizer["ModificaUtente"]);
-            else isConfirmed = await Dialogs.ConfirmAsync($"{@localizer["ConfermaModificaUtente"]} {ut.Nome} {ut.Cognome} ?", localizer["ModificaUtente"]);
+            if (ut.IsAbilitato) isConfirmed = await Dialogs.ConfirmAsync($"{localizer["ConfermaAbilitazione"]} {localizer["Utente"]} {ut.Nome} {ut.Cognome}?", " ");
+            else isConfirmed = await Dialogs.ConfirmAsync($"{localizer["ConfermaDisabilitazione"]} {localizer["Utente"]} {ut.Nome} {ut.Cognome}?", " ");
 
             if (isConfirmed)
             {
