@@ -15,9 +15,11 @@ namespace Fondital.Client.Clients
 	public class MailClient
 	{
 		private readonly HttpClient httpClient;
-		public MailClient(HttpClient httpClient)
+		private readonly AuthClient _authClient;
+		public MailClient(HttpClient httpClient, AuthClient authClient)
 		{
 			this.httpClient = httpClient;
+			_authClient = authClient;
 		}
 
 		public async Task sendMail(MailRequest mailRequest)
@@ -38,9 +40,23 @@ namespace Fondital.Client.Clients
 		{
 			try
 			{
-				int servicePartnerId = servicePartner.Id;
-				var response = await httpClient.PostAsJsonAsync($"MailController/{servicePartnerId}", utente, JsonSerializerOpts.JsonOpts);
-				response.EnsureSuccessStatusCode();
+				if(servicePartner.Id != 0)
+				{
+					// Utente con ServicePartner come Ruolo
+					
+					int servicePartnerId = servicePartner.Id;
+					var response = await httpClient.PostAsJsonAsync($"MailController/{servicePartnerId}", utente, JsonSerializerOpts.JsonOpts);
+					await _authClient.CreaRuolo(utente.UserName, new RuoloDto() { Name = "service partner" });
+					response.EnsureSuccessStatusCode();
+				}
+				else
+				{
+					//Utente con Direzione come Ruolo
+
+					var response = await httpClient.PostAsJsonAsync($"MailController/direzione", utente, JsonSerializerOpts.JsonOpts);
+					await _authClient.CreaRuolo(utente.UserName, new RuoloDto() { Name = "direzione" });
+					response.EnsureSuccessStatusCode();
+				}
 			}
 			catch (Exception e)
 			{

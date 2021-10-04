@@ -17,7 +17,8 @@ namespace Fondital.Repository
         private ListinoRepository _listinoRepository;
         private LavorazioneRepository _lavorazioneRepository;
         private RapportoRepository _rapportoRepository;
-
+        private RuoloRepository _rolesRepository;
+        private UserRolesRepository _userRolesRepository;
         public UnitOfWork(FonditalDbContext context)
         {
             this._context = context;
@@ -31,7 +32,8 @@ namespace Fondital.Repository
         public IListinoRepository Listini => _listinoRepository ??= new ListinoRepository(_context);
         public ILavorazioneRepository Lavorazioni => _lavorazioneRepository ??= new LavorazioneRepository(_context);
         public IRapportoRepository Rapporti => _rapportoRepository ??= new RapportoRepository(_context);
-
+        public IRuoloRepository Roles => _rolesRepository ??= new RuoloRepository(_context);
+        public IUserRolesRepository UserRoles => _userRolesRepository ??= new UserRolesRepository(_context);
         public void Update<T>(T oldItem, T newItem) where T : class
         {
             this._context.Entry(oldItem).CurrentValues.SetValues(newItem);

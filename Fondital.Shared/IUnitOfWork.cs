@@ -14,6 +14,8 @@ namespace Fondital.Shared
         IListinoRepository Listini { get; }
         ILavorazioneRepository Lavorazioni { get; }
         IRapportoRepository Rapporti { get; }
+        IRuoloRepository Roles { get; }
+        IUserRolesRepository UserRoles { get; }
         Task<int> CommitAsync();
         void Update<T>(T Old, T New) where T : class;
     }

@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using Fondital.Shared.Models.Auth;
+using Microsoft.AspNetCore.Identity;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -20,6 +21,6 @@ namespace Fondital.Shared.Dto
         public DateTime Pw_LastChanged { get; set; } = DateTime.Now;
         public bool Pw_MustChange { get; set; } = true;
         public List<RapportoDto> Rapporti { get; set; } = new List<RapportoDto>();
-
+        public List<Ruolo> Ruoli { get; set; } = new List<Ruolo>();
     }
 }

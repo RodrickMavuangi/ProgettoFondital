@@ -59,6 +59,11 @@ namespace Fondital.Client.Shared
                         {
                             Text = localizer["Listino"],
                             Url = "priceLists"
+                        },
+                         new MenuItem()
+                        {
+                            Text = localizer["UtenzeDirezione"],
+                            Url = "utenzedirezione"
                         }
                     }
                 },

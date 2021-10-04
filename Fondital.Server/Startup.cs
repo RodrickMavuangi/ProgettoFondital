@@ -106,7 +106,9 @@ namespace Fondital.Server
             services.AddTransient<IMailService, MailService>();
             services.AddTransient<ILavorazioneService, LavorazioneService>();
             services.AddTransient<IRapportoService, RapportoService>();
-
+            services.AddTransient<IRuoloService, RuoloService>();
+            services.AddTransient<IUserRolesService, UserRolesService>();
+            
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Fondital.Server", Version = "v1" });

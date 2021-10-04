@@ -4,14 +4,16 @@ using Fondital.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
-namespace Fondital.Server.Migrations
+namespace Fondital.Data.Migrations
 {
     [DbContext(typeof(FonditalDbContext))]
-    partial class FonditalDBContextModelSnapshot : ModelSnapshot
+    [Migration("20210930122011_NullableServicePartnerId")]
+    partial class NullableServicePartnerId
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -24,8 +26,6 @@ namespace Fondital.Server.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
-                        .HasAnnotation("SqlServer:IdentityIncrement", 1)
-                        .HasAnnotation("SqlServer:IdentitySeed", 1)
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("ConcurrencyStamp")
@@ -33,7 +33,6 @@ namespace Fondital.Server.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
-                        .IsRequired()
                         .HasMaxLength(256)
                         .HasColumnType("nvarchar(256)");
 
@@ -42,9 +41,6 @@ namespace Fondital.Server.Migrations
                         .HasColumnType("nvarchar(256)");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("Name")
-                        .IsUnique();
 
                     b.HasIndex("NormalizedName")
                         .IsUnique()
@@ -618,21 +614,6 @@ namespace Fondital.Server.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
-            modelBuilder.Entity("RuoloUtente", b =>
-                {
-                    b.Property<int>("RuoliId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("UtentiId")
-                        .HasColumnType("int");
-
-                    b.HasKey("RuoliId", "UtentiId");
-
-                    b.HasIndex("UtentiId");
-
-                    b.ToTable("RuoloUtente");
-                });
-
             modelBuilder.Entity("Fondital.Shared.Models.Auth.Utente", b =>
                 {
                     b.HasOne("Fondital.Shared.Models.ServicePartner", "ServicePartner")
@@ -845,21 +826,6 @@ namespace Fondital.Server.Migrations
                     b.HasOne("Fondital.Shared.Models.Auth.Utente", null)
                         .WithMany()
                         .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("RuoloUtente", b =>
-                {
-                    b.HasOne("Fondital.Shared.Models.Auth.Ruolo", null)
-                        .WithMany()
-                        .HasForeignKey("RuoliId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Fondital.Shared.Models.Auth.Utente", null)
-                        .WithMany()
-                        .HasForeignKey("UtentiId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });

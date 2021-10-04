@@ -385,6 +385,15 @@ namespace Fondital.Client.LanguageResources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Crea Ruolo.
+        /// </summary>
+        public static string CreaRuolo {
+            get {
+                return ResourceManager.GetString("CreaRuolo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Data.
         /// </summary>
         public static string Data {
@@ -656,6 +665,15 @@ namespace Fondital.Client.LanguageResources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to è stata inviata una mail a.
+        /// </summary>
+        public static string InviaMail {
+            get {
+                return ResourceManager.GetString("InviaMail", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Lavorazione.
         /// </summary>
         public static string Lavorazione {
@@ -697,6 +715,15 @@ namespace Fondital.Client.LanguageResources {
         public static string Logout {
             get {
                 return ResourceManager.GetString("Logout", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to è stata inviata una mail a .
+        /// </summary>
+        public static string MailInviata {
+            get {
+                return ResourceManager.GetString("MailInviata", resourceCulture);
             }
         }
         
@@ -760,6 +787,15 @@ namespace Fondital.Client.LanguageResources {
         public static string ModificaUtente {
             get {
                 return ResourceManager.GetString("ModificaUtente", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Modifica Valore.
+        /// </summary>
+        public static string ModificaValore {
+            get {
+                return ResourceManager.GetString("ModificaValore", resourceCulture);
             }
         }
         
@@ -1016,6 +1052,24 @@ namespace Fondital.Client.LanguageResources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to per Risettare la password.
+        /// </summary>
+        public static string ResetPassword {
+            get {
+                return ResourceManager.GetString("ResetPassword", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ruolo.
+        /// </summary>
+        public static string Ruolo {
+            get {
+                return ResourceManager.GetString("Ruolo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Direzione.
         /// </summary>
         public static string RuoloDirezione {
@@ -1039,6 +1093,15 @@ namespace Fondital.Client.LanguageResources {
         public static string ServicePartner {
             get {
                 return ResourceManager.GetString("ServicePartner", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Per settare la prima Password.
+        /// </summary>
+        public static string SettaPassword {
+            get {
+                return ResourceManager.GetString("SettaPassword", resourceCulture);
             }
         }
         
@@ -1111,6 +1174,24 @@ namespace Fondital.Client.LanguageResources {
         public static string Utenti {
             get {
                 return ResourceManager.GetString("Utenti", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Utenze Direzione.
+        /// </summary>
+        public static string UtenzeDirezione {
+            get {
+                return ResourceManager.GetString("UtenzeDirezione", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Valore.
+        /// </summary>
+        public static string Valore {
+            get {
+                return ResourceManager.GetString("Valore", resourceCulture);
             }
         }
         

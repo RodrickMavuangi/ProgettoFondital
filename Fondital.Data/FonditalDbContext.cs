@@ -1,10 +1,12 @@
 ﻿using Fondital.Data.Configurations;
+using Fondital.Shared.Dto;
 using Fondital.Shared.Models;
 using Fondital.Shared.Models.Auth;
 using IdentityServer4.EntityFramework.Entities;
 using IdentityServer4.EntityFramework.Extensions;
 using IdentityServer4.EntityFramework.Interfaces;
 using IdentityServer4.EntityFramework.Options;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
@@ -13,7 +15,7 @@ using System.Threading.Tasks;
 
 namespace Fondital.Data
 {
-    public class FonditalDbContext : IdentityDbContext<Utente, Ruolo, int>, IPersistedGrantDbContext
+    public class FonditalDbContext : IdentityDbContext<Utente,Ruolo,int>, IPersistedGrantDbContext
     {
         private readonly IOptions<OperationalStoreOptions> _operationalStoreOptions;
 
@@ -31,10 +33,10 @@ namespace Fondital.Data
         public DbSet<Lavorazione> Lavorazioni { get; set; }
         public DbSet<Rapporto> Rapporti { get; set; }
         public DbSet<RapportoVoceCosto> RapportiVociCosto { get; set; }
-
+        public DbSet<Ruolo> Ruolos { get; set; }
+        public DbSet<UserRole> UserRole { get; set; }
         public DbSet<PersistedGrant> PersistedGrants { get; set; }
         public DbSet<DeviceFlowCodes> DeviceFlowCodes { get; set; }
-
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
@@ -42,6 +44,7 @@ namespace Fondital.Data
             builder.ApplyConfigurationsFromAssembly(Assembly.GetAssembly(typeof(UtenteConfiguration)));
 
             builder.ConfigurePersistedGrantContext(_operationalStoreOptions.Value);
+            //builder.Entity<IdentityUserRole<int>>().HasKey(p => new { p.UserId, p.RoleId });
         }
 
         Task<int> IPersistedGrantDbContext.SaveChangesAsync() => base.SaveChangesAsync();
