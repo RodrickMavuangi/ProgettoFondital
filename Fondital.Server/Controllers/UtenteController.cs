@@ -47,40 +47,6 @@ namespace Fondital.Server.Controllers
             }
         }
 
-        /*
-        [HttpPut("{id}")]
-        public async Task UpdateUtente(int id, [FromBody] UtenteDto utenteDtoToUpdate)
-        {
-            Utente utenteToUpdate = _mapper.Map<Utente>(utenteDtoToUpdate);
-            Utente _utente = new Utente();
-            try
-            {
-                if (utenteToUpdate == null)
-                {
-                    _logger.LogError("L'oggetto servicePartner inviato dal Client è null.");
-                }
-                else
-                {
-                    _utente = await _ut.GetUtenteById(id);
-
-                    if (_utente == null)
-                    {
-                        _logger.LogError($"l'utente con l'id:{utenteToUpdate.Id} non è stato trovato");
-                    }
-                    else
-                    {
-                        Utente utenteFromDB = await _ut.GetUtenteById(id);
-                        await _ut.UpdateUtente(utenteToUpdate,_utente);
-                    }
-                }
-            }
-            catch (Exception e)
-            {
-                _logger.LogError($"C'è stato un problema : {e.Message}");
-            }
-        }
-        */
-
         [HttpPut("update")]
         public async Task<IActionResult> UpdateUtente([FromBody] UtenteDto utenteDtoToUpdate)
         {

@@ -24,8 +24,6 @@ namespace Fondital.Client.Clients
         {
             var response = await httpClient.PostAsJsonAsync($"servicePartnersControl", servicePartner, JsonSerializerOpts.JsonOpts);
 			response.EnsureSuccessStatusCode();
-			//var result = await response.Content.ReadFromJsonAsync<ServicePartnerDto>(JsonSerializerOpts.JsonOpts);
-			//return result;
 		}
 
         public async Task UpdateServicePartner(ServicePartnerDto servicePartner)
