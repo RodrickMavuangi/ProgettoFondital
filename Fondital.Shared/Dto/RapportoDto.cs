@@ -10,7 +10,7 @@ namespace Fondital.Shared.Dto
         public int Id { get; set; }
         public UtenteDto Utente { get; set; } = new();
         public StatoRapporto Stato { get; set; } = 0;
-        public List<RapportoVoceCostoDto> VociDiCosto { get; set; } = new();
+        public List<RapportoVoceCostoDto> RapportiVociCosto { get; set; } = new();
         public List<RicambioDto> Ricambi { get; set; } = new();
         public DateTime? DataRapporto { get; set; }
         public string NomeTecnico { get; set; }

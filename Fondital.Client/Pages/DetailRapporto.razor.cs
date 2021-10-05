@@ -1,6 +1,5 @@
 ﻿using Fondital.Shared.Dto;
 using Microsoft.AspNetCore.Components;
-using Microsoft.Extensions.Configuration;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -11,6 +10,8 @@ namespace Fondital.Client.Pages
         private RapportoDto Rapporto { get; set; } = new();
         private List<RapportoVoceCostoDto> RapportiVociCosto { get; set; } = new();
         private RapportoVoceCostoDto NewRapportoVoceCosto { get; set; } = new();
+        public List<LavorazioneDto> ListaLavorazioni { get; set; }
+        public string Modello { get; set; }        
         private int CurrentStepIndex { get; set; }
         private string CurrentCulture { get; set; }
         private bool ShowAddVoceCosto { get; set; }
@@ -21,6 +22,7 @@ namespace Fondital.Client.Pages
             ShowAddVoceCosto = false;
             CurrentCulture = await StateProvider.GetCurrentCulture();
             Rapporto.Utente = await StateProvider.GetCurrentUser();
+            ListaLavorazioni = (List<LavorazioneDto>)await LavorazioneClient.GetAllLavorazioni(true);
         }
 
         protected void PreviousStep()
@@ -33,6 +35,8 @@ namespace Fondital.Client.Pages
         {
             if (CurrentStepIndex < 3)
                 CurrentStepIndex++;
+            //if (CurrentStepIndex == 1)
+                //GetModelloCaldaia();
         }
 
         protected void NuovoRicambio()
@@ -52,10 +56,11 @@ namespace Fondital.Client.Pages
             await CloseAndRefresh();
         }
 
+        //protected async void GetModelloCaldaia() =>
+        //    Modello = await RestClient.ModelloCaldaiaService(Rapporto.Caldaia.Matricola ?? "");
+
         protected void EditVoceCosto(int Id)
         {
         }
-
-        public string Modello => RestClient.ModelloCaldaiaService().ToString();
     }
 }

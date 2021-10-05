@@ -1,13 +1,11 @@
-﻿using Fondital.Shared.Dto;
-using Fondital.Shared.Models;
-using System;
+﻿using System;
 using System.Net.Http;
 using System.Net.Http.Json;
 using System.Threading.Tasks;
 
 namespace Fondital.Client.Clients
 {
-	public class RestExternalServiceClient
+    public class RestExternalServiceClient
 	{
 		private readonly HttpClient httpClient;
 		public RestExternalServiceClient(HttpClient httpClient)
@@ -15,20 +13,17 @@ namespace Fondital.Client.Clients
 			this.httpClient = httpClient;
 		}
 
-		public async Task<string> ModelloCaldaiaService()
+		public async Task<string> ModelloCaldaiaService(string matricola)
 		{
 			try
 			{
-				var response = await httpClient.GetAsync($"externalServiceController/modelloCaldaia");
-				if(response.StatusCode.ToString().Equals("NotFound"))
-				{
-					// Restituire un feedback du errore
-					return "Not Found";
-				}
-                else
-                {
-					return response.Content.ToString();
-                }
+				var response = await httpClient.GetAsync($"externalServiceController/modelloCaldaia/{matricola}");
+				if (response.IsSuccessStatusCode)
+					return await response.Content.ReadFromJsonAsync<string>(JsonSerializerOpts.JsonOpts);
+				else if (response.StatusCode == System.Net.HttpStatusCode.NotFound)
+					throw new Exception("NotFound");
+				else
+					throw new Exception("GenericError");
 			}
 			catch (Exception e)
 			{

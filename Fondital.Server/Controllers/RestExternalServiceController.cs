@@ -24,15 +24,15 @@ namespace Fondital.Server.Controllers
             _httpClient = httpClient;
         }
 
-        [HttpGet("modelloCaldaia")]
+        [HttpGet("modelloCaldaia/{matricola}")]
         [AllowAnonymous]
-        public async Task<IActionResult> GetServiceCaldaia()
+        public async Task<IActionResult> GetServiceCaldaia(string matricola)
         {
             try
             {
                 _httpClient.BaseAddress = new Uri(_config["RestClientSettings:BaseAddress"]);
                 //_httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-                var response = await _httpClient.GetAsync(_config["RestClientSettings:UriModelloCaldaia"]);
+                var response = await _httpClient.GetAsync($"/getProductById?ID={matricola}");
                 if (!response.IsSuccessStatusCode)
                     return NotFound();
 
@@ -58,7 +58,7 @@ namespace Fondital.Server.Controllers
                     return NotFound();
 
                 _logger.Information("Info: {Action} {Object} {ObjectId} effettuato con successo", "GET", "Ricambio", "ricambioId");
-                return Ok();
+                return Ok(response);
             }
             catch (Exception ex)
             {

@@ -60,7 +60,7 @@ else
     </div>
     <!--FINE BARRA FILTRI-->
     <div class="row-3 d-flex justify-content-between flex-wrap flex-md-nowrap pt-0 pb-4 mb-4">
-        <TelerikGrid Data="@ListaRapportiFiltered" Class="table table-striped">
+        <TelerikGrid Data="@ListaRapporti" Class="table table-striped">
             <GridColumns>
                 <GridColumn Field=Utente.ServicePartner.RagioneSociale Width="15%" Title=@Localizer["ServicePartner"].Value.ToUpper() />
                 <GridColumn Field=@nameof(RapportoDto.Stato) Width="15%" Title=@Localizer["Stato"].Value.ToUpper() />

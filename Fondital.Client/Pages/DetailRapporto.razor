@@ -4,6 +4,7 @@
 @inject IStringLocalizer<App> Localizer
 @inject CurrentStateProvider StateProvider
 @inject RapportoClient HttpClient
+@inject LavorazioneClient LavorazioneClient
 @inject RestExternalServiceClient RestClient
 @inject NavigationManager NavigationManager
 @attribute [Authorize]
@@ -97,35 +98,35 @@
                 </span>
                 <span style="width: 33%" class="ml-3">
                     <label>@Localizer["Versione"]</label>
-                    <InputText Class="form-control form-control-lg w100 mb-3" @bind-Value="Rapporto.Caldaia.Versione" />
+                    <InputText disabled="@(Modello==null)" Class="form-control form-control-lg w100 mb-3" @bind-Value="Rapporto.Caldaia.Versione" />
                 </span>
             </div>
             <div class="form-field my-4 d-flex justify-content-start w-100">
                 <span style="width: 33%">
                     <label>@Localizer["DataVendita"]</label>
-                    <TelerikDatePicker Class="w100 mb-3 datePickerEp" @bind-Value="Rapporto.Caldaia.DataVendita" />
+                    <TelerikDatePicker Enabled="@(Modello!=null)" Class="w100 mb-3 datePickerEp" @bind-Value="Rapporto.Caldaia.DataVendita" />
                 </span>
                 <span style="width: 33%" class="ml-3">
                     <label>@Localizer["DataMontaggio"]</label>
-                    <TelerikDatePicker Class="w100 mb-3 datePickerEp" @bind-Value="Rapporto.Caldaia.DataMontaggio" />
+                    <TelerikDatePicker Enabled="@(Modello!=null)" Class="w100 mb-3 datePickerEp" @bind-Value="Rapporto.Caldaia.DataMontaggio" />
                 </span>
                 <span style="width: 33%" class="ml-3">
                     <label>@Localizer["DataAvvio"]</label>
-                    <TelerikDatePicker Class="w100 mb-3 datePickerEp" @bind-Value="Rapporto.Caldaia.DataAvvio" />
+                    <TelerikDatePicker Enabled="@(Modello!=null)" Class="w100 mb-3 datePickerEp" @bind-Value="Rapporto.Caldaia.DataAvvio" />
                 </span>
             </div>
             <div class="form-field my-4 d-flex justify-content-start w-100">
                 <span style="width: 33%">
                     <label>@Localizer["TecnicoPrimaAccensione"]</label>
-                    <InputText Class="form-control form-control-lg w100 mb-3" @bind-Value="Rapporto.Caldaia.TecnicoPrimoAvvio" />
+                    <InputText disabled="@(Modello==null)" Class="form-control form-control-lg w100 mb-3" @bind-Value="Rapporto.Caldaia.TecnicoPrimoAvvio" />
                 </span>
                 <span style="width: 33%" class="ml-3">
                     <label>@Localizer["NumeroCertTecnico"]</label>
-                    <InputNumber Class="form-control form-control-lg w100 mb-3" @bind-Value="Rapporto.Caldaia.NumCertificatoTecnico" />
+                    <InputNumber disabled="@(Modello==null)" Class="form-control form-control-lg w100 mb-3" @bind-Value="Rapporto.Caldaia.NumCertificatoTecnico" />
                 </span>
                 <span style="width: 33%" class="ml-3">
                     <label>@Localizer["DittaPrimoAvvio"]</label>
-                    <InputText Class="form-control form-control-lg w100 mb-3" @bind-Value="Rapporto.Caldaia.DittaPrimoAvvio" />
+                    <InputText disabled="@(Modello==null)" Class="form-control form-control-lg w100 mb-3" @bind-Value="Rapporto.Caldaia.DittaPrimoAvvio" />
                 </span>
             </div>
         }
@@ -145,7 +146,10 @@
             <div class="form-field my-4 d-flex justify-content-start w-100">
                 <span style="width: 33%">
                     <label>@Localizer["TipologiaLavoro"]</label>
-                    <InputText Class="form-control form-control-lg w100 mb-3" @bind-Value="Rapporto.TipoLavoro" />
+                    @*<InputText Class="form-control form-control-lg w100 mb-3" @bind-Value="Rapporto.TipoLavoro" />*@
+                    <TelerikDropDownList Data="@ListaLavorazioni"
+                                         Value="@nameof(LavorazioneDto.NomeItaliano)"
+                                         ValueField="@nameof(LavorazioneDto.NomeItaliano)" />
                 </span>
                 <span style="width: 33%" class="ml-3">
                     <label>@Localizer["NomeTecnico"]</label>
@@ -175,10 +179,10 @@
         }
         else if (CurrentStepIndex == 3)
         {
-            @if (Rapporto.VociDiCosto != null)
+            @if (Rapporto.RapportiVociCosto != null)
             {
                 <div class="row-3 d-flex justify-content-between flex-wrap flex-md-nowrap  pt-0 pb-4 mb-4">
-                    <TelerikGrid Data="@Rapporto.VociDiCosto" Class="table table-striped">
+                    <TelerikGrid Data="@Rapporto.RapportiVociCosto" Class="table table-striped">
                         <GridColumns>
                             <GridColumn Field=@nameof(RapportoVoceCostoDto.VoceCostoId) Width="10%" Title="#" />
                             <GridColumn Field=VociDiCosto.VoceCosto.NomeItaliano Width="30%" Title="@Localizer["VociCosto"].Value.ToUpper()" Visible="@(CurrentCulture == "it-IT")" />
