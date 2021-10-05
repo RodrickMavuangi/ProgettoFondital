@@ -365,6 +365,11 @@ span.link {
     margin: 0 0 32px 0;
 }
 
+.validation-message {
+    font-size: 13px!important;
+    font-weight: normal!important;
+    margin: 8px 0 0 0!important;
+}
 
 /*************** HEADER ******************/
 .logo img {
@@ -1112,7 +1117,9 @@ a:hover .nomeCircle {
 
 
 /*OVERRIDE TELERIK TABLE*/
-
+.k-header > .k-cell-inner {
+    margin: 0!important;
+}
 .k-virtual-content {
     overflow-y: auto !important;
 }
