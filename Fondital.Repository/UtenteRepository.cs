@@ -21,5 +21,11 @@ namespace Fondital.Repository
         {
             return await Db.Utenti.SingleOrDefaultAsync(u => u.UserName == username);
         }
+
+        public async Task CreateUtente(Utente utente)
+        {
+            await Db.Utenti.AddAsync(utente);
+            Db.Entry(utente.ServicePartner).State = EntityState.Unchanged;
+        }
     }
 }

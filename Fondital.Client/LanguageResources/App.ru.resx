@@ -407,7 +407,7 @@ La nuova password deve essere lunga almeno 8 caratteri e contenere minuscole, ma
     <value>Valore RU</value>
   </data>
   <data name="MailInviata" xml:space="preserve">
-    <value>è stata inviata una mail a RU</value>
+    <value>Mail inviata con successo all'utente RU</value>
   </data>
   <data name="Stato" xml:space="preserve">
     <value>Stato RU</value>
@@ -497,9 +497,21 @@ La nuova password deve essere lunga almeno 8 caratteri e contenere minuscole, ma
     <value>Utenze Direzione RU</value>
   </data>
   <data name="ConfermaAbilitazione" xml:space="preserve">
-    <value>Si è sicuri di voler abilitare l'elemento RU</value>
+    <value>Conferma abilitazione RU</value>
   </data>
   <data name="ConfermaDisabilitazione" xml:space="preserve">
-    <value>Si è sicuri di voler disabilitare l'elemento RU</value>
+    <value>Conferma disabilitazione RU</value>
+  </data>
+  <data name="ResetPassword" xml:space="preserve">
+    <value>Si è sicuri di voler inviare un'email di Reset Password all'utente RU</value>
+  </data>
+  <data name="CercaPerRaggruppamento" xml:space="preserve">
+    <value>Cerca per Raggruppamento RU</value>
+  </data>
+  <data name="CercaPerServicePartner" xml:space="preserve">
+    <value>Cerca per Service Partner RU</value>
+  </data>
+  <data name="CercaPerVoceCosto" xml:space="preserve">
+    <value>Cerca per Voce di Costo RU</value>
   </data>
 </root>

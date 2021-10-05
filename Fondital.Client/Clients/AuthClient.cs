@@ -44,7 +44,7 @@ namespace Fondital.Client.Clients
         
         public async Task ForgotPassword(ForgotPwRequestDto ForgotRequest)
         {
-            MailRequest _mailRequest = new MailRequest() { Subject = "PASSWORD DIMENTICATA" , ToEmail = ForgotRequest.Email};
+            MailRequestDto _mailRequest = new MailRequestDto() { Subject = "PASSWORD DIMENTICATA" , ToEmail = ForgotRequest.Email};
             var response = await httpClient.PostAsJsonAsync($"MailController", _mailRequest, JsonSerializerOpts.JsonOpts);
             if (!response.IsSuccessStatusCode)
                 throw new Exception(response.Content.ReadAsStringAsync().Result);

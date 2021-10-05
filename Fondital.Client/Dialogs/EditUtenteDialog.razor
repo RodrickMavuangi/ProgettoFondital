@@ -8,8 +8,8 @@
     <div class="form-field">
         <label class="text-capitalize">@localizer["Email"]</label>
         <div>
-            <TelerikTextBox Class="form-control form-control-lg w100" @bind-Value="UtenteToUpdate.Email" Enabled="false"/>
-            <ValidationMessage For="() => UtenteToUpdate.Email" />
+            <TelerikTextBox Class="form-control form-control-lg w100" @bind-Value="UtenteToUpdate.UserName" Enabled="false"/>
+            <ValidationMessage For="() => UtenteToUpdate.UserName" />
         </div>
     </div>
     <div class="form-field mt-4">
@@ -28,5 +28,4 @@
     </div>
 
     <button type="submit" class="btn btn-primary ml-auto w-100 mt-4" disabled="@isSubmitting">@localizer["Salva"]</button>
-
 </EditForm>

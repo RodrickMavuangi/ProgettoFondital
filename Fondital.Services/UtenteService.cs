@@ -16,8 +16,7 @@ namespace Fondital.Services
 
         public async Task<Utente> CreateUtente(Utente newUser)
         {
-            await _unitOfWork.Utenti
-                .AddAsync(newUser);
+            await _unitOfWork.Utenti.CreateUtente(newUser);
             await _unitOfWork.CommitAsync();
 
             return newUser;
