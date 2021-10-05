@@ -31,9 +31,8 @@ namespace Fondital.Server.Controllers
         private readonly SignInManager<Utente> _signinManager;
         private readonly Serilog.ILogger _logger;
         private readonly IRuoloService _ruoloService;
-        private readonly IUserRolesService _userRolesService;
         private readonly IMapper _mapper;
-        public AuthController(Serilog.ILogger logger, UserManager<Utente> userManager, RoleManager<Ruolo> roleManager, IOptionsSnapshot<JwtSettings> jwtSettings, IAuthService authService, IConfigurazioneService confService, IUtenteService utenteService, SignInManager<Utente> signInManager, IRuoloService ruoloService, IUserRolesService userRolesService, IMapper mapper)
+        public AuthController(Serilog.ILogger logger, UserManager<Utente> userManager, RoleManager<Ruolo> roleManager, IOptionsSnapshot<JwtSettings> jwtSettings, IAuthService authService, IConfigurazioneService confService, IUtenteService utenteService, SignInManager<Utente> signInManager, IRuoloService ruoloService, IMapper mapper)
         {
             _userManager = userManager;
             _roleManager = roleManager;
@@ -45,7 +44,7 @@ namespace Fondital.Server.Controllers
             _logger = logger;
             _ruoloService = ruoloService;
             _mapper = mapper;
-            _userRolesService = userRolesService;
+
         }
 
         [HttpPost("CreateWithPassword")]

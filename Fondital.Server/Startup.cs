@@ -107,7 +107,6 @@ namespace Fondital.Server
             services.AddTransient<ILavorazioneService, LavorazioneService>();
             services.AddTransient<IRapportoService, RapportoService>();
             services.AddTransient<IRuoloService, RuoloService>();
-            services.AddTransient<IUserRolesService, UserRolesService>();
             
             services.AddSwaggerGen(c =>
             {
