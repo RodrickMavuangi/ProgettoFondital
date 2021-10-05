@@ -2,6 +2,7 @@
 
 @inject ServicePartnerClient servicePartnerClient
 @inject IStringLocalizer<App> localizer
+@inject IConfiguration config
 @inject NavigationManager navManager
 @attribute [Authorize]
 
@@ -29,7 +30,6 @@
 
 @if (ServicePartners == null)
 {
-    @*<p><em>@localizer["Caricamento"]</em></p>*@
     <!--CARICO IL LOADER-->
     <div class="k-loader-container k-loader-container-md k-loader-top " style="" data-id="7d13dd9e-e016-4aec-8e1b-5253cd5131d5">
         <div class="k-loader-container-overlay k-overlay-light"></div>
@@ -49,7 +49,6 @@ else
     <!-- BARRA FILTRI-->
     <div class="row-2 d-inline w-100 mb-4 pt-0 pb-4 pt-4 border-bottom barraFiltri">
         <div class="form-group rowFiltri">
-            @*<img src="../img/Icons/search.svg" class="bi bi-search float-lg-right icoSearch blu" />*@
             <i class="bi bi-search float-lg-right icoSearch blu"></i>
             <input class="form-control float-lg-right filtriInput mx-1" @bind-value="SearchText" @bind-value:event="oninput" placeholder=@localizer["CercaSP"] />
         </div>
@@ -57,8 +56,8 @@ else
     <!--FINE BARRA FILTRI-->
     <!--LISTA-->
     <div class="row-3 d-flex justify-content-between flex-wrap flex-md-nowrap  pt-0 pb-4 mb-4">
-        <TelerikGrid Data="@ServicePartners_filtered" EditMode="@GridEditMode.Popup" Pageable="true"
-                     Class="table table-striped" OnUpdate="@UpdateHandler" Resizable="true" Sortable="true">
+        <TelerikGrid Data="@ServicePartners_filtered" Pageable="true" PageSize="@PageSize"
+                     Class="table table-striped" Sortable="true">
             <GridColumns>
                 <GridColumn Field=@nameof(ServicePartnerDto.CodiceFornitore) Title=@localizer["CodiceFornitore"].Value.ToUpper() />
                 <GridColumn Field=@nameof(ServicePartnerDto.RagioneSociale) Title=@localizer["RagioneSociale"].Value.ToUpper() />
@@ -67,8 +66,6 @@ else
                     <Template>
                         @{
                             ServicePartnerDto sp = (ServicePartnerDto)context;
-                            @*<i class="bi bi-people-fill float-lg-left icoClienti blu" @onclick="@(() => navManager.NavigateTo($"/detailservicepartner/{sp.Id}"))"></i>
-                                <b>@(sp.Utenti.Count())</b>*@
                             <span class="link" @onclick="@(() => navManager.NavigateTo($"/detailservicepartner/{sp.Id}"))"><i class="bi bi-people-fill float-lg-left icoClienti blu"></i> <b>@(sp.Utenti.Count())</b></span>
                         }
                     </Template>

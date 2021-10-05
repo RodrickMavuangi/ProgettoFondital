@@ -47,55 +47,21 @@ namespace Fondital.Server.Controllers
             }
         }
 
-        /*
-        [HttpPut("{id}")]
-        public async Task UpdateUtente(int id, [FromBody] UtenteDto utenteDtoToUpdate)
+        [HttpPut("update")]
+        public async Task<IActionResult> UpdateUtente([FromBody] UtenteDto utenteDtoToUpdate)
         {
             Utente utenteToUpdate = _mapper.Map<Utente>(utenteDtoToUpdate);
-            Utente _utente = new Utente();
-            try
-            {
-                if (utenteToUpdate == null)
-                {
-                    _logger.LogError("L'oggetto servicePartner inviato dal Client è null.");
-                }
-                else
-                {
-                    _utente = await _ut.GetUtenteById(id);
-
-                    if (_utente == null)
-                    {
-                        _logger.LogError($"l'utente con l'id:{utenteToUpdate.Id} non è stato trovato");
-                    }
-                    else
-                    {
-                        Utente utenteFromDB = await _ut.GetUtenteById(id);
-                        await _ut.UpdateUtente(utenteToUpdate,_utente);
-                    }
-                }
-            }
-            catch (Exception e)
-            {
-                _logger.LogError($"C'è stato un problema : {e.Message}");
-            }
-        }
-        */
-
-        [HttpPut("{id}")]
-        public async Task UpdateUtente(int id, [FromBody] UtenteDto utenteDtoToUpdate)
-        {
-            Utente utenteToUpdate = _mapper.Map<Utente>(utenteDtoToUpdate);
-            Utente utente = await _ut.GetUtenteById(id);
 
             try
             {
-                await _ut.UpdateUtente(utente.UserName, utenteToUpdate);
-                _logger.Information("Info: {Action} {Object} {ObjectId} effettuato con successo", "UPDATE", "Utente", id);
+                await _ut.UpdateUtente(utenteToUpdate.UserName, utenteToUpdate);
+                _logger.Information("Info: {Action} {Object} {ObjectId} effettuato con successo", "UPDATE", "Utente", utenteToUpdate.UserName);
+                return Ok();
             }
             catch (Exception ex)
             {
-                _logger.Error("Eccezione {Action} {Object} {ObjectId}: {ExceptionMessage}", "UPDATE", "Utente", id, ex.Message);
-                throw;
+                _logger.Error("Eccezione {Action} {Object} {ObjectId}: {ExceptionMessage}", "UPDATE", "Utente", utenteDtoToUpdate.UserName, ex.Message);
+                return BadRequest($"{ex.Message} - {ex.InnerException?.Message}");
             }
         }
     }

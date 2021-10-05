@@ -2,17 +2,19 @@
 using Microsoft.AspNetCore.Components;
 using System;
 using System.Threading.Tasks;
+using Telerik.Blazor;
 
 namespace Fondital.Client.Dialogs
 {
-    public partial class EditUserDialog
+    public partial class AddUtenteDialog
     {
+        [CascadingParameter]
+        public DialogFactory Dialogs { get; set; }
         [Parameter] public EventCallback OnClose { get; set; }
         [Parameter] public EventCallback OnSave { get; set; }
-        [Parameter] public UtenteDto UtenteToUpdate { get; set; }
-
+        [Parameter] public ServicePartnerDto SP { get; set; }
+        public UtenteDto NuovoUtente { get; set; } = new();
         protected bool isSubmitting = false;
-
         protected string ErrorMessage = "";
 
         protected async Task SalvaUtente()
@@ -22,9 +24,12 @@ namespace Fondital.Client.Dialogs
 
             try
             {
-                await httpClient.UpdateUtente(UtenteToUpdate.Id, UtenteToUpdate);
+                NuovoUtente.Email = NuovoUtente.UserName;
+                NuovoUtente.ServicePartner = SP;
+                await httpClient.sendMailForNewUser(NuovoUtente);
                 isSubmitting = false;
                 await OnSave.InvokeAsync();
+                await Dialogs.ConfirmAsync($"{@localizer["MailInviata"]} {NuovoUtente.Nome} {NuovoUtente.Cognome} {localizer["SettaPassword"]}");
             }
             catch (Exception ex)
             {
