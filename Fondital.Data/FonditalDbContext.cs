@@ -33,8 +33,8 @@ namespace Fondital.Data
         public DbSet<Lavorazione> Lavorazioni { get; set; }
         public DbSet<Rapporto> Rapporti { get; set; }
         public DbSet<RapportoVoceCosto> RapportiVociCosto { get; set; }
-        public DbSet<Ruolo> Ruolos { get; set; }
-        public DbSet<UserRole> UserRole { get; set; }
+        public DbSet<Ruolo> Ruoli { get; set; }
+        public DbSet<UserRole> UserRoles { get; set; }
         public DbSet<PersistedGrant> PersistedGrants { get; set; }
         public DbSet<DeviceFlowCodes> DeviceFlowCodes { get; set; }
         protected override void OnModelCreating(ModelBuilder builder)

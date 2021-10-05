@@ -21,7 +21,7 @@ namespace Fondital.Repository
 
         public async Task<IEnumerable<UserRole>> GetAll()
         {
-            return await Db.UserRole.ToListAsync();
+            return await Db.UserRoles.ToListAsync();
         }
     }
 }

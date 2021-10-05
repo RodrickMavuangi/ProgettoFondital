@@ -26,14 +26,7 @@ namespace Fondital.Repository
 
         public async Task<IEnumerable<Utente>> GetAllUtentiWithRoles()
         {
-            List<Utente> Utenti = new();
-            try
-            {
-                return await Db.Utenti.Include(m => m.Ruoli).ToListAsync();
-            }
-            catch (Exception e) { }
-
-            return Utenti;
+                return await Db.Utenti.Include(m => m.Ruoli).ToListAsync(); 
         }
     }
 }

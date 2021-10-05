@@ -52,7 +52,7 @@ namespace Fondital.Client.Clients
                 throw new Exception(response.Content.ReadAsStringAsync().Result);
         }
 
-        public async Task CreaRuolo(string UtenteEmail, RuoloDto ruolo)
+        public async Task AssegnaRuolo(string UtenteEmail, RuoloDto ruolo)
 		{
                 var response = await httpClient.PostAsJsonAsync<RuoloDto>($"authControl/ruolo/{UtenteEmail}",ruolo,JsonSerializerOpts.JsonOpts);
 

@@ -22,8 +22,6 @@ namespace Fondital.Client.Pages
 		[Parameter]
 		public string servicePId { get; set; }
 		private List<UtenteDto> ListaUtenti = new List<UtenteDto>();
-		private List<RuoloDto> Roles = new List<RuoloDto>();
-		private List<UserRolesDto> AssociazioneUserRoles = new List<UserRolesDto>();
 		private List<UtenteDto> UtentiDirezione = new List<UtenteDto>();
 		private List<int> ListID = new List<int>();
 		protected bool ShowAddDialog { get; set; } = false;

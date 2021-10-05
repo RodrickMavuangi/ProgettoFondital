@@ -21,6 +21,6 @@ namespace Fondital.Shared.Dto
         public DateTime Pw_LastChanged { get; set; } = DateTime.Now;
         public bool Pw_MustChange { get; set; } = true;
         public List<RapportoDto> Rapporti { get; set; } = new List<RapportoDto>();
-        public List<Ruolo> Ruoli { get; set; } = new List<Ruolo>();
+        public List<RuoloDto> Ruoli { get; set; } = new List<RuoloDto>();
     }
 }

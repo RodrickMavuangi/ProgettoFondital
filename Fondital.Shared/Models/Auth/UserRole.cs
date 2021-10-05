@@ -6,7 +6,7 @@ namespace Fondital.Shared.Models.Auth
 	[NotMapped]
 	public class UserRole : IdentityUserRole<int>
 	{
-		//public int UserId { get; set; }
-		//public int RoleId { get; set; }
+		public int UserId { get; set; }
+		public int RoleId { get; set; }
 	}
 }

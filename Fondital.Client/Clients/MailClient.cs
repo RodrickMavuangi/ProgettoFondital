@@ -36,26 +36,27 @@ namespace Fondital.Client.Clients
 			}
 		}
 
-		public async Task sendMailForNewUser(UtenteDto utente, ServicePartnerDto servicePartner)
+		public async Task sendMailForNewUser(UtenteDto utente)
 		{
 			try
 			{
-				if(servicePartner.Id != 0)
+				if(utente.ServicePartner.Id != 0)
 				{
 					// Utente con ServicePartner come Ruolo
-					
-					int servicePartnerId = servicePartner.Id;
-					var response = await httpClient.PostAsJsonAsync($"MailController/{servicePartnerId}", utente, JsonSerializerOpts.JsonOpts);
-					await _authClient.CreaRuolo(utente.UserName, new RuoloDto() { Name = "service partner" });
+
+					//utente.Ruoli.Add(new RuoloDto() { Name = "Service Partner" });
+					var response = await httpClient.PostAsJsonAsync("MailController/NewUser", utente, JsonSerializerOpts.JsonOpts);
 					response.EnsureSuccessStatusCode();
+					await _authClient.AssegnaRuolo(utente.UserName, new RuoloDto() { Name = "Service Partner" });
 				}
 				else
 				{
 					//Utente con Direzione come Ruolo
 
-					var response = await httpClient.PostAsJsonAsync($"MailController/direzione", utente, JsonSerializerOpts.JsonOpts);
-					await _authClient.CreaRuolo(utente.UserName, new RuoloDto() { Name = "direzione" });
+					//utente.Ruoli.Add(new RuoloDto() { Name = "Direzione" });
+					var response = await httpClient.PostAsJsonAsync("MailController/NewUser", utente, JsonSerializerOpts.JsonOpts);
 					response.EnsureSuccessStatusCode();
+					await _authClient.AssegnaRuolo(utente.UserName, new RuoloDto() { Name = "Direzione" });
 				}
 			}
 			catch (Exception e)

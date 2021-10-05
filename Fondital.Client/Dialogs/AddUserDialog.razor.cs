@@ -27,7 +27,8 @@ namespace Fondital.Client.Dialogs
             {
                 NuovoUtente.Email = NuovoUtente.UserName;
                 NuovoUtente.IsAbilitato = false;
-                await httpClient.sendMailForNewUser(NuovoUtente,SPToUpdate);
+                NuovoUtente.ServicePartner = SPToUpdate;
+                await httpClient.sendMailForNewUser(NuovoUtente);
                 isSubmitting = false;
                 await OnSave.InvokeAsync();
                 await Dialogs.ConfirmAsync($"{@localizer["MailInviata"]} {NuovoUtente.Nome} {NuovoUtente.Cognome} {localizer["SettaPassword"]}");

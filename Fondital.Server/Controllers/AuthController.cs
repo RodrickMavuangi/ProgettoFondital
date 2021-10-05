@@ -152,32 +152,31 @@ namespace Fondital.Server.Controllers
 
         [HttpPost("ruolo/{UtenteEmail}")]
         [AllowAnonymous]
-        public async Task<IActionResult> CreaRuolo(string UtenteEmail, [FromBody]RuoloDto ruolo)
+        public async Task<IActionResult> AssegnaRuolo(string UtenteEmail, [FromBody]RuoloDto ruolo)
 		{
             try
 			{
-                List<Ruolo> Ruoli = new List<Ruolo>();
                 IdentityResult res = new IdentityResult();
 
                 var user = await _userManager.FindByEmailAsync(UtenteEmail);
 
-                //Si aggiunge un ruolo nel db solo se non esiste ancora
-                if ( ! await _roleManager.RoleExistsAsync(ruolo.Name))
+				//Si aggiunge un ruolo nel db solo se non esiste ancora
+				if (!await _roleManager.RoleExistsAsync(ruolo.Name))
 				{
-                    Ruolo r = new Ruolo() { Name = ruolo.Name };
-                    r.Utenti.Add(user);
-                    res = await _roleManager.CreateAsync(r);
-                    if (!res.Succeeded) BadRequest(res.Errors);
+					Ruolo r = new Ruolo() { Name = ruolo.Name };
+					r.Utenti.Add(user);
+					res = await _roleManager.CreateAsync(r);
+					if (!res.Succeeded) BadRequest(res.Errors);
 				}
 				else
 				{
-                    // Aggiorna la lista di utente del ruolo
-                    Ruolo r = await _roleManager.FindByNameAsync(ruolo.Name);
-                    r.Utenti.Add(user);
-                    await _roleManager.UpdateAsync(r);
+					// Aggiorna la lista di utente del ruolo
+					Ruolo r = await _roleManager.FindByNameAsync(ruolo.Name);
+					r.Utenti.Add(user);
+					res = await _roleManager.UpdateAsync(r);
+					if (!res.Succeeded) BadRequest(res.Errors);
 				}
-                    
-                
+
 				await _userManager.AddToRoleAsync(user, ruolo.Name);
                 return Ok();
             }
