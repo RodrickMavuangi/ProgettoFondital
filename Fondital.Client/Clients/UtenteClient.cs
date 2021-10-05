@@ -1,4 +1,5 @@
 ﻿using Fondital.Shared.Dto;
+using System;
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Net.Http.Json;
@@ -23,8 +24,10 @@ namespace Fondital.Client.Clients
 
         public async Task UpdateUtente(UtenteDto utente)
 		{
-            var response =  await httpClient.PutAsJsonAsync($"utentiControl/{utente.Id}", utente, JsonSerializerOpts.JsonOpts);
-            response.EnsureSuccessStatusCode();
+            var response =  await httpClient.PutAsJsonAsync($"utentiControl/update", utente, JsonSerializerOpts.JsonOpts);
+            
+            if (!response.IsSuccessStatusCode)
+                throw new Exception(response.Content.ReadAsStringAsync().Result);
         }     
     }
 }

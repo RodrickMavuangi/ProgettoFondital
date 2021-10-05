@@ -81,21 +81,21 @@ namespace Fondital.Server.Controllers
         }
         */
 
-        [HttpPut("{id}")]
-        public async Task UpdateUtente(int id, [FromBody] UtenteDto utenteDtoToUpdate)
+        [HttpPut("update")]
+        public async Task<IActionResult> UpdateUtente([FromBody] UtenteDto utenteDtoToUpdate)
         {
             Utente utenteToUpdate = _mapper.Map<Utente>(utenteDtoToUpdate);
-            Utente utente = await _ut.GetUtenteById(id);
 
             try
             {
-                await _ut.UpdateUtente(utente.UserName, utenteToUpdate);
-                _logger.Information("Info: {Action} {Object} {ObjectId} effettuato con successo", "UPDATE", "Utente", id);
+                await _ut.UpdateUtente(utenteToUpdate.UserName, utenteToUpdate);
+                _logger.Information("Info: {Action} {Object} {ObjectId} effettuato con successo", "UPDATE", "Utente", utenteToUpdate.UserName);
+                return Ok();
             }
             catch (Exception ex)
             {
-                _logger.Error("Eccezione {Action} {Object} {ObjectId}: {ExceptionMessage}", "UPDATE", "Utente", id, ex.Message);
-                throw;
+                _logger.Error("Eccezione {Action} {Object} {ObjectId}: {ExceptionMessage}", "UPDATE", "Utente", utenteDtoToUpdate.UserName, ex.Message);
+                return BadRequest($"{ex.Message} - {ex.InnerException?.Message}");
             }
         }
     }

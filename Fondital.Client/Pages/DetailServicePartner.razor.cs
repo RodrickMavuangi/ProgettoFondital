@@ -50,15 +50,15 @@ namespace Fondital.Client.Pages
             StateHasChanged();
         }
 
-        protected void EditUtente(int utenteId)
+        protected void EditUtente(string username)
         {
-            UtenteSelected = SpSelected.Utenti.Single(x => x.Id == utenteId);
+            UtenteSelected = SpSelected.Utenti.Single(x => x.UserName == username);
             ShowEditDialog = true;
         }
 
-        protected async Task SendMail(int utenteId)
+        protected async Task SendMail(string username)
         {
-            UtenteSelected = SpSelected.Utenti.Single(x => x.Id == utenteId);
+            UtenteSelected = SpSelected.Utenti.Single(x => x.UserName == username);
 
             bool isConfirmed = await Dialogs.ConfirmAsync($"{@localizer["ResetPassword"]} {UtenteSelected.UserName}?", " ");
             if (isConfirmed)
@@ -74,13 +74,15 @@ namespace Fondital.Client.Pages
             }
         }
 
-        protected async Task UpdateEnableUtente(int Id)
+        protected async Task UpdateEnableUtente(string username)
         {
-            UtenteSelected = ListaUtentiFiltered.Single(x => x.Id == Id);
+            UtenteSelected = ListaUtentiFiltered.Single(x => x.UserName == username);
 
             bool isConfirmed = false;
-            if (UtenteSelected.IsAbilitato) isConfirmed = await Dialogs.ConfirmAsync($"{localizer["ConfermaAbilitazione"]} {localizer["Utente"]}: {UtenteSelected.UserName}", " ");
-            else isConfirmed = await Dialogs.ConfirmAsync($"{localizer["ConfermaDisabilitazione"]} {localizer["Utente"]}: {UtenteSelected.UserName}", " ");
+            if (UtenteSelected.IsAbilitato) 
+                isConfirmed = await Dialogs.ConfirmAsync($"{localizer["ConfermaAbilitazione"]} {localizer["Utente"]}: {UtenteSelected.UserName}", " ");
+            else 
+                isConfirmed = await Dialogs.ConfirmAsync($"{localizer["ConfermaDisabilitazione"]} {localizer["Utente"]}: {UtenteSelected.UserName}", " ");
 
             if (isConfirmed)
             {

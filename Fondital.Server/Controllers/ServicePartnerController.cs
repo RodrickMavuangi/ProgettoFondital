@@ -94,7 +94,7 @@ namespace Fondital.Server.Controllers
         }
 
         [HttpPut("{id}")]
-        public async Task UpdateServicePartner(int id, [FromBody] ServicePartnerDto spDtoToUpdate)
+        public async Task<IActionResult> UpdateServicePartner(int id, [FromBody] ServicePartnerDto spDtoToUpdate)
         {
             ServicePartner spToUpdate = _mapper.Map<ServicePartner>(spDtoToUpdate);
 
@@ -102,11 +102,12 @@ namespace Fondital.Server.Controllers
             {
                 await _spService.UpdateServicePartner(id, spToUpdate);
                 _logger.Information("Info: {Action} {Object} {ObjectId} effettuato con successo", "UPDATE", "ServicePartner", id);
+                return Ok();
             }
             catch (Exception ex)
             {
                 _logger.Error("Eccezione {Action} {Object} {ObjectId}: {ExceptionMessage}", "UPDATE", "ServicePartner", id, ex.Message);
-                throw;
+                return BadRequest($"{ex.Message} - {ex.InnerException?.Message}");
             }
         }
     }

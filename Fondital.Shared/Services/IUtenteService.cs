@@ -10,8 +10,7 @@ namespace Fondital.Shared.Services
         Task<Utente> GetUtenteById(int id);
         Task<Utente> GetUtenteByUsername(string username);
         Task<Utente> CreateUtente(Utente utente);
-        Task UpdateUtente(string utenteToBeUpdated, Utente utente);
-        Task UpdateUtente(Utente utToUpdate, Utente utFromDB);
+        Task UpdateUtente(string username, Utente utFromDB);
         Task DeleteUtente(Utente utente);
     }
 }

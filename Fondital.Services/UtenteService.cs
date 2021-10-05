@@ -44,16 +44,10 @@ namespace Fondital.Services
             return await _unitOfWork.Utenti.GetByUsernameAsync(username);
         }
 
-        public async Task UpdateUtente(string username, Utente utente)
-        {
-            var utenteToUpdate = await _unitOfWork.Utenti.SingleOrDefaultAsync(u => u.UserName == username);
-            _unitOfWork.Update(utenteToUpdate, utente);
-
-            await _unitOfWork.CommitAsync();
-        }
-
-        public async Task UpdateUtente(Utente utToUpdate, Utente utFromDB)
+        public async Task UpdateUtente(string username, Utente utToUpdate)
 		{
+            //EF Core da problemi con i campi di Identity, per questo non viene chiamato l'Update di UnitOfWork
+            var utFromDB = await _unitOfWork.Utenti.SingleOrDefaultAsync(u => u.UserName == username);
             utFromDB.Cognome = utToUpdate.Cognome;
             utFromDB.Nome = utToUpdate.Nome;
             utFromDB.IsAbilitato = utToUpdate.IsAbilitato;
