@@ -54,7 +54,10 @@ namespace Fondital.Client.Pages
 
         protected async Task UpdateEnableLavorazione(int Id)
         {
-            bool isConfirmed = await Dialogs.ConfirmAsync($"{localizer["ConfermaModificaLavorazione"]} {Id}", localizer["ModificaLavorazione"]);
+            bool isAbilitato = ListaLavorazioniFiltered.Single(x => x.Id == Id).IsAbilitato;
+            bool isConfirmed = false;
+            if (isAbilitato) isConfirmed = await Dialogs.ConfirmAsync($"{localizer["ConfermaAbilitazione"]} {localizer["Lavorazione"]} # {Id}?", " ");
+            else isConfirmed = await Dialogs.ConfirmAsync($"{localizer["ConfermaDisabilitazione"]} {localizer["Lavorazione"]} # {Id}?", " ");
 
             if (isConfirmed)
             {

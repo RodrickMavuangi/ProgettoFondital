@@ -54,7 +54,10 @@ namespace Fondital.Client.Pages
 
         protected async Task UpdateEnableDifetto(int Id)
         {
-            bool isConfirmed = await Dialogs.ConfirmAsync($"{localizer["ConfermaModificaDifetto"]} {Id}", localizer["Modifica"] + " " + localizer["Difetto"]);
+            bool isAbilitato = ListaDifettiFiltered.Single(x => x.Id == Id).IsAbilitato;
+            bool isConfirmed = false;
+            if (isAbilitato) isConfirmed = await Dialogs.ConfirmAsync($"{localizer["ConfermaAbilitazione"]} {localizer["Difetto"]} # {Id}?", " ");
+            else isConfirmed = await Dialogs.ConfirmAsync($"{localizer["ConfermaDisabilitazione"]} {localizer["Difetto"]} # {Id}?", " ");
 
             if (isConfirmed)
             {

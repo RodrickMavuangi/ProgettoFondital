@@ -6,8 +6,8 @@
 
   <ItemGroup>
     <PackageReference Include="MailKit" Version="2.15.0" />
-    <PackageReference Include="MimeKit" Version="2.15.0" />
-    <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="6.12.1" />
+    <PackageReference Include="MimeKit" Version="2.15.1" />
+    <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="6.12.2" />
   </ItemGroup>
 
   <ItemGroup>

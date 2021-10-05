@@ -55,7 +55,7 @@ else
         </div>
     </div><!--FINE BARRA FILTRI-->
     <div class="row-3 d-flex justify-content-between flex-wrap flex-md-nowrap  pt-0 pb-4 mb-4">
-        <TelerikGrid Data="@ListaLavorazioniFiltered" Pageable="true" PageSize="@PageSize" Class="table table-striped">
+        <TelerikGrid Data="@ListaLavorazioniFiltered" Pageable="true" PageSize="@PageSize" Sortable="true" Class="table table-striped">
             <GridColumns>
                 <GridColumn Field=@nameof(LavorazioneDto.Id) Title="#" Width="10%" />
                 <GridColumn Field=@nameof(LavorazioneDto.NomeItaliano) Width="70%" Title="@localizer["Descrizione"].Value.ToUpper()" Visible="@(CurrentCulture == "it-IT")" />
