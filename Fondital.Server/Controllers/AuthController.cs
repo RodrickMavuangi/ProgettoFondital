@@ -1,4 +1,5 @@
-﻿using Fondital.Shared.Dto;
+﻿using AutoMapper;
+using Fondital.Shared.Dto;
 using Fondital.Shared.Enums;
 using Fondital.Shared.Models.Auth;
 using Fondital.Shared.Services;
@@ -28,8 +29,9 @@ namespace Fondital.Server.Controllers
         private readonly IUtenteService _utenteService;
         private readonly SignInManager<Utente> _signinManager;
         private readonly Serilog.ILogger _logger;
-
-        public AuthController(Serilog.ILogger logger, UserManager<Utente> userManager, RoleManager<Ruolo> roleManager, IOptionsSnapshot<JwtSettings> jwtSettings, IAuthService authService, IConfigurazioneService confService, IUtenteService utenteService, SignInManager<Utente> signInManager)
+        private readonly IRuoloService _ruoloService;
+        private readonly IMapper _mapper;
+        public AuthController(Serilog.ILogger logger, UserManager<Utente> userManager, RoleManager<Ruolo> roleManager, IOptionsSnapshot<JwtSettings> jwtSettings, IAuthService authService, IConfigurazioneService confService, IUtenteService utenteService, SignInManager<Utente> signInManager, IRuoloService ruoloService, IMapper mapper)
         {
             _userManager = userManager;
             _roleManager = roleManager;
@@ -39,6 +41,9 @@ namespace Fondital.Server.Controllers
             _utenteService = utenteService;
             _signinManager = signInManager;
             _logger = logger;
+            _ruoloService = ruoloService;
+            _mapper = mapper;
+
         }
 
         [HttpPost("CreateWithPassword")]
@@ -155,6 +160,43 @@ namespace Fondital.Server.Controllers
                 return BadRequest(ex.Message);
             }
         }
+
+        [HttpPost("ruolo/{UtenteEmail}")]
+        [AllowAnonymous]
+        public async Task<IActionResult> AssegnaRuolo(string UtenteEmail, [FromBody]RuoloDto ruolo)
+		{
+            try
+			{
+                IdentityResult res = new IdentityResult();
+
+                var user = await _userManager.FindByEmailAsync(UtenteEmail);
+
+				//Si aggiunge un ruolo nel db solo se non esiste ancora
+				if (!await _roleManager.RoleExistsAsync(ruolo.Name))
+				{
+					Ruolo r = new Ruolo() { Name = ruolo.Name };
+					r.Utenti.Add(user);
+					res = await _roleManager.CreateAsync(r);
+					if (!res.Succeeded) BadRequest(res.Errors);
+				}
+				else
+				{
+					// Aggiorna la lista di utente del ruolo
+					Ruolo r = await _roleManager.FindByNameAsync(ruolo.Name);
+					r.Utenti.Add(user);
+					res = await _roleManager.UpdateAsync(r);
+					if (!res.Succeeded) BadRequest(res.Errors);
+				}
+
+				await _userManager.AddToRoleAsync(user, ruolo.Name);
+                return Ok();
+            }
+
+            catch(Exception e)
+			{
+                throw;
+			}
+		}
 
         //[HttpPost("Roles")]
         //public async Task<IActionResult> CreateRole(string roleName)
