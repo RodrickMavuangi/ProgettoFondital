@@ -22,7 +22,7 @@ namespace Fondital.Client.Dialogs
 
             try
             {
-                await servicePartnerClient.UpdateServicePartner(SPToUpdate.Id, SPToUpdate);
+                await servicePartnerClient.UpdateServicePartner(SPToUpdate);
                 isSubmitting = false;
                 await OnSave.InvokeAsync();
             }

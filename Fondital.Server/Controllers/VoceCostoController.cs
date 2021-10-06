@@ -4,7 +4,7 @@ using Fondital.Shared.Models;
 using Fondital.Shared.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using RouteAttribute = Microsoft.AspNetCore.Mvc.RouteAttribute;
@@ -16,11 +16,11 @@ namespace Fondital.Server.Controllers
     [Authorize]
     public class VoceCostoController : ControllerBase
     {
-        private readonly ILogger<VoceCostoController> _logger;
+        private readonly Serilog.ILogger _logger;
         private readonly IVoceCostoService _voceCostoService;
         private readonly IMapper _mapper;
 
-        public VoceCostoController(ILogger<VoceCostoController> logger, IVoceCostoService voceCostoService, IMapper mapper)
+        public VoceCostoController(Serilog.ILogger logger, IVoceCostoService voceCostoService, IMapper mapper)
         {
             _logger = logger;
             _voceCostoService = voceCostoService;
@@ -37,14 +37,34 @@ namespace Fondital.Server.Controllers
         public async Task UpdateVoceCosto([FromBody] VoceCostoDto voceCostoDto, int voceCostoId)
         {
             VoceCosto voceCostoToUpdate = _mapper.Map<VoceCosto>(voceCostoDto);
-            await _voceCostoService.UpdateVoceCosto(voceCostoId, voceCostoToUpdate);
+
+            try
+            {
+                await _voceCostoService.UpdateVoceCosto(voceCostoId, voceCostoToUpdate);
+                _logger.Information("Info: {Action} {Object} {ObjectId} effettuato con successo", "UPDATE", "VoceCosto", voceCostoId);
+            }
+            catch (Exception ex)
+            {
+                _logger.Error("Eccezione {Action} {Object} {ObjectId}: {ExceptionMessage}", "UPDATE", "VoceCosto", voceCostoId, ex.Message);
+                throw;
+            }
         }
 
         [HttpPost]
         public async Task CreateVoceCosto([FromBody] VoceCostoDto voceCostoDto)
         {
             VoceCosto voceCosto = _mapper.Map<VoceCosto>(voceCostoDto);
-            await _voceCostoService.AddVoceCosto(voceCosto);
+
+            try
+            {
+                int voceCostoId = await _voceCostoService.AddVoceCosto(voceCosto);
+                _logger.Information("Info: {Action} {Object} {ObjectId} effettuato con successo", "CREATE", "VoceCosto", voceCostoId);
+            }
+            catch (Exception ex)
+            {
+                _logger.Error("Eccezione {Action} {Object}: {ExceptionMessage}", "CREATE", "VoceCosto", ex.Message);
+                throw;
+            }
         }
     }
 }

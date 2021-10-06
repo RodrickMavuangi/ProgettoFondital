@@ -1,6 +1,5 @@
 ﻿using Fondital.Shared.Dto;
 using Microsoft.AspNetCore.Components;
-using Microsoft.JSInterop;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,15 +19,13 @@ namespace Fondital.Client.Pages
         protected bool ShowAddDialog { get; set; } = false;
         protected bool ShowEditDialog { get; set; } = false;
         protected ListinoDto ListinoSelected { get; set; }
-
         public string SearchSPText = "";
         public string SearchVoceCostoText = "";
         public string SearchRaggruppamentoText = "";
 
         protected override async Task OnInitializedAsync()
         {
-            var js = (IJSInProcessRuntime)JSRuntime;
-            CurrentCulture = await js.InvokeAsync<string>("blazorCulture.get");
+            CurrentCulture = await StateProvider.GetCurrentCulture();
             PageSize = Convert.ToInt32(config["PageSize"]);
 
             await RefreshListini();
@@ -36,9 +33,9 @@ namespace Fondital.Client.Pages
 
         public List<ListinoDto> ListiniFiltered =>
             ListaListini.Where(x => x.ServicePartner.RagioneSociale.Contains(SearchSPText, StringComparison.InvariantCultureIgnoreCase)
-            && x.Raggruppamento.Contains(SearchRaggruppamentoText, StringComparison.InvariantCultureIgnoreCase) 
-            &&  (
-                    (CurrentCulture == "ru-RU" && x.VoceCosto.NomeRusso.Contains(SearchVoceCostoText, StringComparison.InvariantCultureIgnoreCase)) 
+            && x.Raggruppamento.Contains(SearchRaggruppamentoText, StringComparison.InvariantCultureIgnoreCase)
+            && (
+                    (CurrentCulture == "ru-RU" && x.VoceCosto.NomeRusso.Contains(SearchVoceCostoText, StringComparison.InvariantCultureIgnoreCase))
                     || (CurrentCulture == "it-IT" && x.VoceCosto.NomeItaliano.Contains(SearchVoceCostoText, StringComparison.InvariantCultureIgnoreCase)
                 )
             )).ToList();

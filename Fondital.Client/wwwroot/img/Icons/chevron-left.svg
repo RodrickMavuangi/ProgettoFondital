@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="7px" height="13px" viewBox="0 0 7 13" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>Icons / solid / primary / chevron-left</title>
+    <defs>
+        <filter id="filter-1">
+            <feColorMatrix in="SourceGraphic" type="matrix" values="0 0 0 0 0.000000 0 0 0 0 0.482353 0 0 0 0 1.000000 0 0 0 1.000000 0"></feColorMatrix>
+        </filter>
+    </defs>
+    <g id="Symbols" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="UI-/-Buttons-/-Large-/-Outline-/-Ico-Dx" transform="translate(-121.000000, -17.000000)">
+            <g id="chevron-right" transform="translate(114.000000, 14.000000)" filter="url(#filter-1)">
+                <g transform="translate(7.000000, 3.000000)">
+                    <path d="M0.146893784,0.146893784 C0.240698047,0.052852083 0.368066523,-4.4408921e-16 0.500893784,-4.4408921e-16 C0.633721045,-4.4408921e-16 0.761089521,0.052852083 0.854893784,0.146893784 L6.85489378,6.14689378 C6.94893548,6.24069805 7.00178757,6.36806652 7.00178757,6.50089378 C7.00178757,6.63372104 6.94893548,6.76108952 6.85489378,6.85489378 L0.854893784,12.8548938 C0.659384982,13.0504026 0.342402585,13.0504026 0.146893784,12.8548938 C-0.0486150178,12.659385 -0.0486150178,12.3424026 0.146893784,12.1468938 L5.79389378,6.50089378 L0.146893784,0.854893784 C0.052852083,0.761089521 0,0.633721045 0,0.500893784 C0,0.368066523 0.052852083,0.240698047 0.146893784,0.146893784 Z" id="Path" fill="#FFFFFF"></path>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

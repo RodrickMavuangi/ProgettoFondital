@@ -1,9 +1,9 @@
 ﻿@page "/"
-@inject FonditalAuthStateProvider authStateProvider
-@inject IStringLocalizer<App> localizer
-@inject UtenteClient utClient
-@attribute [Authorize]
 
+@inject FonditalAuthStateProvider authStateProvider
+@inject CurrentStateProvider StateProvider
+@inject IStringLocalizer<App> localizer
+@attribute [Authorize]
 
 <AuthorizeView>
     <Authorized>

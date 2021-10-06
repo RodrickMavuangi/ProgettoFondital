@@ -4,7 +4,6 @@ using Fondital.Shared.Models;
 using Fondital.Shared.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,11 +17,11 @@ namespace Fondital.Server.Controllers
     [Authorize]
     public class ServicePartnerController : ControllerBase
     {
-        private readonly ILogger<ServicePartnerController> _logger;
+        private readonly Serilog.ILogger _logger;
         private readonly IServicePartnerService _spService;
         private readonly IMapper _mapper;
 
-        public ServicePartnerController(ILogger<ServicePartnerController> logger, IServicePartnerService spService, IMapper mapper)
+        public ServicePartnerController(Serilog.ILogger logger, IServicePartnerService spService, IMapper mapper)
         {
             _logger = logger;
             _spService = spService;
@@ -36,51 +35,50 @@ namespace Fondital.Server.Controllers
         }
 
         [HttpGet("utenti/{id}")]
-        public async Task<ServicePartnerDto> getWithUtentiFor(int id)
+        public async Task<ServicePartnerDto> GetWithUtenti(int id)
         {
-            return _mapper.Map<ServicePartnerDto>(await _spService.GetServicePartnerWithUtentiAsync(id));
+            try
+            {
+                return _mapper.Map<ServicePartnerDto>(await _spService.GetServicePartnerWithUtentiAsync(id));
+            }
+            catch (Exception ex)
+            {
+                _logger.Error("Eccezione {Action} {Object} {ObjectId}: {ExceptionMessage}", "GET", "ServicePartner", id, ex.Message);
+                throw;
+            }
         }
 
-        /*
-		[HttpPost]
-        public async Task<ServicePartnerDto> CreateServicePartner([FromBody] ServicePartnerDto servicePartnerDto)
+        [HttpGet("{id}")]
+        public async Task<ServicePartnerDto> GetServicePArtnerById(int id)
         {
-            ServicePartner servicePartner = _mapper.Map<ServicePartner>(servicePartnerDto);
-            ServicePartnerDto newServicePartner = new ServicePartnerDto();
-			try
-			{
-                if (servicePartner == null)
-                {
-                    _logger.LogError("L'oggetto servicePartner inviato dal Client è null.");
-                }
-				else
-				{
-                    newServicePartner = _mapper.Map<ServicePartnerDto>(await _spService.CreateServicePartner(servicePartner));
-				}
-            }
-			catch (Exception e) 
+            try
             {
-                _logger.LogError($"C'è stato un problema : {e.Message}");
+                return _mapper.Map<ServicePartnerDto>(await _spService.GetServicePartnerById(id));
             }
-            return newServicePartner;
+            catch (Exception ex)
+            {
+                _logger.Error("Eccezione {Action} {Object} {ObjectId}: {ExceptionMessage}", "GET", "ServicePartner", id, ex.Message);
+                throw;
+            }
         }
-        */
 
         [HttpPost]
         public async Task<IActionResult> CreateServicePartner([FromBody] ServicePartnerDto servicePartnerDto)
         {
             ServicePartner servicePartner = _mapper.Map<ServicePartner>(servicePartnerDto);
+
             try
             {
-                await _spService.CreateServicePartner(servicePartner);
+                int SPId = await _spService.CreateServicePartner(servicePartner);
+                _logger.Information("Info: {Action} {Object} {ObjectId} effettuato con successo", "CREATE", "ServicePartner", SPId);
                 return Ok();
             }
             catch (Exception ex)
             {
                 if (ex.InnerException != null)
-                    _logger.LogError($"{ex.Message} - INNER EXCEPTION: {ex.InnerException.Message}");
+                    _logger.Error("Eccezione {Action} {Object}: {ExceptionMessage} - INNER EXCEPTION: {InnerException}", "CREATE", "ServicePartner", ex.Message, ex.InnerException.Message);
                 else
-                    _logger.LogError(ex.Message);
+                    _logger.Error("Eccezione {Action} {Object}: {ExceptionMessage}", "CREATE", "ServicePartner", ex.Message);
 
                 List<ServicePartner> list = (List<ServicePartner>)await _spService.GetAllServicePartners();
 
@@ -95,60 +93,22 @@ namespace Fondital.Server.Controllers
             }
         }
 
-
-        /*
         [HttpPut("{id}")]
-        public async Task UpdateServicePartner(int id,[FromBody] ServicePartnerDto spToUpdate)
-		{
-            ServicePartner _servicePartner = new ServicePartner();
-            try
-            {
-                if(spToUpdate == null)
-				{
-                    _logger.LogError("L'oggetto servicePartner inviato dal Client è null.");
-				}
-				else
-				{
-                    _servicePartner = await _spService.GetServicePartnerById(id);
-
-                    if(_servicePartner == null)
-					{
-                        _logger.LogError($"il service partner con l'id:{spToUpdate.Id} non è stato trovato");
-					}
-					else
-					{
-                         await _spService.UpdateServicePartner(_servicePartner,spToUpdate);
-					}
-                }
-			}
-            catch(Exception e)
-			{
-                _logger.LogError($"C'è stato un problema : {e.Message}");
-            }
-		}
-        */
-
-        [HttpPut("{id}")]
-        public async Task UpdateServicePartner(int id, [FromBody] ServicePartnerDto spDtoToUpdate)
+        public async Task<IActionResult> UpdateServicePartner(int id, [FromBody] ServicePartnerDto spDtoToUpdate)
         {
             ServicePartner spToUpdate = _mapper.Map<ServicePartner>(spDtoToUpdate);
-            await _spService.UpdateServicePartner(id, spToUpdate);
-        }
 
-
-        [HttpGet("{id}")]
-        public async Task<ServicePartnerDto> GetServicePArtnerById(int id)
-        {
-            ServicePartnerDto servicePartnerDto = new ServicePartnerDto();
             try
             {
-                servicePartnerDto = _mapper.Map<ServicePartnerDto>(await _spService.GetServicePartnerById(id));
+                await _spService.UpdateServicePartner(id, spToUpdate);
+                _logger.Information("Info: {Action} {Object} {ObjectId} effettuato con successo", "UPDATE", "ServicePartner", id);
+                return Ok();
             }
-            catch (Exception e)
+            catch (Exception ex)
             {
-                _logger.LogError($"C'è stato un problema : {e.Message}");
+                _logger.Error("Eccezione {Action} {Object} {ObjectId}: {ExceptionMessage}", "UPDATE", "ServicePartner", id, ex.Message);
+                return BadRequest($"{ex.Message} - {ex.InnerException?.Message}");
             }
-            return servicePartnerDto;
         }
     }
 }

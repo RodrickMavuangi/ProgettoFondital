@@ -4,7 +4,6 @@ using Fondital.Shared.Models;
 using Fondital.Shared.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,11 +17,11 @@ namespace Fondital.Server.Controllers
     [Authorize]
     public class LavorazioneController : ControllerBase
     {
-        private readonly ILogger<LavorazioneController> _logger;
+        private readonly Serilog.ILogger _logger;
         private readonly ILavorazioneService _lavorazioneService;
         private readonly IMapper _mapper;
 
-        public LavorazioneController(ILogger<LavorazioneController> logger, ILavorazioneService lavorazioneService, IMapper mapper)
+        public LavorazioneController(Serilog.ILogger logger, ILavorazioneService lavorazioneService, IMapper mapper)
         {
             _logger = logger;
             _lavorazioneService = lavorazioneService;
@@ -39,7 +38,17 @@ namespace Fondital.Server.Controllers
         public async Task UpdateLavorazione([FromBody] LavorazioneDto lavorazioneDto, int lavorazioneId)
         {
             Lavorazione lavorazioneToUpdate = _mapper.Map<Lavorazione>(lavorazioneDto);
-            await _lavorazioneService.UpdateLavorazione(lavorazioneId, lavorazioneToUpdate);
+
+            try
+            {
+                await _lavorazioneService.UpdateLavorazione(lavorazioneId, lavorazioneToUpdate);
+                _logger.Information("Info: {Action} {Object} {ObjectId} effettuato con successo", "UPDATE", "Lavorazione", lavorazioneId);
+            }
+            catch (Exception ex)
+            {
+                _logger.Error("Eccezione {Action} {Object} {ObjectId}: {ExceptionMessage}", "UPDATE", "Lavorazione", lavorazioneId, ex.Message);
+                throw;
+            }
         }
 
         [HttpPost]
@@ -48,15 +57,16 @@ namespace Fondital.Server.Controllers
             Lavorazione lavorazione = _mapper.Map<Lavorazione>(lavorazioneDto);
             try
             {
-                await _lavorazioneService.AddLavorazione(lavorazione);
+                int lavorazioneId = await _lavorazioneService.AddLavorazione(lavorazione);
+                _logger.Information("Info: {Action} {Object} {ObjectId} effettuato con successo", "CREATE", "Lavorazione", lavorazioneId);
                 return Ok();
             }
             catch (Exception ex)
             {
                 if (ex.InnerException != null)
-                    _logger.LogError($"{ex.Message} - INNER EXCEPTION: {ex.InnerException.Message}");
+                    _logger.Error("Eccezione {Action} {Object}: {ExceptionMessage} - INNER EXCEPTION: {InnerException}", "CREATE", "Lavorazione", ex.Message, ex.InnerException.Message);
                 else
-                    _logger.LogError(ex.Message);
+                    _logger.Error("Eccezione {Action} {Object}: {ExceptionMessage}", "CREATE", "Lavorazione", ex.Message);
 
                 List<LavorazioneDto> lista = (List<LavorazioneDto>)await _lavorazioneService.GetAllLavorazioni();
 

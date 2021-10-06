@@ -12,5 +12,6 @@ namespace Fondital.Shared.Repositories
 
         Task<IEnumerable<Utente>> GetAllUtentiWithRoles();
         
+        Task CreateUtente(Utente utente);
     }
 }

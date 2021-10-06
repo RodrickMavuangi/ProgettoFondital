@@ -1,11 +1,9 @@
-﻿using Fondital.Shared.Models;
-using System.Threading.Tasks;
-
+﻿using Fondital.Shared.Dto;
 
 namespace Fondital.Shared.Services
 {
     public interface IMailService
     {
-        Task SendEmailAsync(MailRequest mailRequest);
+        void SendEmailAsync(MailRequestDto mailRequest);
     }
 }

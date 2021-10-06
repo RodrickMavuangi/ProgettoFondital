@@ -1,30 +1,15 @@
 ﻿@layout TelerikLayout
 @inherits LayoutComponentBase
-
 @inject IJSRuntime JS
 @inject NavigationManager FonditalNavigationManager
 
-<Header></Header>
 
+<Header @ref="Header" />
 
-<div class="main">
-
-    <div class="content px-4">
-        @Body
+<CascadingValue Value="Header" IsFixed="true">
+    <div class="main">
+        <div class="content px-4">
+            @Body
+        </div>
     </div>
-</div>
-
-@code{
-    protected override void OnInitialized()
-    {
-
-    }
-
-    protected override async Task OnAfterRenderAsync(bool firstRender)
-    {
-        await JS.InvokeVoidAsync("manipulateActiveLink",
-            firstRender,
-            FonditalNavigationManager.ToBaseRelativePath(FonditalNavigationManager.Uri));
-    }
-}
-
+</CascadingValue>

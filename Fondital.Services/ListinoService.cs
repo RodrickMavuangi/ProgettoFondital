@@ -32,10 +32,12 @@ namespace Fondital.Services
             await _unitOfWork.CommitAsync();
         }
 
-        public async Task AddListino(Listino listino)
+        public async Task<int> AddListino(Listino listino)
         {
             await _unitOfWork.Listini.AddListino(listino);
             await _unitOfWork.CommitAsync();
+
+            return listino.Id;
         }
     }
 }

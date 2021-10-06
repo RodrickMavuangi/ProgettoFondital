@@ -4,7 +4,6 @@ using Fondital.Shared.Models.Auth;
 using Fondital.Shared.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -14,14 +13,14 @@ namespace Fondital.Server.Controllers
 {
     [ApiController]
     [Route("utentiControl")]
-    //[Authorize]
+    [Authorize]
     public class UtenteController : ControllerBase
     {
-        private readonly ILogger<UtenteController> _logger;
+        private readonly Serilog.ILogger _logger;
         private readonly IUtenteService _ut;
         private readonly IMapper _mapper;
 
-        public UtenteController(ILogger<UtenteController> logger, IUtenteService ut, IMapper mapper)
+        public UtenteController(Serilog.ILogger logger, IUtenteService ut, IMapper mapper)
         {
             _ut = ut;
             _logger = logger;
@@ -37,49 +36,33 @@ namespace Fondital.Server.Controllers
         [HttpGet("{username}")]
         public UtenteDto GetUtenteByUsername(string username)
         {
-            return _mapper.Map<UtenteDto>(_ut.GetUtenteByUsername(username).Result);
-        }
-
-        /*
-        [HttpPut("{id}")]
-        public async Task UpdateUtente(int id, [FromBody] UtenteDto utenteDtoToUpdate)
-        {
-            Utente utenteToUpdate = _mapper.Map<Utente>(utenteDtoToUpdate);
-            Utente _utente = new Utente();
             try
             {
-                if (utenteToUpdate == null)
-                {
-                    _logger.LogError("L'oggetto servicePartner inviato dal Client è null.");
-                }
-                else
-                {
-                    _utente = await _ut.GetUtenteById(id);
-
-                    if (_utente == null)
-                    {
-                        _logger.LogError($"l'utente con l'id:{utenteToUpdate.Id} non è stato trovato");
-                    }
-                    else
-                    {
-                        Utente utenteFromDB = await _ut.GetUtenteById(id);
-                        await _ut.UpdateUtente(utenteToUpdate,_utente);
-                    }
-                }
+                return _mapper.Map<UtenteDto>(_ut.GetUtenteByUsername(username).Result);
             }
-            catch (Exception e)
+            catch (Exception ex)
             {
-                _logger.LogError($"C'è stato un problema : {e.Message}");
+                _logger.Error("Eccezione {Action} {Object} {ObjectId}: {ExceptionMessage}", "GET", "Utente", username, ex.Message);
+                throw;
             }
         }
-        */
 
-        [HttpPut("{id}")]
-        public async Task UpdateUtente(int id, [FromBody] UtenteDto utenteDtoToUpdate)
+        [HttpPut("update")]
+        public async Task<IActionResult> UpdateUtente([FromBody] UtenteDto utenteDtoToUpdate)
         {
             Utente utenteToUpdate = _mapper.Map<Utente>(utenteDtoToUpdate);
-            Utente utente = await _ut.GetUtenteById(id);
-            await _ut.UpdateUtente(utente.UserName, utenteToUpdate);
+
+            try
+            {
+                await _ut.UpdateUtente(utenteToUpdate.UserName, utenteToUpdate);
+                _logger.Information("Info: {Action} {Object} {ObjectId} effettuato con successo", "UPDATE", "Utente", utenteToUpdate.UserName);
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                _logger.Error("Eccezione {Action} {Object} {ObjectId}: {ExceptionMessage}", "UPDATE", "Utente", utenteDtoToUpdate.UserName, ex.Message);
+                return BadRequest($"{ex.Message} - {ex.InnerException?.Message}");
+            }
         }
     }
 }

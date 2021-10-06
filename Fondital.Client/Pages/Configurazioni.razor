@@ -1,4 +1,5 @@
 ﻿@page "/generalConfigurations"
+
 @inject ConfigurazioneClient confClient
 @inject IStringLocalizer<App> localizer
 @attribute [Authorize]
@@ -18,12 +19,10 @@
 </div>
 <!--FINE ROW 1 . TITOLI + BUTTON DX-->
 
-
 @if (ListaConfigurazioni == null)
 {
     @*<p><em>@localizer["Caricamento"]...</em></p>*@
     <!--CARICO IL LOADER-->
-
     <div class="k-loader-container k-loader-container-md k-loader-top " style="" data-id="7d13dd9e-e016-4aec-8e1b-5253cd5131d5">
         <div class="k-loader-container-overlay k-overlay-light"></div>
         <div class="k-loader-container-inner ">
@@ -36,7 +35,6 @@
             </div>
         </div>
     </div>
-
 }
 else
 {
@@ -74,7 +72,6 @@ else
                 </button>
             </div>
             <DataAnnotationsValidator />
-
         </EditForm>
 
         @if (submitSucceded == true)

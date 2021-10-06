@@ -7,135 +7,101 @@ using System.Linq;
 using System.Threading.Tasks;
 using Telerik.Blazor;
 
-
 namespace Fondital.Client.Pages
 {
-	public partial class DetailServicePartner
-	{
-		public string SearchText = "";
-		public StatoUtente ConStato { get; set; } = new();
-		[CascadingParameter]
-		public DialogFactory Dialogs { get; set; }
-		public List<string> ListaScelta { get; set; } = new List<string>() { };
-		public string SceltaCorrente = string.Empty;
-		[Parameter]
-		public string servicePId { get; set; }
-		private List<UtenteDto> ListaUtenti = new List<UtenteDto>();
-		protected bool ShowAddDialog { get; set; } = false;
-		protected bool ShowEditDialog { get; set; } = false;
-		protected bool ShowEditDialog_SP { get; set; } = false;
-		protected UtenteDto UtenteSelected { get; set; }
-		protected ServicePartnerDto SpSelected { get; set; } = new ServicePartnerDto() { CodiceCliente = "", CodiceFornitore = "", RagioneSociale = "" };
+    public partial class DetailServicePartner
+    {
+        [CascadingParameter]
+        public DialogFactory Dialogs { get; set; }
+        [Parameter]
+        public string servicePId { get; set; }
+        public string SearchText = "";
+        private int PageSize { get; set; }
+        public string StatusFilter { get; set; }
+        public List<string> ListaScelta { get; set; }
+        protected bool ShowAddDialog { get; set; } = false;
+        protected bool ShowEditDialog { get; set; } = false;
+        protected bool ShowEditDialog_SP { get; set; } = false;
+        protected UtenteDto UtenteSelected { get; set; }
+        protected ServicePartnerDto SpSelected { get; set; } = new();
+        public List<UtenteDto> ListaUtentiFiltered => StatusFilter == ListaScelta[0] ? SpSelected.Utenti.Where(x => x.UserName.Contains(SearchText, StringComparison.InvariantCultureIgnoreCase) && x.IsAbilitato == true).ToList() :
+                                                      StatusFilter == ListaScelta[1] ? SpSelected.Utenti.Where(x => x.UserName.Contains(SearchText, StringComparison.InvariantCultureIgnoreCase) && x.IsAbilitato == false).ToList() :
+                                                      SpSelected.Utenti.Where(x => x.UserName.Contains(SearchText, StringComparison.InvariantCultureIgnoreCase)).ToList();
 
-		protected override async Task OnInitializedAsync()
-		{
-			ListaScelta = new List<string>() { @localizer["Tutti"], @localizer["Abilitati"], @localizer["Disabilitati"] };
-			SpSelected = await servicePartnerClient.GetServicePartnerWithUtenti(int.Parse(servicePId));
+        protected override async Task OnInitializedAsync()
+        {
+            ListaScelta = new() { localizer["Abilitati"], localizer["Disabilitati"] };
+            PageSize = Convert.ToInt32(config["PageSize"]);
+            
+            await RefreshUtenti();
+        }
 
-			if (SpSelected.Utenti == null) SpSelected.Utenti = new List<UtenteDto>();
+        protected async Task CloseAndRefresh()
+        {
+            ShowAddDialog = false;
+            ShowEditDialog = false;
+            ShowEditDialog_SP = false;
+            await RefreshUtenti();
+        }
 
-			SceltaCorrente = null;
-			await RefreshUtenti();
-		}
+        protected async Task RefreshUtenti()
+        {
+            SpSelected = await servicePartnerClient.GetServicePartnerWithUtenti(int.Parse(servicePId));
+            StateHasChanged();
+        }
 
-		public List<UtenteDto> ListaUtenti_Filtered => ConStato == StatoUtente.Abilitati ? SpSelected.Utenti.Where(x => x.Email.ToLower().Contains(SearchText.ToLower()) && x.IsAbilitato == true).ToList() :
-													   ConStato == StatoUtente.Disabilitati ? SpSelected.Utenti.Where(x => x.Email.ToLower().Contains(SearchText.ToLower()) && x.IsAbilitato == false).ToList() :
-													   SpSelected.Utenti.Where(x => x.Email.ToLower().Contains(SearchText.ToLower())).ToList();
+        protected void EditUtente(string username)
+        {
+            UtenteSelected = SpSelected.Utenti.Single(x => x.UserName == username);
+            ShowEditDialog = true;
+        }
 
-		protected async Task CloseAndRefresh()
-		{
-			ShowAddDialog = false;
-			ShowEditDialog = false;
-			ShowEditDialog_SP = false;
-			await RefreshUtenti();
-		}
+        protected async Task SendMail(string username)
+        {
+            UtenteSelected = SpSelected.Utenti.Single(x => x.UserName == username);
 
-		protected async Task RefreshUtenti()
-		{
-			ListaUtenti = (List<UtenteDto>)await utenteClient.GetUtenti();
-			SpSelected = await servicePartnerClient.GetServicePartnerWithUtenti(int.Parse(servicePId));
-			StateHasChanged();
-		}
+            bool isConfirmed = await Dialogs.ConfirmAsync($"{@localizer["ResetPassword"]} {UtenteSelected.UserName}?", " ");
+            if (isConfirmed)
+            {
+                MailRequestDto mailRequest = new MailRequestDto()
+                {
+                    ToEmail = UtenteSelected.UserName,
+                    Subject = localizer["RisettaPassword"],
+                };
 
-		protected void EditUtente(int utenteId)
-		{
-			UtenteSelected = ListaUtenti.Single(x => x.Id == utenteId);
-			ShowEditDialog = true;
-		}
+                await mailClient.sendMail(mailRequest);
+                await Dialogs.AlertAsync($"{@localizer["MailInviata"]} {UtenteSelected.UserName}.", " ");
+            }
+        }
 
-		protected async Task EditSp(int SpId)
-		{
-			SpSelected = await servicePartnerClient.GetServicePartnerWithUtenti(int.Parse(servicePId));
-			ShowEditDialog_SP = true;
-		}
+        protected async Task UpdateEnableUtente(string username)
+        {
+            UtenteSelected = ListaUtentiFiltered.Single(x => x.UserName == username);
 
-		protected async Task sendMail(int utenteId)
-		{
-			UtenteSelected = ListaUtenti.Single(x => x.Id == utenteId);
-			UtenteDto UtenteToSendMail = (UtenteDto)await utenteClient.GetUtente(UtenteSelected.UserName);
-			bool isConfirmed = await Dialogs.ConfirmAsync($"{@localizer["InviaMail"]} {UtenteToSendMail.Nome} {UtenteToSendMail.Cognome} {localizer["ResetPassword"]}");
-			if (isConfirmed)
-			{
-				MailRequest mailRequest = new MailRequest()
-				{
-					ToEmail = UtenteToSendMail.UserName,
-					Subject = localizer["RisettaPassword"],
-				};
+            bool isConfirmed = false;
+            if (UtenteSelected.IsAbilitato) 
+                isConfirmed = await Dialogs.ConfirmAsync($"{localizer["ConfermaAbilitazione"]} {localizer["Utente"]}: {UtenteSelected.UserName}", " ");
+            else 
+                isConfirmed = await Dialogs.ConfirmAsync($"{localizer["ConfermaDisabilitazione"]} {localizer["Utente"]}: {UtenteSelected.UserName}", " ");
 
-				await mailClient.sendMail(mailRequest);
-				await Dialogs.AlertAsync($"{@localizer["MailInviata"]} {UtenteToSendMail.Email} {@localizer["ResetPassword"]}");
-			}
-		}
-
-		protected async Task UpdateEnableUtente(int Id)
-		{
-			UtenteDto ut = ListaUtenti_Filtered.Single(x => x.Id == Id);
-			bool isConfirmed = false;
-			if (ut.IsAbilitato) isConfirmed = await Dialogs.ConfirmAsync($"{@localizer["ConfermaModificaUtenteAb"]} {ut.Nome} {ut.Cognome} ?", @localizer["ModificaUtente"]);
-			else isConfirmed = await Dialogs.ConfirmAsync($"{@localizer["ConfermaModificaUtente"]} {ut.Nome} {ut.Cognome} ?", localizer["ModificaUtente"]);
-
-			if (isConfirmed)
-			{
-				try
-				{
-					await utenteClient.UpdateUtente(Id, ut);
-					await CloseAndRefresh();
-				}
-				catch (Exception e)
-				{
-					throw;
-				}
-			}
-			else
-			{
-				//	//fai revert: ^ restituisce lo XOR dei due valori
-				//	//true XOR true = false
-				//	//false XOR true = true
-				ListaUtenti_Filtered.Single(x => x.Id == Id).IsAbilitato ^= true;
-			}
-		}
-
-		public void MyValueChangeHandler(string theUserChoice)
-		{
-			switch (theUserChoice)
-			{
-				case "Tutti":
-					ConStato = StatoUtente.Tutti;
-					break;
-				case "Abilitati":
-					ConStato = StatoUtente.Abilitati;
-					break;
-				case "Disabilitati":
-					ConStato = StatoUtente.Disabilitati;
-					break;
-			}
-		}
-
-		public enum StatoUtente
-		{
-			Tutti = 0,
-			Abilitati,
-			Disabilitati 
-		}
-	}
+            if (isConfirmed)
+            {
+                try
+                {
+                    await utenteClient.UpdateUtente(UtenteSelected);
+                }
+                catch (Exception e)
+                {
+                    throw;
+                }
+            }
+            else
+            {
+                //	//fai revert: ^ restituisce lo XOR dei due valori
+                //	//true XOR true = false
+                //	//false XOR true = true
+                UtenteSelected.IsAbilitato ^= true;
+            }
+        }
+    }
 }

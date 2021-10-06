@@ -1,7 +1,8 @@
 ﻿@page "/processings"
+
 @inject LavorazioneClient httpClient
+@inject CurrentStateProvider StateProvider
 @inject IConfiguration config
-@inject IJSRuntime JSRuntime
 @inject IStringLocalizer<App> localizer
 @attribute [Authorize]
 
@@ -27,13 +28,10 @@
 </div>
 <!--FINE ROW 1 . TITOLI + BUTTON DX-->
 
-
-
 @if (ListaLavorazioni == null)
 {
     @*<p><em>@localizer["Caricamento"]</em></p>*@
     <!--CARICO IL LOADER-->
-
     <div class="k-loader-container k-loader-container-md k-loader-top " style="" data-id="7d13dd9e-e016-4aec-8e1b-5253cd5131d5">
         <div class="k-loader-container-overlay k-overlay-light"></div>
         <div class="k-loader-container-inner ">
@@ -56,9 +54,8 @@ else
             <input class="form-control float-lg-right filtriInput mx-1" @bind-value="SearchText" @bind-value:event="oninput" placeholder=@localizer["CercaLavorazioni"] />
         </div>
     </div><!--FINE BARRA FILTRI-->
-
     <div class="row-3 d-flex justify-content-between flex-wrap flex-md-nowrap  pt-0 pb-4 mb-4">
-        <TelerikGrid Data="@ListaLavorazioniFiltered" Pageable="true" PageSize="@PageSize" Class="table table-striped">
+        <TelerikGrid Data="@ListaLavorazioniFiltered" Pageable="true" PageSize="@PageSize" Sortable="true" Class="table table-striped">
             <GridColumns>
                 <GridColumn Field=@nameof(LavorazioneDto.Id) Title="#" Width="10%" />
                 <GridColumn Field=@nameof(LavorazioneDto.NomeItaliano) Width="70%" Title="@localizer["Descrizione"].Value.ToUpper()" Visible="@(CurrentCulture == "it-IT")" />
@@ -67,7 +64,6 @@ else
                     @{
                         var lavorazione = lav as LavorazioneDto;
                         <GridCommandButton Class=" btnIcon bgBianco white" Command="EditLavorazione" Icon="" ImageUrl="/img/Icons/edit.svg" OnClick="@(() => EditLavorazione(lavorazione.Id))" />
-                      
                     }
                 </GridCommandColumn>
                 <GridCommandColumn Context="lav" Width="3%">
@@ -79,24 +75,23 @@ else
             </GridColumns>
         </TelerikGrid>
     </div>
-        }
+}
 
+<!--DIALOGS-->
+<TelerikWindow Class="modal-app dialogBox" Width="500px" Height="auto" Centered="true" Modal="true" @bind-Visible="ShowAddDialog">
+    <WindowActions>
+        <WindowAction Name="Close" IconClass="k-icon k-i-close text-dark" />
+    </WindowActions>
+    <WindowContent>
+        <div class="dialogForm"><AddLavorazioneDialog OnClose="CloseAndRefresh" OnSave="CloseAndRefresh"></AddLavorazioneDialog></div>
+    </WindowContent>
+</TelerikWindow>
 
-        <!--DIALOGS-->
-        <TelerikWindow Class="modal-app dialogBox" Width="500px" Height="auto" Centered="true" Modal="true" @bind-Visible="ShowAddDialog">
-            <WindowActions>
-                <WindowAction Name="Close" IconClass="k-icon k-i-close text-dark" />
-            </WindowActions>
-            <WindowContent>
-                <div class="dialogForm"><AddLavorazioneDialog OnClose="CloseAndRefresh" OnSave="CloseAndRefresh"></AddLavorazioneDialog></div>
-            </WindowContent>
-        </TelerikWindow>
-
-        <TelerikWindow Class="modal-app dialogBox" Width="500px" Height="auto" Centered="true" Modal="true" @bind-Visible="ShowEditDialog">
-            <WindowActions>
-                <WindowAction Name="Close" IconClass="k-icon k-i-close text-dark" />
-            </WindowActions>
-            <WindowContent>
-                <div class="dialogForm"> <EditLavorazioneDialog LavorazioneToUpdate="LavorazioneSelected" OnClose="CloseAndRefresh" OnSave="CloseAndRefresh" /></div>
-            </WindowContent>
-        </TelerikWindow>
+<TelerikWindow Class="modal-app dialogBox" Width="500px" Height="auto" Centered="true" Modal="true" @bind-Visible="ShowEditDialog">
+    <WindowActions>
+        <WindowAction Name="Close" IconClass="k-icon k-i-close text-dark" />
+    </WindowActions>
+    <WindowContent>
+        <div class="dialogForm"> <EditLavorazioneDialog LavorazioneToUpdate="LavorazioneSelected" OnClose="CloseAndRefresh" OnSave="CloseAndRefresh" /></div>
+    </WindowContent>
+</TelerikWindow>

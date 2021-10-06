@@ -1,7 +1,5 @@
 ﻿using Fondital.Shared.Dto;
 using Microsoft.AspNetCore.Components;
-using Microsoft.AspNetCore.Components.Authorization;
-using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -9,11 +7,9 @@ namespace Fondital.Client.Shared
 {
     public partial class Header
     {
-        [CascadingParameter]
-        private Task<AuthenticationState> AuthStateTask { get; set; }
         bool ViewUserMenu = false;
         public List<MenuItem> MenuItems { get; set; }
-        protected UtenteDto UtenteCorrente { get; set; }
+        public UtenteDto UtenteCorrente { get; set; }
 
         public class MenuItem
         {
@@ -24,39 +20,34 @@ namespace Fondital.Client.Shared
 
         protected override async Task OnInitializedAsync()
         {
-            try
-            {
-                var authState = await AuthStateTask;
-                if (authState.User.Identity.IsAuthenticated)
-                    UtenteCorrente = await utClient.GetUtente(authState.User.Identity.Name);
+            await PopolaUtente();
 
-                MenuItems = new List<MenuItem>()
+            MenuItems = new List<MenuItem>()
             {
-            new MenuItem()
+                new MenuItem()
                 {
-                Section = "",
-                SubSectionList = new List<MenuItem>()
+                    Section = "",
+                    SubSectionList = new List<MenuItem>()
                     {
-                    new MenuItem()
+                        //new MenuItem()
+                        //{
+                        //    Section = @localizer["Impostazioni"],
+                        //    Page = "/profile"
+                        //},
+                        new MenuItem()
                         {
-                        Section = @localizer["Impostazioni"],
-                        Page = "/profile"
-                        },
-                    new MenuItem()
-                        {
-                        Section = @localizer["Esci"],
-                        Page = "/account/logout"
+                            Section = @localizer["Esci"],
+                            Page = "/account/logout"
                         }
                     }
                 }
             };
+        }
 
-                await base.OnInitializedAsync();
-            }
-            catch (Exception e)
-            {
-                throw new Exception("Eccezione header.razor");
-            }
+        public async Task PopolaUtente()
+        {
+            UtenteCorrente = await StateProvider.GetCurrentUser();
+            StateHasChanged();
         }
 
         public void ToggleUserMenu()

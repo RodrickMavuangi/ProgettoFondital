@@ -168,9 +168,6 @@
   <data name="Configurazioni" xml:space="preserve">
     <value>Configurazioni</value>
   </data>
-  <data name="ConfermaModificaLavorazione" xml:space="preserve">
-    <value>Sicuri di voler modificare la lavorazione #</value>
-  </data>
   <data name="ConfigurazioniGenerali" xml:space="preserve">
     <value>Configurazioni Generali</value>
   </data>
@@ -306,12 +303,6 @@
   <data name="CodiceFornitore" xml:space="preserve">
     <value>CODICE FORNITORE</value>
   </data>
-  <data name="ConfermaModificaUtente" xml:space="preserve">
-    <value>Si è Sicuro di volere Disabilitare l'utente</value>
-  </data>
-  <data name="ConfermaModificaUtenteAb" xml:space="preserve">
-    <value>Si è Sicuro di volere Abilitare l'utente</value>
-  </data>
   <data name="Disabilitati" xml:space="preserve">
     <value>Disabilitati</value>
   </data>
@@ -407,7 +398,7 @@ La nuova password deve essere lunga almeno 8 caratteri e contenere minuscole, ma
     <value>Valore</value>
   </data>
   <data name="MailInviata" xml:space="preserve">
-    <value>è stata inviata una mail a </value>
+    <value>Mail inviata con successo all'utente</value>
   </data>
   <data name="Stato" xml:space="preserve">
     <value>Stato</value>
@@ -495,5 +486,23 @@ La nuova password deve essere lunga almeno 8 caratteri e contenere minuscole, ma
   </data>
   <data name="UtenzeDirezione" xml:space="preserve">
     <value>Utenze Direzione</value>
+  </data>
+  <data name="ConfermaAbilitazione" xml:space="preserve">
+    <value>Conferma abilitazione</value>
+  </data>
+  <data name="ConfermaDisabilitazione" xml:space="preserve">
+    <value>Conferma disabilitazione</value>
+  </data>
+  <data name="ResetPassword" xml:space="preserve">
+    <value>Si vuole inviare un'email di Reset Password all'utente</value>
+  </data>
+  <data name="CercaPerServicePartner" xml:space="preserve">
+    <value>Cerca per Service Partner</value>
+  </data>
+  <data name="CercaPerVoceCosto" xml:space="preserve">
+    <value>Cerca per Voce di Costo</value>
+  </data>
+  <data name="CercaPerRaggruppamento" xml:space="preserve">
+    <value>Cerca per Raggruppamento</value>
   </data>
 </root>
