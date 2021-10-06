@@ -27,13 +27,14 @@ namespace Fondital.Server.Controllers
             _mapper = mapper;
         }
 
-        [HttpGet]
-        public IEnumerable<UtenteDto> GetUtenti()
+        [HttpGet("{roleName}")]
+        public IEnumerable<UtenteDto> GetUtenti(string roleName)
         {
-            return _mapper.Map<IEnumerable<UtenteDto>>(_ut.GetAllUtenti().Result);
+            Ruolo ruolo = new() { Name = roleName };
+            return _mapper.Map<IEnumerable<UtenteDto>>(_ut.GetAllUtenti(ruolo).Result);
         }
 
-        [HttpGet("{username}")]
+        [HttpGet("getsingle/{username}")]
         public UtenteDto GetUtenteByUsername(string username)
         {
             try

@@ -14,7 +14,6 @@ namespace Fondital.Data.Configurations
             builder.Property(u => u.Name).IsRequired();
             builder.HasIndex(u => u.Name).IsUnique();
 
-            builder.HasMany(m => m.Utenti).WithMany(s => s.Ruoli);
             builder.ToTable("AspNetRoles");
         }
     }

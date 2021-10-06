@@ -1,5 +1,4 @@
 ﻿using Fondital.Shared;
-using Fondital.Shared.Dto;
 using Fondital.Shared.Models.Auth;
 using Fondital.Shared.Services;
 using System.Collections.Generic;
@@ -16,9 +15,8 @@ namespace Fondital.Services
         }
 
         public async Task<IEnumerable<Ruolo>> GetAll()
-		{
-            return await _unitOfWork.Roles.GetAllAsync();
-		}
-       
+        {
+            return await _unitOfWork.Ruoli.GetAllAsync();
+        }
     }
 }

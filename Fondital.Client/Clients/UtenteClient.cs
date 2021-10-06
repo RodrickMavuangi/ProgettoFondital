@@ -16,11 +16,13 @@ namespace Fondital.Client.Clients
             this.httpClient = httpClient;
         }
 
-        public async Task<IEnumerable<UtenteDto>> GetUtenti() =>
-            await httpClient.GetFromJsonAsync<IEnumerable<UtenteDto>>("utentiControl", JsonSerializerOpts.JsonOpts);
+        public async Task<IEnumerable<UtenteDto>> GetUtenti(string ruolo = "")
+        {
+            return await httpClient.GetFromJsonAsync<IEnumerable<UtenteDto>>($"utentiControl/{ruolo}", JsonSerializerOpts.JsonOpts);
+        }
 
         public async Task<UtenteDto> GetUtente(string username) =>
-            await httpClient.GetFromJsonAsync<UtenteDto>($"utentiControl/{username}", JsonSerializerOpts.JsonOpts);
+            await httpClient.GetFromJsonAsync<UtenteDto>($"utentiControl/getsingle/{username}", JsonSerializerOpts.JsonOpts);
 
         public async Task UpdateUtente(UtenteDto utente)
 		{

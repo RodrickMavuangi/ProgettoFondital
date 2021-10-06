@@ -4,6 +4,7 @@ using Fondital.Shared.Repositories;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Fondital.Repository
@@ -30,9 +31,12 @@ namespace Fondital.Repository
             Db.Entry(utente.ServicePartner).State = EntityState.Unchanged;
         }
 
-        public async Task<IEnumerable<Utente>> GetAllUtentiWithRoles()
+        public async Task<IEnumerable<Utente>> GetAllUtentiWithRoles(Ruolo ruolo)
         {
-                return await Db.Utenti.Include(m => m.Ruoli).ToListAsync(); 
+            if (ruolo != null)
+                return await Db.Utenti.Include(m => m.Ruoli).Where(x => x.Ruoli.Contains(ruolo)).ToListAsync(); 
+            else
+                return await Db.Utenti.Include(m => m.Ruoli).ToListAsync();
         }
     }
 }
