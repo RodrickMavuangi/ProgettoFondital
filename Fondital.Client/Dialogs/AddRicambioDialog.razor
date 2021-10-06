@@ -1,0 +1,31 @@
+﻿@inject IStringLocalizer<App> localizer
+
+<EditForm Model="Ricambio" OnValidSubmit="ConfirmAsync">
+    <DataAnnotationsValidator />
+
+    <div>@ErrorMessage</div>
+
+    <div class="form-field">
+        <label>@localizer["Quantita"]</label>
+        <div>
+            <InputNumber Class="form-control form-control-lg w100" @bind-Value="Ricambio.Quantita" />
+            <ValidationMessage For="() => Ricambio.Quantita" />
+        </div>
+    </div>
+
+    <div class="form-field">
+        <label>@localizer["Costo"]</label>
+        <div>
+            <InputNumber Class="form-control form-control-lg w100" @bind-Value="Ricambio.Costo" />
+            <ValidationMessage For="() => Ricambio.Costo" />
+        </div>
+    </div>
+
+    <div class="form-field">
+        <label>@localizer["Descrizione"]</label>
+        <div>
+            <InputText Class="form-control form-control-lg w100" @bind-Value="Ricambio.Descrizione" />
+            <ValidationMessage For="() => Ricambio.Descrizione" />
+        </div>
+    </div>
+</EditForm>
