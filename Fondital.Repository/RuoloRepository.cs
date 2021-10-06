@@ -1,5 +1,4 @@
 ﻿using Fondital.Data;
-using Fondital.Shared.Dto;
 using Fondital.Shared.Models.Auth;
 using Fondital.Shared.Repositories;
 using Microsoft.EntityFrameworkCore;

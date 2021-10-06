@@ -22,7 +22,6 @@ namespace Fondital.Client.Clients
             {
                 var response = await httpClient.PostAsJsonAsync("MailController", mailRequest, JsonSerializerOpts.JsonOpts);
                 response.EnsureSuccessStatusCode();
-                //var result = await response.Content.ReadFromJsonAsync<Utente>(JsonSerializerOpts.JsonOpts);
             }
             catch (Exception e)
             {
@@ -34,11 +33,10 @@ namespace Fondital.Client.Clients
 		{
 			try
 			{
-				if(utente.ServicePartner.Id != 0)
+				if(utente.ServicePartner != null)
 				{
 					// Utente con ServicePartner come Ruolo
 
-					//utente.Ruoli.Add(new RuoloDto() { Name = "Service Partner" });
 					var response = await httpClient.PostAsJsonAsync("MailController/NewUser", utente, JsonSerializerOpts.JsonOpts);
 					response.EnsureSuccessStatusCode();
 					await _authClient.AssegnaRuolo(utente.UserName, new RuoloDto() { Name = "Service Partner" });
@@ -47,7 +45,6 @@ namespace Fondital.Client.Clients
 				{
 					//Utente con Direzione come Ruolo
 
-					//utente.Ruoli.Add(new RuoloDto() { Name = "Direzione" });
 					var response = await httpClient.PostAsJsonAsync("MailController/NewUser", utente, JsonSerializerOpts.JsonOpts);
 					response.EnsureSuccessStatusCode();
 					await _authClient.AssegnaRuolo(utente.UserName, new RuoloDto() { Name = "Direzione" });

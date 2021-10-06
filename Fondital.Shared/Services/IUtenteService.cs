@@ -6,7 +6,7 @@ namespace Fondital.Shared.Services
 {
     public interface IUtenteService
     {
-        Task<IEnumerable<Utente>> GetAllUtenti();
+        Task<IEnumerable<Utente>> GetAllUtenti(Ruolo ruolo);
         Task<Utente> GetUtenteById(int id);
         Task<Utente> GetUtenteByUsername(string username);
         Task<Utente> CreateUtente(Utente utente);

@@ -1,6 +1,7 @@
 ﻿using Fondital.Shared.Models.Auth;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using System.Collections.Generic;
 
 namespace Fondital.Data.Configurations
 {
@@ -18,7 +19,7 @@ namespace Fondital.Data.Configurations
             builder.Property(u => u.Email).IsRequired();
 
             builder.HasOne(m => m.ServicePartner).WithMany(s => s.Utenti);
-            builder.HasMany(m => m.Ruoli).WithMany(s => s.Utenti);/*.UsingEntity(join => join.ToTable("AspNetUserRoles"))*/ 
+
             builder.ToTable("AspNetUsers");
         }
     }

@@ -1,12 +1,10 @@
 ﻿using Fondital.Data.Configurations;
-using Fondital.Shared.Dto;
 using Fondital.Shared.Models;
 using Fondital.Shared.Models.Auth;
 using IdentityServer4.EntityFramework.Entities;
 using IdentityServer4.EntityFramework.Extensions;
 using IdentityServer4.EntityFramework.Interfaces;
 using IdentityServer4.EntityFramework.Options;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;

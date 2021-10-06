@@ -29,9 +29,9 @@ namespace Fondital.Services
             await _unitOfWork.CommitAsync();
         }
 
-        public async Task<IEnumerable<Utente>> GetAllUtenti()
+        public async Task<IEnumerable<Utente>> GetAllUtenti(Ruolo ruolo)
         {
-            return await _unitOfWork.Utenti.GetAllUtentiWithRoles();
+            return await _unitOfWork.Utenti.GetAllUtentiWithRoles(ruolo);
         }
 
         public async Task<Utente> GetUtenteById(int id)
