@@ -1,7 +1,6 @@
-﻿using Fondital.Shared.Settings;
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Options;
+using Microsoft.Extensions.Configuration;
 using System;
 using System.Net.Http;
 using System.Threading.Tasks;
@@ -16,29 +15,29 @@ namespace Fondital.Server.Controllers
     {
         private readonly Serilog.ILogger _logger;
         private readonly HttpClient _httpClient;
-        private readonly RestClientSettings _restClientSettings;
+        private readonly IConfiguration _config;
 
-        public RestExternalServiceController(Serilog.ILogger logger, HttpClient httpClient, IOptions<RestClientSettings> restClientSettings)
+        public RestExternalServiceController(Serilog.ILogger logger, IConfiguration config, HttpClient httpClient)
         {
             _logger = logger;
+            _config = config;
             _httpClient = httpClient;
-            _restClientSettings = restClientSettings.Value;
         }
 
-        [HttpGet("modelloCaldaia")]
+        [HttpGet("modelloCaldaia/{matricola}")]
         [AllowAnonymous]
-        public async Task<IActionResult> GetServiceCaldaia()
+        public async Task<IActionResult> GetServiceCaldaia(string matricola)
         {
             try
             {
-                _httpClient.BaseAddress = new Uri(_restClientSettings.BaseAddress);
+                _httpClient.BaseAddress = new Uri(_config["RestClientSettings:BaseAddress"]);
                 //_httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-                var response = _httpClient.GetAsync(_restClientSettings.UriModelloCaldaia).Result;
+                var response = await _httpClient.GetAsync($"/getProductById?ID={matricola}");
                 if (!response.IsSuccessStatusCode)
                     return NotFound();
 
                 _logger.Information("Info: {Action} {Object} {ObjectId} effettuato con successo", "GET", "Caldaia", "caldaiaId");
-                return Ok();
+                return Ok(response);
             }
             catch (Exception ex)
             {
@@ -53,13 +52,13 @@ namespace Fondital.Server.Controllers
         {
             try
             {
-                _httpClient.BaseAddress = new Uri(_restClientSettings.BaseAddress);
-                var response = _httpClient.GetAsync(_restClientSettings.UriRicambio).Result;
+                _httpClient.BaseAddress = new Uri(_config["RestClientSettings:BaseAddress"]);
+                var response = _httpClient.GetAsync(_config["RestClientSettings:UriRicambio"]).Result;
                 if (!response.IsSuccessStatusCode)
                     return NotFound();
 
                 _logger.Information("Info: {Action} {Object} {ObjectId} effettuato con successo", "GET", "Ricambio", "ricambioId");
-                return Ok();
+                return Ok(response);
             }
             catch (Exception ex)
             {

@@ -20,12 +20,12 @@ namespace Fondital.Repository
 
         public async Task<List<Rapporto>> GetAllRapporti()
         {
-            return await Db.Rapporti.Include(x => x.Utente).ThenInclude(x => x.ServicePartner).Include(x => x.Cliente).Include(x => x.Caldaia).ToListAsync();
+            return await Db.Rapporti.Include(x => x.Utente).ThenInclude(x => x.ServicePartner).ToListAsync();
         }
 
         public async Task<Rapporto> GetRapportoByIdAsync(int Id)
         {
-            return await Db.Rapporti.Include(x => x.Utente).ThenInclude(x => x.ServicePartner.RagioneSociale).SingleOrDefaultAsync(x => x.Id == Id);
+            return await Db.Rapporti.Include(x => x.Utente).ThenInclude(x => x.ServicePartner).SingleOrDefaultAsync(x => x.Id == Id);
         }
 
         public async Task AddRapporto(Rapporto rapporto)

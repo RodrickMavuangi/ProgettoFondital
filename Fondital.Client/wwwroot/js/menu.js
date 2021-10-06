@@ -47,6 +47,7 @@ function OnClickHandler(item) {
         if (activeAnchor.parentElement.parentElement.parentElement.parentElement.classList.contains('k-menu-popup')) {
             document.querySelector("[aria-haspopup=true]").firstChild.classList.add("bg_active");
             document.querySelector("[aria-haspopup=true]").setAttribute('aria-hasopenmenu', true);
+        } else if (!item.ModifyOnClick) {
         } else {
             document.querySelector("[aria-hasopenmenu=true]").setAttribute('aria-hasopenmenu', false);
         }

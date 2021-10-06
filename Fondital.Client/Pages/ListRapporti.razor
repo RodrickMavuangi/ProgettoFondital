@@ -18,8 +18,8 @@
     <!--FINE TITLE PAGE-->
     <!--ROW BOTTONI-->
     <div class="col-md-7 pb-4 border-bottom pr-0">
-        <div class="col  text-left d-none barraStrumenti "> </div>
-        <div class="col  text-right d-inline-block float-lg-right p-0">
+        <div class="col text-left d-none barraStrumenti" />
+        <div class="col text-right d-inline-block float-lg-right p-0">
             <TelerikButton Class="btn btn-primary btn-verde btn-lg mx-1" OnClick=@(() => NavigationManager.NavigateTo("/reportDetail"))>@Localizer["Inserisci"] @Localizer["Rapporto"]</TelerikButton>
         </div>
     </div>
@@ -47,9 +47,17 @@ else
     <!--BARRA FILTRI-->
     <div class="row-2 d-inline w-100 mb-4  pt-0 pb-4 pt-4 border-bottom barraFiltri">
         <div class="form-group rowFiltri rowFiltriRapportini ">
-            <input class="form-control float-lg-right filtriInput mx-1" @bind-value="SearchBySp" @bind-value:event="oninput" placeholder=@Localizer["ServicePartner"] />
-            <input class="form-control float-lg-right filtriInput mx-1" @bind-value="SearchByStato" @bind-value:event="oninput" placeholder=@Localizer["Stato"] />
-            <input class="form-control float-lg-right filtriInput mx-1" @bind-value="SearchByDate" @bind-value:event="oninput" placeholder=@Localizer["DataDaA"] />
+            @*<input class="form-control float-lg-right filtriInput mx-1" @bind-value="SearchBySp" @bind-value:event="oninput" placeholder=@Localizer["ServicePartner"] />*@
+            <TelerikDropDownList Data="@ListRagioneSociale"
+                                 Class="form-control float-lg-right filtriInput mx-1"
+                                 @bind-Value="SearchBySp" />
+            @*<input class="form-control float-lg-right filtriInput mx-1" @bind-value="SearchByStato" @bind-value:event="oninput" placeholder=@Localizer["Stato"] />*@
+            <TelerikDropDownList Data="@ListStati"
+                                 Class="form-control float-lg-right filtriInput mx-1"
+                                 @bind-Value="SearchByStato" />
+            @*<input class="form-control float-lg-right filtriInput mx-1" @bind-value="SearchByDate" @bind-value:event="oninput" placeholder=@Localizer["DataDaA"] />*@
+            <TelerikDatePicker @bind-Value="SearchByDataFirst" Max="SearchByDataLast.Value" />
+            <TelerikDatePicker @bind-Value="SearchByDataLast" Min="SearchByDataFirst.Value" />
             <input class="form-control float-lg-right filtriInput mx-1" @bind-value="SearchByCliente" @bind-value:event="oninput" placeholder=@Localizer["Cliente"] />
             <input class="form-control float-lg-right filtriInput mx-1" @bind-value="SearchById" @bind-value:event="oninput" placeholder=@Localizer["NumRapporto"] />
             <input class="form-control float-lg-right filtriInput mx-1" @bind-value="SearchByMatricola" @bind-value:event="oninput" placeholder=@Localizer["Matricola"] />

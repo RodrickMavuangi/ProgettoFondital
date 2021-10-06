@@ -21,7 +21,6 @@ namespace Fondital.Client.AuthPages
 
         protected async Task ForgotPw()
         {
-
             try
             {
                 if (!string.IsNullOrWhiteSpace(ForgotForm.Email))
