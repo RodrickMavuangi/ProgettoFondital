@@ -7,7 +7,9 @@ namespace Fondital.Client.Shared
 {
     public partial class NavMenu
     {
-        List<MenuItem> MenuItems { get; set; }
+        List<MenuItem> MenuAnagrafiche { get; set; }
+        List<MenuItem> MenuRapporti { get; set; }
+        List<MenuItem> MenuConfigurazioni { get; set; }
         static bool IsInternalPage(string url)
         {
             if (string.IsNullOrEmpty(url)) return false;
@@ -28,7 +30,7 @@ namespace Fondital.Client.Shared
 
         protected override void OnInitialized()
         {
-            MenuItems = new List<MenuItem>()
+            MenuAnagrafiche = new List<MenuItem>()
             {
                 new MenuItem()
                 {
@@ -67,13 +69,21 @@ namespace Fondital.Client.Shared
                             Url = "utenzedirezione"
                         }
                     }
-                },
+                }
+            };
+
+            MenuRapporti = new List<MenuItem>()
+            {
                 new MenuItem()
                 {
                     ModifyOnClick = false,
                     Text = localizer["GestioneRapporti"],
                     Url = "reports"
-                },
+                }
+            };
+
+            MenuConfigurazioni = new List<MenuItem>()
+            {
                 new MenuItem()
                 {
                     ModifyOnClick = false,

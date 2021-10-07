@@ -505,4 +505,7 @@ La nuova password deve essere lunga almeno 8 caratteri e contenere minuscole, ma
   <data name="CercaPerRaggruppamento" xml:space="preserve">
     <value>Cerca per Raggruppamento</value>
   </data>
+  <data name="UtenteDisabilitato" xml:space="preserve">
+    <value>L'utente è disabilitato, contattare la Direzione.</value>
+  </data>
 </root>

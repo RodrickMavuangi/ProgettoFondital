@@ -514,4 +514,7 @@ La nuova password deve essere lunga almeno 8 caratteri e contenere minuscole, ma
   <data name="CercaPerVoceCosto" xml:space="preserve">
     <value>Cerca per Voce di Costo RU</value>
   </data>
+  <data name="UtenteDisabilitato" xml:space="preserve">
+    <value>L'utente è disabilitato, contattare la Direzione. RU</value>
+  </data>
 </root>

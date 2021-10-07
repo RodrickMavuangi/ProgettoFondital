@@ -13,7 +13,7 @@ namespace Fondital.Server.Controllers
 {
     [ApiController]
     [Route("rapportiControl")]
-    [Authorize]
+    [Authorize(Roles = "Direzione,Service Partner")]
     public class RapportoController : ControllerBase
     {
         private readonly Serilog.ILogger _logger;

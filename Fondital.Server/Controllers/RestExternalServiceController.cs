@@ -10,7 +10,7 @@ namespace Fondital.Server.Controllers
 {
     [ApiController]
     [Route("externalServiceController")]
-    [Authorize]
+    [Authorize(Roles = "Direzione,Service Partner")]
     public class RestExternalServiceController : ControllerBase
     {
         private readonly Serilog.ILogger _logger;
@@ -25,13 +25,11 @@ namespace Fondital.Server.Controllers
         }
 
         [HttpGet("modelloCaldaia/{matricola}")]
-        [AllowAnonymous]
         public async Task<IActionResult> GetServiceCaldaia(string matricola)
         {
             try
             {
                 _httpClient.BaseAddress = new Uri(_config["RestClientSettings:BaseAddress"]);
-                //_httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
                 var response = await _httpClient.GetAsync($"/getProductById?ID={matricola}");
                 if (!response.IsSuccessStatusCode)
                     return NotFound();
@@ -47,7 +45,6 @@ namespace Fondital.Server.Controllers
         }
 
         [HttpGet("pezzoRicambio")]
-        [AllowAnonymous]
         public async Task<IActionResult> GetServiceRicambio()
         {
             try

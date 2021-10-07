@@ -3,6 +3,7 @@ using Fondital.Shared.Dto;
 using Fondital.Shared.Models.Auth;
 using Fondital.Shared.Services;
 using Fondital.Shared.Settings;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.WebUtilities;
@@ -16,6 +17,7 @@ namespace Fondital.Server.Controllers
 {
     [Route("MailController")]
     [ApiController]
+    [Authorize(Roles = "Direzione")]
     public class MailController : ControllerBase
     {
         private readonly UserManager<Utente> _userManager;
@@ -56,7 +58,7 @@ namespace Fondital.Server.Controllers
         }
 
         [HttpPost("NewUser")]
-        public async Task<IActionResult> sendMailForNewUser([FromBody] UtenteDto utenteDto)
+        public async Task<IActionResult> SendMailForNewUser([FromBody] UtenteDto utenteDto)
         {
             Utente utente = _mapper.Map<Utente>(utenteDto);
             try

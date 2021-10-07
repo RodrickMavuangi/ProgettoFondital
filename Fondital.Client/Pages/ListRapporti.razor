@@ -56,8 +56,8 @@ else
                                  Class="form-control float-lg-right filtriInput mx-1"
                                  @bind-Value="SearchByStato" />
             @*<input class="form-control float-lg-right filtriInput mx-1" @bind-value="SearchByDate" @bind-value:event="oninput" placeholder=@Localizer["DataDaA"] />*@
-            <TelerikDatePicker @bind-Value="SearchByDataFirst" Max="SearchByDataLast.Value" />
-            <TelerikDatePicker @bind-Value="SearchByDataLast" Min="SearchByDataFirst.Value" />
+            <TelerikDatePicker @bind-Value="SearchByDataFirst" />
+            <TelerikDatePicker @bind-Value="SearchByDataLast" />
             <input class="form-control float-lg-right filtriInput mx-1" @bind-value="SearchByCliente" @bind-value:event="oninput" placeholder=@Localizer["Cliente"] />
             <input class="form-control float-lg-right filtriInput mx-1" @bind-value="SearchById" @bind-value:event="oninput" placeholder=@Localizer["NumRapporto"] />
             <input class="form-control float-lg-right filtriInput mx-1" @bind-value="SearchByMatricola" @bind-value:event="oninput" placeholder=@Localizer["Matricola"] />
@@ -69,7 +69,7 @@ else
     </div>
     <!--FINE BARRA FILTRI-->
     <div class="row-3 d-flex justify-content-between flex-wrap flex-md-nowrap pt-0 pb-4 mb-4">
-        <TelerikGrid Data="@ListaRapportiFiltered" Class="table table-striped">
+        <TelerikGrid Data="@ListaRapportiFiltered" Class="table table-striped" PageSize=@PageSize Pageable="true">
             <GridColumns>
                 <GridColumn Field=Utente.ServicePartner.RagioneSociale Width="15%" Title=@Localizer["ServicePartner"].Value.ToUpper() />
                 <GridColumn Field=@nameof(RapportoDto.Stato) Width="15%" Title=@Localizer["Stato"].Value.ToUpper() />

@@ -13,7 +13,7 @@ namespace Fondital.Server.Controllers
 {
     [ApiController]
     [Route("utentiControl")]
-    [Authorize]
+    [Authorize(Roles = "Direzione,Service Partner")]
     public class UtenteController : ControllerBase
     {
         private readonly Serilog.ILogger _logger;
@@ -28,6 +28,7 @@ namespace Fondital.Server.Controllers
         }
 
         [HttpGet("{roleName}")]
+        [Authorize(Roles = "Direzione")]
         public IEnumerable<UtenteDto> GetUtenti(string roleName)
         {
             Ruolo ruolo = new() { Name = roleName };
@@ -49,6 +50,7 @@ namespace Fondital.Server.Controllers
         }
 
         [HttpPut("update")]
+        [Authorize(Roles = "Direzione")]
         public async Task<IActionResult> UpdateUtente([FromBody] UtenteDto utenteDtoToUpdate)
         {
             Utente utenteToUpdate = _mapper.Map<Utente>(utenteDtoToUpdate);
