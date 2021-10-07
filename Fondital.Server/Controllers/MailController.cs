@@ -66,11 +66,13 @@ namespace Fondital.Server.Controllers
             Utente utente = _mapper.Map<Utente>(utenteDto);
             try
             {
+                //brutto workaround per mettere una pezza alla gestione del tracking di EF Core che si perde dopo il mapping di Automapper
                 var sp = utente.ServicePartner;
                 utente.ServicePartner = null;
                 var result = await _userManager.CreateAsync(utente);
                 utente.ServicePartner = sp;
                 await _utService.UpdateUtente(utente.UserName, utente);
+
                 var user = await _userManager.FindByEmailAsync(utente.Email);
 
                 var code = await _userManager.GeneratePasswordResetTokenAsync(utente);
