@@ -64,7 +64,7 @@ else
     <!--FINE BARRA FILTRI-->
 
     <!--LISTA-->
-    <TelerikGrid Data="@(UtentiDirezione)"
+    <TelerikGrid Data="@(ListaUtDirezioneFiltered)"
                  Pageable="true"
                  PageSize="PageSize"
                  Class="table table-striped"
@@ -100,7 +100,7 @@ else
         <WindowAction Name="Close" IconClass="k-icon k-i-close text-dark" />
     </WindowActions>
     <WindowContent>
-        <EditUserDialog UtenteToUpdate="UtenteSelected" OnClose="CloseAndRefresh" OnSave="CloseAndRefresh" />
+        <EditUtenteDialog UtenteToUpdate="UtenteSelected" OnClose="CloseAndRefresh" OnSave="CloseAndRefresh" />
     </WindowContent>
 </TelerikWindow>
 
@@ -109,6 +109,6 @@ else
         <WindowAction Name="Close" IconClass="k-icon k-i-close text-dark" />
     </WindowActions>
     <WindowContent>
-        <AddUserDialog SPToUpdate="SpSelected" OnClose="CloseAndRefresh" OnSave="CloseAndRefresh" />
+        <AddUtenteDialog SP=@null OnClose="CloseAndRefresh" OnSave="CloseAndRefresh" />
     </WindowContent>
 </TelerikWindow>
