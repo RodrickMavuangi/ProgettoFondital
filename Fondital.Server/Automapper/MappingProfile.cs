@@ -24,8 +24,12 @@ namespace Fondital.Server.Automapper
             CreateMap<Listino, ListinoDto>();
             CreateMap<ListinoDto, Listino>();
 
-            CreateMap<Utente, UtenteDto>();
-            CreateMap<UtenteDto, Utente>();
+            CreateMap<Utente, UtenteDto>().ForMember(
+                dest => dest.ServicePartner,
+                opt => opt.MapFrom(src => src.ServicePartner));
+            CreateMap<UtenteDto, Utente>().ForMember(
+                dest => dest.ServicePartner,
+                opt => opt.MapFrom(src => src.ServicePartner));
 
             CreateMap<Ruolo, RuoloDto>();
             CreateMap<RuoloDto, Ruolo>();
