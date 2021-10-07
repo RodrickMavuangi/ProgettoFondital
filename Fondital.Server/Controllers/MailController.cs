@@ -25,14 +25,16 @@ namespace Fondital.Server.Controllers
         private readonly IMailService _mailService;
         private readonly JwtSettings _jwtSettings;
         private readonly IMapper _mapper;
+        private readonly IUtenteService _utService;
 
-        public MailController(Serilog.ILogger logger, UserManager<Utente> userManager, IMailService mailService, IOptionsSnapshot<JwtSettings> jwtSettings, IMapper mapper)
+        public MailController(Serilog.ILogger logger, UserManager<Utente> userManager, IMailService mailService, IOptionsSnapshot<JwtSettings> jwtSettings, IMapper mapper, IUtenteService utService)
         {
             _userManager = userManager;
             _logger = logger;
             _mailService = mailService;
             _jwtSettings = jwtSettings.Value;
             _mapper = mapper;
+            _utService = utService;
         }
 
         [HttpPost]
@@ -64,7 +66,11 @@ namespace Fondital.Server.Controllers
             Utente utente = _mapper.Map<Utente>(utenteDto);
             try
             {
+                var sp = utente.ServicePartner;
+                utente.ServicePartner = null;
                 var result = await _userManager.CreateAsync(utente);
+                utente.ServicePartner = sp;
+                await _utService.UpdateUtente(utente.UserName, utente);
                 var user = await _userManager.FindByEmailAsync(utente.Email);
 
                 var code = await _userManager.GeneratePasswordResetTokenAsync(utente);
