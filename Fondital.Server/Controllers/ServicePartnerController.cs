@@ -14,7 +14,7 @@ namespace Fondital.Server.Controllers
 {
     [ApiController]
     [Route("servicePartnersControl")]
-    [Authorize]
+    [Authorize(Roles = "Direzione,Service Partner")]
     public class ServicePartnerController : ControllerBase
     {
         private readonly Serilog.ILogger _logger;
@@ -29,12 +29,14 @@ namespace Fondital.Server.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = "Direzione")]
         public async Task<IEnumerable<ServicePartnerDto>> Get()
         {
             return _mapper.Map<IEnumerable<ServicePartnerDto>>(await _spService.GetAllServicePartners());
         }
 
         [HttpGet("utenti/{id}")]
+        [Authorize(Roles = "Direzione")]
         public async Task<ServicePartnerDto> GetWithUtenti(int id)
         {
             try
@@ -63,6 +65,7 @@ namespace Fondital.Server.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "Direzione")]
         public async Task<IActionResult> CreateServicePartner([FromBody] ServicePartnerDto servicePartnerDto)
         {
             ServicePartner servicePartner = _mapper.Map<ServicePartner>(servicePartnerDto);
@@ -94,6 +97,7 @@ namespace Fondital.Server.Controllers
         }
 
         [HttpPut("{id}")]
+        [Authorize(Roles = "Direzione")]
         public async Task<IActionResult> UpdateServicePartner(int id, [FromBody] ServicePartnerDto spDtoToUpdate)
         {
             ServicePartner spToUpdate = _mapper.Map<ServicePartner>(spDtoToUpdate);

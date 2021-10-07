@@ -11,7 +11,7 @@ namespace Fondital.Server.Controllers
 {
     [ApiController]
     [Route("configurazioniControl")]
-    [Authorize]
+    [Authorize(Roles = "Direzione")]
     public class ConfigurazioneController : ControllerBase
     {
         private readonly Serilog.ILogger _logger;

@@ -7,7 +7,7 @@ namespace Fondital.Shared.Repositories
     public interface IUtenteRepository : IRepository<Utente>
     {
         Task<Utente> GetByUsernameAsync(string username);
-        Task<IEnumerable<Utente>> GetAllUtentiWithRoles(Ruolo ruolo);
+        Task<IEnumerable<Utente>> GetAllUtenti(bool? isDirezione);
         Task CreateUtente(Utente utente);
     }
 }

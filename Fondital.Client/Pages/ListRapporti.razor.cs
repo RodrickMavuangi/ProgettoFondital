@@ -13,7 +13,7 @@ namespace Fondital.Client.Pages
         private List<RapportoDto> ListaRapporti { get; set; }
         private List<string> ListRagioneSociale { get; set; } = new();
         private static IEnumerable<string> ListStati { get => EnumExtensions.GetEnumNames<StatoRapporto>(); }
-        private int PageSize { get; set; } = 10;
+        private int PageSize { get; set; }
         private string SearchBySp { get; set; } = "";
         private string SearchByStato { get; set; } = "";
         private DateTime? SearchByDataFirst { get; set; }
@@ -24,31 +24,11 @@ namespace Fondital.Client.Pages
         private string SearchByTelefono { get; set; } = "";
         private string SearchByEmail { get; set; } = "";
 
-        protected bool ShowAddDialog { get; set; } = false;
-
         protected override async Task OnInitializedAsync()
         {
             PageSize = Convert.ToInt32(Config["PageSize"]);
-            await RefreshRapporti();
-        }
-
-        protected async Task CloseAndRefresh()
-        {
-            ShowAddDialog = false;
-            await RefreshRapporti();
-        }
-
-        protected void PopulateSPFilter()
-        {
-            ListRagioneSociale.Clear();
+            ListaRapporti = (List<RapportoDto>)await HttpClient.GetAllRapporti();
             ListRagioneSociale = ListaRapporti.Select(x => x.Utente.ServicePartner.RagioneSociale).Distinct().ToList();
-            /*
-            foreach (RapportoDto rapporto in ListaRapporti)
-            {
-                ListRagioneSociale.Add(rapporto.Utente.ServicePartner.RagioneSociale);
-            }
-            ListRagioneSociale = ListRagioneSociale.Distinct().ToList();
-            */
         }
 
         public List<RapportoDto> ListaRapportiFiltered => ListaRapporti
@@ -62,13 +42,6 @@ namespace Fondital.Client.Pages
                      && x.Cliente.NumTelefono.ToString().Contains(SearchByTelefono, StringComparison.InvariantCultureIgnoreCase)
                      && x.Cliente.Email.Contains(SearchByEmail, StringComparison.InvariantCultureIgnoreCase)
             ).ToList();
-
-        protected async Task RefreshRapporti()
-        {
-            ListaRapporti = (List<RapportoDto>)await HttpClient.GetAllRapporti();
-            PopulateSPFilter();
-            StateHasChanged();
-        }
 
         protected void ViewRapporto(int rapportoId)
         {

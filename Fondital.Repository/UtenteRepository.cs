@@ -31,12 +31,14 @@ namespace Fondital.Repository
             Db.Entry(utente.ServicePartner).State = EntityState.Unchanged;
         }
 
-        public async Task<IEnumerable<Utente>> GetAllUtentiWithRoles(Ruolo ruolo)
+        public async Task<IEnumerable<Utente>> GetAllUtenti(bool? isDirezione)
         {
-            if (ruolo != null)
-                return await Db.Utenti.Include(m => m.Ruoli).Where(x => x.Ruoli.Contains(ruolo)).ToListAsync(); 
+            if (isDirezione == true)
+                return await Db.Utenti.Where(x => x.ServicePartner == null).ToListAsync(); 
+            else if (isDirezione == false)
+                return await Db.Utenti.Where(x => x.ServicePartner != null).ToListAsync();
             else
-                return await Db.Utenti.Include(m => m.Ruoli).ToListAsync();
+                return await Db.Utenti.ToListAsync();
         }
     }
 }

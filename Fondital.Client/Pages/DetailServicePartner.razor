@@ -5,7 +5,7 @@
 @inject UtenteClient utenteClient
 @inject ServicePartnerClient servicePartnerClient
 @inject IConfiguration config
-@attribute [Authorize]
+@attribute [Authorize(Roles = "Direzione")]
 
 <div class="row-1 d-flex justify-content-between flex-wrap flex-md-nowrap  pt-0 fit-content">
     <!--TITOLO PAGINA-->
