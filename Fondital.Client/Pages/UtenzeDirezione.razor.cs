@@ -43,7 +43,7 @@ namespace Fondital.Client.Pages
 
         protected async Task RefreshUtenti()
         {
-            UtentiDirezione = (List<UtenteDto>)await utenteClient.GetUtenti("Direzione");
+            UtentiDirezione = (List<UtenteDto>)await utenteClient.GetUtenti(true);
             StateHasChanged();
         }
 

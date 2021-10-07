@@ -17,7 +17,7 @@ namespace Fondital.Server.Controllers
 {
     [Route("MailController")]
     [ApiController]
-    [Authorize(Roles = "Direzione")]
+    [Authorize(Roles = "Direzione,Service Partner")]
     public class MailController : ControllerBase
     {
         private readonly UserManager<Utente> _userManager;
@@ -58,6 +58,7 @@ namespace Fondital.Server.Controllers
         }
 
         [HttpPost("NewUser")]
+        [Authorize(Roles = "Direzione")]
         public async Task<IActionResult> SendMailForNewUser([FromBody] UtenteDto utenteDto)
         {
             Utente utente = _mapper.Map<Utente>(utenteDto);

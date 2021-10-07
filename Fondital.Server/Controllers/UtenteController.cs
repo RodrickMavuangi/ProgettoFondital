@@ -27,12 +27,11 @@ namespace Fondital.Server.Controllers
             _mapper = mapper;
         }
 
-        [HttpGet("{roleName}")]
+        [HttpGet]
         [Authorize(Roles = "Direzione")]
-        public IEnumerable<UtenteDto> GetUtenti(string roleName)
+        public IEnumerable<UtenteDto> GetUtenti([FromQuery]bool? isDirezione)
         {
-            Ruolo ruolo = new() { Name = roleName };
-            return _mapper.Map<IEnumerable<UtenteDto>>(_ut.GetAllUtenti(ruolo).Result);
+            return _mapper.Map<IEnumerable<UtenteDto>>(_ut.GetAllUtenti(isDirezione).Result);
         }
 
         [HttpGet("getsingle/{username}")]
