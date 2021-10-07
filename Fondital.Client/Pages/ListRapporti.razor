@@ -56,8 +56,8 @@ else
                                  Class="form-control float-lg-right filtriInput mx-1"
                                  @bind-Value="SearchByStato" />
             @*<input class="form-control float-lg-right filtriInput mx-1" @bind-value="SearchByDate" @bind-value:event="oninput" placeholder=@Localizer["DataDaA"] />*@
-            <TelerikDatePicker @bind-Value="SearchByDataFirst" />
-            <TelerikDatePicker @bind-Value="SearchByDataLast" />
+            <TelerikDatePicker @bind-Value="SearchByDataDa" Min="@(DateTime.ParseExact("20211001", "yyyyMMdd", null))" Max="SearchByDataA" />
+            <TelerikDatePicker @bind-Value="SearchByDataA" Min="SearchByDataDa" Max="DateTime.Now" />
             <input class="form-control float-lg-right filtriInput mx-1" @bind-value="SearchByCliente" @bind-value:event="oninput" placeholder=@Localizer["Cliente"] />
             <input class="form-control float-lg-right filtriInput mx-1" @bind-value="SearchById" @bind-value:event="oninput" placeholder=@Localizer["NumRapporto"] />
             <input class="form-control float-lg-right filtriInput mx-1" @bind-value="SearchByMatricola" @bind-value:event="oninput" placeholder=@Localizer["Matricola"] />
@@ -73,7 +73,7 @@ else
             <GridColumns>
                 <GridColumn Field=Utente.ServicePartner.RagioneSociale Width="15%" Title=@Localizer["ServicePartner"].Value.ToUpper() />
                 <GridColumn Field=@nameof(RapportoDto.Stato) Width="15%" Title=@Localizer["Stato"].Value.ToUpper() />
-                <GridColumn Field=@nameof(RapportoDto.DataRapporto) Width="15%" Title=@Localizer["Data"].Value.ToUpper() />
+                <GridColumn Field=@nameof(RapportoDto.DataRapporto) DisplayFormat="{0:dd/MM/yyyy}" Width="15%" Title=@Localizer["Data"].Value.ToUpper() />
                 <GridColumn Field=Cliente.FullName Width="15%" Title=@Localizer["Cliente"].Value.ToUpper() />
                 <GridColumn Field=@nameof(RapportoDto.Id) Width="10%" Title=@Localizer["NumRapporto"].Value.ToUpper() />
                 <GridColumn Field=Caldaia.Matricola Width="15%" Title=@Localizer["Matricola"].Value.ToUpper() />
