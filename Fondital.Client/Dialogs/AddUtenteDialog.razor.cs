@@ -29,7 +29,7 @@ namespace Fondital.Client.Dialogs
                 await httpClient.sendMailForNewUser(NuovoUtente);
                 isSubmitting = false;
                 await OnSave.InvokeAsync();
-                await Dialogs.ConfirmAsync($"{@localizer["MailInviata"]} {NuovoUtente.Nome} {NuovoUtente.Cognome} {localizer["SettaPassword"]}");
+                await Dialogs.ConfirmAsync($"{@localizer["MailInviata"]} {NuovoUtente.Nome} {NuovoUtente.Cognome}.", " ");
             }
             catch (Exception ex)
             {

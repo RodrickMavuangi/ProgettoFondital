@@ -159,16 +159,7 @@ namespace Fondital.Server.Controllers
                 if (!await _roleManager.RoleExistsAsync(ruolo.Name))
                 {
                     Ruolo r = new Ruolo() { Name = ruolo.Name };
-                    r.Utenti.Add(user);
                     res = await _roleManager.CreateAsync(r);
-                    if (!res.Succeeded) BadRequest(res.Errors);
-                }
-                else
-                {
-                    // Aggiorna la lista di utente del ruolo
-                    Ruolo r = await _roleManager.FindByNameAsync(ruolo.Name);
-                    r.Utenti.Add(user);
-                    res = await _roleManager.UpdateAsync(r);
                     if (!res.Succeeded) BadRequest(res.Errors);
                 }
 
@@ -178,7 +169,7 @@ namespace Fondital.Server.Controllers
             catch (Exception ex)
             {
                 _logger.Error("Eccezione {Action} {Object} {ObjectId}: {ExceptionMessage}", "Assegna", "Ruolo", ruolo.Name, ex.Message);
-                throw;
+                return BadRequest(ex.Message);
             }
         }
 

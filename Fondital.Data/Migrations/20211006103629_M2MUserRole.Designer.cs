@@ -620,20 +620,20 @@ namespace Fondital.Data.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
-            modelBuilder.Entity("RuoloUtente", b =>
-                {
-                    b.Property<int>("RuoliId")
-                        .HasColumnType("int");
+            //modelBuilder.Entity("RuoloUtente", b =>
+            //    {
+            //        b.Property<int>("RuoliId")
+            //            .HasColumnType("int");
 
-                    b.Property<int>("UtentiId")
-                        .HasColumnType("int");
+            //        b.Property<int>("UtentiId")
+            //            .HasColumnType("int");
 
-                    b.HasKey("RuoliId", "UtentiId");
+            //        b.HasKey("RuoliId", "UtentiId");
 
-                    b.HasIndex("UtentiId");
+            //        b.HasIndex("UtentiId");
 
-                    b.ToTable("RuoloUtente");
-                });
+            //        b.ToTable("RuoloUtente");
+            //    });
 
             modelBuilder.Entity("Fondital.Shared.Models.Auth.Utente", b =>
                 {
@@ -853,20 +853,20 @@ namespace Fondital.Data.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("RuoloUtente", b =>
-                {
-                    b.HasOne("Fondital.Shared.Models.Auth.Ruolo", null)
-                        .WithMany()
-                        .HasForeignKey("RuoliId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
+            //modelBuilder.Entity("RuoloUtente", b =>
+            //    {
+            //        b.HasOne("Fondital.Shared.Models.Auth.Ruolo", null)
+            //            .WithMany()
+            //            .HasForeignKey("RuoliId")
+            //            .OnDelete(DeleteBehavior.Restrict)
+            //            .IsRequired();
 
-                    b.HasOne("Fondital.Shared.Models.Auth.Utente", null)
-                        .WithMany()
-                        .HasForeignKey("UtentiId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-                });
+            //        b.HasOne("Fondital.Shared.Models.Auth.Utente", null)
+            //            .WithMany()
+            //            .HasForeignKey("UtentiId")
+            //            .OnDelete(DeleteBehavior.Restrict)
+            //            .IsRequired();
+            //    });
 
             modelBuilder.Entity("Fondital.Shared.Models.Auth.Utente", b =>
                 {

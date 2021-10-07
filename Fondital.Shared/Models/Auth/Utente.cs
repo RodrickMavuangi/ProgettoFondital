@@ -14,6 +14,6 @@ namespace Fondital.Shared.Models.Auth
         public DateTime Pw_LastChanged { get; set; } = DateTime.Now;
         public bool Pw_MustChange { get; set; } = true;
         public List<Rapporto> Rapporti { get; set; } = new List<Rapporto>();
-        public List<Ruolo> Ruoli { get; set; } = new List<Ruolo>();
+        //public List<Ruolo> Ruoli { get; set; } = new List<Ruolo>();
     }
 }
