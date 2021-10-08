@@ -11,7 +11,7 @@ namespace Fondital.Shared.Models
         public DateTime? DataMontaggio { get; set; }
         public DateTime? DataAvvio { get; set; }
         public string TecnicoPrimoAvvio { get; set; }
-        public int NumCertificatoTecnico { get; set; }
+        public int? NumCertificatoTecnico { get; set; }
         public string DittaPrimoAvvio { get; set; }
     }
 }

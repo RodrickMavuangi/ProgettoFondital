@@ -17,12 +17,16 @@
     </div>
     <!--FINE TITLE PAGE-->
     <!--ROW BOTTONI-->
-    <div class="col-md-7 pb-4 border-bottom pr-0">
-        <div class="col text-left d-none barraStrumenti" />
-        <div class="col text-right d-inline-block float-lg-right p-0">
-            <TelerikButton Class="btn btn-primary btn-verde btn-lg mx-1" OnClick=@(() => NavigationManager.NavigateTo("/reportDetail"))>@Localizer["Inserisci"] @Localizer["Rapporto"]</TelerikButton>
-        </div>
-    </div>
+    <AuthorizeView Roles="Service Partner">
+        <Authorized>
+            <div class="col-md-7 pb-4 border-bottom pr-0">
+                <div class="col text-left d-none barraStrumenti" />
+                <div class="col text-right d-inline-block float-lg-right p-0">
+                    <TelerikButton Class="btn btn-primary btn-verde btn-lg mx-1" OnClick=@(() => NavigationManager.NavigateTo("/reportDetail"))>@Localizer["Inserisci"] @Localizer["Rapporto"]</TelerikButton>
+                </div>
+            </div>
+        </Authorized>
+    </AuthorizeView>
     <!--FINE BUTTON TOP DX-->
 </div>
 <!--FINE ROW 1 . TITOLI + BUTTON DX-->
