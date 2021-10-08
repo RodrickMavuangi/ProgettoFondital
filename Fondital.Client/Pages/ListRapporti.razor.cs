@@ -34,13 +34,13 @@ namespace Fondital.Client.Pages
         public List<RapportoDto> ListaRapportiFiltered => ListaRapporti
             .Where(x => x.Utente.ServicePartner.RagioneSociale.Contains(SearchBySp, StringComparison.InvariantCultureIgnoreCase)
                      && x.Stato.ToString().Contains(SearchByStato, StringComparison.InvariantCultureIgnoreCase)
-                     && x.DataRapporto.Value.Date >= SearchByDataDa.Date
-                     && x.DataRapporto.Value.Date <= SearchByDataA.Date
-                     && (x.Cliente.Nome + " " + x.Cliente.Cognome).Contains(SearchByCliente, StringComparison.InvariantCultureIgnoreCase)
+                     && x.DataRapporto.Date >= SearchByDataDa.Date
+                     && x.DataRapporto.Date <= SearchByDataA.Date
+                     && ((x.Cliente.Nome ?? "") + " " + (x.Cliente.Cognome ?? "")).Contains(SearchByCliente, StringComparison.InvariantCultureIgnoreCase)
                      && x.Id.ToString().Contains(SearchById, StringComparison.InvariantCultureIgnoreCase)
-                     && x.Caldaia.Matricola.Contains(SearchByMatricola, StringComparison.InvariantCultureIgnoreCase)
-                     && x.Cliente.NumTelefono.ToString().Contains(SearchByTelefono, StringComparison.InvariantCultureIgnoreCase)
-                     && x.Cliente.Email.Contains(SearchByEmail, StringComparison.InvariantCultureIgnoreCase)
+                     && (x.Caldaia.Matricola ?? "").Contains(SearchByMatricola, StringComparison.InvariantCultureIgnoreCase)
+                     && (x.Cliente.NumTelefono ?? "").Contains(SearchByTelefono, StringComparison.InvariantCultureIgnoreCase)
+                     && (x.Cliente.Email ?? "").Contains(SearchByEmail, StringComparison.InvariantCultureIgnoreCase)
             ).ToList();
 
         protected void ViewRapporto(int rapportoId)

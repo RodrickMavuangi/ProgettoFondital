@@ -48,7 +48,7 @@ namespace Fondital.Server.Controllers
         }
 
         [HttpPost("update/{rapportoId}")]
-        public async Task UpdateRapporto([FromBody] RapportoDto rapportoDto, int rapportoId)
+        public async Task<IActionResult> UpdateRapporto([FromBody] RapportoDto rapportoDto, int rapportoId)
         {
             Rapporto rapportoToUpdate = _mapper.Map<Rapporto>(rapportoDto);
 
@@ -56,27 +56,30 @@ namespace Fondital.Server.Controllers
             {
                 await _rapportoService.UpdateRapporto(rapportoId, rapportoToUpdate);
                 _logger.Information("Info: {Action} {Object} {ObjectId} effettuato con successo", "UPDATE", "Rapporto", rapportoId);
+                return Ok();
             }
             catch (Exception ex)
             {
                 _logger.Error("Eccezione {Action} {Object} {ObjectId}: {ExceptionMessage}", "UPDATE", "Rapporto", rapportoId, ex.Message);
-                throw;
+                return BadRequest($"{ex.Message} - {ex.InnerException?.Message}");
             }
         }
 
         [HttpPost]
-        public async Task CreateRapporto([FromBody] RapportoDto rapportoDto)
+        public async Task<IActionResult> CreateRapporto([FromBody] RapportoDto rapportoDto)
         {
             try
             {
                 Rapporto newRapporto = _mapper.Map<Rapporto>(rapportoDto);
                 int rapportoId = await _rapportoService.AddRapporto(newRapporto);
                 _logger.Information("Info: {Action} {Object} {ObjectId} effettuato con successo", "CREATE", "Rapporto", rapportoId);
+
+                return Ok(rapportoId);
             }
             catch (Exception ex)
             {
                 _logger.Error("Eccezione {Action} {Object}: {ExceptionMessage}", "CREATE", "Rapporto", ex.Message);
-                throw;
+                return BadRequest(ex.Message);
             }
         }
     }
