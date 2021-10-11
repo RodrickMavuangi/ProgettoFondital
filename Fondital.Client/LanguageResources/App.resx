@@ -493,4 +493,13 @@ La nuova password deve essere lunga almeno 8 caratteri e contenere minuscole, ma
   <data name="ConfermaDisabilitazione" xml:space="preserve">
     <value>Si è sicuri di voler disabilitare l'elemento</value>
   </data>
+  <data name="Id" xml:space="preserve">
+    <value>Id</value>
+  </data>
+  <data name="IdFornitore" xml:space="preserve">
+    <value>Id Fornitore</value>
+  </data>
+  <data name="SelezionaElemento" xml:space="preserve">
+    <value>Seleziona Elemento</value>
+  </data>
 </root>

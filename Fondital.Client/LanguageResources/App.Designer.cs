@@ -575,6 +575,24 @@ namespace Fondital.Client.LanguageResources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Id.
+        /// </summary>
+        public static string Id {
+            get {
+                return ResourceManager.GetString("Id", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Id Fornitore.
+        /// </summary>
+        public static string IdFornitore {
+            get {
+                return ResourceManager.GetString("IdFornitore", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Impostazioni.
         /// </summary>
         public static string Impostazioni {
@@ -1039,6 +1057,15 @@ namespace Fondital.Client.LanguageResources {
         public static string Salva {
             get {
                 return ResourceManager.GetString("Salva", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Seleziona Elemento.
+        /// </summary>
+        public static string SelezionaElemento {
+            get {
+                return ResourceManager.GetString("SelezionaElemento", resourceCulture);
             }
         }
         

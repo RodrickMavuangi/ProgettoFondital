@@ -8,12 +8,14 @@ namespace Fondital.Client.Dialogs
     {
         [Parameter] public EventCallback OnClose { get; set; }
         [Parameter] public EventCallback OnSave { get; set; }
-        protected RicambioDto Ricambio { get; set; } = new();
+        [Parameter] public EventCallback<RicambioDto> RicambioChanged { get; set; }
+        [Parameter] public RicambioDto NewRicambio { get; set; } = new();
+        protected RicambioRequestDto RicambioRequest { get; set; } = new();
 
-        protected bool isSubmitting = false;
-        protected string ErrorMessage = "";
-        protected async Task ConfirmAsync()
+        public async Task Done()
         {
+            //NewRicambio = await RestClient.PezzoRicambioService(RicambioRequest);
+            //await RicambioChanged.InvokeAsync(NewRicambio);
             await OnSave.InvokeAsync();
         }
     }

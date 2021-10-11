@@ -11,17 +11,22 @@ namespace Fondital.Client.Pages
         private RapportoDto Rapporto { get; set; } = new();
         private List<RapportoVoceCostoDto> RapportiVociCosto { get; set; } = new();
         private RapportoVoceCostoDto NewRapportoVoceCosto { get; set; } = new();
+        private RicambioDto NewRicambio { get; set; } = new();
         public List<LavorazioneDto> ListaLavorazioni { get; set; } = new();
         public List<string> LavorazioniDescription { get; set; } = new();
         public string Modello { get; set; }        
         private int CurrentStepIndex { get; set; }
         private string CurrentCulture { get; set; }
         private bool ShowAddVoceCosto { get; set; }
+        private bool ShowEditVoceCosto { get; set; }
+        private bool ShowAddRicambio { get; set; }
         [Parameter] public string Id { get; set; }
 
         protected override async Task OnInitializedAsync()
         {
             ShowAddVoceCosto = false;
+            ShowEditVoceCosto = false;
+            ShowAddRicambio = false;
             CurrentCulture = await StateProvider.GetCurrentCulture();
             Rapporto.Utente = await StateProvider.GetCurrentUser();
             ListaLavorazioni = (List<LavorazioneDto>)await LavorazioneClient.GetAllLavorazioni(true);
@@ -41,42 +46,43 @@ namespace Fondital.Client.Pages
         {
             if (CurrentStepIndex < 3)
                 CurrentStepIndex++;
-            //if (CurrentStepIndex == 1)
-                //GetModelloCaldaia();
-        }
-
-        protected void NuovoRicambio()
-        {
-            Rapporto.Ricambi.Add(new RicambioDto());
-        }
-
-        protected void RemoveRicambio(RicambioDto ricambio)
-        {
-            Rapporto.Ricambi.Remove(ricambio);
-            CloseAndRefresh();
         }
 
         protected async Task CloseAndRefresh()
         {
             ShowAddVoceCosto = false;
+            ShowEditVoceCosto = false;
+            ShowAddRicambio = false;
             await InvokeAsync(StateHasChanged);
         }
 
         protected async Task AggiungiVoceCosto()
         {
-            RapportiVociCosto.Add(NewRapportoVoceCosto);
+            await CloseAndRefresh();
+        }
+        protected async Task RemoveVoceCosto(RapportoVoceCostoDto rapportoVoceCosto)
+        {
+            RapportiVociCosto.Remove(rapportoVoceCosto);
             await CloseAndRefresh();
         }
 
         protected async Task AggiungiRicambio()
         {
+            Rapporto.Ricambi.Add(NewRicambio);
+            await CloseAndRefresh();
+        }
+
+        protected async Task RemoveRicambio(RicambioDto ricambio)
+        {
+            Rapporto.Ricambi.Remove(ricambio);
+            await CloseAndRefresh();
+        }
+
+        protected void EditVoceCosto()
+        {
         }
 
         //protected async void GetModelloCaldaia() =>
         //    Modello = await RestClient.ModelloCaldaiaService(Rapporto.Caldaia.Matricola ?? "");
-
-        protected void EditVoceCosto(int Id)
-        {
-        }
     }
 }
