@@ -20,6 +20,8 @@ namespace Fondital.Client.Dialogs
         protected string CurrentCulture { get; set; }
         protected VoceCostoDto VoceCostoToAdd =>
             ListaVociCosto.SingleOrDefault(x => (CurrentCulture == "it-IT" && x.NomeItaliano == VoceCostoName) || (CurrentCulture == "ru-RU" && x.NomeRusso == VoceCostoName));
+        protected bool IsButtonEnabled =>
+            VoceCostoToAdd != null && ((VoceCostoToAdd.Tipologia == TipologiaVoceCosto.Quantita && Quantita > 0) || VoceCostoToAdd.Tipologia == TipologiaVoceCosto.Forfettario);
 
         protected override async Task OnInitializedAsync()
         {

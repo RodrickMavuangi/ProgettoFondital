@@ -18,8 +18,10 @@ namespace Fondital.Client.Pages
         private RicambioDto NewRicambio { get; set; } = new();
         public List<LavorazioneDto> ListaLavorazioni { get; set; } = new();
         public List<string> LavorazioniDescription { get; set; } = new();
+        public RapportoVoceCostoDto RapportoVoceCostoSelected { get; set; } = new();
+        public string Modello { get; set; }        
         protected List<string> CampiDaCompilare { get; set; } = new();
-        public string Modello { get; set; }
+        
         private int CurrentStepIndex { get; set; }
         private string CurrentCulture { get; set; }
 
@@ -77,8 +79,10 @@ namespace Fondital.Client.Pages
             await CloseAndRefresh();
         }
 
-        protected void EditVoceCosto()
+        protected void EditVoceCosto(RapportoVoceCostoDto rapportoVoceCosto)
         {
+            RapportoVoceCostoSelected = rapportoVoceCosto;
+            ShowEditVoceCosto = true;
         }
 
         //protected async void GetModelloCaldaia() =>

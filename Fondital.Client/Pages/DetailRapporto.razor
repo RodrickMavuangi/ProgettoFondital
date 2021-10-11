@@ -236,7 +236,7 @@
                             <GridCommandColumn Context="voce" Width="3%">
                                 @{
                                     var voceCosto = voce as RapportoVoceCostoDto;
-                                    <GridCommandButton Class=" btnIcon bgBianco white" Command="EditLavorazione" Icon="" ImageUrl="/img/Icons/edit.svg" OnClick="@(() => ShowEditVoceCosto = true)" />
+                                    <GridCommandButton Class=" btnIcon bgBianco white" Command="EditLavorazione" Icon="" ImageUrl="/img/Icons/edit.svg" OnClick="@(() => EditVoceCosto(voceCosto))" />
                                 }
                             </GridCommandColumn>
                         </GridColumns>
@@ -282,6 +282,17 @@
     <WindowContent>
         <div class="dialogForm">
             <AddRapportoVoceCostoDialog @bind-Rapporto="Rapporto" OnSave="AggiungiVoceCosto" OnClose="CloseAndRefresh" />
+        </div>
+    </WindowContent>
+</TelerikWindow>
+
+<TelerikWindow Class="modal-app dialogBox" Width="500px" Height="auto" Centered="true" Modal="true" @bind-Visible="ShowEditVoceCosto">
+    <WindowActions>
+        <WindowAction Name="Close" IconClass="k-icon k-i-close text-dark" />
+    </WindowActions>
+    <WindowContent>
+        <div class="dialogForm">
+            <EditRapportoVoceCostoDialog @bind-RapportoVoceCosto="RapportoVoceCostoSelected" OnSave="CloseAndRefresh" OnClose="CloseAndRefresh" />
         </div>
     </WindowContent>
 </TelerikWindow>
