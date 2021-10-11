@@ -1,25 +1,29 @@
 ﻿@inject IStringLocalizer<App> localizer
-@inject VoceCostoClient voceCostoClient
 @inject CurrentStateProvider StateProvider
 
 <div class="form-field">
     @if (CurrentCulture == "it-IT")
     {
         <label>@localizer["NomeItaliano"]</label>
+        <label class="form-control form-control-lg w100">@RapportoVoceCosto.VoceCosto.NomeItaliano</label>
     }
     else
     {
         <label>@localizer["NomeRusso"]</label>
+        <label class="form-control form-control-lg w100">@RapportoVoceCosto.VoceCosto.NomeRusso</label>
     }
-    <TelerikDropDownList Data="ListaSelezione" Filterable="true" @bind-Value="VoceCostoName" />
 </div>
 
-@if (VoceCostoToAdd?.Tipologia == TipologiaVoceCosto.Quantita)
+@if (RapportoVoceCosto.VoceCosto?.Tipologia == TipologiaVoceCosto.Quantita)
 {
     <div class="form-field">
         <label>@localizer["Quantita"]</label>
-        <input class="form-control form-control-lg w100" type="number" min="1" max="@Int32.MaxValue" @bind-value="@Quantita" />
+        <input class="form-control form-control-lg w100" type="number" min="1" max="@Int32.MaxValue" @bind-value="@RapportoVoceCosto.Quantita" />
     </div>
+}
+else
+{
+    <label>La tipologia della voce di costo è: forfettaria</label>
 }
 
 <div class="form-field">
