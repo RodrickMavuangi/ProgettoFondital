@@ -47,7 +47,6 @@ namespace Fondital.Client.Pages
                 LavorazioniDescription = ListaLavorazioni.Select(x => x.NomeRusso).ToList();
         }
 
-
         protected async Task CloseAndRefresh()
         {
             ShowAddVoceCosto = false;
@@ -98,7 +97,6 @@ namespace Fondital.Client.Pages
         protected async Task<bool> Salva(StatoRapporto? newStatus = null)
         {
             IsSubmitting = true;
-            CampiDaCompilare.Clear();
 
             try
             {
