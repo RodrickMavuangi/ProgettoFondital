@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using Fondital.Shared.Dto;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using System;
@@ -44,13 +45,14 @@ namespace Fondital.Server.Controllers
             }
         }
 
-        [HttpGet("pezzoRicambio")]
-        public async Task<IActionResult> GetServiceRicambio()
+        [HttpGet("pezzoRicambio/{idRicambio}/{idFornitore}/{quantita}")]
+        [AllowAnonymous]
+        public async Task<IActionResult> GetServiceRicambio(RicambioRequestDto ricambio)
         {
             try
             {
                 _httpClient.BaseAddress = new Uri(_config["RestClientSettings:BaseAddress"]);
-                var response = _httpClient.GetAsync(_config["RestClientSettings:UriRicambio"]).Result;
+                var response = await _httpClient.GetAsync($"/sparePart/{ricambio.Id}/{ricambio.SupplierId}/{ricambio.Quantity}");
                 if (!response.IsSuccessStatusCode)
                     return NotFound();
 

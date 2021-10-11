@@ -131,7 +131,6 @@
                 </span>
                 <span class="col-4">
                     <label>@Localizer["Modello"]</label>
-                    @*<InputText Class="form-control form-control-lg w100 mb-3" @bind-Value="Rapporto.Caldaia.Modello" />*@
                     <label class="form-control form-control-lg w100 mb-3">@Modello</label>
                 </span>
                 <span class="col-4">
@@ -187,7 +186,6 @@
             <div class="form-field my-4 d-flex justify-content-start w-100">
                 <span class="col-4">
                     <label>@Localizer["TipologiaLavoro"]</label>
-                    @*<InputText Class="form-control form-control-lg w100 mb-3" @bind-Value="Rapporto.TipoLavoro" />*@
                     <TelerikDropDownList Data="@LavorazioniDescription"
                                          Class="form-control form-control-lg w100 mb-3"
                                          @bind-Value="Rapporto.TipoLavoro" />
@@ -206,9 +204,8 @@
                         <label class="d-inline labelDescr">@Localizer["Descrizione"]</label>
                     </span>
 
-                    <TelerikButton Class="btn btn-primary btn-lg mx-1" OnClick="NuovoRicambio">@Localizer["AddRicambio"]</TelerikButton><i class="bi bi-plus icoPlus"></i>
+                    <TelerikButton Class="btn btn-primary btn-lg mx-1" OnClick="() => ShowAddRicambio = true">@Localizer["AddRicambio"]</TelerikButton><i class="bi bi-plus icoPlus"></i>
                 </div>
-
                 <div class="form-field my-4 w-100">
                     @foreach (RicambioDto Ricambio in Rapporto.Ricambi)
                     {
@@ -239,7 +236,7 @@
                             <GridCommandColumn Context="voce" Width="3%">
                                 @{
                                     var voceCosto = voce as RapportoVoceCostoDto;
-                                    <GridCommandButton Class=" btnIcon bgBianco white" Command="EditLavorazione" Icon="" ImageUrl="/img/Icons/edit.svg" OnClick="@(() => EditVoceCosto(voceCosto.VoceCosto.Id))" />
+                                    <GridCommandButton Class=" btnIcon bgBianco white" Command="EditLavorazione" Icon="" ImageUrl="/img/Icons/edit.svg" OnClick="@(() => ShowEditVoceCosto = true)" />
                                 }
                             </GridCommandColumn>
                         </GridColumns>
@@ -267,12 +264,14 @@
     </WindowContent>
 </TelerikWindow>
 
-<TelerikWindow Class="modal-app dialogBox" Width="500px" Height="auto" Centered="true" Modal="true" @bind-Visible="ShowAddVoceCosto">
+<TelerikWindow Class="modal-app dialogBox" Width="500px" Height="auto" Centered="true" Modal="true" @bind-Visible="ShowAddRicambio">
     <WindowActions>
         <WindowAction Name="Close" IconClass="k-icon k-i-close text-dark" />
     </WindowActions>
     <WindowContent>
-        <div class="dialogForm"><AddRicambioDialog OnSave="AggiungiRicambio" OnClose="CloseAndRefresh" /></div>
+        <div class="dialogForm">
+            <AddRicambioDialog OnSave="AggiungiRicambio" OnClose="CloseAndRefresh" />
+        </div>
     </WindowContent>
 </TelerikWindow>
 
@@ -281,6 +280,8 @@
         <WindowAction Name="Close" IconClass="k-icon k-i-close text-dark" />
     </WindowActions>
     <WindowContent>
-        <div class="dialogForm"><AddRapportoVoceCostoDialog @bind-NewRapportoVoceCosto="NewRapportoVoceCosto" OnSave="AggiungiVoceCosto" OnClose="CloseAndRefresh" /></div>
+        <div class="dialogForm">
+            <AddRapportoVoceCostoDialog @bind-Rapporto="Rapporto" OnSave="AggiungiVoceCosto" OnClose="CloseAndRefresh" />
+        </div>
     </WindowContent>
 </TelerikWindow>

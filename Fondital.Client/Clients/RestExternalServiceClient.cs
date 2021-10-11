@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Fondital.Shared.Dto;
+using System;
 using System.Net.Http;
 using System.Net.Http.Json;
 using System.Threading.Tasks;
@@ -31,15 +32,17 @@ namespace Fondital.Client.Clients
 			}
 		}
 
-		public async Task PezzoRicambioService()
+		public async Task<RicambioDto> PezzoRicambioService(RicambioRequestDto ricambioRequest)
 		{
 			try
 			{
-				var response = await httpClient.GetAsync($"externalServiceController/pezzoRicambio");
-				if (response.StatusCode.ToString().Equals("NotFound"))
-				{
-					// Restituire un feedback du errore
-				}
+				var response = await httpClient.GetAsync($"externalServiceController/pezzoRicambio/{ricambioRequest.Id}/{ricambioRequest.SupplierId}/{ricambioRequest.Quantity}");
+				if (response.IsSuccessStatusCode)
+					return await response.Content.ReadFromJsonAsync<RicambioDto>(JsonSerializerOpts.JsonOpts);
+				else if (response.StatusCode == System.Net.HttpStatusCode.NotFound)
+					throw new Exception("NotFound");
+				else
+					throw new Exception("GenericError");
 			}
 			catch (Exception e)
 			{

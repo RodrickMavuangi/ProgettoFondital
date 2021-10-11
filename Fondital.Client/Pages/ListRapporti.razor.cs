@@ -23,12 +23,14 @@ namespace Fondital.Client.Pages
         private string SearchByMatricola { get; set; } = "";
         private string SearchByTelefono { get; set; } = "";
         private string SearchByEmail { get; set; } = "";
+        private bool LoadingVar { get; set; }
+        protected bool ShowAddDialog { get; set; } = false;
 
         protected override async Task OnInitializedAsync()
         {
+            LoadingVar = true;
             PageSize = Convert.ToInt32(Config["PageSize"]);
-            ListaRapporti = (List<RapportoDto>)await HttpClient.GetAllRapporti();
-            ListRagioneSociale = ListaRapporti.Select(x => x.Utente.ServicePartner.RagioneSociale).Distinct().ToList();
+            await RefreshRapporti();
         }
 
         public List<RapportoDto> ListaRapportiFiltered => ListaRapporti
@@ -42,6 +44,14 @@ namespace Fondital.Client.Pages
                      && (x.Cliente.NumTelefono ?? "").Contains(SearchByTelefono, StringComparison.InvariantCultureIgnoreCase)
                      && (x.Cliente.Email ?? "").Contains(SearchByEmail, StringComparison.InvariantCultureIgnoreCase)
             ).ToList();
+
+        protected async Task RefreshRapporti()
+        {
+            ListaRapporti = (List<RapportoDto>)await HttpClient.GetAllRapporti();
+            ListRagioneSociale = ListaRapporti.Select(x => x.Utente.ServicePartner.RagioneSociale).Distinct().ToList();
+            LoadingVar = false;
+            StateHasChanged();
+        }
 
         protected void ViewRapporto(int rapportoId)
         {

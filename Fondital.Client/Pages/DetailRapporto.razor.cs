@@ -15,12 +15,16 @@ namespace Fondital.Client.Pages
         private RapportoDto Rapporto { get; set; } = new();
         private List<RapportoVoceCostoDto> RapportiVociCosto { get; set; } = new();
         private RapportoVoceCostoDto NewRapportoVoceCosto { get; set; } = new();
+        private RicambioDto NewRicambio { get; set; } = new();
         public List<LavorazioneDto> ListaLavorazioni { get; set; } = new();
         public List<string> LavorazioniDescription { get; set; } = new();
         protected List<string> CampiDaCompilare { get; set; } = new();
         public string Modello { get; set; }
         private int CurrentStepIndex { get; set; }
         private string CurrentCulture { get; set; }
+
+        private bool ShowEditVoceCosto { get; set; } = false;
+        private bool ShowAddRicambio { get; set; } = false;
         private bool ShowAddVoceCosto { get; set; } = false;
         private bool ShowCampiObbligatori { get; set; } = false;
         private bool IsSubmitting { get; set; } = false;
@@ -43,30 +47,38 @@ namespace Fondital.Client.Pages
                 LavorazioniDescription = ListaLavorazioni.Select(x => x.NomeRusso).ToList();
         }
 
-        protected void NuovoRicambio()
-        {
-            Rapporto.Ricambi.Add(new RicambioDto());
-        }
-
-        protected void RemoveRicambio(RicambioDto ricambio)
-        {
-            Rapporto.Ricambi.Remove(ricambio);
-            CloseAndRefresh();
-        }
 
         protected async Task CloseAndRefresh()
         {
             ShowAddVoceCosto = false;
+            ShowEditVoceCosto = false;
+            ShowAddRicambio = false;
             await InvokeAsync(StateHasChanged);
         }
 
         protected async Task AggiungiVoceCosto()
         {
-            RapportiVociCosto.Add(NewRapportoVoceCosto);
+            await CloseAndRefresh();
+        }
+        protected async Task RemoveVoceCosto(RapportoVoceCostoDto rapportoVoceCosto)
+        {
+            RapportiVociCosto.Remove(rapportoVoceCosto);
             await CloseAndRefresh();
         }
 
         protected async Task AggiungiRicambio()
+        {
+            Rapporto.Ricambi.Add(NewRicambio);
+            await CloseAndRefresh();
+        }
+
+        protected async Task RemoveRicambio(RicambioDto ricambio)
+        {
+            Rapporto.Ricambi.Remove(ricambio);
+            await CloseAndRefresh();
+        }
+
+        protected void EditVoceCosto()
         {
         }
 

@@ -106,6 +106,24 @@ namespace Fondital.Shared.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Id Fornitore.
+        /// </summary>
+        public static string IdFornitore {
+            get {
+                return ResourceManager.GetString("IdFornitore", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Id Ricambio.
+        /// </summary>
+        public static string IdRicambio {
+            get {
+                return ResourceManager.GetString("IdRicambio", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Nuova Password.
         /// </summary>
         public static string NewPassword {
@@ -156,6 +174,15 @@ namespace Fondital.Shared.Resources {
         public static string Password {
             get {
                 return ResourceManager.GetString("Password", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Quantita.
+        /// </summary>
+        public static string Quantita {
+            get {
+                return ResourceManager.GetString("Quantita", resourceCulture);
             }
         }
         

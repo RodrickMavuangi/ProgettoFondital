@@ -132,6 +132,12 @@
   <data name="Email" xml:space="preserve">
     <value>Email</value>
   </data>
+  <data name="IdFornitore" xml:space="preserve">
+    <value>Id Fornitore</value>
+  </data>
+  <data name="IdRicambio" xml:space="preserve">
+    <value>Id Ricambio</value>
+  </data>
   <data name="NewPassword" xml:space="preserve">
     <value>Nuova Password</value>
   </data>
@@ -149,6 +155,9 @@
   </data>
   <data name="Password" xml:space="preserve">
     <value>Password</value>
+  </data>
+  <data name="Quantita" xml:space="preserve">
+    <value>Quantita</value>
   </data>
   <data name="Raggruppamento" xml:space="preserve">
     <value>Raggruppamento</value>
