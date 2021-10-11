@@ -1,5 +1,7 @@
 ﻿using Fondital.Shared;
+using Fondital.Shared.Enums;
 using Fondital.Shared.Models;
+using Fondital.Shared.Models.Auth;
 using Fondital.Shared.Services;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -24,22 +26,31 @@ namespace Fondital.Services
             return await _unitOfWork.Rapporti.GetByIdAsync(id);
         }
 
-        public async Task UpdateRapporto(int rapportoId, Rapporto rapporto)
+        public async Task UpdateRapporto(int rapportoId, Rapporto rapporto, Utente updatingUser)
         {
-            var rapportoToUpdate = await _unitOfWork.Rapporti.GetByIdAsync(rapportoId);
-            _unitOfWork.Update(rapportoToUpdate, rapporto);
-            _unitOfWork.Update(rapportoToUpdate.Cliente, rapporto.Cliente);
-            _unitOfWork.Update(rapportoToUpdate.Caldaia, rapporto.Caldaia);
+            var RapportoToUpdate = await _unitOfWork.Rapporti.GetByIdAsync(rapportoId);
+            StatoRapporto? NuovoStato = rapporto.Stato == RapportoToUpdate.Stato ? null : rapporto.Stato;
+
+            await _unitOfWork.Rapporti.AddAudit(RapportoToUpdate, updatingUser, NuovoStato);
+            _unitOfWork.Update(RapportoToUpdate, rapporto);
+            _unitOfWork.Update(RapportoToUpdate.Cliente, rapporto.Cliente);
+            _unitOfWork.Update(RapportoToUpdate.Caldaia, rapporto.Caldaia);
 
             await _unitOfWork.CommitAsync();
         }
 
-        public async Task<int> AddRapporto(Rapporto rapporto)
+        public async Task<int> AddRapporto(Rapporto rapporto, Utente creatingUser)
         {
-            await _unitOfWork.Rapporti.AddRapporto(rapporto);
+            await _unitOfWork.Rapporti.AddAudit(rapporto, creatingUser, StatoRapporto.Aperto, "Creazione rapporto");
+            await _unitOfWork.Rapporti.AddRapporto(rapporto, creatingUser);
             await _unitOfWork.CommitAsync();
 
             return rapporto.Id;
         }
+    }
+
+    public record RecordRapporto(Rapporto RapportoClass)
+    {
+        protected Rapporto Rapporto { get; set; } = RapportoClass;
     }
 }
