@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Components;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http.Json;
 using System.Threading.Tasks;
 using Telerik.Blazor;
 
@@ -14,6 +15,7 @@ namespace Fondital.Client.Pages
         [CascadingParameter] DialogFactory Dialogs { get; set; }
         [Parameter] public string Id { get; set; }
         private RapportoDto Rapporto { get; set; } = new();
+        private string RapportoBeforeSave { get; set; }
         private List<RapportoVoceCostoDto> RapportiVociCosto { get; set; } = new();
         private RicambioDto NewRicambio { get; set; } = new();
         public List<LavorazioneDto> ListaLavorazioni { get; set; } = new();
@@ -38,7 +40,9 @@ namespace Fondital.Client.Pages
             else
                 Rapporto = await RapportoClient.GetRapportoById(int.Parse(Id)); //c'è il parse così se viene inserito un url malformato lancia errore
 
+            RapportoBeforeSave = await JsonContent.Create(Rapporto).ReadAsStringAsync();
             ListaLavorazioni = (List<LavorazioneDto>)await LavorazioneClient.GetAllLavorazioni(true);
+            
             if (CurrentCulture == "it-IT")
                 LavorazioniDescription = ListaLavorazioni.Select(x => x.NomeItaliano).ToList();
             else
@@ -92,25 +96,51 @@ namespace Fondital.Client.Pages
 
         protected async Task<bool> Salva(StatoRapporto? newStatus = null)
         {
-            IsSubmitting = true;
+            //uso la serializzazione per ottenere la value equality al posto della reference equality
+            var RapportoSerialized = await JsonContent.Create(Rapporto).ReadAsStringAsync();
 
-            try
+            //se il rapporto non è cambiato non salvare su db e ritorna ok
+            if (RapportoBeforeSave == RapportoSerialized)
+                return true;
+            else
             {
-                if (Rapporto.Id == 0)
-                {   //il rapporto va creato
-                    Rapporto.Id = await RapportoClient.CreateRapporto(Rapporto);
-                }
-                else if (newStatus == null)
-                {   //il rapporto va aggiornato
-                    if (Rapporto.Stato == StatoRapporto.Aperto || Rapporto.Stato == StatoRapporto.Rifiutato)
-                    {
-                        await RapportoClient.UpdateRapporto(Rapporto.Id, Rapporto);
+                IsSubmitting = true;
+                RapportoBeforeSave = RapportoSerialized; //aggiorno all'ultimo "checkpoint"
+
+                try
+                {
+                    if (Rapporto.Id == 0)
+                    {   //il rapporto va creato
+                        Rapporto.Id = await RapportoClient.CreateRapporto(Rapporto);
                     }
-                    else
-                    {   //aggiornamento della direzione: mantenere la consistenza del rapporto
+                    else if (newStatus == null)
+                    {   //il rapporto va aggiornato
+                        if (Rapporto.Stato == StatoRapporto.Aperto || Rapporto.Stato == StatoRapporto.Rifiutato)
+                        {
+                            await RapportoClient.UpdateRapporto(Rapporto.Id, Rapporto);
+                        }
+                        else
+                        {   //aggiornamento della direzione: mantenere la consistenza del rapporto
+                            CampiDaCompilare = CheckCampiObbligatori();
+                            if (CampiDaCompilare.Count == 0)
+                                await RapportoClient.UpdateRapporto(Rapporto.Id, Rapporto);
+                            else
+                            {
+                                ShowCampiObbligatori = true;
+                                IsSubmitting = false;
+                                return false;
+                            }
+                        }
+                    }
+                    else if (newStatus != null)
+                    {   //oltre all'aggiornamento va cambiato stato
                         CampiDaCompilare = CheckCampiObbligatori();
                         if (CampiDaCompilare.Count == 0)
+                        {
+                            Rapporto.Stato = newStatus.Value;
                             await RapportoClient.UpdateRapporto(Rapporto.Id, Rapporto);
+                            NavigationManager.NavigateTo("/reports");
+                        }
                         else
                         {
                             ShowCampiObbligatori = true;
@@ -119,32 +149,16 @@ namespace Fondital.Client.Pages
                         }
                     }
                 }
-                else if (newStatus != null)
-                {   //oltre all'aggiornamento va cambiato stato
-                    CampiDaCompilare = CheckCampiObbligatori();
-                    if (CampiDaCompilare.Count == 0)
-                    {
-                        Rapporto.Stato = newStatus.Value;
-                        await RapportoClient.UpdateRapporto(Rapporto.Id, Rapporto);
-                        NavigationManager.NavigateTo("/reports");
-                    }
-                    else
-                    {
-                        ShowCampiObbligatori = true;
-                        IsSubmitting = false;
-                        return false;
-                    }
+                catch (Exception ex)
+                {
+                    await Dialogs.AlertAsync($"{Localizer["ErroreSalvaRapporto"]}: {ex.Message}", Localizer["Errore"]);
+                    IsSubmitting = false;
+                    return false;
                 }
-            }
-            catch (Exception ex)
-            {
-                await Dialogs.AlertAsync($"{Localizer["ErroreSalvaRapporto"]}: {ex.Message}", Localizer["Errore"]);
-                IsSubmitting = false;
-                return false;
-            }
 
-            IsSubmitting = false;
-            return true;
+                IsSubmitting = false;
+                return true;
+            }
         }
 
         protected List<string> CheckCampiObbligatori()
