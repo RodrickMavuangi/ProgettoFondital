@@ -30,6 +30,7 @@
   <ItemGroup>
     <EmbeddedResource Update="LanguageResources\App.ru.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>App.ru.Designer.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
 
