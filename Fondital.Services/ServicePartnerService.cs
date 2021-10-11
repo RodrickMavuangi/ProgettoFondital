@@ -1,9 +1,8 @@
-﻿using System.Collections.Generic;
-using System.Threading.Tasks;
-using Fondital.Shared;
+﻿using Fondital.Shared;
 using Fondital.Shared.Models;
-using Fondital.Shared.Models.Auth;
 using Fondital.Shared.Services;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Fondital.Services
 {
@@ -17,8 +16,7 @@ namespace Fondital.Services
 
         public async Task<int> CreateServicePartner(ServicePartner newSp)
         {
-            await _unitOfWork.ServicePartners
-                .AddAsync(newSp);
+            await _unitOfWork.ServicePartners.AddAsync(newSp);
             await _unitOfWork.CommitAsync();
 
             return newSp.Id;
@@ -32,17 +30,16 @@ namespace Fondital.Services
         }
 
         public async Task<ServicePartner> GetServicePartnerWithUtentiAsync(int ServicePartnerID)
-		{
+        {
             return await _unitOfWork.ServicePartners.GetWithUtenteAsync(ServicePartnerID);
-		}
+        }
 
         public async Task<IEnumerable<ServicePartner>> GetAllServicePartners()
         {
-           // return await _unitOfWork.ServicePartners.GetAllAsync();
             return await _unitOfWork.ServicePartners.GetAllServicePartner();
         }
 
-        
+
         public async Task<ServicePartner> GetServicePartnerById(int id)
         {
             return await _unitOfWork.ServicePartners.GetByIdAsync(id);
@@ -53,22 +50,7 @@ namespace Fondital.Services
             var spToUpdate = await _unitOfWork.ServicePartners.SingleOrDefaultAsync(c => c.Id == spId);
             _unitOfWork.Update(spToUpdate, sp);
 
-            if(spToUpdate.Utenti != null && sp.Utenti != null)
-			{
-                foreach (var item in sp.Utenti)
-				{
-                    spToUpdate.Utenti.Add(item);
-				}
-			}
-            if(spToUpdate.Utenti == null && sp.Utenti != null)
-			{
-                spToUpdate.Utenti = new List<Utente>();
-                foreach (var item in sp.Utenti)
-                {
-                    spToUpdate.Utenti.Add(item);
-                }
-            }
             await _unitOfWork.CommitAsync();
-        }                                       
+        }
     }
 }

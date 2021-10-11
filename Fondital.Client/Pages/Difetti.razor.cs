@@ -56,8 +56,8 @@ namespace Fondital.Client.Pages
         {
             bool isAbilitato = ListaDifettiFiltered.Single(x => x.Id == Id).IsAbilitato;
             bool isConfirmed = false;
-            if (isAbilitato) isConfirmed = await Dialogs.ConfirmAsync($"{localizer["ConfermaAbilitazione"]} {localizer["Difetto"]} # {Id}?", " ");
-            else isConfirmed = await Dialogs.ConfirmAsync($"{localizer["ConfermaDisabilitazione"]} {localizer["Difetto"]} # {Id}?", " ");
+            if (isAbilitato) isConfirmed = await Dialogs.ConfirmAsync($"{localizer["ConfermaAbilitazione"]} {localizer["Difetto"]} # {Id}", " ");
+            else isConfirmed = await Dialogs.ConfirmAsync($"{localizer["ConfermaDisabilitazione"]} {localizer["Difetto"]} # {Id}", " ");
 
             if (isConfirmed)
             {

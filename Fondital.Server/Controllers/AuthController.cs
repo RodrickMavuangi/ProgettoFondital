@@ -18,6 +18,7 @@ namespace Fondital.Server.Controllers
 {
     [Route("authControl")]
     [ApiController]
+    [AllowAnonymous]
     public class AuthController : ControllerBase
     {
         private readonly UserManager<Utente> _userManager;
@@ -41,20 +42,7 @@ namespace Fondital.Server.Controllers
             _logger = logger;
         }
 
-        [HttpPost("CreateWithPassword")]
-        //[Authorize("Direzione")]
-        [AllowAnonymous]
-        public async Task<IActionResult> CreateWithPassword(Utente user, string password)
-        {
-            var x = await _userManager.CreateAsync(user, password);
-            if (x.Succeeded)
-                return Ok();
-            else
-                return BadRequest(x.Errors);
-        }
-
         [HttpPost("login")]
-        [AllowAnonymous]
         public async Task<IActionResult> LogIn([FromBody] LoginRequestDto loginRequest)
         {
             LoginResponseDto response = new();
@@ -72,7 +60,12 @@ namespace Fondital.Server.Controllers
                 var roles = await _signinManager.UserManager.GetRolesAsync(user);
                 int durataPasswordInGiorni = 30 * (int)Enum.Parse<DurataValiditaConfigurazione>(_confService.GetValoreByChiave("DurataPassword").Result);
 
-                if (user.Pw_MustChange || (DateTime.Now - user.Pw_LastChanged).TotalDays > durataPasswordInGiorni)
+                if (!user.IsAbilitato)
+                {
+                    _logger.Information("Login failure: {Action} {Object} {ObjectId} fallito per {LoginFailureReason}", "LOGIN", "Utente", loginRequest.Email, "utente disabilitato");
+                    return BadRequest("UtenteDisabilitato");
+                }
+                else if (user.Pw_MustChange || (DateTime.Now - user.Pw_LastChanged).TotalDays > durataPasswordInGiorni)
                 {
                     _logger.Information("Login failure: {Action} {Object} {ObjectId} fallito per {LoginFailureReason}", "LOGIN", "Utente", loginRequest.Email, "password scaduta");
                     return BadRequest("PasswordMustChange");
@@ -101,7 +94,6 @@ namespace Fondital.Server.Controllers
         }
 
         [HttpPost("changepw")]
-        [AllowAnonymous]
         public async Task<IActionResult> ChangePassword([FromBody] ChangePwRequestDto ChangePwRequest)
         {
             try
@@ -127,9 +119,7 @@ namespace Fondital.Server.Controllers
             }
         }
 
-
         [HttpPost("resetpw")]
-        [AllowAnonymous]
         public async Task<IActionResult> ResetPassword([FromBody] ResetPwRequestDto resetPasswordRequest)
         {
             try
@@ -137,7 +127,6 @@ namespace Fondital.Server.Controllers
                 var user = await _signinManager.UserManager.FindByEmailAsync(resetPasswordRequest.Email);
                 user.Pw_LastChanged = DateTime.Now;
                 user.Pw_MustChange = false;
-                //await _utenteService.UpdateUtente(user.UserName, user);
 
                 string Token = Encoding.UTF8.GetString(WebEncoders.Base64UrlDecode(resetPasswordRequest.Token));
                 var task = await _userManager.ResetPasswordAsync(user, Token, resetPasswordRequest.ConfirmPassword);
@@ -156,43 +145,33 @@ namespace Fondital.Server.Controllers
             }
         }
 
-        //[HttpPost("Roles")]
-        //public async Task<IActionResult> CreateRole(string roleName)
-        //{
-        //    if (string.IsNullOrWhiteSpace(roleName))
-        //    {
-        //        return BadRequest("Role name should be provided.");
-        //    }
-        //
-        //    var newRole = new Ruolo
-        //    {
-        //        Name = roleName
-        //    };
-        //
-        //    var roleResult = await _roleManager.CreateAsync(newRole);
-        //
-        //    if (roleResult.Succeeded)
-        //    {
-        //        return Ok();
-        //    }
-        //
-        //    return Problem(roleResult.Errors.First().Description, null, 500);
-        //}
+        [HttpPost("ruolo/{UtenteEmail}")]
+        [Authorize(Roles = "Direzione")]
+        public async Task<IActionResult> AssegnaRuolo(string UtenteEmail, [FromBody] RuoloDto ruolo)
+        {
+            try
+            {
+                IdentityResult res = new IdentityResult();
 
-        //[HttpPost("User/{userEmail}/Role")]
-        //public async Task<IActionResult> AddUserToRole(string userEmail, [FromBody] string roleName)
-        //{
-        //    var user = _userManager.Users.SingleOrDefault(u => u.UserName == userEmail);
-        //
-        //    var result = await _userManager.AddToRoleAsync(user, roleName);
-        //
-        //    if (result.Succeeded)
-        //    {
-        //        return Ok();
-        //    }
-        //
-        //    return Problem(result.Errors.First().Description, null, 500);
-        //}
+                var user = await _userManager.FindByEmailAsync(UtenteEmail);
+
+                //Si aggiunge un ruolo nel db solo se non esiste ancora
+                if (!await _roleManager.RoleExistsAsync(ruolo.Name))
+                {
+                    Ruolo r = new Ruolo() { Name = ruolo.Name };
+                    res = await _roleManager.CreateAsync(r);
+                    if (!res.Succeeded) BadRequest(res.Errors);
+                }
+
+                await _userManager.AddToRoleAsync(user, ruolo.Name);
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                _logger.Error("Eccezione {Action} {Object} {ObjectId}: {ExceptionMessage}", "Assegna", "Ruolo", ruolo.Name, ex.Message);
+                return BadRequest(ex.Message);
+            }
+        }
 
         private string GenerateJwt(Utente user, IList<string> roles, JwtSettings jwtSettings)
         {

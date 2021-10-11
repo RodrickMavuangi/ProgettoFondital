@@ -28,6 +28,8 @@ namespace Fondital.Services
         {
             var rapportoToUpdate = await _unitOfWork.Rapporti.GetByIdAsync(rapportoId);
             _unitOfWork.Update(rapportoToUpdate, rapporto);
+            _unitOfWork.Update(rapportoToUpdate.Cliente, rapporto.Cliente);
+            _unitOfWork.Update(rapportoToUpdate.Caldaia, rapporto.Caldaia);
 
             await _unitOfWork.CommitAsync();
         }

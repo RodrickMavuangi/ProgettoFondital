@@ -398,7 +398,7 @@ La nuova password deve essere lunga almeno 8 caratteri e contenere minuscole, ma
     <value>Valore</value>
   </data>
   <data name="MailInviata" xml:space="preserve">
-    <value>è stata inviata una mail a </value>
+    <value>Mail inviata con successo all'utente</value>
   </data>
   <data name="Stato" xml:space="preserve">
     <value>Stato</value>
@@ -488,10 +488,115 @@ La nuova password deve essere lunga almeno 8 caratteri e contenere minuscole, ma
     <value>Utenze Direzione</value>
   </data>
   <data name="ConfermaAbilitazione" xml:space="preserve">
-    <value>Si è sicuri di voler abilitare l'elemento</value>
+    <value>Conferma abilitazione</value>
   </data>
   <data name="ConfermaDisabilitazione" xml:space="preserve">
-    <value>Si è sicuri di voler disabilitare l'elemento</value>
+    <value>Conferma disabilitazione</value>
+  </data>
+  <data name="ResetPassword" xml:space="preserve">
+    <value>Si vuole inviare un'email di Reset Password all'utente</value>
+  </data>
+  <data name="CercaPerServicePartner" xml:space="preserve">
+    <value>Cerca per Service Partner</value>
+  </data>
+  <data name="CercaPerVoceCosto" xml:space="preserve">
+    <value>Cerca per Voce di Costo</value>
+  </data>
+  <data name="CercaPerRaggruppamento" xml:space="preserve">
+    <value>Cerca per Raggruppamento</value>
+  </data>
+  <data name="UtenteDisabilitato" xml:space="preserve">
+    <value>L'utente è disabilitato, contattare la Direzione.</value>
+  </data>
+  <data name="Invia" xml:space="preserve">
+    <value>Invia</value>
+  </data>  
+    <data name="CittaCliente" xml:space="preserve">
+    <value>Dati Anagrafici - Città</value>
+  </data>
+  <data name="CivicoCliente" xml:space="preserve">
+    <value>Dati Anagrafici - Numero</value>
+  </data>
+  <data name="CognomeCliente" xml:space="preserve">
+    <value>Dati Anagrafici - Cognome</value>
+  </data>
+  <data name="DataAvvio" xml:space="preserve">
+    <value>Data Avvio</value>
+  </data>
+  <data name="DataAvvioCaldaia" xml:space="preserve">
+    <value>Dati Caldaia - Data Avvio</value>
+  </data>
+  <data name="DataMontaggio" xml:space="preserve">
+    <value>Data Montaggio</value>
+  </data>
+  <data name="DataMontaggioCaldaia" xml:space="preserve">
+    <value>Dati Caldaia - Data Montaggio</value>
+  </data>
+  <data name="DataVendita" xml:space="preserve">
+    <value>Data Vendita</value>
+  </data>
+  <data name="DataVenditaCaldaia" xml:space="preserve">
+    <value>Dati Caldaia - Data Vendita</value>
+  </data>
+  <data name="DittaAvvioCaldaia" xml:space="preserve">
+    <value>Dati Caldaia - Ditta Prima Accensione</value>
+  </data>
+  <data name="EmailCliente" xml:space="preserve">
+    <value>Dati Anagrafici - Email</value>
+  </data>
+  <data name="Errore" xml:space="preserve">
+    <value>Errore RU</value>
+  </data>
+  <data name="ErroreSalvaRapporto" xml:space="preserve">
+    <value>Si è verificato un errore nel salvataggio del rapporto</value>
+  </data>
+  <data name="ListaCampiObbligatori" xml:space="preserve">
+    <value>I seguenti campi sono obbligatori</value>
+  </data>
+  <data name="CampiObbligatori" xml:space="preserve">
+    <value>Campi obbligatori</value>
+  </data>
+  <data name="MatricolaCaldaia" xml:space="preserve">
+    <value>Dati Caldaia - Matricola</value>
+  </data>
+  <data name="ModelloCaldaia" xml:space="preserve">
+    <value>Dati Caldaia - Modello</value>
+  </data>
+  <data name="NomeCliente" xml:space="preserve">
+    <value>Dati Anagrafici - Nome</value>
+  </data>
+  <data name="NumCertificatoCaldaia" xml:space="preserve">
+    <value>Dati Caldaia - Numero Certificato Tecnico</value>
+  </data>
+  <data name="RapportoDataIntervento" xml:space="preserve">
+    <value>Intervento - Data Intervento</value>
+  </data>
+  <data name="RapportoMotivoIntervento" xml:space="preserve">
+    <value>Intervento - Motivo Intervento</value>
+  </data>
+  <data name="RapportoNomeTecnico" xml:space="preserve">
+    <value>Intervento - Nome Tecnico</value>
+  </data>
+  <data name="RapportoRicambi" xml:space="preserve">
+    <value>Intervento - Ricambi</value>
+  </data>
+  <data name="RapportoTipologiaLavoro" xml:space="preserve">
+    <value>Intervento - Tipologia di Lavoro</value>
+  </data>
+  <data name="RapportoVociCosto" xml:space="preserve">
+    <value>Lavorazioni - Voci di Costo</value>
+  </data>
+  <data name="TecnicoCaldaia" xml:space="preserve">
+    <value>Dati Caldaia - Tecnico Prima Accensione</value>
+  </data>
+  <data name="TelefonoCliente" xml:space="preserve">
+    <value>Dati Anagrafici - Numero Telefonico</value>
+  </data>
+  <data name="VersioneCaldaia" xml:space="preserve">
+    <value>Dati Caldaia - Versione</value>
+  </data>
+  <data name="ViaCliente" xml:space="preserve">
+    <value>Dati Anagrafici - Via</value>
   </data>
   <data name="Id" xml:space="preserve">
     <value>Id</value>

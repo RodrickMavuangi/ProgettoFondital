@@ -13,7 +13,7 @@ namespace Fondital.Server.Controllers
 {
     [ApiController]
     [Route("vociCostoControl")]
-    [Authorize]
+    [Authorize(Roles = "Direzione,Service Partner")]
     public class VoceCostoController : ControllerBase
     {
         private readonly Serilog.ILogger _logger;
@@ -34,6 +34,7 @@ namespace Fondital.Server.Controllers
         }
 
         [HttpPost("update/{voceCostoId}")]
+        [Authorize(Roles = "Direzione")]
         public async Task UpdateVoceCosto([FromBody] VoceCostoDto voceCostoDto, int voceCostoId)
         {
             VoceCosto voceCostoToUpdate = _mapper.Map<VoceCosto>(voceCostoDto);
@@ -51,6 +52,7 @@ namespace Fondital.Server.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "Direzione")]
         public async Task CreateVoceCosto([FromBody] VoceCostoDto voceCostoDto)
         {
             VoceCosto voceCosto = _mapper.Map<VoceCosto>(voceCostoDto);

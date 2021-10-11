@@ -13,7 +13,7 @@ namespace Fondital.Shared.Models
         public StatoRapporto Stato { get; set; }
         public List<Ricambio> Ricambi { get; set; }
         public List<RapportoVoceCosto> RapportiVociCosto { get; set; }
-        public DateTime? DataRapporto { get; set; }
+        public DateTime DataRapporto { get; set; }
         public string NomeTecnico { get; set; }
 
         // Dati Anagrafici Cliente

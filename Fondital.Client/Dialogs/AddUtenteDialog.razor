@@ -1,5 +1,7 @@
 ﻿@inject MailClient httpClient
 @inject IStringLocalizer<App> localizer
+@inject AuthClient authClient
+@inject UtenteClient utenteClient
 
 <EditForm Model="NuovoUtente" OnValidSubmit="SalvaUtente">
     <DataAnnotationsValidator />

@@ -13,7 +13,7 @@ namespace Fondital.Server.Controllers
 {
     [ApiController]
     [Route("listiniControl")]
-    [Authorize]
+    [Authorize(Roles = "Direzione,Service Partner")]
     public class ListinoController : ControllerBase
     {
         private readonly Serilog.ILogger _logger;
@@ -48,6 +48,7 @@ namespace Fondital.Server.Controllers
         }
 
         [HttpPost("update/{listinoId}")]
+        [Authorize(Roles = "Direzione")]
         public async Task UpdateListino([FromBody] ListinoDto listinoDto, int listinoId)
         {
             Listino listinoToUpdate = _mapper.Map<Listino>(listinoDto);
@@ -65,6 +66,7 @@ namespace Fondital.Server.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "Direzione")]
         public async Task CreateListino([FromBody] ListinoDto listinoDto)
         {
             Listino newListino = _mapper.Map<Listino>(listinoDto);

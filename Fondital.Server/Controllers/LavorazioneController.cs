@@ -14,7 +14,7 @@ namespace Fondital.Server.Controllers
 {
     [ApiController]
     [Route("lavorazioniControl")]
-    [Authorize]
+    [Authorize(Roles = "Direzione,Service Partner")]
     public class LavorazioneController : ControllerBase
     {
         private readonly Serilog.ILogger _logger;
@@ -35,6 +35,7 @@ namespace Fondital.Server.Controllers
         }
 
         [HttpPost("update/{lavorazioneId}")]
+        [Authorize(Roles = "Direzione")]
         public async Task UpdateLavorazione([FromBody] LavorazioneDto lavorazioneDto, int lavorazioneId)
         {
             Lavorazione lavorazioneToUpdate = _mapper.Map<Lavorazione>(lavorazioneDto);
@@ -52,6 +53,7 @@ namespace Fondital.Server.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "Direzione")]
         public async Task<IActionResult> CreateLavorazione([FromBody] LavorazioneDto lavorazioneDto)
         {
             Lavorazione lavorazione = _mapper.Map<Lavorazione>(lavorazioneDto);

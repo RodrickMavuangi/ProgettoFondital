@@ -3,11 +3,11 @@
 
 @inject IStringLocalizer<App> Localizer
 @inject CurrentStateProvider StateProvider
-@inject RapportoClient HttpClient
+@inject RapportoClient RapportoClient
 @inject LavorazioneClient LavorazioneClient
 @inject RestExternalServiceClient RestClient
 @inject NavigationManager NavigationManager
-@attribute [Authorize]
+@attribute [Authorize(Roles = "Direzione,Service Partner")]
 
 <div class="row-1 d-flex justify-content-between flex-wrap flex-md-nowrap pt-0">
     <div class="col-md-5 text-left pb-4 border-bottom">
@@ -27,8 +27,27 @@
             {
                 <TelerikButton Class="btn btn-primary btn-lg mx-1" OnClick="(() => ShowAddVoceCosto = true)">@Localizer["Inserisci"] @Localizer["VoceCosto"] </TelerikButton><i class="bi bi-plus icoPlus"></i>
             }
-            <TelerikButton Class="btn btn-primary btn-verde btn-lg mx-1">@Localizer["Salva"] @Localizer["Modifiche"]</TelerikButton>
 
+            <AuthorizeView Roles="Direzione">
+                <Authorized>
+                    <TelerikButton Class="btn btn-primary btn-verde btn-lg mx-1" OnClick=@(() => Salva()) Enabled=@(!IsSubmitting)>@Localizer["Salva"] @Localizer["Modifiche"]</TelerikButton>
+                </Authorized>
+            </AuthorizeView>
+            <AuthorizeView Roles="Service Partner">
+                <Authorized>
+                    @if (Rapporto.Stato == StatoRapporto.Aperto || Rapporto.Stato == StatoRapporto.Rifiutato)
+                    {
+                        if (CurrentStepIndex != 3)
+                        {
+                            <TelerikButton Class="btn btn-primary btn-verde btn-lg mx-1" OnClick=@(() => Salva()) Enabled=@(!IsSubmitting)>@Localizer["Salva"] @Localizer["Modifiche"]</TelerikButton>
+                        }
+                        else
+                        {
+                            <TelerikButton Class="btn btn-primary btn-verde btn-lg mx-1" OnClick=@(() => Salva(StatoRapporto.Registrato)) Enabled=@(!IsSubmitting)>@Localizer["Invia"]</TelerikButton>
+                        }
+                    }
+                </Authorized>
+            </AuthorizeView>
         </div>
     </div>
 </div>
@@ -38,16 +57,22 @@
     <div class="col-md-8 p-0 pl-0 pr-0 d-inline">
         <TelerikStepper Class="w-100 stepperEp" @bind-Value="@CurrentStepIndex" Linear="true">
             <StepperSteps>
-                <StepperStep Label=@Localizer["DatiAnagrafici"] />
-                <StepperStep Label=@Localizer["DatiCaldaia"] />
-                <StepperStep Label=@Localizer["Intervento"] />
-                <StepperStep Label=@Localizer["Lavorazioni"] />
+                <StepperStep OnChange=@(async (args) => { if (!await Salva()) args.IsCanceled = true; }) Label=@Localizer["DatiAnagrafici"] />
+                <StepperStep OnChange=@(async (args) => { if (!await Salva()) args.IsCanceled = true; }) Label=@Localizer["DatiCaldaia"] />
+                <StepperStep OnChange=@(async (args) => { if (!await Salva()) args.IsCanceled = true; }) Label=@Localizer["Intervento"] />
+                <StepperStep OnChange=@(async (args) => { if (!await Salva()) args.IsCanceled = true; }) Label=@Localizer["Lavorazioni"] />
             </StepperSteps>
         </TelerikStepper>
     </div>
     <div class="col-md-4 p-0 pl-0 pr-0 d-inline text-right">
-        <TelerikButton Class="btn btn-primary-outline outline-icon-left btn-lg mx-1" OnClick=@PreviousStep><i class="bi bi-chevron-left icoBack"></i> @Localizer["Indietro"] </TelerikButton>
-        <TelerikButton Class="btn btn-primary-outline outline-icon-right btn-lg mx-1" OnClick=@NextStep>@Localizer["Avanti"] <i class="bi bi-chevron-right icoForward"></i></TelerikButton>
+        @if (CurrentStepIndex > 0)
+        {
+            <TelerikButton Class="btn btn-primary-outline outline-icon-left btn-lg mx-1" OnClick=@(async () => { await CambiaStep(CurrentStepIndex -1); })><i class="bi bi-chevron-left icoBack"></i> @Localizer["Indietro"] </TelerikButton>
+        }
+        @if (CurrentStepIndex < 3)
+        {
+            <TelerikButton Class="btn btn-primary-outline outline-icon-right btn-lg mx-1" OnClick=@(async () => { await CambiaStep(CurrentStepIndex +1); })>@Localizer["Avanti"] <i class="bi bi-chevron-right icoForward"></i></TelerikButton>
+        }
     </div>
 
 </div>
@@ -163,7 +188,7 @@
                     <label>@Localizer["TipologiaLavoro"]</label>
                     <TelerikDropDownList Data="@LavorazioniDescription"
                                          Class="form-control form-control-lg w100 mb-3"
-                                         @bind-Value="Rapporto.TipoLavoro"/>
+                                         @bind-Value="Rapporto.TipoLavoro" />
                 </span>
                 <span class="col-4">
                     <label>@Localizer["NomeTecnico"]</label>
@@ -221,6 +246,23 @@
         }
     </EditForm>
 </div>
+
+<TelerikWindow Class="modal-app dialogBox" Width="500px" Height="auto" Centered="true" Modal="true" @bind-Visible="ShowCampiObbligatori">
+    <WindowActions>
+        <WindowAction Name="Close" IconClass="k-icon k-i-close text-dark" />
+    </WindowActions>
+    <WindowTitle>@Localizer["CampiObbligatori"]</WindowTitle>
+    <WindowContent>
+        <div>
+            @Localizer["ListaCampiObbligatori"]:
+            <br />
+            @foreach(string campo in CampiDaCompilare)
+                {
+                    <div>@campo</div>
+                }
+        </div>
+    </WindowContent>
+</TelerikWindow>
 
 <TelerikWindow Class="modal-app dialogBox" Width="500px" Height="auto" Centered="true" Modal="true" @bind-Visible="ShowAddRicambio">
     <WindowActions>

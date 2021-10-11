@@ -1,6 +1,8 @@
 ﻿using Fondital.Shared.Dto;
 using Fondital.Shared.Models;
+using Fondital.Shared.Models.Auth;
 using System;
+using System.Collections.Generic;
 using System.Net.Http;
 using System.Net.Http.Json;
 using System.Threading.Tasks;
@@ -44,10 +46,18 @@ namespace Fondital.Client.Clients
         
         public async Task ForgotPassword(ForgotPwRequestDto ForgotRequest)
         {
-            MailRequest _mailRequest = new MailRequest() { Subject = "PASSWORD DIMENTICATA" , ToEmail = ForgotRequest.Email};
+            MailRequestDto _mailRequest = new MailRequestDto() { Subject = "PASSWORD DIMENTICATA" , ToEmail = ForgotRequest.Email};
             var response = await httpClient.PostAsJsonAsync($"MailController", _mailRequest, JsonSerializerOpts.JsonOpts);
             if (!response.IsSuccessStatusCode)
                 throw new Exception(response.Content.ReadAsStringAsync().Result);
+        }
+
+        public async Task AssegnaRuolo(string UtenteEmail, RuoloDto ruolo)
+		{
+                var response = await httpClient.PostAsJsonAsync<RuoloDto>($"authControl/ruolo/{UtenteEmail}",ruolo,JsonSerializerOpts.JsonOpts);
+
+                if (!response.IsSuccessStatusCode)
+                    throw new Exception(response.Content.ReadAsStringAsync().Result);
         }
     }
 }

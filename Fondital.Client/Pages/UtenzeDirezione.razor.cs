@@ -1,5 +1,4 @@
 ﻿using Fondital.Shared.Dto;
-using Fondital.Shared.Models;
 using Microsoft.AspNetCore.Components;
 using System;
 using System.Collections.Generic;
@@ -9,7 +8,7 @@ using Telerik.Blazor;
 
 namespace Fondital.Client.Pages
 {
-    public partial class DetailServicePartner
+    public partial class UtenzeDirezione
     {
         [CascadingParameter]
         public DialogFactory Dialogs { get; set; }
@@ -21,18 +20,17 @@ namespace Fondital.Client.Pages
         public List<string> ListaScelta { get; set; }
         protected bool ShowAddDialog { get; set; } = false;
         protected bool ShowEditDialog { get; set; } = false;
-        protected bool ShowEditDialog_SP { get; set; } = false;
+        private List<UtenteDto> UtentiDirezione = new();
         protected UtenteDto UtenteSelected { get; set; }
-        protected ServicePartnerDto SpSelected { get; set; } = new();
-        public List<UtenteDto> ListaUtentiFiltered => StatusFilter == ListaScelta[0] ? SpSelected.Utenti.Where(x => x.UserName.Contains(SearchText, StringComparison.InvariantCultureIgnoreCase) && x.IsAbilitato == true).ToList() :
-                                                      StatusFilter == ListaScelta[1] ? SpSelected.Utenti.Where(x => x.UserName.Contains(SearchText, StringComparison.InvariantCultureIgnoreCase) && x.IsAbilitato == false).ToList() :
-                                                      SpSelected.Utenti.Where(x => x.UserName.Contains(SearchText, StringComparison.InvariantCultureIgnoreCase)).ToList();
+        public List<UtenteDto> ListaUtDirezioneFiltered => StatusFilter == ListaScelta[0] ? UtentiDirezione.Where(x => x.UserName.Contains(SearchText, StringComparison.CurrentCultureIgnoreCase) && x.IsAbilitato == true).ToList() :
+                                                           StatusFilter == ListaScelta[1] ? UtentiDirezione.Where(x => x.UserName.Contains(SearchText, StringComparison.CurrentCultureIgnoreCase) && x.IsAbilitato == false).ToList() :
+                                                           UtentiDirezione.Where(x => x.UserName.Contains(SearchText, StringComparison.CurrentCultureIgnoreCase)).ToList();
 
         protected override async Task OnInitializedAsync()
         {
             ListaScelta = new() { localizer["Abilitati"], localizer["Disabilitati"] };
             PageSize = Convert.ToInt32(config["PageSize"]);
-            
+
             await RefreshUtenti();
         }
 
@@ -40,26 +38,25 @@ namespace Fondital.Client.Pages
         {
             ShowAddDialog = false;
             ShowEditDialog = false;
-            ShowEditDialog_SP = false;
             await RefreshUtenti();
         }
 
         protected async Task RefreshUtenti()
         {
-            SpSelected = await servicePartnerClient.GetServicePartnerWithUtenti(int.Parse(servicePId));
+            UtentiDirezione = (List<UtenteDto>)await utenteClient.GetUtenti(true);
             StateHasChanged();
         }
 
         protected void EditUtente(string username)
         {
-            UtenteSelected = SpSelected.Utenti.Single(x => x.UserName == username);
+            UtenteSelected = UtentiDirezione.Single(x => x.UserName == username);
             ShowEditDialog = true;
         }
 
         protected async Task SendMail(string username)
         {
-            UtenteSelected = SpSelected.Utenti.Single(x => x.UserName == username);
-
+            UtenteSelected = UtentiDirezione.Single(x => x.UserName == username);
+            
             bool isConfirmed = await Dialogs.ConfirmAsync($"{@localizer["ResetPassword"]} {UtenteSelected.UserName}?", " ");
             if (isConfirmed)
             {
@@ -76,13 +73,13 @@ namespace Fondital.Client.Pages
 
         protected async Task UpdateEnableUtente(string username)
         {
-            UtenteSelected = ListaUtentiFiltered.Single(x => x.UserName == username);
+            UtenteSelected = UtentiDirezione.Single(x => x.UserName == username);
 
             bool isConfirmed = false;
-            if (UtenteSelected.IsAbilitato) 
-                isConfirmed = await Dialogs.ConfirmAsync($"{localizer["ConfermaAbilitazione"]} {localizer["Utente"]}: {UtenteSelected.UserName}", " ");
-            else 
-                isConfirmed = await Dialogs.ConfirmAsync($"{localizer["ConfermaDisabilitazione"]} {localizer["Utente"]}: {UtenteSelected.UserName}", " ");
+            if (UtenteSelected.IsAbilitato)
+                isConfirmed = await Dialogs.ConfirmAsync($"{@localizer["ConfermaAbilitazione"]} {localizer["Utente"]} {UtenteSelected.UserName}", " ");
+            else
+                isConfirmed = await Dialogs.ConfirmAsync($"{@localizer["ConfermaDisabilitazione"]} {localizer["Utente"]} {UtenteSelected.UserName}", " ");
 
             if (isConfirmed)
             {
@@ -99,7 +96,7 @@ namespace Fondital.Client.Pages
             {
                 //	//fai revert: ^ restituisce lo XOR dei due valori
                 //	//true XOR true = false
-                //	//false XOR true = true
+                //	//false XOR true = true kjkj
                 UtenteSelected.IsAbilitato ^= true;
             }
         }

@@ -2,7 +2,7 @@
 
 @inject ConfigurazioneClient confClient
 @inject IStringLocalizer<App> localizer
-@attribute [Authorize]
+@attribute [Authorize(Roles = "Direzione")]
 
 <div class="row-1 d-flex justify-content-between flex-wrap flex-md-nowrap  pt-0 mb-64">
     <!--TITOLO PAGINA-->
@@ -45,9 +45,9 @@ else
                     <label class="form-label">@localizer["PeriodoValidita"] @localizer["Garanzia"]</label>
                     <InputSelect @bind-Value="Input.Garanzia" @oninput="ResetSubmitTrigger">
                         @foreach (DurataValiditaConfigurazione durata in Enum.GetValues(typeof(DurataValiditaConfigurazione)))
-                        {
+                            {
                             <option value="@durata">@durata.Description()</option>
-                        }
+                            }
                     </InputSelect>
                     <ValidationMessage For="@(() => Input.Garanzia)" />
                 </div>
@@ -59,9 +59,9 @@ else
                     </label>
                     <InputSelect @bind-Value="Input.Password" @oninput="ResetSubmitTrigger">
                         @foreach (DurataValiditaConfigurazione durata in Enum.GetValues(typeof(DurataValiditaConfigurazione)))
-                        {
+                            {
                             <option value="@durata">@durata.Description()</option>
-                        }
+                            }
                     </InputSelect>
                     <ValidationMessage For="@(() => Input.Password)" />
                 </div>
