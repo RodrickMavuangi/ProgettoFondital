@@ -214,7 +214,7 @@
                             <InputNumber Class="form-control inputCosto d-inline mr-3" @bind-Value="Ricambio.Costo" />
                             <InputText Class="form-control inputDescr d-inline" @bind-Value="Ricambio.Descrizione" />
                             @*<a href="#" title="Elimina" class="icoDelete d-inline rosso text-center"><i class="bi bi-x-square"></i></a>*@
-                            <TelerikButton OnClick="(() => Rapporto.Ricambi.Remove(Ricambio))" />
+                            <TelerikButton OnClick="(() => Rapporto.Ricambi.Remove(Ricambio))" Class="icoDelete d-inline rosso text-center" IconClass="" ImageUrl="/img/Icons/delete.svg" />
                         </div>
                     }
                 </div>
