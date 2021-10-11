@@ -12,26 +12,22 @@ namespace Fondital.Client.Pages
     public partial class DetailRapporto
     {
         [CascadingParameter] DialogFactory Dialogs { get; set; }
+        [Parameter] public string Id { get; set; }
         private RapportoDto Rapporto { get; set; } = new();
         private List<RapportoVoceCostoDto> RapportiVociCosto { get; set; } = new();
-        private RapportoVoceCostoDto NewRapportoVoceCosto { get; set; } = new();
         private RicambioDto NewRicambio { get; set; } = new();
         public List<LavorazioneDto> ListaLavorazioni { get; set; } = new();
         public List<string> LavorazioniDescription { get; set; } = new();
         public RapportoVoceCostoDto RapportoVoceCostoSelected { get; set; } = new();
         public string Modello { get; set; }        
-        protected List<string> CampiDaCompilare { get; set; } = new();
-        
+        protected List<string> CampiDaCompilare { get; set; } = new();       
         private int CurrentStepIndex { get; set; }
         private string CurrentCulture { get; set; }
-
         private bool ShowEditVoceCosto { get; set; } = false;
         private bool ShowAddRicambio { get; set; } = false;
         private bool ShowAddVoceCosto { get; set; } = false;
         private bool ShowCampiObbligatori { get; set; } = false;
-        private bool IsSubmitting { get; set; } = false;
-        
-        [Parameter] public string Id { get; set; }
+        private bool IsSubmitting { get; set; } = false;      
 
         protected override async Task OnInitializedAsync()
         {
@@ -87,10 +83,6 @@ namespace Fondital.Client.Pages
 
         //protected async void GetModelloCaldaia() =>
         //    Modello = await RestClient.ModelloCaldaiaService(Rapporto.Caldaia.Matricola ?? "");
-
-        protected void EditVoceCosto(int Id)
-        {
-        }
 
         protected async Task CambiaStep(int newStep)
         {
