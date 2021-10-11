@@ -14,7 +14,7 @@ namespace Fondital.Server.Controllers
 {
     [ApiController]
     [Route("difettiControl")]
-    [Authorize]
+    [Authorize(Roles = "Direzione,Service Partner")]
     public class DifettoController : ControllerBase
     {
         private readonly Serilog.ILogger _logger;
@@ -35,6 +35,7 @@ namespace Fondital.Server.Controllers
         }
 
         [HttpPost("update/{difettoId}")]
+        [Authorize(Roles = "Direzione")]
         public async Task UpdateDifetto([FromBody] DifettoDto difettoDto, int difettoId)
         {
             Difetto difettoToUpdate = _mapper.Map<Difetto>(difettoDto);
@@ -52,6 +53,7 @@ namespace Fondital.Server.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "Direzione")]
         public async Task<IActionResult> CreateDifetto([FromBody] DifettoDto difettoDto)
         {
             Difetto difetto = _mapper.Map<Difetto>(difettoDto);

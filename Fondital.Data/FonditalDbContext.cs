@@ -14,7 +14,7 @@ using System.Threading.Tasks;
 
 namespace Fondital.Data
 {
-    public class FonditalDbContext : IdentityDbContext<Utente, Ruolo, int>, IPersistedGrantDbContext
+    public class FonditalDbContext : IdentityDbContext<Utente,Ruolo,int>, IPersistedGrantDbContext
     {
         private readonly IOptions<OperationalStoreOptions> _operationalStoreOptions;
 
@@ -32,10 +32,9 @@ namespace Fondital.Data
         public DbSet<Lavorazione> Lavorazioni { get; set; }
         public DbSet<Rapporto> Rapporti { get; set; }
         public DbSet<RapportoVoceCosto> RapportiVociCosto { get; set; }
-
+        public DbSet<Ruolo> Ruoli { get; set; }
         public DbSet<PersistedGrant> PersistedGrants { get; set; }
         public DbSet<DeviceFlowCodes> DeviceFlowCodes { get; set; }
-
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);

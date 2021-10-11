@@ -4,19 +4,21 @@ using Fondital.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
-namespace Fondital.Server.Migrations
+namespace Fondital.Data.Migrations
 {
     [DbContext(typeof(FonditalDbContext))]
-    partial class FonditalDBContextModelSnapshot : ModelSnapshot
+    [Migration("20210930122011_NullableServicePartnerId")]
+    partial class NullableServicePartnerId
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
-                .HasAnnotation("ProductVersion", "5.0.10")
+                .HasAnnotation("ProductVersion", "5.0.9")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
             modelBuilder.Entity("Fondital.Shared.Models.Auth.Ruolo", b =>
@@ -24,8 +26,6 @@ namespace Fondital.Server.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
-                        .HasAnnotation("SqlServer:IdentityIncrement", 1)
-                        .HasAnnotation("SqlServer:IdentitySeed", 1)
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("ConcurrencyStamp")
@@ -33,7 +33,6 @@ namespace Fondital.Server.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
-                        .IsRequired()
                         .HasMaxLength(256)
                         .HasColumnType("nvarchar(256)");
 
@@ -42,9 +41,6 @@ namespace Fondital.Server.Migrations
                         .HasColumnType("nvarchar(256)");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("Name")
-                        .IsUnique();
 
                     b.HasIndex("NormalizedName")
                         .IsUnique()
@@ -622,8 +618,7 @@ namespace Fondital.Server.Migrations
                 {
                     b.HasOne("Fondital.Shared.Models.ServicePartner", "ServicePartner")
                         .WithMany("Utenti")
-                        .HasForeignKey("ServicePartnerId")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .HasForeignKey("ServicePartnerId");
 
                     b.Navigation("ServicePartner");
                 });
@@ -633,13 +628,13 @@ namespace Fondital.Server.Migrations
                     b.HasOne("Fondital.Shared.Models.ServicePartner", "ServicePartner")
                         .WithMany("Listini")
                         .HasForeignKey("ServicePartnerId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("Fondital.Shared.Models.VoceCosto", "VoceCosto")
                         .WithMany("Listini")
                         .HasForeignKey("VoceCostoId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("ServicePartner");
@@ -652,7 +647,7 @@ namespace Fondital.Server.Migrations
                     b.HasOne("Fondital.Shared.Models.Auth.Utente", "Utente")
                         .WithMany("Rapporti")
                         .HasForeignKey("UtenteId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.OwnsOne("Fondital.Shared.Models.Caldaia", "Caldaia", b1 =>
@@ -761,13 +756,13 @@ namespace Fondital.Server.Migrations
                     b.HasOne("Fondital.Shared.Models.Rapporto", "Rapporto")
                         .WithMany("VociCostoRapporti")
                         .HasForeignKey("RapportoId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("Fondital.Shared.Models.VoceCosto", "VoceCosto")
                         .WithMany("VociCostoRapporti")
                         .HasForeignKey("VoceCostoId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Rapporto");
@@ -779,8 +774,7 @@ namespace Fondital.Server.Migrations
                 {
                     b.HasOne("Fondital.Shared.Models.Rapporto", "Rapporto")
                         .WithMany("Ricambi")
-                        .HasForeignKey("RapportoId")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .HasForeignKey("RapportoId");
 
                     b.Navigation("Rapporto");
                 });
@@ -790,7 +784,7 @@ namespace Fondital.Server.Migrations
                     b.HasOne("Fondital.Shared.Models.Auth.Ruolo", null)
                         .WithMany()
                         .HasForeignKey("RoleId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
@@ -799,7 +793,7 @@ namespace Fondital.Server.Migrations
                     b.HasOne("Fondital.Shared.Models.Auth.Utente", null)
                         .WithMany()
                         .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
@@ -808,7 +802,7 @@ namespace Fondital.Server.Migrations
                     b.HasOne("Fondital.Shared.Models.Auth.Utente", null)
                         .WithMany()
                         .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
@@ -817,13 +811,13 @@ namespace Fondital.Server.Migrations
                     b.HasOne("Fondital.Shared.Models.Auth.Ruolo", null)
                         .WithMany()
                         .HasForeignKey("RoleId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("Fondital.Shared.Models.Auth.Utente", null)
                         .WithMany()
                         .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
@@ -832,7 +826,7 @@ namespace Fondital.Server.Migrations
                     b.HasOne("Fondital.Shared.Models.Auth.Utente", null)
                         .WithMany()
                         .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 

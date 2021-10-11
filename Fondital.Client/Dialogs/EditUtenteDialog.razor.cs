@@ -10,9 +10,7 @@ namespace Fondital.Client.Dialogs
         [Parameter] public EventCallback OnClose { get; set; }
         [Parameter] public EventCallback OnSave { get; set; }
         [Parameter] public UtenteDto UtenteToUpdate { get; set; }
-
         protected bool isSubmitting = false;
-
         protected string ErrorMessage = "";
 
         protected async Task SalvaUtente()
@@ -22,8 +20,7 @@ namespace Fondital.Client.Dialogs
 
             try
             {
-                UtenteToUpdate.Email = UtenteToUpdate.UserName;
-                await httpClient.UpdateUtente(UtenteToUpdate.Id, UtenteToUpdate);
+                await httpClient.UpdateUtente(UtenteToUpdate);
                 isSubmitting = false;
                 await OnSave.InvokeAsync();
             }

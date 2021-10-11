@@ -14,7 +14,7 @@ namespace Fondital.Server.Controllers
 {
     [ApiController]
     [Route("servicePartnersControl")]
-    [Authorize]
+    [Authorize(Roles = "Direzione,Service Partner")]
     public class ServicePartnerController : ControllerBase
     {
         private readonly Serilog.ILogger _logger;
@@ -29,12 +29,14 @@ namespace Fondital.Server.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = "Direzione")]
         public async Task<IEnumerable<ServicePartnerDto>> Get()
         {
             return _mapper.Map<IEnumerable<ServicePartnerDto>>(await _spService.GetAllServicePartners());
         }
 
         [HttpGet("utenti/{id}")]
+        [Authorize(Roles = "Direzione")]
         public async Task<ServicePartnerDto> GetWithUtenti(int id)
         {
             try
@@ -63,6 +65,7 @@ namespace Fondital.Server.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "Direzione")]
         public async Task<IActionResult> CreateServicePartner([FromBody] ServicePartnerDto servicePartnerDto)
         {
             ServicePartner servicePartner = _mapper.Map<ServicePartner>(servicePartnerDto);
@@ -94,7 +97,8 @@ namespace Fondital.Server.Controllers
         }
 
         [HttpPut("{id}")]
-        public async Task UpdateServicePartner(int id, [FromBody] ServicePartnerDto spDtoToUpdate)
+        [Authorize(Roles = "Direzione")]
+        public async Task<IActionResult> UpdateServicePartner(int id, [FromBody] ServicePartnerDto spDtoToUpdate)
         {
             ServicePartner spToUpdate = _mapper.Map<ServicePartner>(spDtoToUpdate);
 
@@ -102,11 +106,12 @@ namespace Fondital.Server.Controllers
             {
                 await _spService.UpdateServicePartner(id, spToUpdate);
                 _logger.Information("Info: {Action} {Object} {ObjectId} effettuato con successo", "UPDATE", "ServicePartner", id);
+                return Ok();
             }
             catch (Exception ex)
             {
                 _logger.Error("Eccezione {Action} {Object} {ObjectId}: {ExceptionMessage}", "UPDATE", "ServicePartner", id, ex.Message);
-                throw;
+                return BadRequest($"{ex.Message} - {ex.InnerException?.Message}");
             }
         }
     }

@@ -11,7 +11,7 @@ namespace Fondital.Server.Controllers
 {
     [ApiController]
     [Route("externalServiceController")]
-    [Authorize]
+    [Authorize(Roles = "Direzione,Service Partner")]
     public class RestExternalServiceController : ControllerBase
     {
         private readonly Serilog.ILogger _logger;
@@ -26,7 +26,6 @@ namespace Fondital.Server.Controllers
         }
 
         [HttpGet("modelloCaldaia/{matricola}")]
-        [AllowAnonymous]
         public async Task<IActionResult> GetServiceCaldaia(string matricola)
         {
             try

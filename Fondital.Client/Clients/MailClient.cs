@@ -1,13 +1,7 @@
 ﻿using Fondital.Shared.Dto;
-using Fondital.Shared.Models;
-using Fondital.Shared.Models.Auth;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Json;
-using System.Text.Json;
-using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 namespace Fondital.Client.Clients
@@ -15,32 +9,46 @@ namespace Fondital.Client.Clients
 	public class MailClient
 	{
 		private readonly HttpClient httpClient;
-		public MailClient(HttpClient httpClient)
+		private readonly AuthClient _authClient;
+		public MailClient(HttpClient httpClient, AuthClient authClient)
 		{
 			this.httpClient = httpClient;
+			_authClient = authClient;
 		}
 
-		public async Task sendMail(MailRequest mailRequest)
+        public async Task sendMail(MailRequestDto mailRequest)
+        {
+            try
+            {
+                var response = await httpClient.PostAsJsonAsync("MailController", mailRequest, JsonSerializerOpts.JsonOpts);
+                response.EnsureSuccessStatusCode();
+            }
+            catch (Exception e)
+            {
+                throw;
+            }
+        }
+
+		public async Task sendMailForNewUser(UtenteDto utente)
 		{
 			try
 			{
-				var response = await httpClient.PostAsJsonAsync("MailController", mailRequest, JsonSerializerOpts.JsonOpts);
-				response.EnsureSuccessStatusCode();
-				//var result = await response.Content.ReadFromJsonAsync<Utente>(JsonSerializerOpts.JsonOpts);
-			}
-			catch (Exception e)
-			{
-				throw;
-			}
-		}
+				if(utente.ServicePartner != null)
+				{
+					// Utente con ServicePartner come Ruolo
 
-		public async Task sendMailForNewUser(UtenteDto utente, ServicePartnerDto servicePartner)
-		{
-			try
-			{
-				int servicePartnerId = servicePartner.Id;
-				var response = await httpClient.PostAsJsonAsync($"MailController/{servicePartnerId}", utente, JsonSerializerOpts.JsonOpts);
-				response.EnsureSuccessStatusCode();
+					var response = await httpClient.PostAsJsonAsync("MailController/NewUser", utente, JsonSerializerOpts.JsonOpts);
+					response.EnsureSuccessStatusCode();
+					await _authClient.AssegnaRuolo(utente.UserName, new RuoloDto() { Name = "Service Partner" });
+				}
+				else
+				{
+					//Utente con Direzione come Ruolo
+
+					var response = await httpClient.PostAsJsonAsync("MailController/NewUser", utente, JsonSerializerOpts.JsonOpts);
+					response.EnsureSuccessStatusCode();
+					await _authClient.AssegnaRuolo(utente.UserName, new RuoloDto() { Name = "Direzione" });
+				}
 			}
 			catch (Exception e)
 			{

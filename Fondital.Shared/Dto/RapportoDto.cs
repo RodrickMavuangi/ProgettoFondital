@@ -12,7 +12,7 @@ namespace Fondital.Shared.Dto
         public StatoRapporto Stato { get; set; } = 0;
         public List<RapportoVoceCostoDto> RapportiVociCosto { get; set; } = new();
         public List<RicambioDto> Ricambi { get; set; } = new();
-        public DateTime? DataRapporto { get; set; }
+        public DateTime DataRapporto { get; set; } = DateTime.Now;
         public string NomeTecnico { get; set; }
 
         // Dati Anagrafici

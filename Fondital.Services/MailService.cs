@@ -1,4 +1,4 @@
-﻿using Fondital.Shared.Models;
+﻿using Fondital.Shared.Dto;
 using Fondital.Shared.Models.Settings;
 using Fondital.Shared.Services;
 using Microsoft.Extensions.Options;
@@ -15,7 +15,7 @@ namespace Fondital.Services
             _mailSettings = mailSettings.Value;
         }
 
-        public void SendEmailAsync(MailRequest mailRequest)
+        public void SendEmailAsync(MailRequestDto mailRequest)
         {
             try
             {
