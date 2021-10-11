@@ -42,7 +42,7 @@ namespace Fondital.Services
         public async Task<int> AddRapporto(Rapporto rapporto, Utente creatingUser)
         {
             await _unitOfWork.Rapporti.AddAudit(rapporto, creatingUser, StatoRapporto.Aperto, "Creazione rapporto");
-            await _unitOfWork.Rapporti.AddRapporto(rapporto, creatingUser);
+            await _unitOfWork.Rapporti.AddRapporto(rapporto);
             await _unitOfWork.CommitAsync();
 
             return rapporto.Id;
