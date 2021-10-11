@@ -34,7 +34,6 @@ namespace Fondital.Repository
         public async Task AddRapporto(Rapporto rapporto)
         {
             await Db.Rapporti.AddAsync(rapporto);
-
             Db.Entry(rapporto.Utente).State = EntityState.Unchanged;
         }
 

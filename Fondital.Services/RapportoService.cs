@@ -48,9 +48,4 @@ namespace Fondital.Services
             return rapporto.Id;
         }
     }
-
-    public record RecordRapporto(Rapporto RapportoClass)
-    {
-        protected Rapporto Rapporto { get; set; } = RapportoClass;
-    }
 }
