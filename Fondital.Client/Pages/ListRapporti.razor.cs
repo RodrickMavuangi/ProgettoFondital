@@ -23,12 +23,10 @@ namespace Fondital.Client.Pages
         private string SearchByMatricola { get; set; } = "";
         private string SearchByTelefono { get; set; } = "";
         private string SearchByEmail { get; set; } = "";
-        private bool LoadingVar { get; set; }
         protected bool ShowAddDialog { get; set; } = false;
 
         protected override async Task OnInitializedAsync()
         {
-            LoadingVar = true;
             PageSize = Convert.ToInt32(Config["PageSize"]);
             await RefreshRapporti();
         }
@@ -49,7 +47,6 @@ namespace Fondital.Client.Pages
         {
             ListaRapporti = (List<RapportoDto>)await HttpClient.GetAllRapporti();
             ListRagioneSociale = ListaRapporti.Select(x => x.Utente.ServicePartner.RagioneSociale).Distinct().ToList();
-            LoadingVar = false;
             StateHasChanged();
         }
 
