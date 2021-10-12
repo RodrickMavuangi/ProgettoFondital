@@ -40,7 +40,7 @@ namespace Fondital.Server.Controllers
             }
             catch (Exception ex)
             {
-                _logger.Error("Eccezione {Action} {Object} {ObjectId}: {ExceptionMessage}", "GET", "Caldaia", "caldaiaId", ex.Message);
+                _logger.Error(ex, "Eccezione {Action} {Object} {ObjectId}", "GET", "Caldaia", "caldaiaId");
                 return BadRequest(ex.Message);
             }
         }
@@ -61,7 +61,7 @@ namespace Fondital.Server.Controllers
             }
             catch (Exception ex)
             {
-                _logger.Error("Eccezione {Action} {Object} {ObjectId}: {ExceptionMessage}", "GET", "Ricambio", "ricambioId", ex.Message);
+                _logger.Error(ex, "Eccezione {Action} {Object} {ObjectId}", "GET", "Ricambio", "ricambioId");
                 return BadRequest(ex.Message);
             }
         }

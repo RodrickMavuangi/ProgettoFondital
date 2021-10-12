@@ -39,7 +39,7 @@ namespace Fondital.Server.Controllers
             }
             catch (Exception ex)
             {
-                _logger.Error("Eccezione {Action} {Object} {ObjectId}: {ExceptionMessage}", "UPDATE", "Configurazione", config.Chiave, ex.Message);
+                _logger.Error(ex, "Eccezione {Action} {Object} {ObjectId}", "UPDATE", "Configurazione", config.Chiave);
                 throw;
             }
         }

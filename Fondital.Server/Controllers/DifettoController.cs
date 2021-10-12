@@ -47,7 +47,7 @@ namespace Fondital.Server.Controllers
             }
             catch (Exception ex)
             {
-                _logger.Error("Eccezione {Action} {Object} {ObjectId}: {ExceptionMessage}", "UPDATE", "Difetto", difettoId, ex.Message);
+                _logger.Error(ex, "Eccezione {Action} {Object} {ObjectId}", "UPDATE", "Difetto", difettoId);
                 throw;
             }
         }
@@ -65,10 +65,7 @@ namespace Fondital.Server.Controllers
             }
             catch (Exception ex)
             {
-                if (ex.InnerException != null)
-                    _logger.Error("Eccezione {Action} {Object}: {ExceptionMessage} - INNER EXCEPTION: {InnerException}", "CREATE", "Difetto", ex.Message, ex.InnerException.Message);
-                else
-                    _logger.Error("Eccezione {Action} {Object}: {ExceptionMessage}", "CREATE", "Difetto", ex.Message);
+                _logger.Error(ex, "Eccezione {Action} {Object}", "CREATE", "Difetto");
 
                 List<Difetto> lista = (List<Difetto>)await _difettoService.GetAllDifetti();
 

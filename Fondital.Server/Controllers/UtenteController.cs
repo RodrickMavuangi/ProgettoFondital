@@ -43,7 +43,7 @@ namespace Fondital.Server.Controllers
             }
             catch (Exception ex)
             {
-                _logger.Error("Eccezione {Action} {Object} {ObjectId}: {ExceptionMessage}", "GET", "Utente", username, ex.Message);
+                _logger.Error(ex, "Eccezione {Action} {Object} {ObjectId}", "GET", "Utente", username);
                 throw;
             }
         }
@@ -62,7 +62,7 @@ namespace Fondital.Server.Controllers
             }
             catch (Exception ex)
             {
-                _logger.Error("Eccezione {Action} {Object} {ObjectId}: {ExceptionMessage}", "UPDATE", "Utente", utenteDtoToUpdate.UserName, ex.Message);
+                _logger.Error(ex, "Eccezione {Action} {Object} {ObjectId}", "UPDATE", "Utente", utenteDtoToUpdate.UserName);
                 return BadRequest($"{ex.Message} - {ex.InnerException?.Message}");
             }
         }
