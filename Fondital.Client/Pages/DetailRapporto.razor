@@ -57,10 +57,10 @@
     <div class="col-md-8 p-0 pl-0 pr-0 d-inline">
         <TelerikStepper Class="w-100 stepperEp" @bind-Value="@CurrentStepIndex" Linear="true">
             <StepperSteps>
-                <StepperStep OnChange=@(async (args) => { if (!await Salva()) args.IsCanceled = true; }) Label=@Localizer["DatiAnagrafici"] />
-                <StepperStep OnChange=@(async (args) => { if (!await Salva()) args.IsCanceled = true; }) Label=@Localizer["DatiCaldaia"] />
-                <StepperStep OnChange=@(async (args) => { if (!await Salva()) args.IsCanceled = true; }) Label=@Localizer["Intervento"] />
-                <StepperStep OnChange=@(async (args) => { if (!await Salva()) args.IsCanceled = true; }) Label=@Localizer["Lavorazioni"] />
+                <StepperStep OnChange=@(async (args) => { if (!await Salva()) args.IsCancelled = true; }) Label=@Localizer["DatiAnagrafici"] />
+                <StepperStep OnChange=@(async (args) => { if (!await Salva()) args.IsCancelled = true; }) Label=@Localizer["DatiCaldaia"] />
+                <StepperStep OnChange=@(async (args) => { if (!await Salva()) args.IsCancelled = true; }) Label=@Localizer["Intervento"] />
+                <StepperStep OnChange=@(async (args) => { if (!await Salva()) args.IsCancelled = true; }) Label=@Localizer["Lavorazioni"] />
             </StepperSteps>
         </TelerikStepper>
     </div>
