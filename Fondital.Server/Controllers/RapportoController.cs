@@ -67,10 +67,6 @@ namespace Fondital.Server.Controllers
                 _logger.Error(ex, "Eccezione {Action} {Object} {ObjectId}", "UPDATE", "Rapporto", rapportoId);
                 return BadRequest($"{ex.Message} - {ex.InnerException?.Message}");
             }
-            //finally
-            //{
-            //    Serilog.Log.CloseAndFlush();
-            //}
         }
 
         [HttpPost]
