@@ -7,7 +7,6 @@
 @inject LavorazioneClient LavorazioneClient
 @inject RestExternalServiceClient RestClient
 @inject NavigationManager NavigationManager
-@inject CurrentStateProvider StateProvider
 @attribute [Authorize(Roles = "Direzione,Service Partner")]
 
 <div class="row-1 d-flex justify-content-between flex-wrap flex-md-nowrap pt-0">
@@ -79,7 +78,7 @@
 </div>
 <div>
     <form>
-        <fieldset disabled="@(!DisAbilitaModifica)">
+        <fieldset disabled="@(!AbilitaModifica)">
             <EditForm Model="Rapporto">
                 <DataAnnotationsValidator />
 
@@ -137,35 +136,35 @@
                         </span>
                         <span class="col-4">
                             <label>@Localizer["Versione"]</label>
-                            <InputText Class="form-control form-control-lg w100 mb-3" @bind-Value="Rapporto.Caldaia.Versione" Enabled="@(Modello!=null)" />
+                            <InputText Class="form-control form-control-lg w100 mb-3" @bind-Value="Rapporto.Caldaia.Versione" disabled="@(Modello==null)" />
                         </span>
                     </div>
                     <div class="form-field my-4 d-flex justify-content-start w-100">
                         <span class="col-4">
                             <label>@Localizer["DataVendita"]</label>
-                            <TelerikDatePicker Class="w100 mb-3 datePickerEp" @bind-Value="Rapporto.Caldaia.DataVendita" Enabled="@(!AbilitaSingDatePicker && Modello!=null)" />
+                            <TelerikDatePicker Class="w100 mb-3 datePickerEp" @bind-Value="Rapporto.Caldaia.DataVendita" Enabled="@(AbilitaSingDatePicker && Modello!=null)" />
                         </span>
                         <span class="col-4">
                             <label>@Localizer["DataMontaggio"]</label>
-                            <TelerikDatePicker Class="w100 mb-3 datePickerEp" @bind-Value="Rapporto.Caldaia.DataMontaggio" Enabled="@(!AbilitaSingDatePicker && Modello!=null)" />
+                            <TelerikDatePicker Class="w100 mb-3 datePickerEp" @bind-Value="Rapporto.Caldaia.DataMontaggio" Enabled="@(AbilitaSingDatePicker && Modello!=null)" />
                         </span>
                         <span class="col-4">
                             <label>@Localizer["DataAvvio"]</label>
-                            <TelerikDatePicker Class="w100 mb-3 datePickerEp" @bind-Value="Rapporto.Caldaia.DataAvvio" Enabled="@(!AbilitaSingDatePicker && Modello!=null)" />
+                            <TelerikDatePicker Class="w100 mb-3 datePickerEp" @bind-Value="Rapporto.Caldaia.DataAvvio" Enabled="@(AbilitaSingDatePicker && Modello!=null)" />
                         </span>
                     </div>
                     <div class="form-field my-4 d-flex justify-content-start w-100">
                         <span class="col-4">
                             <label>@Localizer["TecnicoPrimaAccensione"]</label>
-                            <InputText Class="form-control form-control-lg w100 mb-3" @bind-Value="Rapporto.Caldaia.TecnicoPrimoAvvio" Enabled="@(Modello!=null)" />
+                            <InputText Class="form-control form-control-lg w100 mb-3" @bind-Value="Rapporto.Caldaia.TecnicoPrimoAvvio" disabled ="@(Modello==null)" />
                         </span>
                         <span class="col-4">
                             <label>@Localizer["NumeroCertTecnico"]</label>
-                            <InputNumber Class="form-control form-control-lg w100 mb-3" @bind-Value="Rapporto.Caldaia.NumCertificatoTecnico" Enabled="@(Modello!=null)" />
+                            <InputNumber Class="form-control form-control-lg w100 mb-3" @bind-Value="Rapporto.Caldaia.NumCertificatoTecnico" disabled ="@(Modello==null)" />
                         </span>
                         <span class="col-4">
                             <label>@Localizer["DittaPrimoAvvio"]</label>
-                            <InputText Class="form-control form-control-lg w100 mb-3" @bind-Value="Rapporto.Caldaia.DittaPrimoAvvio" Enabled="@(Modello!=null)" />
+                            <InputText Class="form-control form-control-lg w100 mb-3" @bind-Value="Rapporto.Caldaia.DittaPrimoAvvio" disabled ="@(Modello==null)" />
                         </span>
                     </div>
                 }
@@ -175,7 +174,7 @@
                     <div class="form-field my-4 d-flex justify-content-start w-100">
                         <span class="col-4">
                             <label>@Localizer["DataIntervento"]</label>
-                            <TelerikDatePicker Class="w100 mb-3 datePickerEp" @bind-Value="Rapporto.DataIntervento" Enabled="@(!AbilitaSingDatePicker)" />
+                            <TelerikDatePicker Class="w100 mb-3 datePickerEp" @bind-Value="Rapporto.DataIntervento" Enabled="@(AbilitaSingDatePicker)" />
                         </span>
                         <span class="col-8">
                             <label>@Localizer["MotivoIntervento"]</label>
@@ -189,7 +188,7 @@
                             @*<InputText Class="form-control form-control-lg w100 mb-3" @bind-Value="Rapporto.TipoLavoro" />*@
                             <TelerikDropDownList Data="@LavorazioniDescription"
                                                  Class="form-control form-control-lg w100 mb-3"
-                                                 @bind-Value="Rapporto.TipoLavoro" Enabled="@(!AbilitaSingDatePicker)" />
+                                                 @bind-Value="Rapporto.TipoLavoro" Enabled="@(AbilitaSingDatePicker)" />
                         </span>
                         <span class="col-4">
                             <label>@Localizer["NomeTecnico"]</label>

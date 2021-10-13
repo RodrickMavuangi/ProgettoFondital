@@ -10,8 +10,10 @@ using Telerik.Blazor;
 
 namespace Fondital.Client.Pages
 {
-	public partial class ListRapporti
+    public partial class ListRapporti
     {
+        [CascadingParameter]
+        public DialogFactory Dialogs { get; set; }
         private List<RapportoDto> ListaRapporti { get; set; }
         private List<string> ListRagioneSociale { get; set; } = new();
         private static IEnumerable<string> ListStati { get => EnumExtensions.GetEnumNames<StatoRapporto>(); }
@@ -26,12 +28,9 @@ namespace Fondital.Client.Pages
         private string SearchByTelefono { get; set; } = "";
         private string SearchByEmail { get; set; } = "";
         public UtenteDto UtenteCorrente { get; set; }
-		private bool IsSubmitting = false;
-    private bool ShowAddDialog { get; set; } = false;
-
-
-        [CascadingParameter]
-        public DialogFactory Dialogs { get; set; }
+        private bool IsSubmitting = false;
+        private bool ShowAddDialog { get; set; } = false;
+        
         protected override async Task OnInitializedAsync()
         {
             UtenteCorrente = await StateProvider.GetCurrentUser();
@@ -40,7 +39,7 @@ namespace Fondital.Client.Pages
             await RefreshRapporti();
         }
 
-        public List<RapportoDto> ListaRapportiFiltered =>   ListaRapporti
+        public List<RapportoDto> ListaRapportiFiltered => ListaRapporti
             .Where(x => x.Utente.ServicePartner.RagioneSociale.Contains(SearchBySp, StringComparison.InvariantCultureIgnoreCase)
                      && x.Stato.ToString().Contains(SearchByStato, StringComparison.InvariantCultureIgnoreCase)
                      && x.DataRapporto.Date >= SearchByDataDa.Date
@@ -55,11 +54,10 @@ namespace Fondital.Client.Pages
         protected async Task RefreshRapporti()
         {
             ListaRapporti = (List<RapportoDto>)await HttpClient.GetAllRapporti();
-            //ListRagioneSociale = ListaRapporti.Select(x => x.Utente.ServicePartner.RagioneSociale).Distinct().ToList();
-                      if (UtenteCorrente.ServicePartner != null)
+            if (UtenteCorrente.ServicePartner != null)
             {
-                ListRagioneSociale = ListaRapporti.Where(x => x.Utente.ServicePartner.Id == UtenteCorrente.ServicePartner.Id).Select(x => x.Utente.ServicePartner.RagioneSociale).Distinct().ToList();
-                SearchBySp = ListRagioneSociale.FirstOrDefault();
+                ListRagioneSociale = new() { UtenteCorrente.ServicePartner.RagioneSociale };
+                SearchBySp = ListRagioneSociale.First();
             }
             else
             {

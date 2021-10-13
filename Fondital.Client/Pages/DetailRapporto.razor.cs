@@ -25,8 +25,8 @@ namespace Fondital.Client.Pages
         protected List<string> CampiDaCompilare { get; set; } = new();       
         private int CurrentStepIndex { get; set; }
         private string CurrentCulture { get; set; }
-        private bool DisAbilitaModifica { get; set; } = true;
-        private bool AbilitaSingDatePicker { get; set; } = false; 
+        private bool AbilitaModifica { get; set; } = true;
+        private bool AbilitaSingDatePicker { get; set; } = true; 
         private bool ShowEditVoceCosto { get; set; } = false;
         private bool ShowAddRicambio { get; set; } = false;
         private bool ShowAddVoceCosto { get; set; } = false;
@@ -51,20 +51,18 @@ namespace Fondital.Client.Pages
                 LavorazioniDescription = ListaLavorazioni.Select(x => x.NomeItaliano).ToList();
             else
                 LavorazioniDescription = ListaLavorazioni.Select(x => x.NomeRusso).ToList();
-          
-            await RefreshRapporti();
+
+            SetEnabled();
         }
 
-		protected async Task RefreshRapporti()
+		protected void SetEnabled()
 		{
-            Rapporto = await HttpClient.GetRapportoById(int.Parse(Id));
-            Rapporto.Utente = await StateProvider.GetCurrentUser();
+            //se sei un service partner e il rapporto non è aperto o rifiutato
             if (UtenteCorrente.ServicePartner != null && !(Rapporto.Stato == StatoRapporto.Aperto || Rapporto.Stato == StatoRapporto.Rifiutato))
             {
-                DisAbilitaModifica = false;
-                AbilitaSingDatePicker = true;
+                AbilitaModifica = false;
+                AbilitaSingDatePicker = false;
             }         
-			StateHasChanged();
         }
 
         protected async Task CloseAndRefresh()
