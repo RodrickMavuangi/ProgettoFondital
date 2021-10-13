@@ -91,37 +91,7 @@ namespace Fondital.Server
 
             services.AddAutoMapper(cfg => cfg.AddProfile<MappingProfile>());
 
-            var columnOpts = new ColumnOptions();
-            columnOpts.Store.Add(StandardColumn.LogEvent);
-            
-            columnOpts.AdditionalColumns = new Collection<SqlColumn>
-                {
-                    new SqlColumn {ColumnName = "Action", DataType = SqlDbType.VarChar, DataLength = 255},
-                    new SqlColumn {ColumnName = "Object", DataType = SqlDbType.VarChar, DataLength = 255},
-                    new SqlColumn {ColumnName = "ObjectId", DataType = SqlDbType.VarChar, DataLength = 255},
-                    new SqlColumn {ColumnName = "LoginFailureReason", DataType = SqlDbType.VarChar, DataLength = 255},
-                };
-            /*
-            Errors:
-            C:\Users\DamianoRonca\source\repos\Fondital\Fondital.Server\Startup.cs: (107,29)-(107,74): `Configuration.GetConnectionString("Database")` -> Can't statically determine value of expression
-            C:\Users\DamianoRonca\source\repos\Fondital\Fondital.Server\Startup.cs: (108,16)-(108,115): `new MSSqlServerSinkOptions { TableName = "AppLogs", SchemaName = "dbo", AutoCreateSqlTable = true }` -> Can't statically determine value of expression
-            C:\Users\DamianoRonca\source\repos\Fondital\Fondital.Server\Startup.cs: (109,31)-(109,41): `columnOpts` -> Can't statically determine value of expression
-
-            "Serilog": {
-              "Using": ["Serilog.Sinks.MSSqlServer"],
-              "WriteTo": [
-                { "Name": "MSSqlServer", "Args": { "connectionString": "?", "sinkOptions": "?", "columnOptions": "?" } }
-              ]
-            }
-            */
-
-            var logger = new LoggerConfiguration()//.ReadFrom.Configuration(Configuration)
-                .WriteTo
-                .MSSqlServer(Configuration.GetConnectionString("Database"),
-                new MSSqlServerSinkOptions { TableName = "AppLogs", SchemaName = "dbo", AutoCreateSqlTable = true },
-                columnOptions: columnOpts)
-
-                .CreateLogger();
+            var logger = new LoggerConfiguration().ReadFrom.Configuration(Configuration).CreateLogger();
             services.AddSingleton<ILogger>(logger);
 
             services.AddScoped<IUnitOfWork, UnitOfWork>();
@@ -194,6 +164,7 @@ namespace Fondital.Server
             app.UseStaticFiles();
             app.UseAuthentication();
             app.UseAuthorization();
+            app.UseMiddleware<LogUserNameMiddleware>();
 
             app.UseEndpoints(endpoints =>
             {
