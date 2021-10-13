@@ -1,4 +1,5 @@
 ﻿using Fondital.Shared.Dto;
+using Fondital.Shared.Enums;
 using Microsoft.AspNetCore.Components;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,21 +18,36 @@ namespace Fondital.Client.Pages
         private int CurrentStepIndex { get; set; }
         private string CurrentCulture { get; set; }
         private bool ShowAddVoceCosto { get; set; }
+        public bool DisAbilitaModifica { get; set; } = true;
+        public bool AbilitaSingDatePicker { get; set; } = false; 
         [Parameter] public string Id { get; set; }
-
+        public UtenteDto UtenteCorrente { get; set; }
         protected override async Task OnInitializedAsync()
         {
+            UtenteCorrente = await StateProvider.GetCurrentUser();
             ShowAddVoceCosto = false;
             CurrentCulture = await StateProvider.GetCurrentCulture();
-            Rapporto.Utente = await StateProvider.GetCurrentUser();
             ListaLavorazioni = (List<LavorazioneDto>)await LavorazioneClient.GetAllLavorazioni(true);
             if (CurrentCulture == "it-IT")
                 LavorazioniDescription = ListaLavorazioni.Select(x => x.NomeItaliano).ToList();
             else
                 LavorazioniDescription = ListaLavorazioni.Select(x => x.NomeRusso).ToList();
+            await RefreshRapporti();
         }
 
-        protected void PreviousStep()
+		protected async Task RefreshRapporti()
+		{
+            Rapporto = await HttpClient.GetRapportoById(int.Parse(Id));
+            Rapporto.Utente = await StateProvider.GetCurrentUser();
+            if (UtenteCorrente.ServicePartner != null && !(Rapporto.Stato == StatoRapporto.Aperto || Rapporto.Stato == StatoRapporto.Rifiutato))
+            {
+                DisAbilitaModifica = false;
+                AbilitaSingDatePicker = true;
+            }         
+			StateHasChanged();
+        }
+
+		protected void PreviousStep()
         {
             if (CurrentStepIndex > 0)
                 CurrentStepIndex--;
@@ -59,7 +75,8 @@ namespace Fondital.Client.Pages
         protected async Task CloseAndRefresh()
         {
             ShowAddVoceCosto = false;
-            await InvokeAsync(StateHasChanged);
+            //await InvokeAsync(StateHasChanged);
+            await RefreshRapporti();
         }
 
         protected async Task AggiungiVoceCosto()

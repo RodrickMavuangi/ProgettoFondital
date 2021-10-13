@@ -4,6 +4,7 @@
 @inject IConfiguration Config
 @inject RapportoClient HttpClient
 @inject NavigationManager NavigationManager
+@inject CurrentStateProvider StateProvider
 @attribute [Authorize]
 
 <div class="row-1 d-flex justify-content-between flex-wrap flex-md-nowrap  pt-0">
@@ -44,35 +45,61 @@
 }
 else
 {
-    <!--BARRA FILTRI-->
-    <div class="row-2 d-inline w-100 mb-4  pt-0 pb-4 pt-4 border-bottom barraFiltri">
-        <div class="form-group rowFiltri rowFiltriRapportini ">
-            @*<input class="form-control float-lg-right filtriInput mx-1" @bind-value="SearchBySp" @bind-value:event="oninput" placeholder=@Localizer["ServicePartner"] />*@
-            <TelerikDropDownList Data="@ListRagioneSociale"
-                                 Class="form-control float-lg-right filtriInput mx-1"
-                                 @bind-Value="SearchBySp" />
-            @*<input class="form-control float-lg-right filtriInput mx-1" @bind-value="SearchByStato" @bind-value:event="oninput" placeholder=@Localizer["Stato"] />*@
-            <TelerikDropDownList Data="@ListStati"
-                                 Class="form-control float-lg-right filtriInput mx-1"
-                                 @bind-Value="SearchByStato" />
-            @*<input class="form-control float-lg-right filtriInput mx-1" @bind-value="SearchByDate" @bind-value:event="oninput" placeholder=@Localizer["DataDaA"] />*@
-            <TelerikDatePicker @bind-Value="SearchByDataDa" Min="@(DateTime.ParseExact("20211001", "yyyyMMdd", null))" Max="SearchByDataA" />
-            <TelerikDatePicker @bind-Value="SearchByDataA" Min="SearchByDataDa" Max="DateTime.Now" />
-            <input class="form-control float-lg-right filtriInput mx-1" @bind-value="SearchByCliente" @bind-value:event="oninput" placeholder=@Localizer["Cliente"] />
-            <input class="form-control float-lg-right filtriInput mx-1" @bind-value="SearchById" @bind-value:event="oninput" placeholder=@Localizer["NumRapporto"] />
-            <input class="form-control float-lg-right filtriInput mx-1" @bind-value="SearchByMatricola" @bind-value:event="oninput" placeholder=@Localizer["Matricola"] />
-            <input class="form-control float-lg-right filtriInput mx-1" @bind-value="SearchByTelefono" @bind-value:event="oninput" placeholder=@Localizer["Telefono"] />
-            <input class="form-control float-lg-right filtriInput mx-1" @bind-value="SearchByEmail" @bind-value:event="oninput" placeholder=@Localizer["Email"] />
-            <i class="bi bi-search float-lg-right icoSearch blu"></i>
 
-        </div>
+
+<!--BARRA FILTRI-->
+<div class="row-2 d-inline w-100 mb-4  pt-0 pb-4 pt-4 border-bottom barraFiltri">
+    <div class="form-group rowFiltri rowFiltriRapportini ">
+            @*<input class="form-control float-lg-right filtriInput mx-1" @bind-value="SearchBySp" @bind-value:event="oninput" placeholder=@Localizer["ServicePartner"] />*@
+        <TelerikDropDownList Data="@ListRagioneSociale"
+                             TextField="RagioneSociale"
+                             Class="form-control float-lg-right filtriInput mx-1"
+                             ValueField="RagioneSociale" 
+                             @bind-Value="SearchBySp" 
+                             Enabled="@(UtenteCorrente.ServicePartner == null)"/>
+         
+        @*<input class="form-control float-lg-right filtriInput mx-1" @bind-value="SearchByStato" @bind-value:event="oninput" placeholder=@Localizer["Stato"] />*@
+        <TelerikDropDownList Data="@ListStati"
+                             Class="form-control float-lg-right filtriInput mx-1"
+                             @bind-Value="SearchByStato" />
+        @*<input class="form-control float-lg-right filtriInput mx-1" @bind-value="SearchByDate" @bind-value:event="oninput" placeholder=@Localizer["DataDaA"] />*@
+        <TelerikDatePicker @bind-Value="SearchByDataDa" Min="@(DateTime.ParseExact("20211001", "yyyyMMdd", null))" Max="SearchByDataA" />
+        <TelerikDatePicker @bind-Value="SearchByDataA" Min="SearchByDataDa" Max="DateTime.Now" />
+        <input class="form-control float-lg-right filtriInput mx-1" @bind-value="SearchByCliente" @bind-value:event="oninput" placeholder=@Localizer["Cliente"] />
+        <input class="form-control float-lg-right filtriInput mx-1" @bind-value="SearchById" @bind-value:event="oninput" placeholder=@Localizer["NumRapporto"] />
+        <input class="form-control float-lg-right filtriInput mx-1" @bind-value="SearchByMatricola" @bind-value:event="oninput" placeholder=@Localizer["Matricola"] />
+        <input class="form-control float-lg-right filtriInput mx-1" @bind-value="SearchByTelefono" @bind-value:event="oninput" placeholder=@Localizer["Telefono"] />
+        <input class="form-control float-lg-right filtriInput mx-1" @bind-value="SearchByEmail" @bind-value:event="oninput" placeholder=@Localizer["Email"] />
+        <i class="bi bi-search float-lg-right icoSearch blu"></i>
+
+    </div>
     </div>
     <!--FINE BARRA FILTRI-->
-    <div class="row-3 d-flex justify-content-between flex-wrap flex-md-nowrap pt-0 pb-4 mb-4">
+    <div class="row-3 d-flex justify-content-between flex-wrap flex-md-nowrap pt-0 pb-4 mb-4">@*  *@
         <TelerikGrid Data="@ListaRapportiFiltered" Class="table table-striped" PageSize=@PageSize Pageable="true">
             <GridColumns>
                 <GridColumn Field=Utente.ServicePartner.RagioneSociale Width="15%" Title=@Localizer["ServicePartner"].Value.ToUpper() />
-                <GridColumn Field=@nameof(RapportoDto.Stato) Width="15%" Title=@Localizer["Stato"].Value.ToUpper() />
+                @{
+                    if (UtenteCorrente.ServicePartner == null)
+                    {
+                            <GridCommandColumn Context="context" Width="15%" Title=@Localizer["Stato"].Value.ToUpper()>
+                            @{
+                                var rapporto = context as RapportoDto;
+                                string statoAttuale = rapporto.Stato.Description();
+                                <TelerikDropDownList Data="@ListStati" 
+                                                     Width="100%" 
+                                                     @bind-Value="statoAttuale" 
+                                                     OnChange=@(() => { rapporto.Stato = statoAttuale.ToEnum<StatoRapporto>(); Salva(rapporto); }) Enabled="@(!IsSubmitting)">
+
+                                </TelerikDropDownList>
+                            }
+                            </GridCommandColumn>
+                    }
+                    else 
+                    {
+                        <GridColumn Field=@nameof(RapportoDto.Stato) Width="15%" Title=@Localizer["Stato"].Value.ToUpper() />
+                    }
+                }
                 <GridColumn Field=@nameof(RapportoDto.DataRapporto) DisplayFormat="{0:dd/MM/yyyy}" Width="15%" Title=@Localizer["Data"].Value.ToUpper() />
                 <GridColumn Field=Cliente.FullName Width="15%" Title=@Localizer["Cliente"].Value.ToUpper() />
                 <GridColumn Field=@nameof(RapportoDto.Id) Width="10%" Title=@Localizer["NumRapporto"].Value.ToUpper() />
