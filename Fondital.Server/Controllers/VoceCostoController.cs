@@ -46,7 +46,7 @@ namespace Fondital.Server.Controllers
             }
             catch (Exception ex)
             {
-                _logger.Error("Eccezione {Action} {Object} {ObjectId}: {ExceptionMessage}", "UPDATE", "VoceCosto", voceCostoId, ex.Message);
+                _logger.Error(ex, "Eccezione {Action} {Object} {ObjectId}", "UPDATE", "VoceCosto", voceCostoId);
                 throw;
             }
         }
@@ -64,7 +64,7 @@ namespace Fondital.Server.Controllers
             }
             catch (Exception ex)
             {
-                _logger.Error("Eccezione {Action} {Object}: {ExceptionMessage}", "CREATE", "VoceCosto", ex.Message);
+                _logger.Error(ex, "Eccezione {Action} {Object}", "CREATE", "VoceCosto");
                 throw;
             }
         }

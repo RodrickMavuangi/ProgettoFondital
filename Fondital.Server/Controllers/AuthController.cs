@@ -88,7 +88,7 @@ namespace Fondital.Server.Controllers
             }
             catch (Exception ex)
             {
-                _logger.Error("Eccezione {Action} {Object} {ObjecId}: {ExceptionMessage}", "LOGIN", "Utente", loginRequest.Email, ex.Message);
+                _logger.Error(ex, "Eccezione {Action} {Object} {ObjecId}", "LOGIN", "Utente", loginRequest.Email);
                 return BadRequest(ex.Message);
             }
         }
@@ -114,7 +114,7 @@ namespace Fondital.Server.Controllers
             }
             catch (Exception ex)
             {
-                _logger.Error("Eccezione {Action} {Object} {ObjectId}: {ExceptionMessage}", "CHANGEPWD", "Utente", ChangePwRequest.Email, ex.Message);
+                _logger.Error(ex, "Eccezione {Action} {Object} {ObjectId}", "CHANGEPWD", "Utente", ChangePwRequest.Email);
                 return BadRequest(ex.Message);
             }
         }
@@ -140,7 +140,7 @@ namespace Fondital.Server.Controllers
             }
             catch (Exception ex)
             {
-                _logger.Error("Eccezione {Action} {Object} {ObjectId}: {ExceptionMessage}", "RESETPWD", "Utente", resetPasswordRequest.Email, ex.Message);
+                _logger.Error(ex, "Eccezione {Action} {Object} {ObjectId}", "RESETPWD", "Utente", resetPasswordRequest.Email);
                 return BadRequest(ex.Message);
             }
         }
@@ -168,7 +168,7 @@ namespace Fondital.Server.Controllers
             }
             catch (Exception ex)
             {
-                _logger.Error("Eccezione {Action} {Object} {ObjectId}: {ExceptionMessage}", "Assegna", "Ruolo", ruolo.Name, ex.Message);
+                _logger.Error(ex, "Eccezione {Action} {Object} {ObjectId}", "Assegna", "Ruolo", ruolo.Name);
                 return BadRequest(ex.Message);
             }
         }

@@ -508,4 +508,103 @@ La nuova password deve essere lunga almeno 8 caratteri e contenere minuscole, ma
   <data name="UtenteDisabilitato" xml:space="preserve">
     <value>L'utente è disabilitato, contattare la Direzione.</value>
   </data>
+  <data name="Invia" xml:space="preserve">
+    <value>Invia</value>
+  </data>  
+    <data name="CittaCliente" xml:space="preserve">
+    <value>Dati Anagrafici - Città</value>
+  </data>
+  <data name="CivicoCliente" xml:space="preserve">
+    <value>Dati Anagrafici - Numero</value>
+  </data>
+  <data name="CognomeCliente" xml:space="preserve">
+    <value>Dati Anagrafici - Cognome</value>
+  </data>
+  <data name="DataAvvio" xml:space="preserve">
+    <value>Data Avvio</value>
+  </data>
+  <data name="DataAvvioCaldaia" xml:space="preserve">
+    <value>Dati Caldaia - Data Avvio</value>
+  </data>
+  <data name="DataMontaggio" xml:space="preserve">
+    <value>Data Montaggio</value>
+  </data>
+  <data name="DataMontaggioCaldaia" xml:space="preserve">
+    <value>Dati Caldaia - Data Montaggio</value>
+  </data>
+  <data name="DataVendita" xml:space="preserve">
+    <value>Data Vendita</value>
+  </data>
+  <data name="DataVenditaCaldaia" xml:space="preserve">
+    <value>Dati Caldaia - Data Vendita</value>
+  </data>
+  <data name="DittaAvvioCaldaia" xml:space="preserve">
+    <value>Dati Caldaia - Ditta Prima Accensione</value>
+  </data>
+  <data name="EmailCliente" xml:space="preserve">
+    <value>Dati Anagrafici - Email</value>
+  </data>
+  <data name="Errore" xml:space="preserve">
+    <value>Errore RU</value>
+  </data>
+  <data name="ErroreSalvaRapporto" xml:space="preserve">
+    <value>Si è verificato un errore nel salvataggio del rapporto</value>
+  </data>
+  <data name="ListaCampiObbligatori" xml:space="preserve">
+    <value>I seguenti campi sono obbligatori</value>
+  </data>
+  <data name="CampiObbligatori" xml:space="preserve">
+    <value>Campi obbligatori</value>
+  </data>
+  <data name="MatricolaCaldaia" xml:space="preserve">
+    <value>Dati Caldaia - Matricola</value>
+  </data>
+  <data name="ModelloCaldaia" xml:space="preserve">
+    <value>Dati Caldaia - Modello</value>
+  </data>
+  <data name="NomeCliente" xml:space="preserve">
+    <value>Dati Anagrafici - Nome</value>
+  </data>
+  <data name="NumCertificatoCaldaia" xml:space="preserve">
+    <value>Dati Caldaia - Numero Certificato Tecnico</value>
+  </data>
+  <data name="RapportoDataIntervento" xml:space="preserve">
+    <value>Intervento - Data Intervento</value>
+  </data>
+  <data name="RapportoMotivoIntervento" xml:space="preserve">
+    <value>Intervento - Motivo Intervento</value>
+  </data>
+  <data name="RapportoNomeTecnico" xml:space="preserve">
+    <value>Intervento - Nome Tecnico</value>
+  </data>
+  <data name="RapportoRicambi" xml:space="preserve">
+    <value>Intervento - Ricambi</value>
+  </data>
+  <data name="RapportoTipologiaLavoro" xml:space="preserve">
+    <value>Intervento - Tipologia di Lavoro</value>
+  </data>
+  <data name="RapportoVociCosto" xml:space="preserve">
+    <value>Lavorazioni - Voci di Costo</value>
+  </data>
+  <data name="TecnicoCaldaia" xml:space="preserve">
+    <value>Dati Caldaia - Tecnico Prima Accensione</value>
+  </data>
+  <data name="TelefonoCliente" xml:space="preserve">
+    <value>Dati Anagrafici - Numero Telefonico</value>
+  </data>
+  <data name="VersioneCaldaia" xml:space="preserve">
+    <value>Dati Caldaia - Versione</value>
+  </data>
+  <data name="ViaCliente" xml:space="preserve">
+    <value>Dati Anagrafici - Via</value>
+  </data>
+  <data name="Id" xml:space="preserve">
+    <value>Id</value>
+  </data>
+  <data name="IdFornitore" xml:space="preserve">
+    <value>Id Fornitore</value>
+  </data>
+  <data name="SelezionaElemento" xml:space="preserve">
+    <value>Seleziona Elemento</value>
+  </data>
 </root>

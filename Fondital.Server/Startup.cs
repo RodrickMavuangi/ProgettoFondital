@@ -1,6 +1,7 @@
 using Fondital.Data;
 using Fondital.Repository;
 using Fondital.Server.Automapper;
+using Fondital.Server.Controllers;
 using Fondital.Services;
 using Fondital.Shared;
 using Fondital.Shared.Models.Auth;
@@ -17,15 +18,10 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Protocols.OpenIdConnect;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using Serilog;
 using System.Collections.Generic;
 using System.Text;
 using System.Text.Json.Serialization;
-using AutoMapper;
-using Fondital.Server.Automapper;
-using Fondital.Repository;
-using Fondital.Shared.Settings;
-using Serilog;
-using Fondital.Server.Controllers;
 
 namespace Fondital.Server
 {
@@ -40,7 +36,7 @@ namespace Fondital.Server
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
-        {   
+        {
             services.AddDbContext<FonditalDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("Database")));
 
             services.AddDefaultIdentity<Utente>(options =>
@@ -78,7 +74,7 @@ namespace Fondital.Server
 
             services.Configure<MailSettings>(Configuration.GetSection("MailSettings"));
             services.AddHttpClient<RestExternalServiceController>();
-            
+
             services.AddCors(options =>
             {
                 options.AddPolicy("CorsPolicy",
@@ -92,8 +88,8 @@ namespace Fondital.Server
             services.AddAutoMapper(cfg => cfg.AddProfile<MappingProfile>());
 
             var logger = new LoggerConfiguration().ReadFrom.Configuration(Configuration).CreateLogger();
-
             services.AddSingleton<ILogger>(logger);
+
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddTransient<IAuthService, AuthService>();
             services.AddTransient<IUtenteService, UtenteService>();
@@ -106,7 +102,7 @@ namespace Fondital.Server
             services.AddTransient<ILavorazioneService, LavorazioneService>();
             services.AddTransient<IRapportoService, RapportoService>();
             services.AddTransient<IRuoloService, RuoloService>();
-            
+
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Fondital.Server", Version = "v1" });
@@ -159,11 +155,12 @@ namespace Fondital.Server
             app.UseCors("CorsPolicy");
             app.UseHttpsRedirection();
             app.UseRouting();
-
+            
             app.UseBlazorFrameworkFiles();
             app.UseStaticFiles();
             app.UseAuthentication();
             app.UseAuthorization();
+            app.UseMiddleware<LogUserNameMiddleware>();
 
             app.UseEndpoints(endpoints =>
             {

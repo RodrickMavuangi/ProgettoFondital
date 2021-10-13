@@ -42,7 +42,7 @@ namespace Fondital.Server.Controllers
             }
             catch (Exception ex)
             {
-                _logger.Error("Eccezione {Action} {Object} {ObjectId}: {ExceptionMessage}", "GET", "Listino", id, ex.Message);
+                _logger.Error(ex, "Eccezione {Action} {Object} {ObjectId}", "GET", "Listino", id);
                 throw;
             }
         }
@@ -60,7 +60,7 @@ namespace Fondital.Server.Controllers
             }
             catch (Exception ex)
             {
-                _logger.Error("Eccezione {Action} {Object} {ObjectId}: {ExceptionMessage}", "UPDATE", "Listino", listinoId, ex.Message);
+                _logger.Error(ex, "Eccezione {Action} {Object} {ObjectId}", "UPDATE", "Listino", listinoId);
                 throw;
             }
         }
@@ -78,7 +78,7 @@ namespace Fondital.Server.Controllers
             }
             catch (Exception ex)
             {
-                _logger.Error("Eccezione {Action} {Object}: {ExceptionMessage}", "CREATE", "Listino", ex.Message);
+                _logger.Error(ex, "Eccezione {Action} {Object}", "CREATE", "Listino");
                 throw;
             }
         }

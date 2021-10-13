@@ -1,31 +1,34 @@
 ﻿@inject IStringLocalizer<App> localizer
+@inject RestExternalServiceClient RestClient
 
-<EditForm Model="Ricambio" OnValidSubmit="ConfirmAsync">
+<EditForm Model="RicambioRequest" OnValidSubmit="Done">
     <DataAnnotationsValidator />
 
-    <div>@ErrorMessage</div>
+    <div class="form-field">
+        <label>@localizer["Id"]</label>
+        <div>
+            <InputNumber Class="form-control form-control-lg w100" @bind-Value="RicambioRequest.Id" />
+            <ValidationMessage For="() => RicambioRequest.Id" />
+        </div>
+    </div>
+
+    <div class="form-field">
+        <label>@localizer["IdFornitore"]</label>
+        <div>
+            <InputNumber Class="form-control form-control-lg w100" @bind-Value="RicambioRequest.SupplierId" />
+            <ValidationMessage For="() => RicambioRequest.SupplierId" />
+        </div>
+    </div>
 
     <div class="form-field">
         <label>@localizer["Quantita"]</label>
         <div>
-            <InputNumber Class="form-control form-control-lg w100" @bind-Value="Ricambio.Quantita" />
-            <ValidationMessage For="() => Ricambio.Quantita" />
+            <InputNumber Class="form-control form-control-lg w100" @bind-Value="RicambioRequest.Quantity" />
+            <ValidationMessage For="() => RicambioRequest.Quantity" />
         </div>
     </div>
 
     <div class="form-field">
-        <label>@localizer["Costo"]</label>
-        <div>
-            <InputNumber Class="form-control form-control-lg w100" @bind-Value="Ricambio.Costo" />
-            <ValidationMessage For="() => Ricambio.Costo" />
-        </div>
-    </div>
-
-    <div class="form-field">
-        <label>@localizer["Descrizione"]</label>
-        <div>
-            <InputText Class="form-control form-control-lg w100" @bind-Value="Ricambio.Descrizione" />
-            <ValidationMessage For="() => Ricambio.Descrizione" />
-        </div>
+        <TelerikButton ButtonType="ButtonType.Submit" Class="btn btn-primary ml-auto w-100 mt-5" Enabled="@(RicambioRequest.Quantity>0)">@localizer["Salva"]</TelerikButton>
     </div>
 </EditForm>

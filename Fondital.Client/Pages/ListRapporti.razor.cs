@@ -27,6 +27,8 @@ namespace Fondital.Client.Pages
         private string SearchByEmail { get; set; } = "";
         public UtenteDto UtenteCorrente { get; set; }
 		private bool IsSubmitting = false;
+    private bool ShowAddDialog { get; set; } = false;
+
 
         [CascadingParameter]
         public DialogFactory Dialogs { get; set; }
@@ -34,31 +36,27 @@ namespace Fondital.Client.Pages
         {
             UtenteCorrente = await StateProvider.GetCurrentUser();
             PageSize = Convert.ToInt32(Config["PageSize"]);
-            await RefreshListRapporti();
+
+            await RefreshRapporti();
         }
 
         public List<RapportoDto> ListaRapportiFiltered =>   ListaRapporti
             .Where(x => x.Utente.ServicePartner.RagioneSociale.Contains(SearchBySp, StringComparison.InvariantCultureIgnoreCase)
                      && x.Stato.ToString().Contains(SearchByStato, StringComparison.InvariantCultureIgnoreCase)
-                     && x.DataRapporto.Value.Date >= SearchByDataDa.Date
-                     && x.DataRapporto.Value.Date <= SearchByDataA.Date
-                     && (x.Cliente.Nome + " " + x.Cliente.Cognome).Contains(SearchByCliente, StringComparison.InvariantCultureIgnoreCase)
+                     && x.DataRapporto.Date >= SearchByDataDa.Date
+                     && x.DataRapporto.Date <= SearchByDataA.Date
+                     && ((x.Cliente.Nome ?? "") + " " + (x.Cliente.Cognome ?? "")).Contains(SearchByCliente, StringComparison.InvariantCultureIgnoreCase)
                      && x.Id.ToString().Contains(SearchById, StringComparison.InvariantCultureIgnoreCase)
-                     && x.Caldaia.Matricola.Contains(SearchByMatricola, StringComparison.InvariantCultureIgnoreCase)
-                     && x.Cliente.NumTelefono.ToString().Contains(SearchByTelefono, StringComparison.InvariantCultureIgnoreCase)
-                     && x.Cliente.Email.Contains(SearchByEmail, StringComparison.InvariantCultureIgnoreCase)
+                     && (x.Caldaia.Matricola ?? "").Contains(SearchByMatricola, StringComparison.InvariantCultureIgnoreCase)
+                     && (x.Cliente.NumTelefono ?? "").Contains(SearchByTelefono, StringComparison.InvariantCultureIgnoreCase)
+                     && (x.Cliente.Email ?? "").Contains(SearchByEmail, StringComparison.InvariantCultureIgnoreCase)
             ).ToList();
 
-
-        protected void ViewRapporto(int rapportoId)
-        {
-            NavigationManager.NavigateTo($"/reportDetail/{rapportoId}");
-        }
-
-        protected async Task RefreshListRapporti()
+        protected async Task RefreshRapporti()
         {
             ListaRapporti = (List<RapportoDto>)await HttpClient.GetAllRapporti();
-            if (UtenteCorrente.ServicePartner != null)
+            //ListRagioneSociale = ListaRapporti.Select(x => x.Utente.ServicePartner.RagioneSociale).Distinct().ToList();
+                      if (UtenteCorrente.ServicePartner != null)
             {
                 ListRagioneSociale = ListaRapporti.Where(x => x.Utente.ServicePartner.Id == UtenteCorrente.ServicePartner.Id).Select(x => x.Utente.ServicePartner.RagioneSociale).Distinct().ToList();
                 SearchBySp = ListRagioneSociale.FirstOrDefault();
@@ -68,6 +66,11 @@ namespace Fondital.Client.Pages
                 ListRagioneSociale = ListaRapporti.Select(x => x.Utente.ServicePartner.RagioneSociale).Distinct().ToList();
             }
             StateHasChanged();
+        }
+
+        protected void ViewRapporto(int rapportoId)
+        {
+            NavigationManager.NavigateTo($"/reportDetail/{rapportoId}");
         }
 
         protected async Task Salva(RapportoDto rapportoToSave)

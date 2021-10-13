@@ -9,6 +9,6 @@
         public string NumCivico { get; set; }
         public string NumTelefono { get; set; }
         public string Email { get; set; }
-        public string FullName => $"{Nome} {Cognome}"; 
+        public string FullName => $"{Nome} {Cognome}";
     }
 }

@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using Fondital.Shared.Dto;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using System;
@@ -39,18 +40,19 @@ namespace Fondital.Server.Controllers
             }
             catch (Exception ex)
             {
-                _logger.Error("Eccezione {Action} {Object} {ObjectId}: {ExceptionMessage}", "GET", "Caldaia", "caldaiaId", ex.Message);
+                _logger.Error(ex, "Eccezione {Action} {Object} {ObjectId}", "GET", "Caldaia", "caldaiaId");
                 return BadRequest(ex.Message);
             }
         }
 
-        [HttpGet("pezzoRicambio")]
-        public async Task<IActionResult> GetServiceRicambio()
+        [HttpGet("pezzoRicambio/{idRicambio}/{idFornitore}/{quantita}")]
+        [AllowAnonymous]
+        public async Task<IActionResult> GetServiceRicambio(RicambioRequestDto ricambio)
         {
             try
             {
                 _httpClient.BaseAddress = new Uri(_config["RestClientSettings:BaseAddress"]);
-                var response = _httpClient.GetAsync(_config["RestClientSettings:UriRicambio"]).Result;
+                var response = await _httpClient.GetAsync($"/sparePart/{ricambio.Id}/{ricambio.SupplierId}/{ricambio.Quantity}");
                 if (!response.IsSuccessStatusCode)
                     return NotFound();
 
@@ -59,7 +61,7 @@ namespace Fondital.Server.Controllers
             }
             catch (Exception ex)
             {
-                _logger.Error("Eccezione {Action} {Object} {ObjectId}: {ExceptionMessage}", "GET", "Ricambio", "ricambioId", ex.Message);
+                _logger.Error(ex, "Eccezione {Action} {Object} {ObjectId}", "GET", "Ricambio", "ricambioId");
                 return BadRequest(ex.Message);
             }
         }

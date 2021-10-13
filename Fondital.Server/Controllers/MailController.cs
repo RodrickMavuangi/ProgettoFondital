@@ -54,7 +54,7 @@ namespace Fondital.Server.Controllers
             }
             catch (Exception ex)
             {
-                _logger.Error("Eccezione {Action} {Object} {ObjectId}: {ExceptionMessage}", "SENDMAIL", "Utente", MailRequest.ToEmail, ex.Message);
+                _logger.Error(ex, "Eccezione {Action} {Object} {ObjectId}", "SENDMAIL", "Utente", MailRequest.ToEmail);
                 throw;
             }
         }
@@ -91,7 +91,7 @@ namespace Fondital.Server.Controllers
             }
             catch (Exception ex)
             {
-                _logger.Error("Eccezione {Action} {Object} {ObjectId}: {ExceptionMessage}", "CREATE", "Utente", utente.UserName, ex.Message);
+                _logger.Error(ex, "Eccezione {Action} {Object} {ObjectId}", "CREATE", "Utente", utente.UserName);
                 throw;
             }
         }

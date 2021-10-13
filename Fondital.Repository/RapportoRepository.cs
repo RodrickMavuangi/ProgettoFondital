@@ -1,5 +1,8 @@
 ﻿using Fondital.Data;
+using Fondital.Shared.Enums;
+using Fondital.Shared.Extensions;
 using Fondital.Shared.Models;
+using Fondital.Shared.Models.Auth;
 using Fondital.Shared.Repositories;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
@@ -32,6 +35,14 @@ namespace Fondital.Repository
         {
             await Db.Rapporti.AddAsync(rapporto);
             Db.Entry(rapporto.Utente).State = EntityState.Unchanged;
+        }
+
+        public async Task AddAudit(Rapporto rapporto, Utente utente, StatoRapporto? stato = null, string note = null)
+        {
+            AuditRapporto Audit = new() { Rapporto = rapporto, Utente = utente, StatoIniziale = stato ?? rapporto.Stato};
+            Audit.Note = note ?? (stato == null ? "Modifica campi" : $"Passaggio allo stato {stato.Description()}");
+
+            await Db.AuditRapporti.AddAsync(Audit);
         }
     }
 }

@@ -45,7 +45,7 @@ namespace Fondital.Server.Controllers
             }
             catch (Exception ex)
             {
-                _logger.Error("Eccezione {Action} {Object} {ObjectId}: {ExceptionMessage}", "GET", "ServicePartner", id, ex.Message);
+                _logger.Error(ex, "Eccezione {Action} {Object} {ObjectId}", "GET", "ServicePartner", id);
                 throw;
             }
         }
@@ -59,7 +59,7 @@ namespace Fondital.Server.Controllers
             }
             catch (Exception ex)
             {
-                _logger.Error("Eccezione {Action} {Object} {ObjectId}: {ExceptionMessage}", "GET", "ServicePartner", id, ex.Message);
+                _logger.Error(ex, "Eccezione {Action} {Object} {ObjectId}", "GET", "ServicePartner", id);
                 throw;
             }
         }
@@ -78,10 +78,7 @@ namespace Fondital.Server.Controllers
             }
             catch (Exception ex)
             {
-                if (ex.InnerException != null)
-                    _logger.Error("Eccezione {Action} {Object}: {ExceptionMessage} - INNER EXCEPTION: {InnerException}", "CREATE", "ServicePartner", ex.Message, ex.InnerException.Message);
-                else
-                    _logger.Error("Eccezione {Action} {Object}: {ExceptionMessage}", "CREATE", "ServicePartner", ex.Message);
+                _logger.Error(ex, "Eccezione {Action} {Object}", "CREATE", "ServicePartner");
 
                 List<ServicePartner> list = (List<ServicePartner>)await _spService.GetAllServicePartners();
 
@@ -110,7 +107,7 @@ namespace Fondital.Server.Controllers
             }
             catch (Exception ex)
             {
-                _logger.Error("Eccezione {Action} {Object} {ObjectId}: {ExceptionMessage}", "UPDATE", "ServicePartner", id, ex.Message);
+                _logger.Error(ex, "Eccezione {Action} {Object} {ObjectId}", "UPDATE", "ServicePartner", id);
                 return BadRequest($"{ex.Message} - {ex.InnerException?.Message}");
             }
         }

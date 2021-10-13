@@ -322,29 +322,20 @@ namespace Fondital.Client.LanguageResources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Sicuri di voler modificare la lavorazione #.
+        ///   Looks up a localized string similar to Si è sicuri di voler abilitare l&apos;elemento.
         /// </summary>
-        public static string ConfermaModificaLavorazione {
+        public static string ConfermaAbilitazione {
             get {
-                return ResourceManager.GetString("ConfermaModificaLavorazione", resourceCulture);
+                return ResourceManager.GetString("ConfermaAbilitazione", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Si è Sicuro di volere Disabilitare l&apos;utente.
+        ///   Looks up a localized string similar to Si è sicuri di voler disabilitare l&apos;elemento.
         /// </summary>
-        public static string ConfermaModificaUtente {
+        public static string ConfermaDisabilitazione {
             get {
-                return ResourceManager.GetString("ConfermaModificaUtente", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Si è Sicuro di volere Abilitare l&apos;utente.
-        /// </summary>
-        public static string ConfermaModificaUtenteAb {
-            get {
-                return ResourceManager.GetString("ConfermaModificaUtenteAb", resourceCulture);
+                return ResourceManager.GetString("ConfermaDisabilitazione", resourceCulture);
             }
         }
         
@@ -381,15 +372,6 @@ namespace Fondital.Client.LanguageResources {
         public static string Costo {
             get {
                 return ResourceManager.GetString("Costo", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Crea Ruolo.
-        /// </summary>
-        public static string CreaRuolo {
-            get {
-                return ResourceManager.GetString("CreaRuolo", resourceCulture);
             }
         }
         
@@ -593,6 +575,24 @@ namespace Fondital.Client.LanguageResources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Id.
+        /// </summary>
+        public static string Id {
+            get {
+                return ResourceManager.GetString("Id", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Id Fornitore.
+        /// </summary>
+        public static string IdFornitore {
+            get {
+                return ResourceManager.GetString("IdFornitore", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Impostazioni.
         /// </summary>
         public static string Impostazioni {
@@ -661,15 +661,6 @@ namespace Fondital.Client.LanguageResources {
         public static string Intervento {
             get {
                 return ResourceManager.GetString("Intervento", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to è stata inviata una mail a.
-        /// </summary>
-        public static string InviaMail {
-            get {
-                return ResourceManager.GetString("InviaMail", resourceCulture);
             }
         }
         
@@ -1052,24 +1043,6 @@ namespace Fondital.Client.LanguageResources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to per Risettare la password.
-        /// </summary>
-        public static string ResetPassword {
-            get {
-                return ResourceManager.GetString("ResetPassword", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Ruolo.
-        /// </summary>
-        public static string Ruolo {
-            get {
-                return ResourceManager.GetString("Ruolo", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Direzione.
         /// </summary>
         public static string RuoloDirezione {
@@ -1088,20 +1061,20 @@ namespace Fondital.Client.LanguageResources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Seleziona Elemento.
+        /// </summary>
+        public static string SelezionaElemento {
+            get {
+                return ResourceManager.GetString("SelezionaElemento", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Service Partner.
         /// </summary>
         public static string ServicePartner {
             get {
                 return ResourceManager.GetString("ServicePartner", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Per settare la prima Password.
-        /// </summary>
-        public static string SettaPassword {
-            get {
-                return ResourceManager.GetString("SettaPassword", resourceCulture);
             }
         }
         
