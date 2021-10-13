@@ -29,7 +29,8 @@ namespace Fondital.Client.Pages
         private bool ShowAddRicambio { get; set; } = false;
         private bool ShowAddVoceCosto { get; set; } = false;
         private bool ShowCampiObbligatori { get; set; } = false;
-        private bool IsSubmitting { get; set; } = false;      
+        private bool IsSubmitting { get; set; } = false;
+        private bool IsPrinting { get; set; } = false;
 
         protected override async Task OnInitializedAsync()
         {
@@ -92,6 +93,27 @@ namespace Fondital.Client.Pages
         {
             if (await Salva())
                 CurrentStepIndex = newStep;
+        }
+
+        protected async Task Stampa()
+        {
+            IsPrinting = true;
+            
+            if (RapportoBeforeSave != await JsonContent.Create(Rapporto).ReadAsStringAsync())
+                await Dialogs.AlertAsync($"{Localizer["SaveBeforePrint"]}.", Localizer["Attenzione"]);
+            else
+            {
+                try
+                {
+
+                }
+                catch
+                {
+
+                }
+            }
+
+            IsPrinting = false;
         }
 
         protected async Task<bool> Salva(StatoRapporto? newStatus = null)

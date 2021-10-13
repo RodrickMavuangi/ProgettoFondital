@@ -25,9 +25,10 @@
 
             @if (CurrentStepIndex == 3)
             {
-                <TelerikButton Class="btn btn-primary btn-lg mx-1" OnClick="(() => ShowAddVoceCosto = true)">@Localizer["Inserisci"] @Localizer["VoceCosto"] </TelerikButton><i class="bi bi-plus icoPlus"></i>
+            <TelerikButton Class="btn btn-primary btn-lg mx-1" OnClick="(() => ShowAddVoceCosto = true)">@Localizer["Inserisci"] @Localizer["VoceCosto"] </TelerikButton><i class="bi bi-plus icoPlus"></i>
             }
 
+            <TelerikButton Class="btn btn-primary btn-verde btn-lg mx-1" OnClick=@(() => Stampa()) Enabled=@(!IsPrinting)>@Localizer["Stampa"]</TelerikButton>
             <AuthorizeView Roles="Direzione">
                 <Authorized>
                     <TelerikButton Class="btn btn-primary btn-verde btn-lg mx-1" OnClick=@(() => Salva()) Enabled=@(!IsSubmitting)>@Localizer["Salva"] @Localizer["Modifiche"]</TelerikButton>
@@ -39,11 +40,11 @@
                     {
                         if (CurrentStepIndex != 3)
                         {
-                            <TelerikButton Class="btn btn-primary btn-verde btn-lg mx-1" OnClick=@(() => Salva()) Enabled=@(!IsSubmitting)>@Localizer["Salva"] @Localizer["Modifiche"]</TelerikButton>
+                    <TelerikButton Class="btn btn-primary btn-verde btn-lg mx-1" OnClick=@(() => Salva()) Enabled=@(!IsSubmitting)>@Localizer["Salva"] @Localizer["Modifiche"]</TelerikButton>
                         }
                         else
                         {
-                            <TelerikButton Class="btn btn-primary btn-verde btn-lg mx-1" OnClick=@(() => Salva(StatoRapporto.Registrato)) Enabled=@(!IsSubmitting)>@Localizer["Invia"]</TelerikButton>
+                    <TelerikButton Class="btn btn-primary btn-verde btn-lg mx-1" OnClick=@(() => Salva(StatoRapporto.Registrato)) Enabled=@(!IsSubmitting)>@Localizer["Invia"]</TelerikButton>
                         }
                     }
                 </Authorized>
@@ -251,7 +252,7 @@
     <WindowActions>
         <WindowAction Name="Close" IconClass="k-icon k-i-close text-dark" />
     </WindowActions>
-    <WindowTitle>@Localizer["CampiObbligatori"]</WindowTitle>
+    <WindowTitle>@Localizer["Attenzione"]</WindowTitle>
     <WindowContent>
         <div>
             @Localizer["ListaCampiObbligatori"]:

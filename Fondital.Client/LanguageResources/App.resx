@@ -510,8 +510,8 @@ La nuova password deve essere lunga almeno 8 caratteri e contenere minuscole, ma
   </data>
   <data name="Invia" xml:space="preserve">
     <value>Invia</value>
-  </data>  
-    <data name="CittaCliente" xml:space="preserve">
+  </data>
+  <data name="CittaCliente" xml:space="preserve">
     <value>Dati Anagrafici - Città</value>
   </data>
   <data name="CivicoCliente" xml:space="preserve">
@@ -606,5 +606,11 @@ La nuova password deve essere lunga almeno 8 caratteri e contenere minuscole, ma
   </data>
   <data name="SelezionaElemento" xml:space="preserve">
     <value>Seleziona Elemento</value>
+  </data>
+  <data name="Stampa" xml:space="preserve">
+    <value>Stampa</value>
+  </data>
+  <data name="SaveBeforePrint" xml:space="preserve">
+    <value>Prima di stampare, salvare lo stato del rapporto</value>
   </data>
 </root>

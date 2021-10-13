@@ -616,4 +616,10 @@ La nuova password deve essere lunga almeno 8 caratteri e contenere minuscole, ma
   <data name="SelezionaElemento" xml:space="preserve">
     <value>Seleziona Elemento RU</value>
   </data>
+  <data name="Stampa" xml:space="preserve">
+    <value>Stampa RU</value>
+  </data>
+  <data name="SaveBeforePrint" xml:space="preserve">
+    <value>Prima di stampare, salvare lo stato del rapporto RU</value>
+  </data>
 </root>
