@@ -45,7 +45,7 @@ namespace Fondital.Server.Controllers
             }
             catch (Exception ex)
             {
-                _logger.Error("Eccezione {Action} {Object} {ObjectId}: {ExceptionMessage}", "GET", "Rapporto", id, ex.Message);
+                _logger.Error(ex, "Eccezione {Action} {Object} {ObjectId}", "GET", "Rapporto", id);
                 throw;
             }
         }
@@ -64,9 +64,13 @@ namespace Fondital.Server.Controllers
             }
             catch (Exception ex)
             {
-                _logger.Error("Eccezione {Action} {Object} {ObjectId}: {ExceptionMessage}", "UPDATE", "Rapporto", rapportoId, ex.Message);
+                _logger.Error(ex, "Eccezione {Action} {Object} {ObjectId}", "UPDATE", "Rapporto", rapportoId);
                 return BadRequest($"{ex.Message} - {ex.InnerException?.Message}");
             }
+            //finally
+            //{
+            //    Serilog.Log.CloseAndFlush();
+            //}
         }
 
         [HttpPost]
@@ -84,7 +88,7 @@ namespace Fondital.Server.Controllers
             }
             catch (Exception ex)
             {
-                _logger.Error("Eccezione {Action} {Object}: {ExceptionMessage}", "CREATE", "Rapporto", ex.Message);
+                _logger.Error(ex, "Eccezione {Action} {Object}", "CREATE", "Rapporto");
                 return BadRequest(ex.Message);
             }
         }

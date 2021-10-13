@@ -47,7 +47,7 @@ namespace Fondital.Server.Controllers
             }
             catch (Exception ex)
             {
-                _logger.Error("Eccezione {Action} {Object} {ObjectId}: {ExceptionMessage}", "UPDATE", "Lavorazione", lavorazioneId, ex.Message);
+                _logger.Error(ex, "Eccezione {Action} {Object} {ObjectId}", "UPDATE", "Lavorazione", lavorazioneId);
                 throw;
             }
         }
@@ -65,10 +65,7 @@ namespace Fondital.Server.Controllers
             }
             catch (Exception ex)
             {
-                if (ex.InnerException != null)
-                    _logger.Error("Eccezione {Action} {Object}: {ExceptionMessage} - INNER EXCEPTION: {InnerException}", "CREATE", "Lavorazione", ex.Message, ex.InnerException.Message);
-                else
-                    _logger.Error("Eccezione {Action} {Object}: {ExceptionMessage}", "CREATE", "Lavorazione", ex.Message);
+                _logger.Error(ex, "Eccezione {Action} {Object}", "CREATE", "Lavorazione");
 
                 List<LavorazioneDto> lista = (List<LavorazioneDto>)await _lavorazioneService.GetAllLavorazioni();
 

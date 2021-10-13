@@ -2,7 +2,6 @@
 using Fondital.Shared.Models;
 using Fondital.Shared.Repositories;
 using Microsoft.EntityFrameworkCore;
-using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -26,14 +25,7 @@ namespace Fondital.Repository
 
         public async Task<IEnumerable<ServicePartner>> GetAllServicePartner()
         {
-            List<ServicePartner> servicePartnersRet = new();
-            try
-            {
-                return await Db.ServicePartners.Include(m => m.Utenti).ToListAsync();
-            }
-            catch (Exception e) { }
-
-            return servicePartnersRet;
+            return await Db.ServicePartners.Include(m => m.Utenti).ToListAsync();
         }
     }
 }
