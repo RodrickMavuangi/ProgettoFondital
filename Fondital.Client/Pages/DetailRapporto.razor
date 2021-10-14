@@ -15,6 +15,7 @@
             <div class="page-header">
                 <h1 class="h1"><b>@Localizer["Rapporto"] /</b> @Id</h1>
             </div>
+           <div class="stato aperto top-0" style="text-align: right;">APERTO</div>
         </div>
     </div>
     <div class="col-md-7 pb-4 border-bottom pr-0">
@@ -22,6 +23,7 @@
         <div class="col text-right d-inline-block float-lg-right p-0">
 
             <a href="javascript: history.back()" Class="btn btn-grigio btn-lg mx-1"><i class="bi bi-arrow-return-left"></i></a>
+            <button type="button" class="btn btn-primary btn-blu btn-lg mx-1">Stampa Anagrafica <i class="bi bi-printer-fill right-16"></i></button>
 
             @if (CurrentStepIndex == 3)
             {
@@ -251,15 +253,15 @@
     <WindowActions>
         <WindowAction Name="Close" IconClass="k-icon k-i-close text-dark" />
     </WindowActions>
-    <WindowTitle>@Localizer["CampiObbligatori"]</WindowTitle>
+    @*<WindowTitle>@Localizer["CampiObbligatori"]</WindowTitle>*@
     <WindowContent>
         <div>
-            @Localizer["ListaCampiObbligatori"]:
-            <br />
-            @foreach(string campo in CampiDaCompilare)
-                {
-                    <div>@campo</div>
-                }
+            <div><span class="mb-16 d-inline">@Localizer["ListaCampiObbligatori"]:</span></div>
+           
+            @foreach (string campo in CampiDaCompilare)
+            {
+                <div><span class="regular rosso font14">@campo</span></div>
+            }
         </div>
     </WindowContent>
 </TelerikWindow>

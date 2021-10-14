@@ -4,7 +4,8 @@
 @inject IConfiguration Config
 @inject RapportoClient HttpClient
 @inject NavigationManager NavigationManager
-@attribute [Authorize]
+@inject CurrentStateProvider StateProvider
+@attribute [Authorize(Roles = "Direzione,Service Partner")]
 
 <div class="row-1 d-flex justify-content-between flex-wrap flex-md-nowrap  pt-0">
     <!--TITOLO PAGINA-->
@@ -71,24 +72,59 @@ else
 
             <input class="form-control float-lg-right filtriInput mx-1" @bind-value="SearchByEmail" @bind-value:event="oninput" placeholder=@Localizer["Email"] />
             <i class="bi bi-search float-lg-right icoSearch blu"></i>
-
         </div>
     </div>
 
     <!--FINE BARRA FILTRI-->
     <div class="row-3 d-flex justify-content-between flex-wrap flex-md-nowrap pt-0 pb-4 mb-4">
-        <TelerikGrid Data="@ListaRapportiFiltered" Class="table table-striped" PageSize=@PageSize Pageable="true">
+        <TelerikGrid Data="@ListaRapportiFiltered" Pageable="true" PageSize="@PageSize"
+                     Class="table table-striped" Sortable="true">
             <GridColumns>
                 <GridColumn Field=Utente.ServicePartner.RagioneSociale Width="15%" Title=@Localizer["ServicePartner"].Value.ToUpper() />
-                <GridColumn Field=@nameof(RapportoDto.Stato) Width="15%" Title=@Localizer["Stato"].Value.ToUpper() />
-                <GridColumn Field=@nameof(RapportoDto.DataRapporto) DisplayFormat="{0:dd/MM/yyyy}" Width="15%" Title=@Localizer["Data"].Value.ToUpper() />
+                @{
+                    if (UtenteCorrente.ServicePartner == null)
+                    {
+                                
+                                    <GridCommandColumn Context="context" Width="15%" Title=@Localizer["Stato"].Value.ToUpper()>
+                                        @{
+                                            var rapporto = context as RapportoDto;
+                                            string statoAttuale = rapporto.Stato.Description();
+                                            <div class="barrastato stato @(statoAttuale.ToLower())">
+                                                <TelerikDropDownList Data="@ListStati"
+                                                                     Width="100%"
+                                                                     Class="selectStato"
+                                                                     @bind-Value="statoAttuale"
+                                                                     OnChange=@(() => { rapporto.Stato = statoAttuale.ToEnum<StatoRapporto>(); Salva(rapporto); }) Enabled="@(!IsSubmitting)">
+
+                                                </TelerikDropDownList>
+                                            </div>
+                                        }
+                                    </GridCommandColumn>
+                                
+                    }
+                    else
+                    {
+                        @*<GridColumn Field=@nameof(RapportoDto.Stato) Width="15%" Title=@Localizer["Stato"].Value.ToUpper() />*@
+
+                        <GridColumn Field="Stato" Width="10%" Title="Stato">
+                            <Template>
+                                @{
+                                    RapportoDto stato = (RapportoDto)context;
+                                    <span class="stato barrastato @(stato.Stato)">@(stato.Stato)</span>
+                                }
+                            </Template>
+                        </GridColumn>
+
+                    }
+                }
+                <GridColumn Field=@nameof(RapportoDto.DataRapporto) DisplayFormat="{0:dd/MM/yyyy}" Width="10%" Title=@Localizer["Data"].Value.ToUpper() />
                 <GridColumn Field=Cliente.FullName Width="15%" Title=@Localizer["Cliente"].Value.ToUpper() />
                 <GridColumn Field=@nameof(RapportoDto.Id) Width="10%" Title=@Localizer["NumRapporto"].Value.ToUpper() />
-                <GridColumn Field=Caldaia.Matricola Width="15%" Title=@Localizer["Matricola"].Value.ToUpper() />
-                <GridColumn Field=Cliente.NumTelefono Width="15%" Title=@Localizer["Telefono"].Value.ToUpper() />
+                <GridColumn Field=Caldaia.Matricola Width="10%" Title=@Localizer["Matricola"].Value.ToUpper() />
+                <GridColumn Field=Cliente.NumTelefono Width="10%" Title=@Localizer["Telefono"].Value.ToUpper() />
                 <GridColumn Field=Cliente.Email Width="15%" Title=@Localizer["Email"].Value.ToUpper() />
 
-                <GridCommandColumn Context="rep" Width="3%">
+                <GridCommandColumn Context="rep" Width="4.5%">
                     @{
                         var rapportoDto = rep as RapportoDto;
                         <GridCommandButton Class="btnIcon bgBianco white" Command="ViewRapporto" ImageUrl="/img/Icons/eye-fill.svg" OnClick="@(() => ViewRapporto(rapportoDto.Id))" />

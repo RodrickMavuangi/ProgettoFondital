@@ -1,15 +1,19 @@
 ﻿using Fondital.Shared.Dto;
 using Fondital.Shared.Enums;
 using Fondital.Shared.Extensions;
+using Microsoft.AspNetCore.Components;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Telerik.Blazor;
 
 namespace Fondital.Client.Pages
 {
     public partial class ListRapporti
     {
+        [CascadingParameter]
+        public DialogFactory Dialogs { get; set; }
         private List<RapportoDto> ListaRapporti { get; set; }
         private List<string> ListRagioneSociale { get; set; } = new();
         private static IEnumerable<string> ListStati { get => EnumExtensions.GetEnumNames<StatoRapporto>(); }
@@ -23,11 +27,15 @@ namespace Fondital.Client.Pages
         private string SearchByMatricola { get; set; } = "";
         private string SearchByTelefono { get; set; } = "";
         private string SearchByEmail { get; set; } = "";
-        protected bool ShowAddDialog { get; set; } = false;
+        public UtenteDto UtenteCorrente { get; set; }
+        private bool IsSubmitting = false;
+        private bool ShowAddDialog { get; set; } = false;
 
         protected override async Task OnInitializedAsync()
         {
+            UtenteCorrente = await StateProvider.GetCurrentUser();
             PageSize = Convert.ToInt32(Config["PageSize"]);
+
             await RefreshRapporti();
         }
 
@@ -46,13 +54,38 @@ namespace Fondital.Client.Pages
         protected async Task RefreshRapporti()
         {
             ListaRapporti = (List<RapportoDto>)await HttpClient.GetAllRapporti();
-            ListRagioneSociale = ListaRapporti.Select(x => x.Utente.ServicePartner.RagioneSociale).Distinct().ToList();
+            if (UtenteCorrente.ServicePartner != null)
+            {
+                ListRagioneSociale = new() { UtenteCorrente.ServicePartner.RagioneSociale };
+                SearchBySp = ListRagioneSociale.First();
+            }
+            else
+            {
+                ListRagioneSociale = ListaRapporti.Select(x => x.Utente.ServicePartner.RagioneSociale).Distinct().ToList();
+            }
             StateHasChanged();
         }
 
         protected void ViewRapporto(int rapportoId)
         {
             NavigationManager.NavigateTo($"/reportDetail/{rapportoId}");
+        }
+
+        protected async Task Salva(RapportoDto rapportoToSave)
+        {
+            {
+                IsSubmitting = true;
+                try
+                {
+                    await HttpClient.UpdateRapporto(rapportoToSave.Id, rapportoToSave);
+                    IsSubmitting = false;
+                }
+                catch (Exception ex)
+                {
+                    await Dialogs.AlertAsync($"{Localizer["ErroreSalvaRapporto"]}: {ex.Message}", Localizer["Errore"]);
+                    IsSubmitting = false;
+                }
+            }
         }
     }
 }

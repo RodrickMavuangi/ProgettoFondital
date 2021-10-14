@@ -29,7 +29,7 @@ namespace Fondital.Client.Pages
         private bool ShowAddRicambio { get; set; } = false;
         private bool ShowAddVoceCosto { get; set; } = false;
         private bool ShowCampiObbligatori { get; set; } = false;
-        private bool IsSubmitting { get; set; } = false;      
+        private bool IsSubmitting { get; set; } = false;
 
         protected override async Task OnInitializedAsync()
         {
