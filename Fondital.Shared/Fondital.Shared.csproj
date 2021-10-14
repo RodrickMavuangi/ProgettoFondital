@@ -19,6 +19,9 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Validation.resx</DependentUpon>
     </Compile>
+    <Compile Update="Resources\Display.ru.Designer.cs">
+      <DependentUpon>Display.ru.resx</DependentUpon>
+    </Compile>
   </ItemGroup>
 
   <ItemGroup>
@@ -28,6 +31,7 @@
     </EmbeddedResource>
     <EmbeddedResource Update="Resources\Display.ru.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Display.ru.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Update="Resources\Validation.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
