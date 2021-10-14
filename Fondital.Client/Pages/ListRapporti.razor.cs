@@ -57,7 +57,7 @@ namespace Fondital.Client.Pages
             if (UtenteCorrente.ServicePartner != null)
             {
                 ListRagioneSociale = new() { UtenteCorrente.ServicePartner.RagioneSociale };
-                SearchBySp = ListRagioneSociale.First();
+                SearchBySp = ListRagioneSociale.Single();
             }
             else
             {
@@ -71,20 +71,20 @@ namespace Fondital.Client.Pages
             NavigationManager.NavigateTo($"/reportDetail/{rapportoId}");
         }
 
-        protected async Task Salva(RapportoDto rapportoToSave)
+        protected async Task CambiaStato(RapportoDto rapportoToSave, string statoSelezionato)
         {
+            IsSubmitting = true;
+            rapportoToSave.Stato = Enum.GetValues(typeof(StatoRapporto)).Cast<StatoRapporto>().Single(x => Localizer[x.ToString()] == statoSelezionato);
+
+            try
             {
-                IsSubmitting = true;
-                try
-                {
-                    await HttpClient.UpdateRapporto(rapportoToSave.Id, rapportoToSave);
-                    IsSubmitting = false;
-                }
-                catch (Exception ex)
-                {
-                    await Dialogs.AlertAsync($"{Localizer["ErroreSalvaRapporto"]}: {ex.Message}", Localizer["Errore"]);
-                    IsSubmitting = false;
-                }
+                await HttpClient.UpdateRapporto(rapportoToSave.Id, rapportoToSave);
+                IsSubmitting = false;
+            }
+            catch (Exception ex)
+            {
+                await Dialogs.AlertAsync($"{Localizer["ErroreSalvaRapporto"]}: {ex.Message}", Localizer["Errore"]);
+                IsSubmitting = false;
             }
         }
     }

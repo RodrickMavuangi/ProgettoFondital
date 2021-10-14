@@ -25,18 +25,22 @@ namespace Fondital.Client.Pages
         protected List<string> CampiDaCompilare { get; set; } = new();       
         private int CurrentStepIndex { get; set; }
         private string CurrentCulture { get; set; }
+        private bool AbilitaModifica { get; set; } = true;
+        private bool AbilitaSingDatePicker { get; set; } = true; 
         private bool ShowEditVoceCosto { get; set; } = false;
         private bool ShowAddRicambio { get; set; } = false;
         private bool ShowAddVoceCosto { get; set; } = false;
         private bool ShowCampiObbligatori { get; set; } = false;
-        private bool IsSubmitting { get; set; } = false;
+        private bool IsSubmitting { get; set; } = false;    
+        public UtenteDto UtenteCorrente { get; set; }
 
         protected override async Task OnInitializedAsync()
         {
+            UtenteCorrente = await StateProvider.GetCurrentUser();
             CurrentCulture = await StateProvider.GetCurrentCulture();
 
             if (string.IsNullOrEmpty(Id))
-                Rapporto.Utente = await StateProvider.GetCurrentUser();
+                Rapporto.Utente = UtenteCorrente;
             else
                 Rapporto = await RapportoClient.GetRapportoById(int.Parse(Id)); //c'è il parse così se viene inserito un url malformato lancia errore
 
@@ -47,6 +51,18 @@ namespace Fondital.Client.Pages
                 LavorazioniDescription = ListaLavorazioni.Select(x => x.NomeItaliano).ToList();
             else
                 LavorazioniDescription = ListaLavorazioni.Select(x => x.NomeRusso).ToList();
+
+            SetEnabled();
+        }
+
+		protected void SetEnabled()
+		{
+            //se sei un service partner e il rapporto non è aperto o rifiutato
+            if (UtenteCorrente.ServicePartner != null && !(Rapporto.Stato == StatoRapporto.Aperto || Rapporto.Stato == StatoRapporto.Rifiutato))
+            {
+                AbilitaModifica = false;
+                AbilitaSingDatePicker = false;
+            }         
         }
 
         protected async Task CloseAndRefresh()

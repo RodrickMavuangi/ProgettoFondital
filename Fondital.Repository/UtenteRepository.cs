@@ -22,7 +22,7 @@ namespace Fondital.Repository
 
         public async Task<Utente> GetByUsernameAsync(string username)
         {
-            return await Db.Utenti.SingleOrDefaultAsync(u => u.UserName == username);
+            return await Db.Utenti.Include( x => x.ServicePartner).SingleOrDefaultAsync(u => u.UserName == username);
         }
 
         public async Task CreateUtente(Utente utente)

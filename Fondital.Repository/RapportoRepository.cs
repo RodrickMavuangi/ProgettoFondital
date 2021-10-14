@@ -39,7 +39,7 @@ namespace Fondital.Repository
 
         public async Task AddAudit(Rapporto rapporto, Utente utente, StatoRapporto? stato = null, string note = null)
         {
-            AuditRapporto Audit = new() { Rapporto = rapporto, Utente = utente, StatoIniziale = stato ?? rapporto.Stato};
+            AuditRapporto Audit = new() { Rapporto = rapporto, Utente = utente, StatoIniziale = rapporto.Stato};
             Audit.Note = note ?? (stato == null ? "Modifica campi" : $"Passaggio allo stato {stato.Description()}");
 
             await Db.AuditRapporti.AddAsync(Audit);
