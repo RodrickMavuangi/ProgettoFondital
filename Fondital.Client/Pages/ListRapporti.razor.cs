@@ -57,7 +57,7 @@ namespace Fondital.Client.Pages
             if (UtenteCorrente.ServicePartner != null)
             {
                 ListRagioneSociale = new() { UtenteCorrente.ServicePartner.RagioneSociale };
-                SearchBySp = ListRagioneSociale.First();
+                SearchBySp = ListRagioneSociale.Single();
             }
             else
             {
