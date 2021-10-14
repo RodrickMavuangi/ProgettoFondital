@@ -28,10 +28,10 @@
             <TelerikButton Class="btn btn-primary btn-lg mx-1" OnClick="(() => ShowAddVoceCosto = true)">@Localizer["Inserisci"] @Localizer["VoceCosto"] </TelerikButton><i class="bi bi-plus icoPlus"></i>
             }
 
-            <TelerikButton Class="btn btn-primary btn-verde btn-lg mx-1" OnClick=@(() => Stampa()) Enabled=@(!IsPrinting)>@Localizer["Stampa"]</TelerikButton>
+            <TelerikButton Class="btn btn-primary btn-verde btn-lg mx-1" OnClick=@(() => Stampa()) Enabled=@(!IsPrinting & !IsEdited)>@Localizer["Stampa"]</TelerikButton>
             <AuthorizeView Roles="Direzione">
                 <Authorized>
-                    <TelerikButton Class="btn btn-primary btn-verde btn-lg mx-1" OnClick=@(() => Salva()) Enabled=@(!IsSubmitting)>@Localizer["Salva"] @Localizer["Modifiche"]</TelerikButton>
+                    <TelerikButton Class="btn btn-primary btn-verde btn-lg mx-1" OnClick=@(() => Salva()) Enabled=@(IsEdited)>@Localizer["Salva"] @Localizer["Modifiche"]</TelerikButton>
                 </Authorized>
             </AuthorizeView>
             <AuthorizeView Roles="Service Partner">
@@ -40,11 +40,11 @@
                     {
                         if (CurrentStepIndex != 3)
                         {
-                    <TelerikButton Class="btn btn-primary btn-verde btn-lg mx-1" OnClick=@(() => Salva()) Enabled=@(!IsSubmitting)>@Localizer["Salva"] @Localizer["Modifiche"]</TelerikButton>
+                    <TelerikButton Class="btn btn-primary btn-verde btn-lg mx-1" OnClick=@(() => Salva()) Enabled=@(IsEdited)>@Localizer["Salva"] @Localizer["Modifiche"]</TelerikButton>
                         }
                         else
                         {
-                    <TelerikButton Class="btn btn-primary btn-verde btn-lg mx-1" OnClick=@(() => Salva(StatoRapporto.Registrato)) Enabled=@(!IsSubmitting)>@Localizer["Invia"]</TelerikButton>
+                    <TelerikButton Class="btn btn-primary btn-verde btn-lg mx-1" OnClick=@(() => Salva(StatoRapporto.Registrato)) Enabled=@(IsEdited)>@Localizer["Invia"]</TelerikButton>
                         }
                     }
                 </Authorized>
@@ -79,7 +79,7 @@
 </div>
 
 <div>
-    <EditForm Model="Rapporto">
+    <EditForm Model="Rapporto" @oninput=@(() => IsEdited = true)>
         <DataAnnotationsValidator />
 
         @if (CurrentStepIndex == 0)
@@ -89,7 +89,7 @@
                 <span class="col-4">
                     <label>@Localizer["Nome"]</label>
                     <InputText Class="form-control form-control-lg w100 mb-3" @bind-Value="Rapporto.Cliente.Nome" />
-                </span>
+</span>
                 <span class="col-4">
                     <label>@Localizer["Cognome"]</label>
                     <InputText Class="form-control form-control-lg w100" @bind-Value="Rapporto.Cliente.Cognome" />
@@ -143,15 +143,15 @@
             <div class="form-field my-4 d-flex justify-content-start w-100">
                 <span class="col-4">
                     <label>@Localizer["DataVendita"]</label>
-                    <TelerikDatePicker Enabled="@(Modello!=null)" Class="w100 mb-3 datePickerEp" @bind-Value="Rapporto.Caldaia.DataVendita" />
+                    <TelerikDatePicker Enabled="@(Modello!=null)" Class="w100 mb-3 datePickerEp" @bind-Value="Rapporto.Caldaia.DataVendita" OnChange=@(() => IsEdited = true) />
                 </span>
                 <span class="col-4">
                     <label>@Localizer["DataMontaggio"]</label>
-                    <TelerikDatePicker Enabled="@(Modello!=null)" Class="w100 mb-3 datePickerEp" @bind-Value="Rapporto.Caldaia.DataMontaggio" />
+                    <TelerikDatePicker Enabled="@(Modello!=null)" Class="w100 mb-3 datePickerEp" @bind-Value="Rapporto.Caldaia.DataMontaggio" OnChange=@(() => IsEdited = true) />
                 </span>
                 <span class="col-4">
                     <label>@Localizer["DataAvvio"]</label>
-                    <TelerikDatePicker Enabled="@(Modello!=null)" Class="w100 mb-3 datePickerEp" @bind-Value="Rapporto.Caldaia.DataAvvio" />
+                    <TelerikDatePicker Enabled="@(Modello!=null)" Class="w100 mb-3 datePickerEp" @bind-Value="Rapporto.Caldaia.DataAvvio" OnChange=@(() => IsEdited = true) />
                 </span>
             </div>
 
@@ -176,7 +176,7 @@
             <div class="form-field my-4 d-flex justify-content-start w-100">
                 <span class="col-4">
                     <label>@Localizer["DataIntervento"]</label>
-                    <TelerikDatePicker Class="w100 mb-3 datePickerEp" @bind-Value="Rapporto.DataIntervento" />
+                    <TelerikDatePicker Class="w100 mb-3 datePickerEp" @bind-Value="Rapporto.DataIntervento" OnChange=@(() => IsEdited = true) />
                 </span>
                 <span class="col-8">
                     <label>@Localizer["MotivoIntervento"]</label>
@@ -187,9 +187,7 @@
             <div class="form-field my-4 d-flex justify-content-start w-100">
                 <span class="col-4">
                     <label>@Localizer["TipologiaLavoro"]</label>
-                    <TelerikDropDownList Data="@LavorazioniDescription"
-                                         Class="form-control form-control-lg w100 mb-3"
-                                         @bind-Value="Rapporto.TipoLavoro" />
+                    <TelerikDropDownList Data="@LavorazioniDescription" Class="form-control form-control-lg w100 mb-3" @bind-Value="Rapporto.TipoLavoro" OnChange=@(() => IsEdited = true) />
                 </span>
                 <span class="col-4">
                     <label>@Localizer["NomeTecnico"]</label>
@@ -215,7 +213,7 @@
                             <InputNumber Class="form-control inputCosto d-inline mr-3" @bind-Value="Ricambio.Costo" />
                             <InputText Class="form-control inputDescr d-inline" @bind-Value="Ricambio.Descrizione" />
                             @*<a href="#" title="Elimina" class="icoDelete d-inline rosso text-center"><i class="bi bi-x-square"></i></a>*@
-                            <TelerikButton OnClick="(() => Rapporto.Ricambi.Remove(Ricambio))" Class="icoDelete d-inline rosso text-center" IconClass="" ImageUrl="/img/Icons/delete.svg" />
+                            <TelerikButton OnClick=@(() => { IsEdited = true; Rapporto.Ricambi.Remove(Ricambio); }) Class="icoDelete d-inline rosso text-center" IconClass="" ImageUrl="/img/Icons/delete.svg" />
                         </div>
                     }
                 </div>
@@ -282,7 +280,7 @@
     </WindowActions>
     <WindowContent>
         <div class="dialogForm">
-            <AddRapportoVoceCostoDialog @bind-Rapporto="Rapporto" OnSave="AggiungiVoceCosto" OnClose="CloseAndRefresh" />
+            <AddRapportoVoceCostoDialog @bind-Rapporto="Rapporto" OnSave=@(async () => { IsEdited = true; await CloseAndRefresh(); }) OnClose="CloseAndRefresh" />
         </div>
     </WindowContent>
 </TelerikWindow>
@@ -293,7 +291,7 @@
     </WindowActions>
     <WindowContent>
         <div class="dialogForm">
-            <EditRapportoVoceCostoDialog @bind-RapportoVoceCosto="RapportoVoceCostoSelected" OnSave="CloseAndRefresh" OnClose="CloseAndRefresh" />
+            <EditRapportoVoceCostoDialog @bind-RapportoVoceCosto="RapportoVoceCostoSelected" OnSave=@(async () => { IsEdited = true; await CloseAndRefresh(); }) OnClose="CloseAndRefresh" />
         </div>
     </WindowContent>
 </TelerikWindow>
