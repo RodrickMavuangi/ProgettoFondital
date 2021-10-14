@@ -86,13 +86,12 @@ else
                     <GridCommandColumn Context="context" Width="15%" Title=@Localizer["Stato"].Value.ToUpper()>
                     @{
                         var rapporto = context as RapportoDto;
-                        string statoAttuale = rapporto.Stato.Description();
-                        <TelerikDropDownList Data="@ListStati"
+                        string statoSelezionato = Localizer[rapporto.Stato.ToString()];
+                        <TelerikDropDownList Data=@ListStati.Select(x => Localizer[x])
                                              Width="100%"
-                                             @bind-Value="statoAttuale"
-                                             OnChange=@(() => { rapporto.Stato = statoAttuale.ToEnum<StatoRapporto>(); Salva(rapporto); }) Enabled="@(!IsSubmitting)">
-
-                        </TelerikDropDownList>
+                                             Value="statoSelezionato"
+                                             ValueChanged=@(async (string v) => { statoSelezionato = v; await CambiaStato(rapporto, v); }) 
+                                             Enabled="@(!IsSubmitting)" />
                     }
                     </GridCommandColumn>
                 }

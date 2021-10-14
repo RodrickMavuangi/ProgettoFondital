@@ -607,4 +607,22 @@ La nuova password deve essere lunga almeno 8 caratteri e contenere minuscole, ma
   <data name="SelezionaElemento" xml:space="preserve">
     <value>Seleziona Elemento</value>
   </data>
+  <data name="Aperto" xml:space="preserve">
+    <value>Aperto</value>
+  </data>
+  <data name="Registrato" xml:space="preserve">
+    <value>Registrato</value>
+  </data>
+  <data name="DaVerificare" xml:space="preserve">
+    <value>Da Verificare</value>
+  </data>
+  <data name="Rifiutato" xml:space="preserve">
+    <value>Rifiutato</value>
+  </data>
+  <data name="Approvato" xml:space="preserve">
+    <value>Approvato</value>
+  </data>
+  <data name="Validato" xml:space="preserve">
+    <value>Validato</value>
+  </data>
 </root>
