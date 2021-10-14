@@ -29,7 +29,18 @@
             {
                 <TelerikButton Class="btn btn-primary btn-lg mx-1" OnClick="(() => ShowAddVoceCosto = true)">@Localizer["Inserisci"] @Localizer["VoceCosto"] </TelerikButton><i class="bi bi-plus icoPlus"></i>
             }
-
+            <AuthorizeView Roles="Direzione">
+                <Authorized>
+                    @{
+                        string statoSelezionato = Localizer[Rapporto.Stato.Description().ToString()];
+                        <TelerikDropDownList Data=@ListStati.Select(x => Localizer[x])
+                                             Value="statoSelezionato"
+                                             ValueChanged=@(async (string v) => { statoSelezionato = v; await CambiaStato(Rapporto, v); })
+                                             Enabled="@(!IsSubmitting)" 
+                                             Class="btn btn-primary-outline outline-icon-left btn-lg mx-1"/>
+                    }
+                </Authorized>
+            </AuthorizeView>
             <AuthorizeView Roles="Direzione">
                 <Authorized>
                     <TelerikButton Class="btn btn-primary btn-verde btn-lg mx-1" OnClick=@(() => Salva()) Enabled=@(!IsSubmitting)>@Localizer["Salva"] @Localizer["Modifiche"]</TelerikButton>
