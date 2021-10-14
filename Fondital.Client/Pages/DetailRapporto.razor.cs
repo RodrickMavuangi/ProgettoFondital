@@ -1,5 +1,6 @@
 ﻿using Fondital.Shared.Dto;
 using Fondital.Shared.Enums;
+using Fondital.Shared.Extensions;
 using Microsoft.AspNetCore.Components;
 using System;
 using System.Collections.Generic;
@@ -33,7 +34,7 @@ namespace Fondital.Client.Pages
         private bool ShowCampiObbligatori { get; set; } = false;
         private bool IsSubmitting { get; set; } = false;    
         public UtenteDto UtenteCorrente { get; set; }
-
+        private static IEnumerable<string> ListStati { get => EnumExtensions.GetEnumNames<StatoRapporto>(); }
         protected override async Task OnInitializedAsync()
         {
             UtenteCorrente = await StateProvider.GetCurrentUser();
@@ -205,6 +206,23 @@ namespace Fondital.Client.Pages
             if (Rapporto.RapportiVociCosto.Count == 0) CampiDaCompilare.Add(Localizer["RapportoVociCosto"]);
 
             return CampiDaCompilare;
+        }
+
+        protected async Task CambiaStato(RapportoDto rapportoToSave, string statoSelezionato)
+        {
+            IsSubmitting = true;
+            rapportoToSave.Stato = Enum.GetValues(typeof(StatoRapporto)).Cast<StatoRapporto>().Single(x => Localizer[x.ToString()] == statoSelezionato);
+
+            try
+            {
+                await RapportoClient.UpdateRapporto(rapportoToSave.Id, rapportoToSave);
+                IsSubmitting = false;
+            }
+            catch (Exception ex)
+            {
+                await Dialogs.AlertAsync($"{Localizer["ErroreSalvaRapporto"]}: {ex.Message}", Localizer["Errore"]);
+                IsSubmitting = false;
+            }
         }
     }
 }
