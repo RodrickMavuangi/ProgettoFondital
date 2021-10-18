@@ -92,6 +92,18 @@ namespace Fondital.Client.Pages
             ShowEditVoceCosto = true;
         }
 
+        protected async Task CambiaStato(string statoSelezionato)
+        {
+            IsEdited = true;
+            await Salva(Enum.GetValues(typeof(StatoRapporto)).Cast<StatoRapporto>().Single(x => Localizer[x.ToString()] == statoSelezionato));
+        }
+
+        protected async Task CambiaStep(int newStep)
+        {
+            if (await Salva())
+                CurrentStepIndex = newStep;
+        }
+
         //protected async void GetModelloCaldaia() =>
         //    Modello = await RestClient.ModelloCaldaiaService(Rapporto.Caldaia.Matricola ?? "");
 
@@ -109,12 +121,6 @@ namespace Fondital.Client.Pages
             }
 
             IsPrinting = false;
-        }
-
-        protected async Task CambiaStep(int newStep)
-        {
-            if (await Salva())
-                CurrentStepIndex = newStep;
         }
 
         protected async Task<bool> Salva(StatoRapporto? newStatus = null)

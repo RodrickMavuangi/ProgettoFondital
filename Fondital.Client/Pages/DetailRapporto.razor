@@ -31,10 +31,10 @@
             <AuthorizeView Roles="Direzione">
                 <Authorized>
                     @{
-                        string statoSelezionato = Localizer[Rapporto.Stato.Description().ToString()];
+                        string statoSelezionato = Localizer[Rapporto.Stato.ToString()];
                         <TelerikDropDownList Data=@ListStati.Select(x => Localizer[x])
                                              Value="statoSelezionato"
-                                             ValueChanged=@(async (string v) => { IsEdited = true; statoSelezionato = v; await Salva(v); })
+                                             ValueChanged=@(async (string v) => { statoSelezionato = v; await CambiaStato(v); })
                                              Enabled="@(!IsEdited)"
                                              Class="btn btn-primary-outline outline-icon-left btn-lg mx-1" />
                     }
