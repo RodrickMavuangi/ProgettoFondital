@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Telerik.Blazor;
+using Fondital.Client.Utils;
 
 namespace Fondital.Client.Pages
 {
@@ -91,7 +92,7 @@ namespace Fondital.Client.Pages
 
             try
             {
-
+                await StampaService.StampaDocumento(Rapporto);
             }
             catch
             {
@@ -183,7 +184,7 @@ namespace Fondital.Client.Pages
             if (Rapporto.Caldaia.DataMontaggio == null) CampiDaCompilare.Add(Localizer["DataMontaggioCaldaia"]);
             if (Rapporto.Caldaia.DataAvvio == null) CampiDaCompilare.Add(Localizer["DataAvvioCaldaia"]);
             if (string.IsNullOrEmpty(Rapporto.Caldaia.TecnicoPrimoAvvio)) CampiDaCompilare.Add(Localizer["TecnicoCaldaia"]);
-            if (Rapporto.Caldaia.NumCertificatoTecnico == null) CampiDaCompilare.Add(Localizer["NumCertificatoCaldaia"]);
+            //if (Rapporto.Caldaia.NumCertificatoTecnico == null) CampiDaCompilare.Add(Localizer["NumCertificatoCaldaia"]); //non obbligatorio
             if (string.IsNullOrEmpty(Rapporto.Caldaia.DittaPrimoAvvio)) CampiDaCompilare.Add(Localizer["DittaAvvioCaldaia"]);
             if (Rapporto.DataIntervento == null) CampiDaCompilare.Add(Localizer["RapportoDataIntervento"]);
             if (string.IsNullOrEmpty(Rapporto.MotivoIntervento)) CampiDaCompilare.Add(Localizer["RapportoMotivoIntervento"]);

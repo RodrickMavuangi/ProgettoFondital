@@ -1,4 +1,5 @@
-﻿using Fondital.Shared.Dto;
+﻿using Fondital.Client.Utils;
+using Fondital.Shared.Dto;
 using System;
 using System.Collections.Generic;
 using System.Net.Http;
@@ -29,7 +30,7 @@ namespace Fondital.Client.Clients
         {
             var response = await httpClient.PostAsJsonAsync($"difettiControl", difettoDto, JsonSerializerOpts.JsonOpts);
             if (!response.IsSuccessStatusCode)
-               throw new Exception(response.Content.ReadAsStringAsync().Result);
+                throw new Exception(response.Content.ReadAsStringAsync().Result);
         }
     }
 }

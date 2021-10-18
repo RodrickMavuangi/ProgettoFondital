@@ -23,14 +23,12 @@ namespace Fondital.Client.Dialogs
 
         protected override async Task OnInitializedAsync()
         {
+            CurrentCulture = await StateProvider.GetCurrentCulture();
             ServicePartners = (List<ServicePartnerDto>)await spClient.GetAllServicePartners();
             VociCosto = (List<VoceCostoDto>)await vcClient.GetAllVociCosto();
 
             NuovoListino.ServicePartner = ServicePartners.First();
             NuovoListino.VoceCosto = VociCosto.First();
-
-            var js = (IJSInProcessRuntime)JSRuntime;
-            CurrentCulture = await js.InvokeAsync<string>("blazorCulture.get");
         }
 
         protected async Task SalvaListino()

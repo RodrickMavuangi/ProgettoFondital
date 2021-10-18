@@ -1,8 +1,6 @@
-﻿using Fondital.Shared.Dto;
-using Fondital.Shared.Models;
-using Fondital.Shared.Models.Auth;
+﻿using Fondital.Client.Utils;
+using Fondital.Shared.Dto;
 using System;
-using System.Collections.Generic;
 using System.Net.Http;
 using System.Net.Http.Json;
 using System.Threading.Tasks;
@@ -43,21 +41,21 @@ namespace Fondital.Client.Clients
             if (!response.IsSuccessStatusCode)
                 throw new Exception(response.Content.ReadAsStringAsync().Result);
         }
-        
+
         public async Task ForgotPassword(ForgotPwRequestDto ForgotRequest)
         {
-            MailRequestDto _mailRequest = new MailRequestDto() { Subject = "PASSWORD DIMENTICATA" , ToEmail = ForgotRequest.Email};
+            MailRequestDto _mailRequest = new MailRequestDto() { Subject = "PASSWORD DIMENTICATA", ToEmail = ForgotRequest.Email };
             var response = await httpClient.PostAsJsonAsync($"MailController", _mailRequest, JsonSerializerOpts.JsonOpts);
             if (!response.IsSuccessStatusCode)
                 throw new Exception(response.Content.ReadAsStringAsync().Result);
         }
 
         public async Task AssegnaRuolo(string UtenteEmail, RuoloDto ruolo)
-		{
-                var response = await httpClient.PostAsJsonAsync<RuoloDto>($"authControl/ruolo/{UtenteEmail}",ruolo,JsonSerializerOpts.JsonOpts);
+        {
+            var response = await httpClient.PostAsJsonAsync<RuoloDto>($"authControl/ruolo/{UtenteEmail}", ruolo, JsonSerializerOpts.JsonOpts);
 
-                if (!response.IsSuccessStatusCode)
-                    throw new Exception(response.Content.ReadAsStringAsync().Result);
+            if (!response.IsSuccessStatusCode)
+                throw new Exception(response.Content.ReadAsStringAsync().Result);
         }
     }
 }

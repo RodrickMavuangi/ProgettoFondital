@@ -622,4 +622,10 @@ La nuova password deve essere lunga almeno 8 caratteri e contenere minuscole, ma
   <data name="SaveBeforePrint" xml:space="preserve">
     <value>Prima di stampare, salvare lo stato del rapporto RU</value>
   </data>
+  <data name="AllSP" xml:space="preserve">
+    <value>Tutti i Service Partner RU</value>
+  </data>
+  <data name="AllStati" xml:space="preserve">
+    <value>Tutti gli stati RU</value>
+  </data>
 </root>

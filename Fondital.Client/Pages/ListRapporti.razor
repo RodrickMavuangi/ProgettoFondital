@@ -53,11 +53,15 @@ else
         <div class="form-group rowFiltri rowFiltriRapportini ">
             <TelerikDropDownList Data="@ListRagioneSociale"
                                  Class=" float-lg-right filtriInput mx-1 select"
-                                 @bind-Value="SearchBySp" />
+                                 PopupClass="dropdown-ite"
+                                 @bind-Value="SearchBySp"
+                                 DefaultText=@Localizer["AllSP"] />
 
             <TelerikDropDownList Data="@ListStati"
                                  Class=" float-lg-right filtriInput mx-1 select"
-                                 @bind-Value="SearchByStato" />
+                                 PopupClass="dropdown-ite"
+                                 @bind-Value="SearchByStato"
+                                 DefaultText=@Localizer["AllStati"] />
             @*<input class="form-control float-lg-right filtriInput mx-1" @bind-value="SearchByDate" @bind-value:event="oninput" placeholder=@Localizer["DataDaA"] />*@
             <TelerikDatePicker @bind-Value="SearchByDataDa" Min="@(DateTime.ParseExact("20211001", "yyyyMMdd", null))" Max="SearchByDataA" Class="float-lg-right filtriInput mx-1" />
             <TelerikDatePicker @bind-Value="SearchByDataA" Min="SearchByDataDa" Max="DateTime.Now" Class="float-lg-right filtriInput mx-1" />
