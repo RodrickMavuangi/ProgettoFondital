@@ -44,7 +44,11 @@ namespace Fondital.Client.Utils
 
                 //CREA ZIP
                 //using Stream stream = File.Open($"docs_{rapporto.Id}.zip", FileMode.Create);
+
+
+
                 MemoryStream stream = new();
+                
                 using ZipArchive archive = new(stream, ZipArchiveMode.Create, true, null);
 
                 foreach (var docName in new List<string> { "BUH-IT"/*, "BUH-RU", "IT", "RU" */})
@@ -61,7 +65,13 @@ namespace Fondital.Client.Utils
                     var docAsPdf = pdfProvider.Export(document);
 
                     //ADD TO ZIP
+                    //MemoryStream ms = new(docAsPdf);
+                    //using CompressedStream compressedStream = new(ms, StreamOperationMode.Write, new DeflateSettings());
+                    //ms.CopyTo(compressedStream);
+                    //compressedStream.Flush();
+                    
                     await archive.CreateEntry($"{docName}.pdf").Open().WriteAsync(docAsPdf);
+
                     //using ZipArchiveEntry entry = archive.CreateEntry($"{docName}.pdf"); //?
                     //BinaryWriter writer = new(entry.Open());
                     //writer.Write(docAsPdf);
