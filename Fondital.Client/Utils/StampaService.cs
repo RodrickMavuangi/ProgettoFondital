@@ -9,7 +9,9 @@ using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
 using Telerik.Documents.Core;
+using Telerik.Documents.Core.Fonts;
 using Telerik.Windows.Documents.Common.FormatProviders;
+using Telerik.Windows.Documents.Fixed.Model.Fonts;
 using Telerik.Windows.Documents.Flow.FormatProviders.Docx;
 using Telerik.Windows.Documents.Flow.FormatProviders.Pdf;
 using Telerik.Windows.Documents.Flow.Model;
@@ -20,21 +22,25 @@ namespace Fondital.Client.Utils
     {
         private IJSRuntime _jsRuntime { get; set; }
         private NavigationManager _navManager { get; set; }
+        private HttpClient _httpClient { get; set; }
 
-        public StampaService(IJSRuntime jsRuntime, NavigationManager navManager)
+        public StampaService(IJSRuntime jsRuntime, NavigationManager navManager, HttpClient httpClient)
         {
             _jsRuntime = jsRuntime;
             _navManager = navManager;
+            _httpClient = httpClient;
         }
 
-        public async Task StampaDocumento(RapportoDto rapporto)
+        public async Task StampaDocumenti(RapportoDto rapporto)
         {
             try
             {
-                //APERTURA DOCUMENTO
-                var url = Path.Combine(_navManager.BaseUri, "DocumentTemplates", "BUH-IT.docx");
+                //REGISTRA FONTS
+                List<string> fontList = new() { "Cambria" };
+                await ImportFonts(fontList);
 
-                RadFlowDocument document = await ReadFile(url);
+                //APERTURA DOCUMENTO
+                RadFlowDocument document = await ReadDocument("BUH-IT.docx");
                 RadFlowDocumentEditor editor = new(document);
 
                 //POPOLAMENTO
@@ -43,13 +49,12 @@ namespace Fondital.Client.Utils
                 //ESPORTAZIONE IN PDF
                 PdfFormatProvider pdfProvider = new();
                 var docAsPdf = pdfProvider.Export(document);
-
+                
                 //DOWNLOAD PDF
                 var js = (IJSInProcessRuntime)_jsRuntime;
-                //await js.InvokeVoidAsync("saveFile", Encoding.UTF8.GetString(docAsPdf), "application/pdf", "BUH-IT.pdf");
                 await js.InvokeVoidAsync("saveFile", Convert.ToBase64String(docAsPdf), "application/pdf", "BUH-IT.pdf");
 
-                //TODO: CREAZIONE E DOWNLOAD ZIP
+                //TODO: DOWNLOAD ZIP
             }
             catch (Exception ex)
             {
@@ -57,10 +62,23 @@ namespace Fondital.Client.Utils
             }
         }
 
-        private async Task<RadFlowDocument> ReadFile(string url)
+        private async Task ImportFonts(List<string> FileNames)
         {
-            HttpClient client = new HttpClient();
-            var response = await client.GetAsync(url);
+            foreach (var font in FileNames)
+            {
+                var response = await _httpClient.GetAsync(Path.Combine(_navManager.BaseUri, "Documents/Fonts", $"{font}.TTC"));
+
+                using (MemoryStream ms = new MemoryStream())
+                {
+                    response.Content.ReadAsStream().CopyTo(ms);
+                    FontsRepository.RegisterFont(new FontFamily(font), FontStyles.Normal, FontWeights.Normal, ms.ToArray());
+                }
+            }
+        }
+
+        private async Task<RadFlowDocument> ReadDocument(string docName)
+        {
+            var response = await _httpClient.GetAsync(Path.Combine(_navManager.BaseUri, "Documents/Templates", docName));
 
             IFormatProvider<RadFlowDocument> fileFormatProvider = new DocxFormatProvider();
             Stream stream = response.Content.ReadAsStream();

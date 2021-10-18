@@ -7,9 +7,13 @@
 
   <ItemGroup>
     <Compile Remove="Data\**" />
+    <Compile Remove="wwwroot\DocumentTemplates\**" />
     <Content Remove="Data\**" />
+    <Content Remove="wwwroot\DocumentTemplates\**" />
     <EmbeddedResource Remove="Data\**" />
+    <EmbeddedResource Remove="wwwroot\DocumentTemplates\**" />
     <None Remove="Data\**" />
+    <None Remove="wwwroot\DocumentTemplates\**" />
     <None Remove="Microsoft.Extensions.Logging.AzureAppServices" />
   </ItemGroup>
 
@@ -52,9 +56,5 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Fondital.Shared\Fondital.Shared.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Include="wwwroot\DocumentTemplates\BUH-IT.docx" />
   </ItemGroup>
 </Project>
