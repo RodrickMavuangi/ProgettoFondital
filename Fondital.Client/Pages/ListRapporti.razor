@@ -9,7 +9,7 @@
 
 <div class="row-1 d-flex justify-content-between flex-wrap flex-md-nowrap  pt-0">
     <!--TITOLO PAGINA-->
-    <div class="col-md-5  text-left pb-4 ">
+    <div class="col-md-5  text-left pb-32 ">
         <div class="col  text-left d-inline-block ">
             <div class="page-header">
                 <h1 class="h1"><b>@Localizer["Gestione"]</b> @Localizer["Rapporti"]</h1>
@@ -86,7 +86,7 @@ else
                     @{
                         var rapporto = context as RapportoDto;
                         string statoSelezionato = Localizer[rapporto.Stato.ToString()];
-                        <div class="barrastato stato @(rapporto.Stato.ToString().ToLower())">
+                        <div class="barrastato stato dr @(rapporto.Stato.ToString().ToLower())">
                         <TelerikDropDownList Data=@ListStati.Select(x => Localizer[x])
                                              Width="100%"
                                              Class="selectStato"
@@ -103,7 +103,10 @@ else
                             <Template>
                                 @{
                                     RapportoDto rapporto = (RapportoDto)context;
-                                    <span class="stato barrastato @(rapporto.Stato)">@(rapporto.Stato)</span>
+                                   
+                                    <div class="stato barrastato sp @(rapporto.Stato)">
+                                    <span class="position">@(rapporto.Stato)</span>
+                                    </div>
                                 }
                             </Template>
                         </GridColumn>
