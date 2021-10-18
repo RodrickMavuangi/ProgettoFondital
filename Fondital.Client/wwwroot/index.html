@@ -48,6 +48,29 @@
             set: (value) => window.localStorage['BlazorCulture'] = value
         };
     </script>
+    <script>
+        window.jsOpenIntoNewTab = function (filename, byteBase64) {
+            var blob = b64toBlob(byteBase64);
+
+            var blobURL = URL.createObjectURL(blob);
+            window.open(blobURL);
+        };
+    </script>
+    <script>
+        window.saveFile = function (bytesBase64, mimeType, fileName) {
+            var fileUrl = "data:" + mimeType + ";base64," + bytesBase64;
+            fetch(fileUrl)
+                .then(response => response.blob())
+                .then(blob => {
+                    var link = window.document.createElement("a");
+                    link.href = window.URL.createObjectURL(blob, { type: mimeType });
+                    link.download = fileName;
+                    document.body.appendChild(link);
+                    link.click();
+                    document.body.removeChild(link);
+                });
+        };
+    </script>
     <script src="js/menu.js" defer></script>
 </body>
 

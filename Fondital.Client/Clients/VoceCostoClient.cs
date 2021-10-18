@@ -1,4 +1,5 @@
-﻿using Fondital.Shared.Dto;
+﻿using Fondital.Client.Utils;
+using Fondital.Shared.Dto;
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Net.Http.Json;

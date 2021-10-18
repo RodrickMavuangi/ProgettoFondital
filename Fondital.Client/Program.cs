@@ -1,6 +1,7 @@
 using Blazored.LocalStorage;
 using Fondital.Client.Authentication;
 using Fondital.Client.Clients;
+using Fondital.Client.Utils;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using Microsoft.Extensions.DependencyInjection;
@@ -32,13 +33,14 @@ namespace Fondital.Client
             builder.Services.AddHttpClient<MailClient>(client => client.BaseAddress = new Uri(builder.Configuration["WebAPI:BaseUrl"])).AddHttpMessageHandler<TokenHandler>();
             builder.Services.AddHttpClient<AuthClient>(client => client.BaseAddress = new Uri(builder.Configuration["WebAPI:BaseUrl"])).AddHttpMessageHandler<TokenHandler>();
             builder.Services.AddHttpClient<LavorazioneClient>(client => client.BaseAddress = new Uri(builder.Configuration["WebAPI:BaseUrl"])).AddHttpMessageHandler<TokenHandler>();
-            builder.Services.AddHttpClient<RapportoClient>(client => client.BaseAddress = new Uri(builder.Configuration["WebAPI:BaseUrl"])).AddHttpMessageHandler<TokenHandler>();          
-            builder.Services.AddHttpClient<RestExternalServiceClient>(client => client.BaseAddress = new Uri(builder.Configuration["WebAPI:BaseUrl"])).AddHttpMessageHandler<TokenHandler>();  
+            builder.Services.AddHttpClient<RapportoClient>(client => client.BaseAddress = new Uri(builder.Configuration["WebAPI:BaseUrl"])).AddHttpMessageHandler<TokenHandler>();
+            builder.Services.AddHttpClient<RestExternalServiceClient>(client => client.BaseAddress = new Uri(builder.Configuration["WebAPI:BaseUrl"])).AddHttpMessageHandler<TokenHandler>();
 
             builder.Services.AddBlazoredLocalStorage();
             builder.Services.AddAuthorizationCore();
             builder.Services.AddScoped<FonditalAuthStateProvider>();
             builder.Services.AddScoped<CurrentStateProvider>();
+            builder.Services.AddScoped<StampaService>();
             builder.Services.AddScoped<AuthenticationStateProvider, FonditalAuthStateProvider>(provider => provider.GetRequiredService<FonditalAuthStateProvider>());
             builder.Services.AddScoped<ILoginService, FonditalAuthStateProvider>(provider => provider.GetRequiredService<FonditalAuthStateProvider>());
             builder.Services.AddOptions();

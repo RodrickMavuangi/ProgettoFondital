@@ -5,9 +5,9 @@ using Microsoft.AspNetCore.Components;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net.Http.Json;
 using System.Threading.Tasks;
 using Telerik.Blazor;
+using Fondital.Client.Utils;
 
 namespace Fondital.Client.Pages
 {
@@ -15,15 +15,13 @@ namespace Fondital.Client.Pages
     {
         [CascadingParameter] DialogFactory Dialogs { get; set; }
         [Parameter] public string Id { get; set; }
-        private RapportoDto Rapporto { get; set; } = new();
-        private string RapportoBeforeSave { get; set; }
         private List<RapportoVoceCostoDto> RapportiVociCosto { get; set; } = new();
         private RicambioDto NewRicambio { get; set; } = new();
         public List<LavorazioneDto> ListaLavorazioni { get; set; } = new();
         public List<string> LavorazioniDescription { get; set; } = new();
         public RapportoVoceCostoDto RapportoVoceCostoSelected { get; set; } = new();
-        public string Modello { get; set; }        
-        protected List<string> CampiDaCompilare { get; set; } = new();       
+        public string Modello { get; set; }
+        protected List<string> CampiDaCompilare { get; set; } = new();
         private int CurrentStepIndex { get; set; }
         private string CurrentCulture { get; set; }
         private bool AbilitaModifica { get; set; } = true;
@@ -32,28 +30,36 @@ namespace Fondital.Client.Pages
         private bool ShowAddRicambio { get; set; } = false;
         private bool ShowAddVoceCosto { get; set; } = false;
         private bool ShowCampiObbligatori { get; set; } = false;
+        private bool IsPrinting { get; set; } = false;
+        private bool IsEdited { get; set; } = false;
+        private RapportoDto Rapporto { get; set; } = new();
         private bool IsSubmitting { get; set; } = false;    
         public UtenteDto UtenteCorrente { get; set; }
         private static IEnumerable<string> ListStati { get => EnumExtensions.GetEnumNames<StatoRapporto>(); }
+
         protected override async Task OnInitializedAsync()
         {
             UtenteCorrente = await StateProvider.GetCurrentUser();
             CurrentCulture = await StateProvider.GetCurrentCulture();
 
-            if (string.IsNullOrEmpty(Id))
-                Rapporto.Utente = UtenteCorrente;
-            else
-                Rapporto = await RapportoClient.GetRapportoById(int.Parse(Id)); //c'è il parse così se viene inserito un url malformato lancia errore
+            try
+            {
+                if (string.IsNullOrEmpty(Id))
+                    Rapporto.Utente = await StateProvider.GetCurrentUser();
+                else
+                    Rapporto = await RapportoClient.GetRapportoById(int.Parse(Id)); //c'è il parse così se viene inserito un url malformato lancia errore
 
-            RapportoBeforeSave = await JsonContent.Create(Rapporto).ReadAsStringAsync();
-            ListaLavorazioni = (List<LavorazioneDto>)await LavorazioneClient.GetAllLavorazioni(true);
-            
-            if (CurrentCulture == "it-IT")
-                LavorazioniDescription = ListaLavorazioni.Select(x => x.NomeItaliano).ToList();
-            else
-                LavorazioniDescription = ListaLavorazioni.Select(x => x.NomeRusso).ToList();
+                ListaLavorazioni = (List<LavorazioneDto>)await LavorazioneClient.GetAllLavorazioni(true);
 
-            SetEnabled();
+                if (CurrentCulture == "it-IT")
+                    LavorazioniDescription = ListaLavorazioni.Select(x => x.NomeItaliano).ToList();
+                else
+                    LavorazioniDescription = ListaLavorazioni.Select(x => x.NomeRusso).ToList();
+            }
+            catch
+            {
+                NavigationManager.NavigateTo("/reports");
+            }
         }
 
 		protected void SetEnabled()
@@ -64,6 +70,7 @@ namespace Fondital.Client.Pages
                 AbilitaModifica = false;
                 AbilitaSingDatePicker = false;
             }         
+
         }
 
         protected async Task CloseAndRefresh()
@@ -74,25 +81,17 @@ namespace Fondital.Client.Pages
             await InvokeAsync(StateHasChanged);
         }
 
-        protected async Task AggiungiVoceCosto()
-        {
-            await CloseAndRefresh();
-        }
         protected async Task RemoveVoceCosto(RapportoVoceCostoDto rapportoVoceCosto)
         {
             RapportiVociCosto.Remove(rapportoVoceCosto);
+            IsEdited = true;
             await CloseAndRefresh();
         }
 
         protected async Task AggiungiRicambio()
         {
             Rapporto.Ricambi.Add(NewRicambio);
-            await CloseAndRefresh();
-        }
-
-        protected async Task RemoveRicambio(RicambioDto ricambio)
-        {
-            Rapporto.Ricambi.Remove(ricambio);
+            IsEdited = true;
             await CloseAndRefresh();
         }
 
@@ -105,6 +104,22 @@ namespace Fondital.Client.Pages
         //protected async void GetModelloCaldaia() =>
         //    Modello = await RestClient.ModelloCaldaiaService(Rapporto.Caldaia.Matricola ?? "");
 
+        protected async Task Stampa()
+        {
+            IsPrinting = true;
+
+            try
+            {
+                await StampaService.StampaDocumento(Rapporto);
+            }
+            catch
+            {
+
+            }
+
+            IsPrinting = false;
+        }
+
         protected async Task CambiaStep(int newStep)
         {
             if (await Salva())
@@ -113,19 +128,12 @@ namespace Fondital.Client.Pages
 
         protected async Task<bool> Salva(StatoRapporto? newStatus = null)
         {
-            //uso la serializzazione per ottenere la value equality al posto della reference equality
-            var RapportoSerialized = await JsonContent.Create(Rapporto).ReadAsStringAsync();
-
-            //se il rapporto non è cambiato non salvare su db e ritorna ok
-            if (RapportoBeforeSave == RapportoSerialized)
-                return true;
-            else
+            if (IsEdited)
             {
-                IsSubmitting = true;
-                RapportoBeforeSave = RapportoSerialized; //aggiorno all'ultimo "checkpoint"
-
                 try
                 {
+                    IsEdited = false;
+
                     if (Rapporto.Id == 0)
                     {   //il rapporto va creato
                         Rapporto.Id = await RapportoClient.CreateRapporto(Rapporto);
@@ -144,7 +152,7 @@ namespace Fondital.Client.Pages
                             else
                             {
                                 ShowCampiObbligatori = true;
-                                IsSubmitting = false;
+                                IsEdited = true;
                                 return false;
                             }
                         }
@@ -161,7 +169,7 @@ namespace Fondital.Client.Pages
                         else
                         {
                             ShowCampiObbligatori = true;
-                            IsSubmitting = false;
+                            IsEdited = true;
                             return false;
                         }
                     }
@@ -169,13 +177,11 @@ namespace Fondital.Client.Pages
                 catch (Exception ex)
                 {
                     await Dialogs.AlertAsync($"{Localizer["ErroreSalvaRapporto"]}: {ex.Message}", Localizer["Errore"]);
-                    IsSubmitting = false;
                     return false;
                 }
-
-                IsSubmitting = false;
-                return true;
             }
+
+            return true;
         }
 
         protected List<string> CheckCampiObbligatori()
@@ -196,7 +202,7 @@ namespace Fondital.Client.Pages
             if (Rapporto.Caldaia.DataMontaggio == null) CampiDaCompilare.Add(Localizer["DataMontaggioCaldaia"]);
             if (Rapporto.Caldaia.DataAvvio == null) CampiDaCompilare.Add(Localizer["DataAvvioCaldaia"]);
             if (string.IsNullOrEmpty(Rapporto.Caldaia.TecnicoPrimoAvvio)) CampiDaCompilare.Add(Localizer["TecnicoCaldaia"]);
-            if (Rapporto.Caldaia.NumCertificatoTecnico == null) CampiDaCompilare.Add(Localizer["NumCertificatoCaldaia"]);
+            //if (Rapporto.Caldaia.NumCertificatoTecnico == null) CampiDaCompilare.Add(Localizer["NumCertificatoCaldaia"]); //non obbligatorio
             if (string.IsNullOrEmpty(Rapporto.Caldaia.DittaPrimoAvvio)) CampiDaCompilare.Add(Localizer["DittaAvvioCaldaia"]);
             if (Rapporto.DataIntervento == null) CampiDaCompilare.Add(Localizer["RapportoDataIntervento"]);
             if (string.IsNullOrEmpty(Rapporto.MotivoIntervento)) CampiDaCompilare.Add(Localizer["RapportoMotivoIntervento"]);

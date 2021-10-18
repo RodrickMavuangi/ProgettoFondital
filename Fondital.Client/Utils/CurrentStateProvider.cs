@@ -5,7 +5,7 @@ using Microsoft.JSInterop;
 using System;
 using System.Threading.Tasks;
 
-namespace Fondital.Client
+namespace Fondital.Client.Utils
 {
     public class CurrentStateProvider
     {       

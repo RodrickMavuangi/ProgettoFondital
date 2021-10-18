@@ -2,6 +2,7 @@
 @inject ServicePartnerClient spClient
 @inject VoceCostoClient vcClient  
 @inject IStringLocalizer<App> localizer
+@inject CurrentStateProvider StateProvider 
 @inject IJSRuntime JSRuntime
 
 <EditForm Model="NuovoListino" OnValidSubmit="SalvaListino">
