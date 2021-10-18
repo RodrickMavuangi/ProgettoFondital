@@ -1,5 +1,6 @@
 ﻿using Fondital.Shared.Dto;
 using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.JSInterop;
 using System;
 using System.Collections.Generic;
@@ -16,6 +17,8 @@ using Telerik.Windows.Documents.Flow.FormatProviders.Docx;
 using Telerik.Windows.Documents.Flow.FormatProviders.Pdf;
 using Telerik.Windows.Documents.Flow.Model;
 using Telerik.Windows.Documents.Flow.Model.Editing;
+using Telerik.Zip;
+
 namespace Fondital.Client.Utils
 {
     public class StampaService
@@ -36,25 +39,43 @@ namespace Fondital.Client.Utils
             try
             {
                 //REGISTRA FONTS
-                List<string> fontList = new() { "Cambria" };
+                List<string> fontList = new() { "Cambria_.ttc", "Cambria_b.ttf", "Arial_.ttf", "Arial_b.ttf", "Micross_.ttf" };
                 await ImportFonts(fontList);
 
-                //APERTURA DOCUMENTO
-                RadFlowDocument document = await ReadDocument("BUH-IT.docx");
-                RadFlowDocumentEditor editor = new(document);
+                //CREA ZIP
+                //using Stream stream = File.Open($"docs_{rapporto.Id}.zip", FileMode.Create);
+                MemoryStream stream = new();
+                using ZipArchive archive = new(stream, ZipArchiveMode.Create, true, null);
 
-                //POPOLAMENTO
-                editor.ReplaceText("$SPEmail$", rapporto.MotivoIntervento);
+                foreach (var docName in new List<string> { "BUH-IT"/*, "BUH-RU", "IT", "RU" */})
+                {
+                    //APERTURA DOCUMENTO
+                    RadFlowDocument document = await ReadDocument($"{docName}.docx");
+                    RadFlowDocumentEditor editor = new(document);
 
-                //ESPORTAZIONE IN PDF
-                PdfFormatProvider pdfProvider = new();
-                var docAsPdf = pdfProvider.Export(document);
-                
-                //DOWNLOAD PDF
+                    //POPOLAMENTO
+                    editor.ReplaceText("$SPEmail$", rapporto.MotivoIntervento);
+
+                    //CONVERSIONE IN PDF
+                    PdfFormatProvider pdfProvider = new();
+                    var docAsPdf = pdfProvider.Export(document);
+
+                    //ADD TO ZIP
+                    await archive.CreateEntry($"{docName}.pdf").Open().WriteAsync(docAsPdf);
+                    //using ZipArchiveEntry entry = archive.CreateEntry($"{docName}.pdf"); //?
+                    //BinaryWriter writer = new(entry.Open());
+                    //writer.Write(docAsPdf);
+                    //writer.Flush();
+
+                    //DOWNLOAD PDF
+                    //var js = (IJSInProcessRuntime)_jsRuntime;
+                    //await js.InvokeVoidAsync("saveFile", Convert.ToBase64String(docAsPdf), "application/pdf", $"{docName}.pdf");
+                }
+
+                //DOWNLOAD ZIP
+
                 var js = (IJSInProcessRuntime)_jsRuntime;
-                await js.InvokeVoidAsync("saveFile", Convert.ToBase64String(docAsPdf), "application/pdf", "BUH-IT.pdf");
-
-                //TODO: DOWNLOAD ZIP
+                await js.InvokeVoidAsync("saveFile", Convert.ToBase64String(stream.ToArray()), "application/zip", $"docs_{rapporto.Id}.zip");
             }
             catch (Exception ex)
             {
@@ -66,13 +87,8 @@ namespace Fondital.Client.Utils
         {
             foreach (var font in FileNames)
             {
-                var response = await _httpClient.GetAsync(Path.Combine(_navManager.BaseUri, "Documents/Fonts", $"{font}.TTC"));
-
-                using (MemoryStream ms = new MemoryStream())
-                {
-                    response.Content.ReadAsStream().CopyTo(ms);
-                    FontsRepository.RegisterFont(new FontFamily(font), FontStyles.Normal, FontWeights.Normal, ms.ToArray());
-                }
+                var response = await _httpClient.GetAsync(Path.Combine(_navManager.BaseUri, "Documents/Fonts", $"{font}"));
+                FontsRepository.RegisterFont(new FontFamily(font.Substring(0, font.IndexOf('_'))), FontStyles.Normal, font.Contains("_b") ? FontWeights.Bold : FontWeights.Normal, response.Content.ReadAsByteArrayAsync().Result);
             }
         }
 
