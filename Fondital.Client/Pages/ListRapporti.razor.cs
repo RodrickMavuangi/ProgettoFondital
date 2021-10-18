@@ -16,10 +16,10 @@ namespace Fondital.Client.Pages
         public DialogFactory Dialogs { get; set; }
         private List<RapportoDto> ListaRapporti { get; set; }
         private List<string> ListRagioneSociale { get; set; } = new();
-        private static List<string> ListStati { get; set; } = new();
+        private static IEnumerable<string> ListStati { get => EnumExtensions.GetEnumNames<StatoRapporto>(); }
         private int PageSize { get; set; }
-        private string SearchBySp { get; set; } //affinché il default text si visualizzi il bind-Value deve essere non inizializzato
-        private string SearchByStato { get; set; } //affinché il default text si visualizzi il bind-Value deve essere non inizializzato
+        private string SearchBySp { get; set; } = "";
+        private string SearchByStato { get; set; } = "";
         private DateTime SearchByDataDa { get; set; } = DateTime.ParseExact("20211001", "yyyyMMdd", null);
         private DateTime SearchByDataA { get; set; } = DateTime.Now;
         private string SearchByCliente { get; set; } = "";
@@ -31,8 +31,8 @@ namespace Fondital.Client.Pages
         private bool IsSubmitting = false;
         private bool ShowAddDialog { get; set; } = false;
         public List<RapportoDto> ListaRapportiFiltered => ListaRapporti
-        .Where(x => (SearchBySp == Localizer["AllSP"] || Localizer[x.Utente.ServicePartner.RagioneSociale].ToString().Contains(SearchBySp ?? "", StringComparison.InvariantCultureIgnoreCase))
-             && (SearchByStato == Localizer["AllStati"] || Localizer[x.Stato.ToString()].ToString().Contains(SearchByStato ?? "", StringComparison.InvariantCultureIgnoreCase))
+        .Where(x => x.Utente.ServicePartner.RagioneSociale.Contains(SearchBySp, StringComparison.InvariantCultureIgnoreCase)
+             && x.Stato.ToString().Contains(SearchByStato, StringComparison.InvariantCultureIgnoreCase)
              && x.DataRapporto.Date >= SearchByDataDa.Date
              && x.DataRapporto.Date <= SearchByDataA.Date
              && ((x.Cliente.Nome ?? "") + " " + (x.Cliente.Cognome ?? "")).Contains(SearchByCliente, StringComparison.InvariantCultureIgnoreCase)
@@ -46,7 +46,6 @@ namespace Fondital.Client.Pages
         {
             UtenteCorrente = await StateProvider.GetCurrentUser();
             PageSize = Convert.ToInt32(Config["PageSize"]);
-            ListStati = EnumExtensions.GetEnumNames<StatoRapporto>().Select(x => Localizer[x].Value).ToList();
 
             await RefreshRapporti();
         }
