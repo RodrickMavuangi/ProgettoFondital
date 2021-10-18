@@ -1057,11 +1057,14 @@ a:hover .nomeCircle {
         text-decoration: none !important;
     }
 
+/*add disabled condition*/
 .btn.k-state-disabled {
     background-color: #e9ecef !important;
     opacity: 1 !important;
     color: #B9B9B9 !important;
 }
+
+
 .btn-primary-outline {
     background-color: transparent !important;
     border: 1px solid #0d6efd !important;
