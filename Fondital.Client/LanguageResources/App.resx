@@ -610,13 +610,27 @@ La nuova password deve essere lunga almeno 8 caratteri e contenere minuscole, ma
   <data name="Stampa" xml:space="preserve">
     <value>Stampa</value>
   </data>
-  <data name="SaveBeforePrint" xml:space="preserve">
-    <value>Prima di stampare, salvare lo stato del rapporto</value>
-  </data>
   <data name="AllSP" xml:space="preserve">
     <value>Tutti i Service Partner</value>
   </data>
   <data name="AllStati" xml:space="preserve">
     <value>Tutti gli stati</value>
+  <data name="Aperto" xml:space="preserve">
+    <value>Aperto</value>
+  </data>
+  <data name="Registrato" xml:space="preserve">
+    <value>Registrato</value>
+  </data>
+  <data name="DaVerificare" xml:space="preserve">
+    <value>Da Verificare</value>
+  </data>
+  <data name="Rifiutato" xml:space="preserve">
+    <value>Rifiutato</value>
+  </data>
+  <data name="Approvato" xml:space="preserve">
+    <value>Approvato</value>
+  </data>
+  <data name="Validato" xml:space="preserve">
+    <value>Validato</value>
   </data>
 </root>
