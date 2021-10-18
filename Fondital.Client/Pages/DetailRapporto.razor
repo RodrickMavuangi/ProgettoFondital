@@ -3,7 +3,6 @@
 
 @inject IStringLocalizer<App> Localizer
 @inject CurrentStateProvider StateProvider
-@inject StampaService StampaService 
 @inject RapportoClient RapportoClient
 @inject LavorazioneClient LavorazioneClient
 @inject RestExternalServiceClient RestClient
@@ -16,7 +15,6 @@
             <div class="page-header">
                 <h1 class="h1"><b>@Localizer["Rapporto"] /</b> @Id</h1>
             </div>
-            <div class="stato @Rapporto.Stato.ToString() top-0" style="text-align: right;">@Rapporto.Stato.Description().ToString()</div>
         </div>
     </div>
     <div class="col-md-7 pb-4 border-bottom pr-0">
@@ -24,25 +22,25 @@
         <div class="col text-right d-inline-block float-lg-right p-0">
 
             <a href="javascript: history.back()" Class="btn btn-grigio btn-lg mx-1"><i class="bi bi-arrow-return-left"></i></a>
-            <button type="button" class="btn btn-primary btn-blu btn-lg mx-1">Stampa Anagrafica <i class="bi bi-printer-fill right-16"></i></button>
 
             @if (CurrentStepIndex == 3)
             {
             <TelerikButton Class="btn btn-primary btn-lg mx-1" OnClick="(() => ShowAddVoceCosto = true)">@Localizer["Inserisci"] @Localizer["VoceCosto"] </TelerikButton><i class="bi bi-plus icoPlus"></i>
             }
+
             <AuthorizeView Roles="Direzione">
                 <Authorized>
                     @{
                         string statoSelezionato = Localizer[Rapporto.Stato.Description().ToString()];
                         <TelerikDropDownList Data=@ListStati.Select(x => Localizer[x])
                                              Value="statoSelezionato"
-                                             ValueChanged=@(async (string v) => { statoSelezionato = v; await CambiaStato(Rapporto, v); })
-                                             Enabled="@(!IsSubmitting)" 
-                                             Class="btn btn-primary-outline outline-icon-left btn-lg mx-1"/>
+                                             ValueChanged=@(async (string v) => { IsEdited = true; statoSelezionato = v; await Salva(v); })
+                                             Enabled="@(!IsEdited)"
+                                             Class="btn btn-primary-outline outline-icon-left btn-lg mx-1" />
                     }
                 </Authorized>
             </AuthorizeView>
-          <TelerikButton Class="btn btn-primary btn-verde btn-lg mx-1" OnClick=@(() => Stampa()) Enabled=@(!IsPrinting & !IsEdited)>@Localizer["Stampa"]</TelerikButton>
+            <TelerikButton Class="btn btn-primary btn-verde btn-lg mx-1" OnClick=@(() => Stampa()) Enabled=@(!IsPrinting & !IsEdited)>@Localizer["Stampa"]</TelerikButton>
             <AuthorizeView Roles="Direzione">
                 <Authorized>
                     <TelerikButton Class="btn btn-primary btn-verde btn-lg mx-1" OnClick=@(() => Salva()) Enabled=@(IsEdited)>@Localizer["Salva"] @Localizer["Modifiche"]</TelerikButton>
@@ -94,22 +92,23 @@
 <div>
     <form>
         <fieldset disabled="@(!AbilitaModifica)">
-    <EditForm Model="Rapporto" @oninput=@(() => IsEdited = true)>
-        <DataAnnotationsValidator />
+            <EditForm Model="Rapporto">
+                <DataAnnotationsValidator />
 
-        @if (CurrentStepIndex == 0)
-        {
-            <!--Dati Anagrafici-->
-            <div class="form-field my-4 d-flex justify-content-start w-100">
-                <span class="col-4">
-                    <label>@Localizer["Nome"]</label>
-                    <InputText Class="form-control form-control-lg w100 mb-3" @bind-Value="Rapporto.Cliente.Nome" />
-</span>
-                <span class="col-4">
-                    <label>@Localizer["Cognome"]</label>
-                    <InputText Class="form-control form-control-lg w100" @bind-Value="Rapporto.Cliente.Cognome" />
-                </span>
-            </div>
+                @if (CurrentStepIndex == 0)
+                {
+                    <!--Dati Anagrafici-->
+                    <div class="form-field my-4 d-flex justify-content-start w-100">
+                        <span class="col-4">
+                            <label>@Localizer["Nome"]</label>
+                            <InputText Class="form-control form-control-lg w100 mb-3" @bind-Value="Rapporto.Cliente.Nome" />
+                        </span>
+                        <span class="col-4">
+                            <label>@Localizer["Cognome"]</label>
+                            <InputText Class="form-control form-control-lg w100" @bind-Value="Rapporto.Cliente.Cognome" />
+                        </span>
+                    </div>
+
                     <div class="form-field my-4 d-flex justify-content-start w-100">
                         <span class="col-4">
                             <label>@Localizer["Citta"]</label>
@@ -156,15 +155,15 @@
                     <div class="form-field my-4 d-flex justify-content-start w-100">
                         <span class="col-4">
                             <label>@Localizer["DataVendita"]</label>
-                            <TelerikDatePicker Class="w100 mb-3 datePickerEp" @bind-Value="Rapporto.Caldaia.DataVendita" Enabled="@(AbilitaSingDatePicker && Modello!=null)" OnChange=@(() => IsEdited = true) />
+                            <TelerikDatePicker Class="w100 mb-3 datePickerEp" @bind-Value="Rapporto.Caldaia.DataVendita" Enabled="@(AbilitaModifica && Modello!=null)" />
                         </span>
                         <span class="col-4">
                             <label>@Localizer["DataMontaggio"]</label>
-                            <TelerikDatePicker Class="w100 mb-3 datePickerEp" @bind-Value="Rapporto.Caldaia.DataMontaggio" Enabled="@(AbilitaSingDatePicker && Modello!=null)" OnChange=@(() => IsEdited = true) />
+                            <TelerikDatePicker Class="w100 mb-3 datePickerEp" @bind-Value="Rapporto.Caldaia.DataMontaggio" Enabled="@(AbilitaModifica && Modello!=null)" />
                         </span>
                         <span class="col-4">
                             <label>@Localizer["DataAvvio"]</label>
-                            <TelerikDatePicker Class="w100 mb-3 datePickerEp" @bind-Value="Rapporto.Caldaia.DataAvvio" Enabled="@(AbilitaSingDatePicker && Modello!=null)" OnChange=@(() => IsEdited = true) />
+                            <TelerikDatePicker Class="w100 mb-3 datePickerEp" @bind-Value="Rapporto.Caldaia.DataAvvio" Enabled="@(AbilitaModifica && Modello!=null)" />
                         </span>
                     </div>
                     <div class="form-field my-4 d-flex justify-content-start w-100">
@@ -188,22 +187,21 @@
                     <div class="form-field my-4 d-flex justify-content-start w-100">
                         <span class="col-4">
                             <label>@Localizer["DataIntervento"]</label>
-                            <TelerikDatePicker Class="w100 mb-3 datePickerEp" @bind-Value="Rapporto.DataIntervento" Enabled="@(AbilitaSingDatePicker)" OnChange=@(() => IsEdited = true) />
+                            <TelerikDatePicker Class="w100 mb-3 datePickerEp" @bind-Value="Rapporto.DataIntervento" Enabled="@(AbilitaModifica)" />
                         </span>
                         <span class="col-8">
                             <label>@Localizer["MotivoIntervento"]</label>
                             <InputText Class="form-control form-control-lg w100 mb-3" @bind-Value="Rapporto.MotivoIntervento" />
                         </span>
                     </div>
+
                     <div class="form-field my-4 d-flex justify-content-start w-100">
                         <span class="col-4">
                             <label>@Localizer["TipologiaLavoro"]</label>
                             @*<InputText Class="form-control form-control-lg w100 mb-3" @bind-Value="Rapporto.TipoLavoro" />*@
                             <TelerikDropDownList Data="@LavorazioniDescription"
                                                  Class="form-control form-control-lg w100 mb-3"
-                                                 @bind-Value="Rapporto.TipoLavoro" 
-                                                 Enabled="@(AbilitaSingDatePicker)"
-                                                 OnChange=@(() => IsEdited = true)/>
+                                                 @bind-Value="Rapporto.TipoLavoro" Enabled="@(AbilitaModifica)" />
                         </span>
                         <span class="col-4">
                             <label>@Localizer["NomeTecnico"]</label>
@@ -230,7 +228,7 @@
                                     <InputNumber Class="form-control inputCosto d-inline mr-3" @bind-Value="Ricambio.Costo" />
                                     <InputText Class="form-control inputDescr d-inline" @bind-Value="Ricambio.Descrizione" />
                                     @*<a href="#" title="Elimina" class="icoDelete d-inline rosso text-center"><i class="bi bi-x-square"></i></a>*@
-                                    <TelerikButton OnClick="(() => {IsEdited = true; Rapporto.Ricambi.Remove(Ricambio); })" Class="icoDelete d-inline rosso text-center" IconClass="" ImageUrl="/img/Icons/delete.svg" />
+                                    <TelerikButton OnClick="(() => Rapporto.Ricambi.Remove(Ricambio))" Class="icoDelete d-inline rosso text-center" IconClass="" ImageUrl="/img/Icons/delete.svg" />
                                 </div>
                             }
                         </div>
@@ -269,14 +267,15 @@
     <WindowActions>
         <WindowAction Name="Close" IconClass="k-icon k-i-close text-dark" />
     </WindowActions>
+    <WindowTitle>@Localizer["CampiObbligatori"]</WindowTitle>
     <WindowContent>
         <div>
-            <div><span class="mb-16 d-inline">@Localizer["ListaCampiObbligatori"]:</span></div>
-           
-            @foreach (string campo in CampiDaCompilare)
-            {
-                <div><span class="regular rosso font14">@campo</span></div>
-            }
+            @Localizer["ListaCampiObbligatori"]:
+            <br />
+            @foreach(string campo in CampiDaCompilare)
+                {
+                    <div>@campo</div>
+                }
         </div>
     </WindowContent>
 </TelerikWindow>
@@ -298,7 +297,7 @@
     </WindowActions>
     <WindowContent>
         <div class="dialogForm">
-            <AddRapportoVoceCostoDialog @bind-Rapporto="Rapporto" OnSave=@(async () => { IsEdited = true; await CloseAndRefresh(); }) OnClose="CloseAndRefresh" />
+            <AddRapportoVoceCostoDialog @bind-Rapporto="Rapporto" OnSave="AggiungiVoceCosto" OnClose="CloseAndRefresh" />
         </div>
     </WindowContent>
 </TelerikWindow>
@@ -309,7 +308,7 @@
     </WindowActions>
     <WindowContent>
         <div class="dialogForm">
-            <EditRapportoVoceCostoDialog @bind-RapportoVoceCosto="RapportoVoceCostoSelected" OnSave=@(async () => { IsEdited = true; await CloseAndRefresh(); }) OnClose="CloseAndRefresh" />
+            <EditRapportoVoceCostoDialog @bind-RapportoVoceCosto="RapportoVoceCostoSelected" OnSave="CloseAndRefresh" OnClose="CloseAndRefresh" />
         </div>
     </WindowContent>
 </TelerikWindow>

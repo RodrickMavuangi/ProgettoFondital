@@ -1,4 +1,5 @@
-﻿using Fondital.Shared.Dto;
+﻿using Fondital.Client.Utils;
+using Fondital.Shared.Dto;
 using Fondital.Shared.Enums;
 using Fondital.Shared.Extensions;
 using Microsoft.AspNetCore.Components;
@@ -7,7 +8,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Telerik.Blazor;
-using Fondital.Client.Utils;
 
 namespace Fondital.Client.Pages
 {
@@ -25,7 +25,6 @@ namespace Fondital.Client.Pages
         private int CurrentStepIndex { get; set; }
         private string CurrentCulture { get; set; }
         private bool AbilitaModifica { get; set; } = true;
-        private bool AbilitaSingDatePicker { get; set; } = true; 
         private bool ShowEditVoceCosto { get; set; } = false;
         private bool ShowAddRicambio { get; set; } = false;
         private bool ShowAddVoceCosto { get; set; } = false;
@@ -33,7 +32,6 @@ namespace Fondital.Client.Pages
         private bool IsPrinting { get; set; } = false;
         private bool IsEdited { get; set; } = false;
         private RapportoDto Rapporto { get; set; } = new();
-        private bool IsSubmitting { get; set; } = false;    
         public UtenteDto UtenteCorrente { get; set; }
         private static IEnumerable<string> ListStati { get => EnumExtensions.GetEnumNames<StatoRapporto>(); }
 
@@ -45,9 +43,13 @@ namespace Fondital.Client.Pages
             try
             {
                 if (string.IsNullOrEmpty(Id))
-                    Rapporto.Utente = await StateProvider.GetCurrentUser();
+                    Rapporto.Utente = UtenteCorrente;
                 else
                     Rapporto = await RapportoClient.GetRapportoById(int.Parse(Id)); //c'è il parse così se viene inserito un url malformato lancia errore
+
+                //se sei un service partner e il rapporto non è aperto o rifiutato
+                if (UtenteCorrente.ServicePartner != null && !(Rapporto.Stato == StatoRapporto.Aperto || Rapporto.Stato == StatoRapporto.Rifiutato))
+                    AbilitaModifica = false;
 
                 ListaLavorazioni = (List<LavorazioneDto>)await LavorazioneClient.GetAllLavorazioni(true);
 
@@ -60,17 +62,6 @@ namespace Fondital.Client.Pages
             {
                 NavigationManager.NavigateTo("/reports");
             }
-        }
-
-		protected void SetEnabled()
-		{
-            //se sei un service partner e il rapporto non è aperto o rifiutato
-            if (UtenteCorrente.ServicePartner != null && !(Rapporto.Stato == StatoRapporto.Aperto || Rapporto.Stato == StatoRapporto.Rifiutato))
-            {
-                AbilitaModifica = false;
-                AbilitaSingDatePicker = false;
-            }         
-
         }
 
         protected async Task CloseAndRefresh()
@@ -114,7 +105,7 @@ namespace Fondital.Client.Pages
             }
             catch
             {
-
+                throw;
             }
 
             IsPrinting = false;
@@ -164,7 +155,7 @@ namespace Fondital.Client.Pages
                         {
                             Rapporto.Stato = newStatus.Value;
                             await RapportoClient.UpdateRapporto(Rapporto.Id, Rapporto);
-                            NavigationManager.NavigateTo("/reports");
+                            //NavigationManager.NavigateTo("/reports"); //non mi piace
                         }
                         else
                         {
@@ -212,23 +203,6 @@ namespace Fondital.Client.Pages
             if (Rapporto.RapportiVociCosto.Count == 0) CampiDaCompilare.Add(Localizer["RapportoVociCosto"]);
 
             return CampiDaCompilare;
-        }
-
-        protected async Task CambiaStato(RapportoDto rapportoToSave, string statoSelezionato)
-        {
-            IsSubmitting = true;
-            rapportoToSave.Stato = Enum.GetValues(typeof(StatoRapporto)).Cast<StatoRapporto>().Single(x => Localizer[x.ToString()] == statoSelezionato);
-
-            try
-            {
-                await RapportoClient.UpdateRapporto(rapportoToSave.Id, rapportoToSave);
-                IsSubmitting = false;
-            }
-            catch (Exception ex)
-            {
-                await Dialogs.AlertAsync($"{Localizer["ErroreSalvaRapporto"]}: {ex.Message}", Localizer["Errore"]);
-                IsSubmitting = false;
-            }
         }
     }
 }
