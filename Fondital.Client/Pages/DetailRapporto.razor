@@ -16,6 +16,51 @@
             <div class="page-header">
                 <h1 class="h1"><b>@Localizer["Rapporto"] /</b> @Id</h1>
             </div>
+
+
+            <div class="stato @Rapporto.Stato.ToString() top-0">
+
+                <AuthorizeView Roles="Direzione">
+                    <Authorized>
+                        @{
+
+
+
+
+
+
+                            string statoSelezionato = Localizer[Rapporto.Stato.ToString()];
+                            <TelerikDropDownList Data=@ListStati.Select(x => Localizer[x])
+                                                 Value="statoSelezionato"
+                                                 ValueChanged=@(async (string v) => { statoSelezionato = v; await CambiaStato(v); })
+                                                 Enabled="@(!IsEdited)"
+                                                 Class="selectStato selectStatoDett alignDX d-inline w-100" />
+
+
+
+
+                        }
+
+
+                    </Authorized>
+                </AuthorizeView>
+
+
+                <AuthorizeView Roles="Service Partner">
+                    <Authorized>
+                        @{
+                            <div class="spDett"><span class="d-inline w-100 text-right position">@Rapporto.Stato.Description().ToString()</span></div>
+
+                        }
+                    </Authorized>
+                </AuthorizeView>
+
+            </div>
+
+
+
+
+
         </div>
     </div>
     <div class="col-md-7 pb-4 border-bottom pr-0">
@@ -26,22 +71,12 @@
 
             @if (CurrentStepIndex == 3)
             {
-                <TelerikButton Class="btn btn-primary btn-lg mx-1" OnClick="(() => ShowAddVoceCosto = true)">@Localizer["Inserisci"] @Localizer["VoceCosto"] </TelerikButton><i class="bi bi-plus icoPlus"></i>
+            <TelerikButton Class="btn btn-primary btn-lg mx-1" OnClick="(() => ShowAddVoceCosto = true)">@Localizer["Inserisci"] @Localizer["VoceCosto"] </TelerikButton><i class="bi bi-plus icoPlus"></i>
             }
 
-            <AuthorizeView Roles="Direzione">
-                <Authorized>
-                    @{
-                        string statoSelezionato = Localizer[Rapporto.Stato.ToString()];
-                        <TelerikDropDownList Data=@ListStati.Select(x => Localizer[x])
-                                             Value="statoSelezionato"
-                                             ValueChanged=@(async (string v) => { statoSelezionato = v; await CambiaStato(v); })
-                                             Enabled="@(!IsEdited)"
-                                             Class="btn btn-primary-outline outline-icon-left btn-lg mx-1" />
-                    }
-                </Authorized>
-            </AuthorizeView>
-            <TelerikButton Class="btn btn-primary btn-verde btn-lg mx-1" OnClick=@(() => Stampa()) Enabled=@(!IsPrinting & !IsEdited)>@Localizer["Stampa"]</TelerikButton>
+
+            <TelerikButton Class="btn btn-primary btn-blu btn-lg mx-1" OnClick=@(() => Stampa()) Enabled=@(!IsPrinting & !IsEdited)>@Localizer["Stampa"] <i class="bi bi-printer-fill right-16"></i></TelerikButton>
+
             <AuthorizeView Roles="Direzione">
                 <Authorized>
                     <TelerikButton Class="btn btn-primary btn-verde btn-lg mx-1" OnClick=@(() => Salva()) Enabled=@(IsEdited)>@Localizer["Salva"] @Localizer["Modifiche"]</TelerikButton>
@@ -53,11 +88,11 @@
                     {
                         if (CurrentStepIndex != 3)
                         {
-                            <TelerikButton Class="btn btn-primary btn-verde btn-lg mx-1" OnClick=@(() => Salva()) Enabled=@(IsEdited)>@Localizer["Salva"] @Localizer["Modifiche"]</TelerikButton>
+                    <TelerikButton Class="btn btn-primary btn-verde btn-lg mx-1" OnClick=@(() => Salva()) Enabled=@(IsEdited)>@Localizer["Salva"] @Localizer["Modifiche"]</TelerikButton>
                         }
                         else
                         {
-                            <TelerikButton Class="btn btn-primary btn-verde btn-lg mx-1" OnClick=@(() => Salva(StatoRapporto.Registrato)) Enabled=@(IsEdited)>@Localizer["Invia"]</TelerikButton>
+                    <TelerikButton Class="btn btn-primary btn-verde btn-lg mx-1" OnClick=@(() => Salva(StatoRapporto.Registrato)) Enabled=@(IsEdited)>@Localizer["Invia"]</TelerikButton>
                         }
                     }
                 </Authorized>
@@ -81,11 +116,11 @@
     <div class="col-md-4 p-0 pl-0 pr-0 d-inline text-right">
         @if (CurrentStepIndex > 0)
         {
-            <TelerikButton Class="btn btn-primary-outline outline-icon-left btn-lg mx-1" OnClick=@(async () => { await CambiaStep(CurrentStepIndex -1); })><i class="bi bi-chevron-left icoBack"></i> @Localizer["Indietro"] </TelerikButton>
+        <TelerikButton Class="btn btn-primary-outline outline-icon-left btn-lg mx-1" OnClick=@(async () => { await CambiaStep(CurrentStepIndex -1); })><i class="bi bi-chevron-left icoBack"></i> @Localizer["Indietro"] </TelerikButton>
         }
         @if (CurrentStepIndex < 3)
         {
-            <TelerikButton Class="btn btn-primary-outline outline-icon-right btn-lg mx-1" OnClick=@(async () => { await CambiaStep(CurrentStepIndex +1); })>@Localizer["Avanti"] <i class="bi bi-chevron-right icoForward"></i></TelerikButton>
+        <TelerikButton Class="btn btn-primary-outline outline-icon-right btn-lg mx-1" OnClick=@(async () => { await CambiaStep(CurrentStepIndex +1); })>@Localizer["Avanti"] <i class="bi bi-chevron-right icoForward"></i></TelerikButton>
         }
     </div>
 
@@ -99,164 +134,175 @@
                 @if (CurrentStepIndex == 0)
                 {
                     <!--Dati Anagrafici-->
-                    <div class="form-field my-4 d-flex justify-content-start w-100">
-                        <span class="col-4">
-                            <label>@Localizer["Nome"]</label>
-                            <InputText Class="form-control form-control-lg w100 mb-3" @bind-Value="Rapporto.Cliente.Nome" />
-                        </span>
-                        <span class="col-4">
-                            <label>@Localizer["Cognome"]</label>
-                            <InputText Class="form-control form-control-lg w100" @bind-Value="Rapporto.Cliente.Cognome" />
-                        </span>
-                    </div>
+                <div class="form-field my-4 d-flex justify-content-start w-100">
+                    <span class="col-4">
+                        <label>@Localizer["Nome"]</label>
+                        <InputText Class="form-control form-control-lg w100 mb-3" @bind-Value="Rapporto.Cliente.Nome" />
+                    </span>
+                    <span class="col-4">
+                        <label>@Localizer["Cognome"]</label>
+                        <InputText Class="form-control form-control-lg w100" @bind-Value="Rapporto.Cliente.Cognome" />
+                    </span>
+                </div>
 
-                    <div class="form-field my-4 d-flex justify-content-start w-100">
-                        <span class="col-4">
-                            <label>@Localizer["Citta"]</label>
-                            <InputText Class="form-control form-control-lg w100 mb-3" @bind-Value="Rapporto.Cliente.Citta" />
-                        </span>
-                        <span class="col-4">
-                            <label>@Localizer["Via"]</label>
-                            <InputText Class="form-control form-control-lg w100 mb-3" @bind-Value="Rapporto.Cliente.Via" />
-                        </span>
-                        <span class="ml-3">
-                            <label>@Localizer["NumCivico"]</label>
-                            <InputText Class="form-control form-control-lg w100 mb-3" @bind-Value="Rapporto.Cliente.NumCivico" />
-                        </span>
-                    </div>
+                <div class="form-field my-4 d-flex justify-content-start w-100">
+                    <span class="col-4">
+                        <label>@Localizer["Citta"]</label>
+                        <InputText Class="form-control form-control-lg w100 mb-3" @bind-Value="Rapporto.Cliente.Citta" />
+                    </span>
+                    <span class="col-4">
+                        <label>@Localizer["Via"]</label>
+                        <InputText Class="form-control form-control-lg w100 mb-3" @bind-Value="Rapporto.Cliente.Via" />
+                    </span>
+                    <span class="ml-3">
+                        <label>@Localizer["NumCivico"]</label>
+                        <InputText Class="form-control form-control-lg w100 mb-3" @bind-Value="Rapporto.Cliente.NumCivico" />
+                    </span>
+                </div>
 
-                    <div class="form-field my-4 d-flex justify-content-start w-100">
-                        <span class="col-4">
-                            <label>@Localizer["NumTelefono"]</label>
-                            <InputText Class="form-control form-control-lg w100 mb-3" @bind-Value="Rapporto.Cliente.NumTelefono" />
-                        </span>
-                        <span class="col-4">
-                            <label>@Localizer["Email"]</label>
-                            <InputText Class="form-control form-control-lg w100 mb-3" @bind-Value="Rapporto.Cliente.Email" />
-                        </span>
-                    </div>
+                <div class="form-field my-4 d-flex justify-content-start w-100">
+                    <span class="col-4">
+                        <label>@Localizer["NumTelefono"]</label>
+                        <InputText Class="form-control form-control-lg w100 mb-3" @bind-Value="Rapporto.Cliente.NumTelefono" />
+                    </span>
+                    <span class="col-4">
+                        <label>@Localizer["Email"]</label>
+                        <InputText Class="form-control form-control-lg w100 mb-3" @bind-Value="Rapporto.Cliente.Email" />
+                    </span>
+                </div>
                 }
                 else if (CurrentStepIndex == 1)
                 {
-                    <!--Dati Caldaia-->
-                    <div class="form-field my-4 d-flex justify-content-start w-100">
-                        <span class="col-4">
-                            <label>@Localizer["Matricola"]</label>
-                            <InputText Class="form-control form-control-lg w100 mb-3" @bind-Value="Rapporto.Caldaia.Matricola" />
-                        </span>
-                        <span class="col-4">
-                            <label>@Localizer["Modello"]</label>
-                            <label class="form-control form-control-lg w100 mb-3">@Modello</label>
-                        </span>
-                        <span class="col-4">
-                            <label>@Localizer["Versione"]</label>
-                            <InputText Class="form-control form-control-lg w100 mb-3" @bind-Value="Rapporto.Caldaia.Versione" disabled="@(Modello==null)" />
-                        </span>
-                    </div>
-                    <div class="form-field my-4 d-flex justify-content-start w-100">
-                        <span class="col-4">
-                            <label>@Localizer["DataVendita"]</label>
-                            <TelerikDatePicker Class="w100 mb-3 datePickerEp" @bind-Value="Rapporto.Caldaia.DataVendita" Enabled="@(AbilitaModifica && Modello!=null)" OnChange=@(() => IsEdited = true) />
-                        </span>
-                        <span class="col-4">
-                            <label>@Localizer["DataMontaggio"]</label>
-                            <TelerikDatePicker Class="w100 mb-3 datePickerEp" @bind-Value="Rapporto.Caldaia.DataMontaggio" Enabled="@(AbilitaModifica && Modello!=null)" OnChange=@(() => IsEdited = true) />
-                        </span>
-                        <span class="col-4">
-                            <label>@Localizer["DataAvvio"]</label>
-                            <TelerikDatePicker Class="w100 mb-3 datePickerEp" @bind-Value="Rapporto.Caldaia.DataAvvio" Enabled="@(AbilitaModifica && Modello!=null)" OnChange=@(() => IsEdited = true) />
-                        </span>
-                    </div>
-                    <div class="form-field my-4 d-flex justify-content-start w-100">
-                        <span class="col-4">
-                            <label>@Localizer["TecnicoPrimaAccensione"]</label>
-                            <InputText Class="form-control form-control-lg w100 mb-3" @bind-Value="Rapporto.Caldaia.TecnicoPrimoAvvio" disabled="@(Modello==null)" />
-                        </span>
-                        <span class="col-4">
-                            <label>@Localizer["NumeroCertTecnico"]</label>
-                            <InputNumber Class="form-control form-control-lg w100 mb-3" @bind-Value="Rapporto.Caldaia.NumCertificatoTecnico" disabled="@(Modello==null)" />
-                        </span>
-                        <span class="col-4">
-                            <label>@Localizer["DittaPrimoAvvio"]</label>
-                            <InputText Class="form-control form-control-lg w100 mb-3" @bind-Value="Rapporto.Caldaia.DittaPrimoAvvio" disabled="@(Modello==null)" />
-                        </span>
-                    </div>
+ <!--Dati Caldaia-->
+                <div class="form-field my-4 d-flex justify-content-start w-100">
+                    <span class="col-4">
+                        <label>@Localizer["Matricola"]</label>
+                        <InputText Class="form-control form-control-lg w100 mb-3" @bind-Value="Rapporto.Caldaia.Matricola" />
+                    </span>
+                    <span class="col-4">
+                        <label>@Localizer["Modello"]</label>
+                        <label class="form-control form-control-lg w100 mb-3">@Modello</label>
+                    </span>
+                    <span class="col-4">
+                        <label>@Localizer["Versione"]</label>
+                        <InputText Class="form-control form-control-lg w100 mb-3" @bind-Value="Rapporto.Caldaia.Versione" disabled="@(Modello==null)" />
+                    </span>
+                </div>
+                <div class="form-field my-4 d-flex justify-content-start w-100">
+                    <span class="col-4">
+                        <label>@Localizer["DataVendita"]</label>
+                        <TelerikDatePicker Class="w100 mb-3 datePickerEp" @bind-Value="Rapporto.Caldaia.DataVendita" Enabled="@(AbilitaModifica && Modello!=null)" OnChange=@(() => IsEdited = true) />
+                    </span>
+                    <span class="col-4">
+                        <label>@Localizer["DataMontaggio"]</label>
+                        <TelerikDatePicker Class="w100 mb-3 datePickerEp" @bind-Value="Rapporto.Caldaia.DataMontaggio" Enabled="@(AbilitaModifica && Modello!=null)" OnChange=@(() => IsEdited = true) />
+                    </span>
+                    <span class="col-4">
+                        <label>@Localizer["DataAvvio"]</label>
+                        <TelerikDatePicker Class="w100 mb-3 datePickerEp" @bind-Value="Rapporto.Caldaia.DataAvvio" Enabled="@(AbilitaModifica && Modello!=null)" OnChange=@(() => IsEdited = true) />
+                    </span>
+                </div>
+                <div class="form-field my-4 d-flex justify-content-start w-100">
+                    <span class="col-4">
+                        <label>@Localizer["TecnicoPrimaAccensione"]</label>
+                        <InputText Class="form-control form-control-lg w100 mb-3" @bind-Value="Rapporto.Caldaia.TecnicoPrimoAvvio" disabled="@(Modello==null)" />
+                    </span>
+                    <span class="col-4">
+                        <label>@Localizer["NumeroCertTecnico"]</label>
+                        <InputNumber Class="form-control form-control-lg w100 mb-3" @bind-Value="Rapporto.Caldaia.NumCertificatoTecnico" disabled="@(Modello==null)" />
+                    </span>
+                    <span class="col-4">
+                        <label>@Localizer["DittaPrimoAvvio"]</label>
+                        <InputText Class="form-control form-control-lg w100 mb-3" @bind-Value="Rapporto.Caldaia.DittaPrimoAvvio" disabled="@(Modello==null)" />
+                    </span>
+                </div>
                 }
                 else if (CurrentStepIndex == 2)
                 {
-                    <!--Dati Intervento-->
-                    <div class="form-field my-4 d-flex justify-content-start w-100">
-                        <span class="col-4">
-                            <label>@Localizer["DataIntervento"]</label>
-                            <TelerikDatePicker Class="w100 mb-3 datePickerEp" @bind-Value="Rapporto.DataIntervento" Enabled="@(AbilitaModifica)" OnChange=@(() => IsEdited = true) />
+ <!--Dati Intervento-->
+                <div class="form-field my-4 d-flex justify-content-start w-100">
+                    <span class="col-4">
+                        <label>@Localizer["DataIntervento"]</label>
+                        <TelerikDatePicker Class="w100 mb-3 datePickerEp" @bind-Value="Rapporto.DataIntervento" Enabled="@(AbilitaModifica)" OnChange=@(() => IsEdited = true) />
+                    </span>
+                    <span class="col-8">
+                        <label>@Localizer["MotivoIntervento"]</label>
+                        <InputText Class="form-control form-control-lg w100 mb-3" @bind-Value="Rapporto.MotivoIntervento" />
+                    </span>
+                </div>
+
+                <div class="form-field my-4 d-flex justify-content-start w-100">
+                    <span class="col-4">
+                        <label>@Localizer["TipologiaLavoro"]</label>
+                        <TelerikDropDownList Data="@LavorazioniDescription"
+                                             Class="form-control form-control-lg w100 mb-3"
+                                             @bind-Value="Rapporto.TipoLavoro"
+                                             Enabled="@(AbilitaModifica)"
+                                             OnChange=@(() => IsEdited = true) />
+                    </span>
+                    <span class="col-4">
+                        <label>@Localizer["NomeTecnico"]</label>
+                        <InputText Class="form-control form-control-lg w100" @bind-Value="Rapporto.NomeTecnico" />
+                    </span>
+                </div>
+
+                <div class="form-field my-4 w-100 mt-160">
+                    <div cass="col-12">
+                        <span class="col-8 headerFormRicambiEp">
+                            <label class="d-inline labelQt text-center">N°</label>
+                            <label class="d-inline labelCosto">@Localizer["Costo"]</label>
+                            <label class="d-inline labelDescr">@Localizer["Descrizione"]</label>
                         </span>
-                        <span class="col-8">
-                            <label>@Localizer["MotivoIntervento"]</label>
-                            <InputText Class="form-control form-control-lg w100 mb-3" @bind-Value="Rapporto.MotivoIntervento" />
-                        </span>
+
+                        <TelerikButton Class="btn btn-primary btn-lg mx-1" OnClick="() => ShowAddRicambio = true">@Localizer["AddRicambio"]</TelerikButton><i class="bi bi-plus icoPlus"></i>
                     </div>
 
-                    <div class="form-field my-4 d-flex justify-content-start w-100">
-                        <span class="col-4">
-                            <label>@Localizer["TipologiaLavoro"]</label>
-                            <TelerikDropDownList Data="@LavorazioniDescription"
-                                                 Class="form-control form-control-lg w100 mb-3"
-                                                 @bind-Value="Rapporto.TipoLavoro"
-                                                 Enabled="@(AbilitaModifica)"
-                                                 OnChange=@(() => IsEdited = true) />
-                        </span>
-                        <span class="col-4">
-                            <label>@Localizer["NomeTecnico"]</label>
-                            <InputText Class="form-control form-control-lg w100" @bind-Value="Rapporto.NomeTecnico" />
-                        </span>
-                    </div>
-
-                    <div class="form-field my-4 w-100 mt-160">
-                        <div cass="col-12">
-                            <span class="col-8 headerFormRicambiEp">
-                                <label class="d-inline labelQt text-center">N°</label>
-                                <label class="d-inline labelCosto">@Localizer["Costo"]</label>
-                                <label class="d-inline labelDescr">@Localizer["Descrizione"]</label>
-                            </span>
-
-                            <TelerikButton Class="btn btn-primary btn-lg mx-1" OnClick="() => ShowAddRicambio = true">@Localizer["AddRicambio"]</TelerikButton><i class="bi bi-plus icoPlus"></i>
-                        </div>
-
-                        <div class="form-field my-4 w-100">
-                            @foreach (RicambioDto Ricambio in Rapporto.Ricambi)
+                    <div class="form-field my-4 w-100">
+                        @foreach (RicambioDto Ricambio in Rapporto.Ricambi)
                             {
-                                <div class="col-12 mt-3 mb-3">
-                                    <InputNumber Class="form-control inputQt d-inline mr-3" @bind-Value="Ricambio.Quantita" />
-                                    <InputNumber Class="form-control inputCosto d-inline mr-3" @bind-Value="Ricambio.Costo" />
-                                    <InputText Class="form-control inputDescr d-inline" @bind-Value="Ricambio.Descrizione" />
-                                    <TelerikButton OnClick="(() => { IsEdited = true; Rapporto.Ricambi.Remove(Ricambio); })" Class="icoDelete d-inline rosso text-center" IconClass="" ImageUrl="/img/Icons/delete.svg" />
-                                </div>
-                            }
+                        <div class="col-12 mt-3 mb-3">
+                            <InputNumber Class="form-control inputQt d-inline mr-3" @bind-Value="Ricambio.Quantita" />
+                            <InputNumber Class="form-control inputCosto d-inline mr-3" @bind-Value="Ricambio.Costo" />
+                            <InputText Class="form-control inputDescr d-inline" @bind-Value="Ricambio.Descrizione" />
+                            <TelerikButton OnClick="(() => { IsEdited = true; Rapporto.Ricambi.Remove(Ricambio); })" Class="icoDelete d-inline rosso text-center" IconClass="" ImageUrl="/img/Icons/delete.svg" />
                         </div>
+                            }
                     </div>
+                </div>
                 }
                 else if (CurrentStepIndex == 3)
                 {
-                    @if (Rapporto.RapportiVociCosto != null)
+                @if (Rapporto.RapportiVociCosto != null)
                     {
-                        <div class="row-3 d-flex justify-content-between flex-wrap flex-md-nowrap  pt-0 pb-4 mb-4">
-                            <TelerikGrid Data="@Rapporto.RapportiVociCosto" Class="table table-striped">
-                                <GridColumns>
-                                    <GridColumn Field=@nameof(RapportoVoceCostoDto.VoceCostoId) Width="10%" Title="#" />
-                                    <GridColumn Field=VociDiCosto.VoceCosto.NomeItaliano Width="30%" Title="@Localizer["VociCosto"].Value.ToUpper()" Visible="@(CurrentCulture == "it-IT")" />
-                                    <GridColumn Field=VoceCosto.NomeRusso Width="30%" Title="@Localizer["VociCosto"].Value.ToUpper()" Visible="@(CurrentCulture == "ru-RU")" />
-                                    <GridColumn Field=VoceCosto.Tipologia Width="10%" Title="@Localizer["Tipologia"].Value.ToUpper()" />
-                                    <GridColumn Field=Quantita Width="10%" Title="@Localizer["Quantita"].Value.ToUpper()" />
+                <div class="row-3 d-flex justify-content-between flex-wrap flex-md-nowrap  pt-0 pb-4 mb-4">
+                    <TelerikGrid Data="@Rapporto.RapportiVociCosto" Class="table table-striped">
+                        <GridColumns>
+                            <GridColumn Field=@nameof(RapportoVoceCostoDto.VoceCostoId) Width="10%" Title="#" />
+                            <GridColumn Field=VociDiCosto.VoceCosto.NomeItaliano Width="30%" Title="@Localizer["VociCosto"].Value.ToUpper()" Visible="@(CurrentCulture == "it-IT")" />
+                            <GridColumn Field=VoceCosto.NomeRusso Width="30%" Title="@Localizer["VociCosto"].Value.ToUpper()" Visible="@(CurrentCulture == "ru-RU")" />
+                            <GridColumn Field=VoceCosto.Tipologia Width="10%" Title="@Localizer["Tipologia"].Value.ToUpper()" />
+                            <GridColumn Field=Quantita Width="10%" Title="@Localizer["Quantita"].Value.ToUpper()" />
 
-                                    <GridCommandColumn Context="voce" Width="3%">
-                                        @{
+                            <GridCommandColumn Context="voce" Width="3%">
+                                @{
                                             var voceCosto = voce as RapportoVoceCostoDto;
-                                            <GridCommandButton Class=" btnIcon bgBianco white" Command="EditLavorazione" Icon="" ImageUrl="/img/Icons/edit.svg" OnClick="@(() => EditVoceCosto(voceCosto))" />
-                                        }
-                                    </GridCommandColumn>
-                                </GridColumns>
-                            </TelerikGrid>
-                        </div>
+                                    <GridCommandButton Class=" btnIcon bgBianco white" Command="EditLavorazione" Icon="" ImageUrl="/img/Icons/edit.svg" OnClick="@(() => EditVoceCosto(voceCosto))" />
+                                }
+                            </GridCommandColumn>
+
+                            <GridCommandColumn Context="voce" Width="3%">
+                                @{
+                                      var voceCosto = voce as RapportoVoceCostoDto;       
+                                    <GridCommandButton Class=" btnIcon bgBianco white k-button telerik-blazor k-button-icon" Command="EditLavorazione" Icon="" ImageUrl="/img/Icons/delete.svg" OnClick="@(() => EditVoceCosto(voceCosto))" />
+                                    
+                                }
+                            </GridCommandColumn>
+
+                            
+
+                        </GridColumns>
+                    </TelerikGrid>
+                </div>
                     }
                 }
             </EditForm>
@@ -275,7 +321,7 @@
             <br />
             @foreach (string campo in CampiDaCompilare)
             {
-                <div>@campo</div>
+            <div>@campo</div>
             }
         </div>
     </WindowContent>

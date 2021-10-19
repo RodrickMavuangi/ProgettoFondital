@@ -2,7 +2,7 @@
 Theme Name: Custom Telerik Blazor Child
 Description: This is a child theme for Telerik Blazor Librery.
 Template: Telerik Blazor
-Version: 1.6
+Version: 1.7
 */
 
 
@@ -290,6 +290,10 @@ span.link {
     padding-top: 48px !important;
 }
 
+.pb-32 {
+    padding-bottom: 2rem !important;
+}
+
 .pr-4 {
     padding-right: 1.5rem !important;
 }
@@ -307,7 +311,7 @@ span.link {
 }
 
 .mt-160 {
-    margin-top: 10rem!important;
+    margin-top: 10rem !important;
 }
 
 .mb-16 {
@@ -378,9 +382,9 @@ span.link {
 }
 
 .validation-message {
-    font-size: 13px!important;
-    font-weight: normal!important;
-    margin: 8px 0 0 0!important;
+    font-size: 13px !important;
+    font-weight: normal !important;
+    margin: 8px 0 0 0 !important;
 }
 
 /*************** HEADER ******************/
@@ -487,12 +491,12 @@ a:not([href]):not([tabindex]) {
     }
 
 
-   
+
 
     .k-menu-popup .k-menu-link {
         padding: 0 0 0 0 !important;
-        
     }
+
         .k-menu-popup .k-menu-link .navLink {
             padding: 0.6rem 2.7rem !important;
             color: #212529 !important;
@@ -501,15 +505,15 @@ a:not([href]):not([tabindex]) {
             border: 0 !important;
             font-size: 14px !important;
             line-height: 21px !important;
-            display:inline-block!important;
-            width:100%!important;
+            display: inline-block !important;
+            width: 100% !important;
         }
 
         .k-menu-popup .k-menu-link .active {
             /*    padding: 0.6rem 2.7rem !important;*/
             color: #fff !important;
             background-color: #ED0F0F !important;
-            font-weight:bold!important;
+            font-weight: bold !important;
         }
 
 
@@ -534,12 +538,12 @@ a:not([href]):not([tabindex]) {
         text-align: right !important;
         display: inline-block !important;
     }
-    
-    .k-list .k-item.k-state-selected,
-    .k-list-optionlabel.k-state-selected {
-        color: #ffffff !important;
-        background-color: #ED0F0F !important;
-    }
+
+.k-list .k-item.k-state-selected,
+.k-list-optionlabel.k-state-selected {
+    color: #ffffff !important;
+    background-color: #ED0F0F !important;
+}
 
 /*.lingua .k-select {
     margin-top : 10px;
@@ -586,7 +590,6 @@ ul.dropdownMenu {
     box-sizing: initial;
     background: #F4F4F4;
     border: 0.1em solid #F4F4F4;
-    
     text-align: center;
     border-radius: 50%;
     line-height: 1.5em;
@@ -598,19 +601,20 @@ ul.dropdownMenu {
     margin: 2px 0 0 0;
 }
 
-    a .nomeCircle {
-        color: #007BFF !important;
-        text-decoration: none !important;
-    }
+a .nomeCircle {
+    color: #007BFF !important;
+    text-decoration: none !important;
+}
+
 a:hover .nomeCircle {
     background: #0D0341;
     color: #fff !important;
 }
 
-    .fontProfilo {
-        font-size: 16px;
-        font-weight: bold;
-    }
+.fontProfilo {
+    font-size: 16px;
+    font-weight: bold;
+}
 
 
 
@@ -622,7 +626,7 @@ a:hover .nomeCircle {
     margin: 0px 0 0 0px;
 }
 
-/*    .menuProfilo li.k-item {
+    /*    .menuProfilo li.k-item {
         margin: 0 0 0 0 !important;
     }
     
@@ -652,14 +656,16 @@ a:hover .nomeCircle {
         list-style: none !important;
     }
 
-    
-        .menuProfilo  a {
-            list-style: none !important;
-            text-decoration:none!important;
-        }
+
+    .menuProfilo a {
+        list-style: none !important;
+        text-decoration: none !important;
+    }
+
         .menuProfilo a .k-menu-expand-arrow {
             color: #fff;
         }
+
             .menuProfilo a .k-menu-expand-arrow:hover {
                 color: #D7D7D7;
             }
@@ -685,8 +691,9 @@ a:hover .nomeCircle {
         text-align: right;
         border-bottom: 1px solid #dee2e6 !important;
     }
+
         .dropdown-content a.noborder {
-            border-bottom:none!important;
+            border-bottom: none !important;
         }
 
         .dropdown-content a:hover {
@@ -755,9 +762,11 @@ a:hover .nomeCircle {
         color: #000000 !important;
         font-size: 14px !important;
     }
+
 .k-numerictextbox .k-numeric-wrap {
-    border: none!important;
+    border: none !important;
 }
+
 .form-control-lg {
     padding: .7rem 1rem !important;
     height: 48px;
@@ -774,7 +783,7 @@ a:hover .nomeCircle {
 
 .form-label, label {
     /*    margin-bottom: .7rem !important;*/
-    color: #5F5F5F!important;
+    color: #5F5F5F !important;
     text-transform: uppercase !important;
     font-size: 14px !important;
 }
@@ -833,6 +842,7 @@ a:hover .nomeCircle {
     position: relative;
     left: -18px;
 }
+
 .icoForward {
     position: relative;
     right: -18px;
@@ -869,14 +879,14 @@ a:hover .nomeCircle {
 }
 
 .k-datepicker .k-picker-wrap, .k-timepicker .k-picker-wrap, .k-datetimepicker .k-picker-wrap, .k-dateinput .k-dateinput-wrap {
-
-    border-color:#CED4DA !important;
+    border-color: #CED4DA !important;
     color: #5F5F5F !important;
 }
 
 .k-datepicker .k-select, .k-timepicker .k-select {
-    width: 46px!important;
+    width: 46px !important;
 }
+
 .k-dateinput-wrap .k-input {
     color: #000000 !important;
 }
@@ -896,6 +906,7 @@ a:hover .nomeCircle {
     width: 70% !important;
     min-width: 70% !important;
 }
+
 .inputQt {
     width: 5% !important;
     min-width: 5% !important;
@@ -912,7 +923,7 @@ a:hover .nomeCircle {
 }
 
 .k-dropdown-wrap {
-/*    border: 1px solid #CED4DA !important;
+    /*    border: 1px solid #CED4DA !important;
     border-radius: .125rem !important;
     line-height: 2 !important;
     padding: .7rem 1rem !important;
@@ -926,20 +937,22 @@ a:hover .nomeCircle {
     background-color: transparent !important;
     background-image: none !important;*/
 }
+
 .k-dropdown .k-dropdown-wrap, .k-dropdowntree .k-dropdown-wrap {
     border-color: rgba(0, 0, 0, 0.08);
     color: #424242;
     background-color: #f5f5f5;
     background-image: linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.02));
-
     border: none !important;
     background-image: none !important;
     color: #000000 !important;
-    background-color: transparent!important;
+    background-color: transparent !important;
 }
+
 .k-dropdown, .k-dropdowntree {
     border: 1px solid #CED4DA !important;
 }
+
 .rowFiltri .k-dropdown, .rowFiltri .k-dropdowntree {
     border: none !important;
 }
@@ -949,6 +962,7 @@ a:hover .nomeCircle {
     opacity: 1 !important;
     color: #5F5F5F !important;
 }
+
     .k-state-disabled [disabled], .k-state-disabled .k-state-disabled, .k-widget[disabled] [disabled], .k-widget[disabled] .k-state-disabled, .k-disabled [disabled], .k-disabled .k-state-disabled {
         color: #5F5F5F !important;
         background-color: #e9ecef !important;
@@ -958,27 +972,27 @@ a:hover .nomeCircle {
     color: #5F5F5F !important;
 }
 
-    /*************** BUTTON ******************/
-    .btn {
-        /*min-width: 250px;*/
-        font-family: 'Open Sans Condensed', sans-serif !important;
-        font-size: 16px !important;
-        font-weight: 700 !important;
-        letter-spacing: 1px !important;
-        padding: .7rem 3rem !important;
-        word-wrap: break-word;
-        white-space: normal;
-        cursor: pointer;
-        border: 0 !important;
-        border-radius: .125rem !important;
-        -webkit-box-shadow: 0 2px 5px 0 rgb(0 0 0 / 16%), 0 2px 10px 0 rgb(0 0 0 / 12%);
-        box-shadow: 0 2px 5px 0 rgb(0 0 0 / 16%), 0 2px 10px 0 rgb(0 0 0 / 12%);
-        -webkit-transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,-webkit-box-shadow .15s ease-in-out;
-        transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,-webkit-box-shadow .15s ease-in-out;
-        transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;
-        transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out,-webkit-box-shadow .15s ease-in-out;
-        height: 48px !important;
-    }
+/*************** BUTTON ******************/
+.btn {
+    /*min-width: 250px;*/
+    font-family: 'Open Sans Condensed', sans-serif !important;
+    font-size: 16px !important;
+    font-weight: 700 !important;
+    letter-spacing: 1px !important;
+    padding: .7rem 3rem !important;
+    word-wrap: break-word;
+    white-space: normal;
+    cursor: pointer;
+    border: 0 !important;
+    border-radius: .125rem !important;
+    -webkit-box-shadow: 0 2px 5px 0 rgb(0 0 0 / 16%), 0 2px 10px 0 rgb(0 0 0 / 12%);
+    box-shadow: 0 2px 5px 0 rgb(0 0 0 / 16%), 0 2px 10px 0 rgb(0 0 0 / 12%);
+    -webkit-transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,-webkit-box-shadow .15s ease-in-out;
+    transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,-webkit-box-shadow .15s ease-in-out;
+    transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+    transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out,-webkit-box-shadow .15s ease-in-out;
+    height: 48px !important;
+}
 
 .form-check-mod {
     text-align: center !important;
@@ -1035,7 +1049,6 @@ a:hover .nomeCircle {
     background-color: #868E96 !important;
     border-color: #868E96 !important;
     color: #fff !important;
-    
 }
 
     .btn-grigio:hover {
@@ -1044,23 +1057,32 @@ a:hover .nomeCircle {
         text-decoration: none !important;
     }
 
+/*add disabled condition*/
+.btn.k-state-disabled {
+    background-color: #e9ecef !important;
+    opacity: 1 !important;
+    color: #B9B9B9 !important;
+}
+
+
 .btn-primary-outline {
     background-color: transparent !important;
     border: 1px solid #0d6efd !important;
     color: #0d6efd !important;
-    
     text-transform: uppercase;
     box-shadow: none;
 }
+
     .btn-primary-outline:hover {
         background-color: #0d6efd !important;
         border: 1px solid #0d6efd !important;
         color: #fff !important;
-       
     }
+
 .outline-icon-left {
     padding: .7rem 1.5rem .7rem 2rem !important;
 }
+
 .outline-icon-right {
     padding: .7rem 2rem .7rem 1.5rem !important;
 }
@@ -1149,11 +1171,11 @@ a:hover .nomeCircle {
 }
 
 .rowFiltriRapportini .k-input {
-    height:auto!important;
+    height: auto !important;
 }
 
 .rowFiltriRapportini .k-dropdown, .rowFiltriRapportini .k-dropdowntree {
-    border:none!important;
+    border: none !important;
 }
 
 /*************** TABELLE ******************/
@@ -1204,8 +1226,9 @@ a:hover .nomeCircle {
 
 /*OVERRIDE TELERIK TABLE*/
 .k-header > .k-cell-inner {
-    margin: 0!important;
+    margin: 0 !important;
 }
+
 .k-virtual-content {
     overflow-y: auto !important;
 }
@@ -1251,11 +1274,11 @@ a:hover .nomeCircle {
     vertical-align: middle;
     border: none !important;
     border-bottom: none !important;
-    padding-bottom:20px!important;
+    padding-bottom: 20px !important;
 }
 
 .k-cell-inner > .k-link {
-/*    padding: 1rem 1em !important;*/
+    /*    padding: 1rem 1em !important;*/
     padding: 0 !important;
 }
 
@@ -1288,7 +1311,7 @@ a:hover .nomeCircle {
     padding: 0 !important;
     width: 80px;
     height: 54px;
-/*    border-left: 1px solid #dee2e6 !important;*/
+    /*    border-left: 1px solid #dee2e6 !important;*/
 }
 
 .k-grid-table > :not(caption) > * > * {
@@ -1328,6 +1351,29 @@ a:hover .nomeCircle {
     text-transform: uppercase;
 }
 
+    .stato.sp {
+        width: 100%;
+    }
+
+    .stato .spDett {
+        top: 7px;
+        position: relative;
+        padding-bottom: 7px;
+    }
+
+    .stato.sp .position {
+        position: relative;
+        top: 5px;
+        font-size: 12px;
+    }
+
+    .stato .spDett .position {
+        padding-right: 28px;
+        font-size: 16px;
+        position: relative;
+        top: 10px;
+    }
+
     .stato::after {
         content: "";
         width: 100%;
@@ -1337,24 +1383,36 @@ a:hover .nomeCircle {
         position: relative;
         top: 6px;
     }
+
+    .stato.sp::after {
+        top: -4px;
+    }
+
 .top-0::after {
     top: 0px;
 }
-    .Aperto::after, .aperto::after {
+
+
+.Aperto::after, .aperto::after {
     background-color: #007bff;
 }
+
 .Registrato::after, .registrato::after {
     background-color: #9E0FED;
 }
+
 .DaVerificare::after, .daverificare::after, .verificare::after {
     background-color: #FFC107;
 }
+
 .Rifiutato::after, .rifiutato::after {
     background-color: #ED0F0F;
 }
+
 .Approvato::after, .approvato::after {
     background-color: #28A745;
 }
+
 .Validato::after, .validato::after {
     background-color: #17A2B8;
 }
@@ -1368,20 +1426,30 @@ a:hover .nomeCircle {
     background-color: transparent !important;
     border: none !important;
     position: relative;
-    top: 10px;
+    top: 14px;
 }
+
 
 
 .stato .k-input {
     padding: 0 !important;
-    font-size:12px!important;
+    font-size: 12px !important;
 }
 
 .stato .k-select {
     float: right;
-    padding:0!important;
+    padding: 0 !important;
 }
 
+
+.selectStatoDett .k-input {
+    padding: 0 !important;
+    font-size: 16px !important;
+    display: inline-block;
+    text-align: right;
+    top: 4px;
+    position: relative;
+}
 
 
 /*DIALOG*/
@@ -1406,8 +1474,8 @@ a:hover .nomeCircle {
 
 .k-window-content {
     padding: 32px 32px !important;
-    font-size: 18px!important;
-    font-weight: bold!important;
+    font-size: 18px !important;
+    font-weight: bold !important;
 }
 
 .k-dialog-buttongroup {
@@ -1512,11 +1580,11 @@ a:hover .nomeCircle {
         background-color: #868E96 !important
     }
 
-    .k-dialog-buttongroup .k-button:hover, .dialogForm .k-button:hover {
-        background-color: #D7D7D7 !important;
-        border-color: #D7D7D7 !important;
-        color: #fff;
-    }
+.k-dialog-buttongroup .k-button:hover, .dialogForm .k-button:hover {
+    background-color: #D7D7D7 !important;
+    border-color: #D7D7D7 !important;
+    color: #fff;
+}
 
 .dialogForm .k-form-buttons button:hover, .dialogForm .form-field button:hover, .k-dialog-buttongroup .k-primary:hover,
 .dialogForm .k-form-buttons button:hover, .k-dialog-buttongroup .k-primary:hover, .dialogForm .k-primary:hover {
@@ -1581,8 +1649,9 @@ a:hover .nomeCircle {
     background-color: transparent !important;
     border-left: 1px solid #dee2e6 !important;
 }
+
     .k-grid-table .k-command-cell .k-button.k-button-icon.bgBianco:hover {
-        background-color: #ebebeb!important;
+        background-color: #ebebeb !important;
     }
 
     .k-grid-table .k-command-cell .k-button.k-button-icon.bgBluOn {
@@ -1719,7 +1788,7 @@ a:hover .nomeCircle {
     padding-left: 1rem;
     text-decoration: none !important;
     width: 100%;
-    overflow: initial;  
+    overflow: initial;
 }
 
 .stepperEp .k-step-current .k-step-link .k-step-indicator {
@@ -1740,23 +1809,25 @@ a:hover .nomeCircle {
 
     .stepperEp .k-step-link .k-step-label .k-step-text {
         max-width: max-content;
-        font-size: 16px!important;
+        font-size: 16px !important;
     }
 
 .k-stepper .k-step-label {
-    font-weight: normal!important;
-    color: #9E9E9E!important;
+    font-weight: normal !important;
+    color: #9E9E9E !important;
 }
 
 .k-stepper .k-step-current .k-step-label {
-    font-weight: bold!important;
-    color: #343a40!important;
+    font-weight: bold !important;
+    color: #343a40 !important;
 }
+
 .k-stepper .k-step-done .k-step-label {
     font-weight: bold !important;
     color: #007BFF !important;
 }
-    .stepperEp .k-state-selected {
+
+.stepperEp .k-state-selected {
     background-color: #007BFF;
     border-color: #007BFF;
 }
@@ -1772,23 +1843,29 @@ a:hover .nomeCircle {
     width: 100% !important;
     margin-top: 5px;
 }
+
 .k-step-list-horizontal .k-step {
-    width:28%!important;
+    width: 28% !important;
 }
+
 .k-step-list-horizontal .k-step-last {
     width: 15% !important;
 }
+
 .stepperEp .k-progressbar {
     grid-column-end: 7 !important;
 }
+
 .k-step-list-horizontal .k-step-indicator + .k-step-label {
-    margin-top: 0px!important;
+    margin-top: 0px !important;
 }
+
 .k-stepper .k-step-indicator {
-    border-color: #9E9E9E!important;
-    color: #fff!important;
-    background-color: #9E9E9E!important;
+    border-color: #9E9E9E !important;
+    color: #fff !important;
+    background-color: #9E9E9E !important;
 }
+
 .k-step-indicator-text {
     padding: 0 10px 0 10px;
 }
@@ -1815,11 +1892,11 @@ a:hover .nomeCircle {
     font-family: 'Open Sans Condensed';
     font-size: 16px;
     letter-spacing: 2px;
-    font-weight:bold;
+    font-weight: bold;
 }
 
     .headerFormRicambiEp > label {
-        color: #FFF!important;
+        color: #FFF !important;
     }
 
 /*************** ALTRO ******************/
@@ -1899,6 +1976,7 @@ a:hover .nomeCircle {
         min-width: 180px !important;
         width: 180px !important;
     }
+
     .table .k-command-cell span.k-switch-container {
         left: 12px !important;
     }
@@ -1933,10 +2011,10 @@ a:hover .nomeCircle {
     .rowFiltriRapportini .form-control, .rowFiltriRapportini .select .k-dropdown-wrap {
         min-width: 130px !important;
     }
-    .stepperEp .k-step-link {
-        display: inline-flex!important;
-    }
 
+    .stepperEp .k-step-link {
+        display: inline-flex !important;
+    }
 }
 
 @media screen and (max-width: 1561px) {
@@ -1966,6 +2044,7 @@ a:hover .nomeCircle {
         max-width: 120px !important;
         min-width: 120px !important;
     }
+
     .table .k-command-cell span.k-switch-container {
         left: 20px !important;
     }
@@ -1973,143 +2052,145 @@ a:hover .nomeCircle {
 
 @media screen and (max-width: 1267px) {
     .icoSearch {
-        display:none!important;  
+        display: none !important;
     }
 }
+
 @media screen and (max-width: 1224px) {
     .rowFiltriRapportini {
         justify-content: flex-end !important;
     }
+
         .rowFiltriRapportini .form-control, .rowFiltriRapportini .select .k-dropdown-wrap, .rowFiltriRapportini .k-datepicker {
             margin-bottom: 8px;
         }
 }
 
 
-    /*************** DEFAULT ******************/
+/*************** DEFAULT ******************/
 
-    .mv-up {
-        margin-top: -9px !important;
-        margin-bottom: 8px !important;
-    }
+.mv-up {
+    margin-top: -9px !important;
+    margin-bottom: 8px !important;
+}
 
-    .invalid-feedback {
-        color: #ff606e;
-    }
+.invalid-feedback {
+    color: #ff606e;
+}
 
-    .valid-feedback {
-        color: #2acc80;
-    }
-
-
+.valid-feedback {
+    color: #2acc80;
+}
 
 
 
 
 
 
-    body {
-        font-size: .875rem;
-    }
-
-    .autoWidth {
-        width: auto !important;
-    }
 
 
-    .feather {
-        width: 16px;
-        height: 16px;
-        vertical-align: text-bottom;
-    }
+body {
+    font-size: .875rem;
+}
 
-    /*
+.autoWidth {
+    width: auto !important;
+}
+
+
+.feather {
+    width: 16px;
+    height: 16px;
+    vertical-align: text-bottom;
+}
+
+/*
  * Sidebar
  */
 
-    .sidebar {
-        position: fixed;
-        top: 0;
-        /* rtl:raw:
+.sidebar {
+    position: fixed;
+    top: 0;
+    /* rtl:raw:
   right: 0;
   */
-        bottom: 0;
-        /* rtl:remove */
-        left: 0;
-        z-index: 100; /* Behind the navbar */
-        padding: 48px 0 0; /* Height of navbar */
-        box-shadow: inset -1px 0 0 rgba(0, 0, 0, .1);
+    bottom: 0;
+    /* rtl:remove */
+    left: 0;
+    z-index: 100; /* Behind the navbar */
+    padding: 48px 0 0; /* Height of navbar */
+    box-shadow: inset -1px 0 0 rgba(0, 0, 0, .1);
+}
+
+@media (max-width: 767.98px) {
+    .sidebar {
+        top: 5rem;
+    }
+}
+
+.sidebar-sticky {
+    position: relative;
+    top: 0;
+    height: calc(100vh - 48px);
+    padding-top: .5rem;
+    overflow-x: hidden;
+    overflow-y: auto; /* Scrollable contents if viewport is shorter than content. */
+}
+
+.sidebar .nav-link {
+    font-weight: 500;
+    color: #333;
+}
+
+    .sidebar .nav-link .feather {
+        margin-right: 4px;
+        color: #727272;
     }
 
-    @media (max-width: 767.98px) {
-        .sidebar {
-            top: 5rem;
+    .sidebar .nav-link.active {
+        color: #2470dc;
+    }
+
+        .sidebar .nav-link:hover .feather,
+        .sidebar .nav-link.active .feather {
+            color: inherit;
         }
-    }
 
-    .sidebar-sticky {
-        position: relative;
-        top: 0;
-        height: calc(100vh - 48px);
-        padding-top: .5rem;
-        overflow-x: hidden;
-        overflow-y: auto; /* Scrollable contents if viewport is shorter than content. */
-    }
+.sidebar-heading {
+    font-size: .75rem;
+    text-transform: uppercase;
+}
 
-    .sidebar .nav-link {
-        font-weight: 500;
-        color: #333;
-    }
-
-        .sidebar .nav-link .feather {
-            margin-right: 4px;
-            color: #727272;
-        }
-
-        .sidebar .nav-link.active {
-            color: #2470dc;
-        }
-
-            .sidebar .nav-link:hover .feather,
-            .sidebar .nav-link.active .feather {
-                color: inherit;
-            }
-
-    .sidebar-heading {
-        font-size: .75rem;
-        text-transform: uppercase;
-    }
-
-    /*
+/*
  * Navbar
  */
 
-    .navbar-brand {
-        padding-top: .75rem;
-        padding-bottom: .75rem;
-        font-size: 1rem;
-        background-color: rgba(0, 0, 0, .25);
-        box-shadow: inset -1px 0 0 rgba(0, 0, 0, .25);
-    }
+.navbar-brand {
+    padding-top: .75rem;
+    padding-bottom: .75rem;
+    font-size: 1rem;
+    background-color: rgba(0, 0, 0, .25);
+    box-shadow: inset -1px 0 0 rgba(0, 0, 0, .25);
+}
 
-    .navbar .navbar-toggler {
-        top: .25rem;
-        right: 1rem;
-    }
+.navbar .navbar-toggler {
+    top: .25rem;
+    right: 1rem;
+}
 
-    .navbar .form-control {
-        padding: .75rem 1rem;
-        border-width: 0;
-        border-radius: 0;
-    }
+.navbar .form-control {
+    padding: .75rem 1rem;
+    border-width: 0;
+    border-radius: 0;
+}
 
-    .form-control-dark {
-        color: #fff;
-        background-color: rgba(255, 255, 255, .1);
-        border-color: rgba(255, 255, 255, .1);
-    }
+.form-control-dark {
+    color: #fff;
+    background-color: rgba(255, 255, 255, .1);
+    border-color: rgba(255, 255, 255, .1);
+}
 
-        .form-control-dark:focus {
-            border-color: transparent;
-            box-shadow: 0 0 0 3px rgba(255, 255, 255, .25);
-        }
+    .form-control-dark:focus {
+        border-color: transparent;
+        box-shadow: 0 0 0 3px rgba(255, 255, 255, .25);
+    }
