@@ -276,11 +276,10 @@
     <WindowTitle>@Localizer["CampiObbligatori"]</WindowTitle>
     <WindowContent>
         <div>
-            @Localizer["ListaCampiObbligatori"]:
-            <br />
+            <div><span class="mb-16 d-inline">@Localizer["ListaCampiObbligatori"]:</span></div>
             @foreach (string campo in CampiDaCompilare)
             {
-                <div>@campo</div>
+                <div><span class="regular rosso font14">@campo</span></div>
             }
         </div>
     </WindowContent>
