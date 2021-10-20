@@ -255,8 +255,7 @@
                                     <GridCommandColumn Context="voce" Width="3%">
                                         @{
                                             var voceCosto = voce as RapportoVoceCostoDto;
-                                            <GridCommandButton Class=" btnIcon bgBianco white k-button telerik-blazor k-button-icon" Command="EditLavorazione" Icon="" ImageUrl="/img/Icons/delete.svg" OnClick="@(() => EditVoceCosto(voceCosto))" />
-
+                                            <GridCommandButton Class=" btnIcon bgBianco white k-button telerik-blazor k-button-icon" Command="DeleteLavorazione" Icon="" ImageUrl="/img/Icons/delete.svg" OnClick="@(() => RemoveVoceCosto(voceCosto))" />
                                         }
                                     </GridCommandColumn>
                                 </GridColumns>
