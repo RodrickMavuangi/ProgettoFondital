@@ -45,12 +45,12 @@
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="5.0.9" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.RazorPages" Version="2.2.5" />
     <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="6.12.2" />
+    <PackageReference Include="System.IO.Compression" Version="4.3.0" />
     <PackageReference Include="System.Net.Http.Json" Version="5.0.0" />
     <PackageReference Include="Telerik.Documents.Core.Trial" Version="2021.2.614" />
     <PackageReference Include="Telerik.Documents.Flow.FormatProviders.Pdf.Trial" Version="2021.2.614" />
     <PackageReference Include="Telerik.Documents.Flow.Trial" Version="2021.2.614" />
     <PackageReference Include="Telerik.UI.for.Blazor.Trial" Version="2.26.0" />
-    <PackageReference Include="Telerik.Zip.Trial" Version="2021.2.614" />
     <PackageReference Include="Microsoft.Extensions.Logging.AzureAppServices" Version="5.0.11" />
   </ItemGroup>
 

@@ -1,15 +1,14 @@
 ﻿using Fondital.Shared.Dto;
 using Microsoft.AspNetCore.Components;
-using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
 using Microsoft.JSInterop;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.IO.Compression;
 using System.Linq;
-using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
-using Telerik.Documents.Core;
 using Telerik.Documents.Core.Fonts;
 using Telerik.Windows.Documents.Common.FormatProviders;
 using Telerik.Windows.Documents.Fixed.Model.Fonts;
@@ -17,7 +16,6 @@ using Telerik.Windows.Documents.Flow.FormatProviders.Docx;
 using Telerik.Windows.Documents.Flow.FormatProviders.Pdf;
 using Telerik.Windows.Documents.Flow.Model;
 using Telerik.Windows.Documents.Flow.Model.Editing;
-using Telerik.Zip;
 
 namespace Fondital.Client.Utils
 {
@@ -26,64 +24,50 @@ namespace Fondital.Client.Utils
         private IJSRuntime _jsRuntime { get; set; }
         private NavigationManager _navManager { get; set; }
         private HttpClient _httpClient { get; set; }
+        private IConfiguration _config { get; set; }
+        private RapportoDto Rapporto { get; set; }
+        private RadFlowDocumentEditor Editor { get; set; }
+        private int templateTableRows { get; set; }
 
-        public StampaService(IJSRuntime jsRuntime, NavigationManager navManager, HttpClient httpClient)
+        public StampaService(IJSRuntime jsRuntime, NavigationManager navManager, HttpClient httpClient, IConfiguration config)
         {
             _jsRuntime = jsRuntime;
             _navManager = navManager;
             _httpClient = httpClient;
+            _config = config;
         }
 
         public async Task StampaDocumenti(RapportoDto rapporto)
         {
+            Rapporto = rapporto;
+            templateTableRows = Convert.ToInt32(_config["TemplateTableRows"]);
+
             try
             {
                 //REGISTRA FONTS
                 List<string> fontList = new() { "Cambria_.ttc", "Cambria_b.ttf", "Arial_.ttf", "Arial_b.ttf", "Micross_.ttf" };
                 await ImportFonts(fontList);
 
-                //CREA ZIP
-                //using Stream stream = File.Open($"docs_{rapporto.Id}.zip", FileMode.Create);
+                //CREAZIONE ZIP
+                using MemoryStream stream = new();
+                using ZipArchive archive = new(stream, ZipArchiveMode.Create, true);
 
-
-
-                MemoryStream stream = new();
-                
-                using ZipArchive archive = new(stream, ZipArchiveMode.Create, true, null);
-
-                foreach (var docName in new List<string> { "BUH-IT"/*, "BUH-RU", "IT", "RU" */})
+                foreach (var docName in new List<string> { "BUH-IT"/*, "BUH-RU", "AKT-IT", "AKT-RU" */})
                 {
                     //APERTURA DOCUMENTO
                     RadFlowDocument document = await ReadDocument($"{docName}.docx");
-                    RadFlowDocumentEditor editor = new(document);
+                    Editor = new(document);
 
                     //POPOLAMENTO
-                    editor.ReplaceText("$SPEmail$", rapporto.MotivoIntervento);
+                    PopolaCampi(docName);
 
-                    //CONVERSIONE IN PDF
+                    //CONVERSIONE IN PDF E AGGIUNTA ALLO ZIP
                     PdfFormatProvider pdfProvider = new();
-                    var docAsPdf = pdfProvider.Export(document);
-
-                    //ADD TO ZIP
-                    //MemoryStream ms = new(docAsPdf);
-                    //using CompressedStream compressedStream = new(ms, StreamOperationMode.Write, new DeflateSettings());
-                    //ms.CopyTo(compressedStream);
-                    //compressedStream.Flush();
-                    
-                    await archive.CreateEntry($"{docName}.pdf").Open().WriteAsync(docAsPdf);
-
-                    //using ZipArchiveEntry entry = archive.CreateEntry($"{docName}.pdf"); //?
-                    //BinaryWriter writer = new(entry.Open());
-                    //writer.Write(docAsPdf);
-                    //writer.Flush();
-
-                    //DOWNLOAD PDF
-                    //var js = (IJSInProcessRuntime)_jsRuntime;
-                    //await js.InvokeVoidAsync("saveFile", Convert.ToBase64String(docAsPdf), "application/pdf", $"{docName}.pdf");
+                    pdfProvider.Export(document, archive.CreateEntry($"{docName}.pdf", CompressionLevel.Optimal).Open());
                 }
 
-                //DOWNLOAD ZIP
-
+                //CHIUSURA ZIP E DOWNLOAD
+                archive.Dispose();
                 var js = (IJSInProcessRuntime)_jsRuntime;
                 await js.InvokeVoidAsync("saveFile", Convert.ToBase64String(stream.ToArray()), "application/zip", $"docs_{rapporto.Id}.zip");
             }
@@ -91,6 +75,29 @@ namespace Fondital.Client.Utils
             {
                 throw;
             }
+        }
+
+        private void PopolaCampi(string docName)
+        {
+            switch (docName)
+            {
+                case "BUH-IT":
+                case "BUH-RU":
+                    TrimRigheTabella(0, 4);
+                    TrimRigheTabella(1, 3);
+                    //editor.ReplaceText("$SPEmail$", Rapporto.Utente.Email);
+                    break;
+                case "AKT-IT":
+                case "AKT-RU":
+                    break;
+            }
+        }
+
+        private void TrimRigheTabella(int tableIndex, int righeDaTenere)
+        {
+            //seleziona la tabella numero tableIndex e elimina le righe in eccesso per tenere solo quelle che servono
+            Table table = Editor.Document.EnumerateChildrenOfType<Table>().ToList()[tableIndex];
+            table.Rows.RemoveRange(table.Rows.Count - templateTableRows - 1 + righeDaTenere, templateTableRows - righeDaTenere);
         }
 
         private async Task ImportFonts(List<string> FileNames)
