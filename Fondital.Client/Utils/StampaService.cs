@@ -45,14 +45,14 @@ namespace Fondital.Client.Utils
             try
             {
                 //REGISTRA FONTS
-                List<string> fontList = new() { "Cambria_.ttc", "Cambria_b.ttf", "Arial_.ttf", "Arial_b.ttf", "Micross_.ttf" };
+                List<string> fontList = new() { "Cambria_.ttc", "Cambria_b.ttf", "Arial_.ttf", "Arial_b.ttf", "Arial_b_i.ttf", "Micross_.ttf" };
                 await ImportFonts(fontList);
 
                 //CREAZIONE ZIP
                 using MemoryStream stream = new();
                 using ZipArchive archive = new(stream, ZipArchiveMode.Create, true);
 
-                foreach (var docName in new List<string> { "BUH-IT"/*, "BUH-RU", "AKT-IT", "AKT-RU" */})
+                foreach (var docName in new List<string> { "BUH-IT", "BUH-RU", "AKT-IT", "AKT-RU" })
                 {
                     //APERTURA DOCUMENTO
                     RadFlowDocument document = await ReadDocument($"{docName}.docx");
@@ -83,12 +83,73 @@ namespace Fondital.Client.Utils
             {
                 case "BUH-IT":
                 case "BUH-RU":
-                    TrimRigheTabella(0, 4);
-                    TrimRigheTabella(1, 3);
-                    //editor.ReplaceText("$SPEmail$", Rapporto.Utente.Email);
+                    TrimRigheTabella(0, Rapporto.RapportiVociCosto.Count);
+                    TrimRigheTabella(1, Rapporto.Ricambi.Count);
+
+                    #region SERVICE PARTNER
+                    //ci vuole?
+                    #endregion
+
+                    #region CLIENTE
+                    Editor.ReplaceText("$ClienteRagioneSociale$", ""); //TODO
+                    Editor.ReplaceText("$ClienteIndirizzo$", "");       //TODO
+                    Editor.ReplaceText("$ClienteCF$", "");       //TODO
+                    Editor.ReplaceText("$ClienteCausaleRegistraz$", "");       //TODO
+                    Editor.ReplaceText("$ClienteCC$", "");       //TODO
+                    Editor.ReplaceText("$ClienteBanca$", "");       //TODO
+                    Editor.ReplaceText("$ClienteContoCorrisp$", "");       //TODO
+                    Editor.ReplaceText("$ClienteCodBanca$", "");       //TODO
+                    Editor.ReplaceText("$ClienteTelefono$", "");       //TODO
+                    #endregion
+
+                    #region CALDAIA
+                    Editor.ReplaceText("$Lavorazione$", Rapporto.TipoLavoro);
+                    Editor.ReplaceText("$Matricola$", Rapporto.Caldaia.Matricola);
+                    Editor.ReplaceText("$Indirizzo$", $"{Rapporto.Cliente.Via} {Rapporto.Cliente.NumCivico}, {Rapporto.Cliente.Citta}");
+                    Editor.ReplaceText("$Tecnico$", Rapporto.NomeTecnico);
+                    #endregion
+
+                    #region VOCI
+                    int costoTotVoci = 0;
+                    int costoVoce = 0;
+                    foreach (var (voce, i) in Rapporto.RapportiVociCosto.Select((value, index) => (value, index)))
+                    {
+                        Editor.ReplaceText($"$VoceDescr{i}$", docName == "BUH-IT" ? voce.VoceCosto.NomeItaliano : voce.VoceCosto.NomeRusso);
+                        Editor.ReplaceText($"$VoceData{i}$", Rapporto.DataIntervento?.ToShortDateString());
+                        Editor.ReplaceText($"$VoceQuantita{i}$", voce.Quantita.ToString());
+                        costoVoce = (voce.Quantita * voce.VoceCosto.Listini.FirstOrDefault(x => x.ServicePartner == Rapporto.Utente.ServicePartner).Valore);
+                        costoTotVoci += costoVoce;
+                        Editor.ReplaceText($"$VoceCosto{i}$", $"₽ {costoVoce}");
+                    }
+                    Editor.ReplaceText("$VociNumTot$", Rapporto.RapportiVociCosto.Sum(x => x.Quantita).ToString());
+                    Editor.ReplaceText("$VociCostoTot$", $"₽ {costoTotVoci}");
+                    #endregion
+
+                    #region RICAMBI
+                    foreach (var (ricambio, i) in Rapporto.Ricambi.Select((value, index) => (value, index)))
+                    {
+                        Editor.ReplaceText($"$RicambioCode{i}$", "");           //TODO introdurre codice ricambio
+                        Editor.ReplaceText($"$RicambioDescr{i}$", ricambio.Descrizione);
+                        Editor.ReplaceText($"$RicambioCosto{i}$", $"₽ {ricambio.Costo}");
+                        Editor.ReplaceText($"$RicambioQuantita{i}$", ricambio.Quantita.ToString());
+                        Editor.ReplaceText($"$RicambioTot{i}$", $"₽ {ricambio.Quantita * ricambio.Costo}");
+                    }
+                    Editor.ReplaceText("$RicambiNumTot$", Rapporto.Ricambi.Sum(x => x.Quantita).ToString());
+                    int costoTotRicambi = Rapporto.Ricambi.Sum(x => x.Quantita * x.Costo);
+                    Editor.ReplaceText("$RicambiCostoTot$", $"₽ {costoTotRicambi}");
+                    #endregion
+
+                    #region FONDO PAGINA
+                    Editor.ReplaceText("$Totale$", $"₽ {costoTotVoci + costoTotRicambi}");
+                    Editor.ReplaceText("$NomeDitta$", "");                      //TODO
+                    Editor.ReplaceText("$NomeDirettore$", "");                  //TODO
+                    #endregion
+
                     break;
                 case "AKT-IT":
                 case "AKT-RU":
+                    TrimRigheTabella(1, Rapporto.Ricambi.Count);
+
                     break;
             }
         }
@@ -105,7 +166,11 @@ namespace Fondital.Client.Utils
             foreach (var font in FileNames)
             {
                 var response = await _httpClient.GetAsync(Path.Combine(_navManager.BaseUri, "Documents/Fonts", $"{font}"));
-                FontsRepository.RegisterFont(new FontFamily(font.Substring(0, font.IndexOf('_'))), FontStyles.Normal, font.Contains("_b") ? FontWeights.Bold : FontWeights.Normal, response.Content.ReadAsByteArrayAsync().Result);
+                FontsRepository.RegisterFont(
+                    new FontFamily(font.Substring(0, font.IndexOf('_'))), 
+                    font.Contains("_i") ? FontStyles.Italic : FontStyles.Normal, 
+                    font.Contains("_b") ? FontWeights.Bold : FontWeights.Normal, 
+                    response.Content.ReadAsByteArrayAsync().Result);
             }
         }
 
