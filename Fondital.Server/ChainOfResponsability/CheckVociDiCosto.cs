@@ -1,6 +1,6 @@
 ﻿using Fondital.Server.ChainOfResponsability.Exceptions;
+using Fondital.Shared.Enums;
 using Fondital.Shared.Models;
-
 
 namespace Fondital.Server.ChainOfResponsability
 {
@@ -10,7 +10,7 @@ namespace Fondital.Server.ChainOfResponsability
 		{
 			foreach (var item in rapporto.RapportiVociCosto)
 			{
-				if (item.VoceCosto.Tipologia == Shared.Enums.TipologiaVoceCosto.Forfettario)
+				if (item.VoceCosto.Tipologia == TipologiaVoceCosto.Forfettario)
 					throw new VoceCostoTipologiaForfettariaException();
 			}
 
