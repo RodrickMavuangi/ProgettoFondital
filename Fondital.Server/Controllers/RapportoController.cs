@@ -76,6 +76,8 @@ namespace Fondital.Server.Controllers
 
             try
             {
+                //workaround: l'app si perde l'id utente, lanciando eccezione per le FK
+                newRapporto.Utente.Id = (await _utService.GetUtenteByUsername(newRapporto.Utente.UserName)).Id;
                 int rapportoId = await _rapportoService.AddRapporto(newRapporto);
                 _logger.Information("Info: {Action} {Object} {ObjectId} effettuato con successo", "CREATE", "Rapporto", rapportoId);
 

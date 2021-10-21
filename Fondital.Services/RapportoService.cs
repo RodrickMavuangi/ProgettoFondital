@@ -31,7 +31,7 @@ namespace Fondital.Services
             var RapportoToUpdate = await _unitOfWork.Rapporti.GetByIdAsync(rapportoId);
             StatoRapporto? NuovoStato = rapporto.Stato == RapportoToUpdate.Stato ? null : rapporto.Stato;
 
-            await _unitOfWork.Rapporti.AddAudit(RapportoToUpdate, updatingUser, NuovoStato);
+            _unitOfWork.Rapporti.AddAudit(RapportoToUpdate, updatingUser, NuovoStato);
             _unitOfWork.Update(RapportoToUpdate, rapporto);
             _unitOfWork.Update(RapportoToUpdate.Cliente, rapporto.Cliente);
             _unitOfWork.Update(RapportoToUpdate.Caldaia, rapporto.Caldaia);
@@ -41,8 +41,8 @@ namespace Fondital.Services
 
         public async Task<int> AddRapporto(Rapporto rapporto)
         {
-            await _unitOfWork.Rapporti.AddRapporto(rapporto);
-            await _unitOfWork.Rapporti.AddAudit(rapporto, rapporto.Utente, StatoRapporto.Aperto, "Creazione rapporto");
+            _unitOfWork.Rapporti.AddRapporto(rapporto);
+            _unitOfWork.Rapporti.AddAudit(rapporto, rapporto.Utente, StatoRapporto.Aperto, "Creazione rapporto");
             await _unitOfWork.CommitAsync();
 
             return rapporto.Id;
