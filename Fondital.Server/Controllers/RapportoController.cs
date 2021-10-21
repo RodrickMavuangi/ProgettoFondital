@@ -76,8 +76,7 @@ namespace Fondital.Server.Controllers
 
             try
             {
-                Utente CreatingUser = await _utService.GetUtenteByUsername(this.HttpContext.User.Identity.Name);
-                int rapportoId = await _rapportoService.AddRapporto(newRapporto, CreatingUser);
+                int rapportoId = await _rapportoService.AddRapporto(newRapporto);
                 _logger.Information("Info: {Action} {Object} {ObjectId} effettuato con successo", "CREATE", "Rapporto", rapportoId);
 
                 return Ok(rapportoId);

@@ -35,14 +35,14 @@ namespace Fondital.Services
             _unitOfWork.Update(RapportoToUpdate, rapporto);
             _unitOfWork.Update(RapportoToUpdate.Cliente, rapporto.Cliente);
             _unitOfWork.Update(RapportoToUpdate.Caldaia, rapporto.Caldaia);
-
+            
             await _unitOfWork.CommitAsync();
         }
 
-        public async Task<int> AddRapporto(Rapporto rapporto, Utente creatingUser)
+        public async Task<int> AddRapporto(Rapporto rapporto)
         {
-            await _unitOfWork.Rapporti.AddAudit(rapporto, creatingUser, StatoRapporto.Aperto, "Creazione rapporto");
             await _unitOfWork.Rapporti.AddRapporto(rapporto);
+            await _unitOfWork.Rapporti.AddAudit(rapporto, rapporto.Utente, StatoRapporto.Aperto, "Creazione rapporto");
             await _unitOfWork.CommitAsync();
 
             return rapporto.Id;
