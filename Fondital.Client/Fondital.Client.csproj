@@ -15,15 +15,10 @@
 
   <ItemGroup>
     <Content Remove="wwwroot\appsettings.Development.json" />
-    <Content Remove="wwwroot\appsettings.json" />
   </ItemGroup>
 
   <ItemGroup>
     <None Include="wwwroot\appsettings.Development.json">
-      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
-      <CopyToPublishDirectory>Never</CopyToPublishDirectory>
-    </None>
-    <None Include="wwwroot\appsettings.json">
       <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
       <CopyToPublishDirectory>Never</CopyToPublishDirectory>
     </None>
