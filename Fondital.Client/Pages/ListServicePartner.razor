@@ -62,7 +62,7 @@ else
                 <GridColumn Field=@nameof(ServicePartnerDto.CodiceFornitore) Title=@localizer["CodiceFornitore"].Value.ToUpper() />
                 <GridColumn Field=@nameof(ServicePartnerDto.RagioneSociale) Title=@localizer["RagioneSociale"].Value.ToUpper() />
                 <GridColumn Field=@nameof(ServicePartnerDto.CodiceCliente) Title=@localizer["CodiceUtente"].Value.ToUpper() />
-                <GridColumn Field="N° UTENTI" Title="N° UTENTI" Id="utenti">
+                <GridColumn Field="N° UTENTI" Title=@localizer["NumUtenti"].Value.ToUpper() Id="utenti">
                     <Template>
                         @{
                             ServicePartnerDto sp = (ServicePartnerDto)context;

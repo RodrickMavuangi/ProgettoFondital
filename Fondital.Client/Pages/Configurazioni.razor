@@ -46,7 +46,7 @@ else
                     <InputSelect @bind-Value="Input.Garanzia" @oninput="ResetSubmitTrigger">
                         @foreach (DurataValiditaConfigurazione durata in Enum.GetValues(typeof(DurataValiditaConfigurazione)))
                             {
-                            <option value="@durata">@durata.Description()</option>
+                            <option value="@durata">@localizer[durata.ToString()]</option>
                             }
                     </InputSelect>
                     <ValidationMessage For="@(() => Input.Garanzia)" />
@@ -60,7 +60,7 @@ else
                     <InputSelect @bind-Value="Input.Password" @oninput="ResetSubmitTrigger">
                         @foreach (DurataValiditaConfigurazione durata in Enum.GetValues(typeof(DurataValiditaConfigurazione)))
                             {
-                            <option value="@durata">@durata.Description()</option>
+                            <option value="@durata">@localizer[durata.ToString()]</option>
                             }
                     </InputSelect>
                     <ValidationMessage For="@(() => Input.Password)" />

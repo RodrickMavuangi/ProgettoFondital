@@ -28,7 +28,7 @@
                                     <div class="float-lg-left link-light">
                                         <ul class="mb-0 profilo">
                                             <li class="nomeUtente">@localizer["Ciao"] @UtenteCorrente?.Nome</li>
-                                            <li class="ruoloUtente">@localizer["RuoloDirezione"]</li>
+                                            <li class="ruoloUtente">@(UtenteCorrente.ServicePartner != null ? localizer["ServicePartner"] : localizer["Direzione"])</li>
                                         </ul>
                                     </div>
                                     <div class="float-lg-left align-items-center">
@@ -40,7 +40,7 @@
                                                 </div>
                                                 <div class="dropdown-content">
                                                     @*<a href="/profile" title="@localizer["Impostazioni"]">@localizer["Impostazioni"]</a>*@
-                                                    <a href="/account/logout" title="@localizer["Esci"]" class="noborder">@localizer["Esci"]</a>
+                                                    <a href="/account/logout" title="@localizer["Esci"].Value.ToUpper()" class="noborder">@localizer["Esci"].Value.ToUpper()</a>
                                                 </div>
                                             </li>
                                         </ul>

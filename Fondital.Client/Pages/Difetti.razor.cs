@@ -63,7 +63,7 @@ namespace Fondital.Client.Pages
             {
                 try
                 {
-                    await httpClient.UpdateDifetto(Id, ListaDifetti.Single(x => x.Id == Id));
+                    await httpClient.UpdateDifetto(Id, ListaDifettiFiltered.Single(x => x.Id == Id));
                 }
                 catch (Exception e)
                 {
@@ -75,7 +75,7 @@ namespace Fondital.Client.Pages
                 //fai revert: ^ restituisce lo XOR dei due valori
                 //true XOR true = false
                 //false XOR true = true
-                ListaDifetti.Single(x => x.Id == Id).IsAbilitato ^= true;
+                ListaDifettiFiltered.Single(x => x.Id == Id).IsAbilitato ^= true;
             }
         }
     }

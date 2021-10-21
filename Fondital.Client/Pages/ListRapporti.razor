@@ -58,7 +58,7 @@ else
                                  @bind-Value="SearchBySp"
                                  DefaultText=@Localizer["AllSP"] />
 
-            <TelerikDropDownList Data="@ListStati"
+            <TelerikDropDownList Data=@ListStati.Select(x => Localizer[x])
                                  Class=" float-lg-right filtriInput mx-1 select"
                                  PopupClass="dropdown-ite"
                                  @bind-Value="SearchByStato"

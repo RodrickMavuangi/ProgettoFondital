@@ -264,7 +264,7 @@
   <data name="Quantita" xml:space="preserve">
     <value>Quantità</value>
   </data>
-  <data name="RuoloDirezione" xml:space="preserve">
+  <data name="Direzione" xml:space="preserve">
     <value>Direzione</value>
   </data>
   <data name="Salva" xml:space="preserve">
@@ -634,4 +634,43 @@ La nuova password deve essere lunga almeno 8 caratteri e contenere minuscole, ma
   <data name="Validato" xml:space="preserve">
     <value>Validato</value>
   </data>
+  <data name="Esci" xml:space="preserve">
+    <value>Esci</value>
+  </data>
+  <data name="UnMese" xml:space="preserve">
+    <value>1 mese</value>
+  </data>
+  <data name="DueMesi" xml:space="preserve">
+    <value>2 mesi</value>
+  </data>
+  <data name="TreMesi" xml:space="preserve">
+    <value>3 mesi</value>
+  </data>
+  <data name="QuattroMesi" xml:space="preserve">
+    <value>4 mesi</value>
+  </data>
+  <data name="CinqueMesi" xml:space="preserve">
+    <value>5 mesi</value>
+  </data>
+  <data name="SeiMesi" xml:space="preserve">
+    <value>6 mesi</value>
+  </data>
+  <data name="RitrovaAccount" xml:space="preserve">
+    <value>Inserire l'email dell'account da recuperare.</value>
+  </data>
+  <data name="ErroreEmail" xml:space="preserve">
+    <value>Inserire un'email valida.</value>
+  </data>  
+  <data name="CodiceUtente" xml:space="preserve">
+    <value>Codice Utente</value>
+  </data>  
+  <data name="NumUtenti" xml:space="preserve">
+    <value>N° Utenti</value>
+  </data>    
+  <data name="Listini" xml:space="preserve">
+    <value>Listini</value>
+  </data>   
+  <data name="Raggruppamento" xml:space="preserve">
+    <value>Raggruppamento</value>
+  </data>      
 </root>
