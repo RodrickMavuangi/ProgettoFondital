@@ -1,5 +1,7 @@
 ﻿using AutoMapper;
+using Fondital.Server.ChainOfResponsability;
 using Fondital.Shared.Dto;
+using Fondital.Shared.Enums;
 using Fondital.Shared.Models;
 using Fondital.Shared.Models.Auth;
 using Fondital.Shared.Services;
@@ -21,13 +23,15 @@ namespace Fondital.Server.Controllers
         private readonly IRapportoService _rapportoService;
         private readonly IUtenteService _utService;
         private readonly IMapper _mapper;
+        private readonly IConfigurazioneService _confService;
 
-        public RapportoController(Serilog.ILogger logger, IRapportoService rapportoService, IUtenteService utService, IMapper mapper)
+        public RapportoController(Serilog.ILogger logger, IRapportoService rapportoService, IUtenteService utService, IMapper mapper,IConfigurazioneService confService)
         {
             _logger = logger;
             _rapportoService = rapportoService;
             _utService = utService;
             _mapper = mapper;
+            _confService = confService;
         }
 
         [HttpGet]
@@ -57,6 +61,12 @@ namespace Fondital.Server.Controllers
 
             try
             {
+                if (rapportoToUpdate.Stato == StatoRapporto.Registrato)
+                {
+                    int durataGaranziaInGiorni = 30 * (int)Enum.Parse<DurataValiditaConfigurazione>(_confService.GetValoreByChiave("DurataGaranzia").Result);
+                    rapportoToUpdate.Stato = new AutomaticVerification().CheckAndUpdateStatus(rapportoToUpdate, durataGaranziaInGiorni);
+                }
+
                 Utente UpdatingUser = await _utService.GetUtenteByUsername(this.HttpContext.User.Identity.Name);
                 await _rapportoService.UpdateRapporto(rapportoId, rapportoToUpdate, UpdatingUser);
                 _logger.Information("Info: {Action} {Object} {ObjectId} effettuato con successo", "UPDATE", "Rapporto", rapportoId);
