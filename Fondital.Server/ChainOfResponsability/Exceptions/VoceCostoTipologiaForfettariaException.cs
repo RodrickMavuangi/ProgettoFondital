@@ -1,0 +1,18 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+
+namespace Fondital.Server.ChainOfResponsability.Exceptions
+{
+	public class VoceCostoTipologiaForfettariaException:Exception
+	{
+        public override string Message
+        {
+            get
+            {
+                return "Il Voce di costo è della tipologia Forfettaria";
+            }
+        }
+    }
+}
