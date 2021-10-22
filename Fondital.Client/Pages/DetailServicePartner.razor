@@ -81,9 +81,9 @@ else
     <div class="row-3 d-flex justify-content-between flex-wrap flex-md-nowrap  pt-0 pb-4 mb-4">
         <TelerikGrid Data="@ListaUtentiFiltered" Pageable="true" PageSize="@PageSize" Class="table table-striped" Sortable="true">
             <GridColumns>
-                <GridColumn Field=@nameof(UtenteDto.UserName) Title=@localizer["UTENTI"] />
-                <GridColumn Field=@nameof(UtenteDto.Nome) Title=@localizer["NOME"] />
-                <GridColumn Field=@nameof(UtenteDto.Cognome) Title=@localizer["COGNOME"] />
+                <GridColumn Field=@nameof(UtenteDto.UserName) Title=@localizer["Utenti"].Value.ToUpper() />
+                <GridColumn Field=@nameof(UtenteDto.Nome) Title=@localizer["Nome"].Value.ToUpper() />
+                <GridColumn Field=@nameof(UtenteDto.Cognome) Title=@localizer["Cognome"].Value.ToUpper() />
                 <GridCommandColumn Context="ut" Width="80px">
                     @{
                         var utente = ut as UtenteDto;

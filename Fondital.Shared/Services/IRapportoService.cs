@@ -11,6 +11,6 @@ namespace Fondital.Shared.Services
         Task<IEnumerable<Rapporto>> GetAllRapporti();
         Task<Rapporto> GetRapportoById(int id);
         Task UpdateRapporto(int rapportoId, Rapporto rapporto, Utente updatingUser);
-        Task<int> AddRapporto(Rapporto rapporto, Utente creatingUser);
+        Task<int> AddRapporto(Rapporto rapporto);
     }
 }

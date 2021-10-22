@@ -193,20 +193,20 @@ namespace Fondital.Client.Pages
             if (string.IsNullOrEmpty(Rapporto.Cliente.NumTelefono)) CampiDaCompilare.Add(Localizer["TelefonoCliente"]);
             if (string.IsNullOrEmpty(Rapporto.Cliente.Email)) CampiDaCompilare.Add(Localizer["EmailCliente"]);
             if (string.IsNullOrEmpty(Rapporto.Caldaia.Matricola)) CampiDaCompilare.Add(Localizer["MatricolaCaldaia"]);
-            if (string.IsNullOrEmpty(Rapporto.Caldaia.Modello)) CampiDaCompilare.Add(Localizer["ModelloCaldaia"]);
-            if (string.IsNullOrEmpty(Rapporto.Caldaia.Versione)) CampiDaCompilare.Add(Localizer["VersioneCaldaia"]);
-            if (Rapporto.Caldaia.DataVendita == null) CampiDaCompilare.Add(Localizer["DataVenditaCaldaia"]);
-            if (Rapporto.Caldaia.DataMontaggio == null) CampiDaCompilare.Add(Localizer["DataMontaggioCaldaia"]);
-            if (Rapporto.Caldaia.DataAvvio == null) CampiDaCompilare.Add(Localizer["DataAvvioCaldaia"]);
-            if (string.IsNullOrEmpty(Rapporto.Caldaia.TecnicoPrimoAvvio)) CampiDaCompilare.Add(Localizer["TecnicoCaldaia"]);
+            //if (string.IsNullOrEmpty(Rapporto.Caldaia.Modello)) CampiDaCompilare.Add(Localizer["ModelloCaldaia"]);            commentato per effettuare test
+            //if (string.IsNullOrEmpty(Rapporto.Caldaia.Versione)) CampiDaCompilare.Add(Localizer["VersioneCaldaia"]);          commentato per effettuare test
+            //if (Rapporto.Caldaia.DataVendita == null) CampiDaCompilare.Add(Localizer["DataVenditaCaldaia"]);                  commentato per effettuare test
+            //if (Rapporto.Caldaia.DataMontaggio == null) CampiDaCompilare.Add(Localizer["DataMontaggioCaldaia"]);              commentato per effettuare test
+            //if (Rapporto.Caldaia.DataAvvio == null) CampiDaCompilare.Add(Localizer["DataAvvioCaldaia"]);                      commentato per effettuare test
+            //if (string.IsNullOrEmpty(Rapporto.Caldaia.TecnicoPrimoAvvio)) CampiDaCompilare.Add(Localizer["TecnicoCaldaia"]);  commentato per effettuare test
             //if (Rapporto.Caldaia.NumCertificatoTecnico == null) CampiDaCompilare.Add(Localizer["NumCertificatoCaldaia"]); //non obbligatorio
-            if (string.IsNullOrEmpty(Rapporto.Caldaia.DittaPrimoAvvio)) CampiDaCompilare.Add(Localizer["DittaAvvioCaldaia"]);
+            //if (string.IsNullOrEmpty(Rapporto.Caldaia.DittaPrimoAvvio)) CampiDaCompilare.Add(Localizer["DittaAvvioCaldaia"]); commentato per effettuare test
             if (Rapporto.DataIntervento == null) CampiDaCompilare.Add(Localizer["RapportoDataIntervento"]);
             if (string.IsNullOrEmpty(Rapporto.MotivoIntervento)) CampiDaCompilare.Add(Localizer["RapportoMotivoIntervento"]);
             if (string.IsNullOrEmpty(Rapporto.TipoLavoro)) CampiDaCompilare.Add(Localizer["RapportoTipologiaLavoro"]);
             if (string.IsNullOrEmpty(Rapporto.NomeTecnico)) CampiDaCompilare.Add(Localizer["RapportoNomeTecnico"]);
-            if (Rapporto.Ricambi.Count == 0) CampiDaCompilare.Add(Localizer["RapportoRicambi"]);
-            if (Rapporto.RapportiVociCosto.Count == 0) CampiDaCompilare.Add(Localizer["RapportoVociCosto"]);
+            //if (Rapporto.Ricambi.Count == 0) CampiDaCompilare.Add(Localizer["RapportoRicambi"]);                              commentato per effettuare test
+            //if (Rapporto.RapportiVociCosto.Count == 0) CampiDaCompilare.Add(Localizer["RapportoVociCosto"]);                  commentato per effettuare test
 
             return CampiDaCompilare;
         }

@@ -63,7 +63,7 @@ namespace Fondital.Client.Pages
             {
                 try
                 {
-                    await httpClient.UpdateLavorazione(Id, ListaLavorazioni.Single(x => x.Id == Id));
+                    await httpClient.UpdateLavorazione(Id, ListaLavorazioniFiltered.Single(x => x.Id == Id));
                 }
                 catch (Exception e)
                 {
@@ -72,7 +72,7 @@ namespace Fondital.Client.Pages
             }
             else
             {
-                ListaLavorazioni.Single(x => x.Id == Id).IsAbilitato ^= true;
+                ListaLavorazioniFiltered.Single(x => x.Id == Id).IsAbilitato ^= true;
             }
         }
     }

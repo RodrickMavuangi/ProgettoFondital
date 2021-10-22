@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <root>
-  <!-- 
+	<!-- 
     Microsoft ResX Schema 
     
     Version 2.0
@@ -59,119 +59,119 @@
             : using a System.ComponentModel.TypeConverter
             : and then encoded with base64 encoding.
     -->
-  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
-    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
-    <xsd:element name="root" msdata:IsDataSet="true">
-      <xsd:complexType>
-        <xsd:choice maxOccurs="unbounded">
-          <xsd:element name="metadata">
-            <xsd:complexType>
-              <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" />
-              </xsd:sequence>
-              <xsd:attribute name="name" use="required" type="xsd:string" />
-              <xsd:attribute name="type" type="xsd:string" />
-              <xsd:attribute name="mimetype" type="xsd:string" />
-              <xsd:attribute ref="xml:space" />
-            </xsd:complexType>
-          </xsd:element>
-          <xsd:element name="assembly">
-            <xsd:complexType>
-              <xsd:attribute name="alias" type="xsd:string" />
-              <xsd:attribute name="name" type="xsd:string" />
-            </xsd:complexType>
-          </xsd:element>
-          <xsd:element name="data">
-            <xsd:complexType>
-              <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
-                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
-              </xsd:sequence>
-              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
-              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
-              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
-              <xsd:attribute ref="xml:space" />
-            </xsd:complexType>
-          </xsd:element>
-          <xsd:element name="resheader">
-            <xsd:complexType>
-              <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
-              </xsd:sequence>
-              <xsd:attribute name="name" type="xsd:string" use="required" />
-            </xsd:complexType>
-          </xsd:element>
-        </xsd:choice>
-      </xsd:complexType>
-    </xsd:element>
-  </xsd:schema>
-  <resheader name="resmimetype">
-    <value>text/microsoft-resx</value>
-  </resheader>
-  <resheader name="version">
-    <value>2.0</value>
-  </resheader>
-  <resheader name="reader">
-    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </resheader>
-  <resheader name="writer">
-    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </resheader>
-  <data name="CodiceCliente" xml:space="preserve">
-    <value>Codice Cliente RU</value>
+	<xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+		<xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+		<xsd:element name="root" msdata:IsDataSet="true">
+			<xsd:complexType>
+				<xsd:choice maxOccurs="unbounded">
+					<xsd:element name="metadata">
+						<xsd:complexType>
+							<xsd:sequence>
+								<xsd:element name="value" type="xsd:string" minOccurs="0" />
+							</xsd:sequence>
+							<xsd:attribute name="name" use="required" type="xsd:string" />
+							<xsd:attribute name="type" type="xsd:string" />
+							<xsd:attribute name="mimetype" type="xsd:string" />
+							<xsd:attribute ref="xml:space" />
+						</xsd:complexType>
+					</xsd:element>
+					<xsd:element name="assembly">
+						<xsd:complexType>
+							<xsd:attribute name="alias" type="xsd:string" />
+							<xsd:attribute name="name" type="xsd:string" />
+						</xsd:complexType>
+					</xsd:element>
+					<xsd:element name="data">
+						<xsd:complexType>
+							<xsd:sequence>
+								<xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+								<xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+							</xsd:sequence>
+							<xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+							<xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+							<xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+							<xsd:attribute ref="xml:space" />
+						</xsd:complexType>
+					</xsd:element>
+					<xsd:element name="resheader">
+						<xsd:complexType>
+							<xsd:sequence>
+								<xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+							</xsd:sequence>
+							<xsd:attribute name="name" type="xsd:string" use="required" />
+						</xsd:complexType>
+					</xsd:element>
+				</xsd:choice>
+			</xsd:complexType>
+		</xsd:element>
+	</xsd:schema>
+	<resheader name="resmimetype">
+		<value>text/microsoft-resx</value>
+	</resheader>
+	<resheader name="version">
+		<value>2.0</value>
+	</resheader>
+	<resheader name="reader">
+		<value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+	</resheader>
+	<resheader name="writer">
+		<value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+	</resheader>
+	<data name="CodiceCliente" xml:space="preserve">
+    <value>Код Клиента</value>
   </data>
-  <data name="CodiceFornitore" xml:space="preserve">
-    <value>Codice Fornitore RU</value>
+	<data name="CodiceFornitore" xml:space="preserve">
+    <value>Код Поставщика</value>
   </data>
-  <data name="Cognome" xml:space="preserve">
-    <value>Cognome RU</value>
+	<data name="Cognome" xml:space="preserve">
+    <value>Фамилия</value>
   </data>
-  <data name="ConfirmPassword" xml:space="preserve">
-    <value>Conferma Password RU</value>
+	<data name="ConfirmPassword" xml:space="preserve">
+    <value>Подтверждение Паспорта</value>
   </data>
-  <data name="Email" xml:space="preserve">
-    <value>Email RU</value>
+	<data name="Email" xml:space="preserve">
+    <value>Адресс Электронной Почты</value>
   </data>
-  <data name="IdFornitore" xml:space="preserve">
-    <value>Id Fornitore RU</value>
+	<data name="IdFornitore" xml:space="preserve">
+    <value>Код Поставщика</value>
   </data>
-  <data name="IdRicambio" xml:space="preserve">
-    <value>Id Ricambio RU</value>
+	<data name="IdRicambio" xml:space="preserve">
+    <value>Код Запчасти</value>
   </data>
-  <data name="NewPassword" xml:space="preserve">
-    <value>Nuova Password RU</value>
+	<data name="NewPassword" xml:space="preserve">
+    <value>Новый Пароль</value>
   </data>
-  <data name="Nome" xml:space="preserve">
-    <value>Nome RU</value>
+	<data name="Nome" xml:space="preserve">
+    <value>Имя</value>
   </data>
-  <data name="NomeItaliano" xml:space="preserve">
-    <value>Nome Italiano RU</value>
+	<data name="NomeItaliano" xml:space="preserve">
+    <value>Имя Итальянское</value>
   </data>
-  <data name="NomeRusso" xml:space="preserve">
-    <value>Nome Russo RU</value>
+	<data name="NomeRusso" xml:space="preserve">
+    <value>Имя Русское</value>
   </data>
-  <data name="OldPassword" xml:space="preserve">
-    <value>Vecchia Password RU</value>
+	<data name="OldPassword" xml:space="preserve">
+    <value>Старый Пароль</value>
   </data>
-  <data name="Password" xml:space="preserve">
-    <value>Password RU</value>
+	<data name="Password" xml:space="preserve">
+    <value>Пароль</value>
   </data>
-  <data name="Quantita" xml:space="preserve">
-    <value>Quantita RU</value>
+	<data name="Quantita" xml:space="preserve">
+    <value>Количество</value>
   </data>
-  <data name="Raggruppamento" xml:space="preserve">
-    <value>Raggruppamento RU</value>
+	<data name="Raggruppamento" xml:space="preserve">
+    <value>Группировка</value>
   </data>
-  <data name="RagioneSociale" xml:space="preserve">
-    <value>Ragione Sociale RU</value>
+	<data name="RagioneSociale" xml:space="preserve">
+    <value>Наименование Фирмы</value>
   </data>
-  <data name="ServicePartner" xml:space="preserve">
-    <value>Service Partner RU</value>
+	<data name="ServicePartner" xml:space="preserve">
+    <value>Сервис Партнер</value>
   </data>
-  <data name="Valore" xml:space="preserve">
-    <value>Valore RU</value>
+	<data name="Valore" xml:space="preserve">
+    <value>Значение</value>
   </data>
-  <data name="VoceCosto" xml:space="preserve">
-    <value>Voce di Costo RU</value>
+	<data name="VoceCosto" xml:space="preserve">
+    <value>Статья затрат</value>
   </data>
 </root>

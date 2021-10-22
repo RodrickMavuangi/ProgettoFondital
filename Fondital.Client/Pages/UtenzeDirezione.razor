@@ -11,7 +11,7 @@
     <div class="col-md-5  text-left pb-4 border-bottom">
         <div class="col  text-left d-inline-block ">
             <div class="page-header">
-                <h1 class="h1"><b>Anagrafiche</b> Direzione</h1>
+                <h1 class="h1"><b>@localizer["Anagrafiche"]</b> @localizer["Direzione"]</h1>
             </div>
         </div>
     </div>
@@ -70,9 +70,9 @@ else
                  Class="table table-striped"
                  Sortable="true">
         <GridColumns>
-            <GridColumn Field=@nameof(UtenteDto.UserName) Title=@localizer["UTENTI"] />
-            <GridColumn Field=@nameof(UtenteDto.Nome) Title=@localizer["NOME"] />
-            <GridColumn Field=@nameof(UtenteDto.Cognome) Title=@localizer["COGNOME"] />
+            <GridColumn Field=@nameof(UtenteDto.UserName) Title=@localizer["Utenti"].Value.ToUpper() />
+            <GridColumn Field=@nameof(UtenteDto.Nome) Title=@localizer["Nome"].Value.ToUpper() />
+            <GridColumn Field=@nameof(UtenteDto.Cognome) Title=@localizer["Cognome"].Value.ToUpper() />
             <GridCommandColumn Context="ut" Width="80px">
                 @{
                     var utente = ut as UtenteDto;

@@ -27,7 +27,7 @@ namespace Fondital.Client.Pages
 
             await RefreshVociCosto();
         }
-        public List<VoceCostoDto> ListaLavorazioniFiltered => CurrentCulture == "ru-RU" ?
+        public List<VoceCostoDto> ListaVociCostoFiltered => CurrentCulture == "ru-RU" ?
             ListaVociCosto.Where(x => x.NomeRusso.Contains(SearchText, StringComparison.InvariantCultureIgnoreCase)).ToList() :
             ListaVociCosto.Where(x => x.NomeItaliano.Contains(SearchText, StringComparison.InvariantCultureIgnoreCase)).ToList();
 
@@ -52,13 +52,16 @@ namespace Fondital.Client.Pages
 
         protected async Task UpdateEnableVoceCosto(int Id)
         {
-            bool isConfirmed = await Dialogs.ConfirmAsync($"Si è sicuri di voler modificare la voce di costo # {Id}?", "Modifica voce di costo");
+            bool isAbilitato = ListaVociCostoFiltered.Single(x => x.Id == Id).IsAbilitato;
+            bool isConfirmed = false;
+            if (isAbilitato) isConfirmed = await Dialogs.ConfirmAsync($"{localizer["ConfermaAbilitazione"]} {localizer["VoceCosto"]} # {Id}", " ");
+            else isConfirmed = await Dialogs.ConfirmAsync($"{localizer["ConfermaDisabilitazione"]} {localizer["VoceCosto"]} # {Id}", " ");
 
             if (isConfirmed)
             {
                 try
                 {
-                    await httpClient.UpdateVoceCosto(Id, ListaVociCosto.Single(x => x.Id == Id));
+                    await httpClient.UpdateVoceCosto(Id, ListaVociCostoFiltered.Single(x => x.Id == Id));
                 }
                 catch (Exception e)
                 {
@@ -67,10 +70,7 @@ namespace Fondital.Client.Pages
             }
             else
             {
-                //fai revert: ^ restituisce lo XOR dei due valori
-                //true XOR true = false
-                //false XOR true = true
-                ListaVociCosto.Single(x => x.Id == Id).IsAbilitato ^= true;
+                ListaVociCostoFiltered.Single(x => x.Id == Id).IsAbilitato ^= true;
             }
         }
     }
