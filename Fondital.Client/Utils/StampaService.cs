@@ -45,12 +45,12 @@ namespace Fondital.Client.Utils
             try
             {
                 //REGISTRA FONTS
-                List<string> fontList = new() { "Cambria_.ttc", "Cambria_b.ttf", "Arial_.ttf", "Arial_b.ttf", "Arial_b_i.ttf", "Micross_.ttf" };
+                List<string> fontList = new() { "Arial_.ttf", "Arial_b.ttf", "Arial_b_i.ttf", "Calibri.ttf", "Cambria_.ttc", "Cambria_b.ttf", "Micross_.ttf", "Micross_i.ttf" };
                 await ImportFonts(fontList);
 
                 //CREAZIONE ZIP
-                using MemoryStream stream = new();
-                using ZipArchive archive = new(stream, ZipArchiveMode.Create, true);
+                using MemoryStream zipStream = new();
+                using ZipArchive archive = new(zipStream, ZipArchiveMode.Create, true);
 
                 foreach (var docName in new List<string> { "BUH-IT", "BUH-RU", "AKT-IT", "AKT-RU" })
                 {
@@ -63,13 +63,14 @@ namespace Fondital.Client.Utils
 
                     //CONVERSIONE IN PDF E AGGIUNTA ALLO ZIP
                     PdfFormatProvider pdfProvider = new();
-                    pdfProvider.Export(document, archive.CreateEntry($"{docName}.pdf", CompressionLevel.Optimal).Open());
+                    using Stream pdfStream = archive.CreateEntry($"{docName}.pdf", CompressionLevel.Optimal).Open();
+                    pdfProvider.Export(document, pdfStream);
                 }
 
                 //CHIUSURA ZIP E DOWNLOAD
                 archive.Dispose();
                 var js = (IJSInProcessRuntime)_jsRuntime;
-                await js.InvokeVoidAsync("saveFile", Convert.ToBase64String(stream.ToArray()), "application/zip", $"docs_{rapporto.Id}.zip");
+                await js.InvokeVoidAsync("saveFile", Convert.ToBase64String(zipStream.ToArray()), "application/zip", $"docs_{rapporto.Id}.zip");
             }
             catch (Exception ex)
             {
@@ -131,7 +132,7 @@ namespace Fondital.Client.Utils
                         Editor.ReplaceText($"$RicambioCode{i}$", "");           //TODO introdurre codice ricambio
                         Editor.ReplaceText($"$RicambioDescr{i}$", ricambio.Descrizione);
                         Editor.ReplaceText($"$RicambioCosto{i}$", $"₽ {ricambio.Costo}");
-                        Editor.ReplaceText($"$RicambioQuantita{i}$", ricambio.Quantita.ToString());
+                        Editor.ReplaceText($"$RicambioQta{i}$", ricambio.Quantita.ToString());
                         Editor.ReplaceText($"$RicambioTot{i}$", $"₽ {ricambio.Quantita * ricambio.Costo}");
                     }
                     Editor.ReplaceText("$RicambiNumTot$", Rapporto.Ricambi.Sum(x => x.Quantita).ToString());
@@ -150,6 +151,54 @@ namespace Fondital.Client.Utils
                 case "AKT-RU":
                     TrimRigheTabella(1, Rapporto.Ricambi.Count);
 
+                    #region CALDAIA
+                    Editor.ReplaceText("$MatricolaCaldaia$", Rapporto.Caldaia.Matricola);
+                    Editor.ReplaceText("$TipoCaldaia$", "installata a muro"); //TODO
+                    Editor.ReplaceText("$DataVendita$", Rapporto.Caldaia.DataVendita?.ToShortDateString());
+                    Editor.ReplaceText("$MarcaCaldaia$", ""); //TODO
+                    Editor.ReplaceText("$Venditore$", ""); //TODO
+                    Editor.ReplaceText("$ModelloCaldaia$", Rapporto.Caldaia.Modello);
+                    Editor.ReplaceText("$DataInstallazione$", Rapporto.Caldaia.DataMontaggio?.ToShortDateString());
+                    Editor.ReplaceText("$DataPrimaAccens$", Rapporto.Caldaia.DataAvvio?.ToShortDateString());
+                    Editor.ReplaceText("$Produttore$", ""); //TODO
+                    Editor.ReplaceText("$TecnicoPrimaAccensione$", Rapporto.Caldaia.TecnicoPrimoAvvio);
+                    Editor.ReplaceText("$NumCertificatoTecnico$", Rapporto.Caldaia.NumCertificatoTecnico.ToString());
+                    Editor.ReplaceText("$DittaPrimaAccensione$", Rapporto.Caldaia.DittaPrimoAvvio);
+                    #endregion
+
+                    #region CLIENTE
+                    Editor.ReplaceText("$CittaUtente$", Rapporto.Cliente.Citta);
+                    Editor.ReplaceText("$ViaUtente$", $"{Rapporto.Cliente.Via}, {Rapporto.Cliente.NumCivico}");
+                    Editor.ReplaceText("$TelefonoUtente$", Rapporto.Cliente.NumTelefono);
+                    Editor.ReplaceText("$NomeUtente$", Rapporto.Cliente.FullName);
+                    #endregion
+
+                    #region INTERVENTO
+                    Editor.ReplaceText("$DataIntervento$", Rapporto.DataIntervento?.ToShortDateString());
+                    Editor.ReplaceText("$TecnicoIntervento$", Rapporto.NomeTecnico);
+                    Editor.ReplaceText("$MotivoRiparazione$", Rapporto.MotivoIntervento);
+                    Editor.ReplaceText("$LavoroEffettuato$", Rapporto.TipoLavoro);
+                    #endregion
+
+                    #region RICAMBI
+                    foreach (var (ricambio, i) in Rapporto.Ricambi.Select((value, index) => (value, index)))
+                    {
+                        Editor.ReplaceText($"$RicambioCode{i}$", "");           //TODO introdurre codice ricambio
+                        Editor.ReplaceText($"$RicambioDescr{i}$", ricambio.Descrizione);
+                        Editor.ReplaceText($"$RicambioQta{i}$", ricambio.Quantita.ToString());
+                    }
+                    #endregion
+
+                    #region COSTI
+                    int costoRicambi = Rapporto.Ricambi.Sum(x => x.Quantita * x.Costo);
+                    int costoIntervento = 0;
+                    int costoTrasporto = 0;
+                    Editor.ReplaceText("$CostoRicambi$", costoRicambi.ToString());
+                    Editor.ReplaceText("$CostoIntervento$", ""); //TODO
+                    Editor.ReplaceText("$CostoTrasporto$", ""); //TODO
+                    Editor.ReplaceText("$CostoTotale$", (costoRicambi + costoIntervento + costoTrasporto).ToString());
+                    #endregion
+
                     break;
             }
         }
@@ -167,9 +216,9 @@ namespace Fondital.Client.Utils
             {
                 var response = await _httpClient.GetAsync(Path.Combine(_navManager.BaseUri, "Documents/Fonts", $"{font}"));
                 FontsRepository.RegisterFont(
-                    new FontFamily(font.Substring(0, font.IndexOf('_'))), 
-                    font.Contains("_i") ? FontStyles.Italic : FontStyles.Normal, 
-                    font.Contains("_b") ? FontWeights.Bold : FontWeights.Normal, 
+                    new FontFamily(font.Substring(0, font.IndexOf('_'))),
+                    font.Contains("_i") ? FontStyles.Italic : FontStyles.Normal,
+                    font.Contains("_b") ? FontWeights.Bold : FontWeights.Normal,
                     response.Content.ReadAsByteArrayAsync().Result);
             }
         }
