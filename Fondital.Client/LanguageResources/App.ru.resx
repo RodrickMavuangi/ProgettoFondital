@@ -622,6 +622,9 @@
 	<data name="AllSP" xml:space="preserve">
     <value>Все Сервис Партнеры</value>
   </data>
+  <data name="Aperto" xml:space="preserve">
+    <value>Aperto RU</value>
+  </data>
 	<data name="AllStati" xml:space="preserve">
     <value>Все состояния</value>
   </data>

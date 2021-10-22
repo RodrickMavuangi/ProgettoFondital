@@ -49,14 +49,6 @@
         };
     </script>
     <script>
-        window.jsOpenIntoNewTab = function (filename, byteBase64) {
-            var blob = b64toBlob(byteBase64);
-
-            var blobURL = URL.createObjectURL(blob);
-            window.open(blobURL);
-        };
-    </script>
-    <script>
         window.saveFile = function (bytesBase64, mimeType, fileName) {
             var fileUrl = "data:" + mimeType + ";base64," + bytesBase64;
             fetch(fileUrl)

@@ -23,7 +23,7 @@ namespace Fondital.Services
 
         public async Task<Rapporto> GetRapportoById(int id)
         {
-            return await _unitOfWork.Rapporti.GetByIdAsync(id);
+            return await _unitOfWork.Rapporti.GetRapportoByIdAsync(id);
         }
 
         public async Task UpdateRapporto(int rapportoId, Rapporto rapporto, Utente updatingUser)

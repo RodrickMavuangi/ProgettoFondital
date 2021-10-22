@@ -113,11 +113,11 @@ namespace Fondital.Client.Pages
 
             try
             {
-                await StampaService.StampaDocumento(Rapporto);
+                await StampaService.StampaDocumenti(Rapporto);
             }
-            catch
+            catch (Exception ex)
             {
-                throw;
+                await Dialogs.AlertAsync($"{ex.Message}");
             }
 
             IsPrinting = false;

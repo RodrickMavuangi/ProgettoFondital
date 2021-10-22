@@ -6,6 +6,7 @@ using Fondital.Shared.Models.Auth;
 using Fondital.Shared.Repositories;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Fondital.Repository
@@ -28,7 +29,15 @@ namespace Fondital.Repository
 
         public async Task<Rapporto> GetRapportoByIdAsync(int Id)
         {
-            return await Db.Rapporti.Include(x => x.Utente).ThenInclude(x => x.ServicePartner).SingleOrDefaultAsync(x => x.Id == Id);
+            var rapporto = await Db.Rapporti.Include(x => x.Utente).ThenInclude(x => x.ServicePartner).SingleOrDefaultAsync(x => x.Id == Id);            
+            //.Include non si tira su i RapportiVociCosto, probabilmente perché nel model c'è sia l'oggetto che la chiave
+            //il codice seguente è un workaround
+            rapporto.RapportiVociCosto = await Db.RapportiVociCosto.Where(x => x.RapportoId == rapporto.Id).ToListAsync();
+            List<VoceCosto> voci = await Db.VociCosto.Where(x => rapporto.RapportiVociCosto.Select(y => y.VoceCostoId).Contains(x.Id)).ToListAsync();
+            foreach (var rvc in rapporto.RapportiVociCosto)
+                rvc.VoceCosto = voci.Single(x => x.Id == rvc.VoceCostoId);
+
+            return rapporto;
         }
 
         public void AddRapporto(Rapporto rapporto)
