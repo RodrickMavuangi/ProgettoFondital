@@ -117,7 +117,7 @@ namespace Fondital.Client.Pages
             }
             catch (Exception ex)
             {
-                await Dialogs.AlertAsync($"{ex.Message} - {ex.InnerException.Message}");
+                await Dialogs.AlertAsync($"{ex.Message}");
             }
 
             IsPrinting = false;
