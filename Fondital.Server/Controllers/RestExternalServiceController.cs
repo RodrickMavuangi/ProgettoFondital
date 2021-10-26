@@ -1,9 +1,14 @@
-﻿using Fondital.Shared.Dto;
+﻿using AutoMapper;
+using Fondital.Shared.Dto;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Net.Http;
+using System.Net.Http.Json;
+using System.Text.Json;
 using System.Threading.Tasks;
 using RouteAttribute = Microsoft.AspNetCore.Mvc.RouteAttribute;
 
@@ -11,32 +16,36 @@ namespace Fondital.Server.Controllers
 {
     [ApiController]
     [Route("externalServiceController")]
-    [Authorize(Roles = "Direzione,Service Partner")]
+    //[Authorize(Roles = "Direzione,Service Partner")]
     public class RestExternalServiceController : ControllerBase
     {
         private readonly Serilog.ILogger _logger;
         private readonly HttpClient _httpClient;
         private readonly IConfiguration _config;
+        private readonly IMapper _mapper;
 
-        public RestExternalServiceController(Serilog.ILogger logger, IConfiguration config, HttpClient httpClient)
+        public RestExternalServiceController(Serilog.ILogger logger, IConfiguration config, HttpClient httpClient, IMapper mapper)
         {
             _logger = logger;
             _config = config;
             _httpClient = httpClient;
+            _mapper = mapper;
         }
 
-        [HttpGet("modelloCaldaia/{matricola}")]
-        public async Task<IActionResult> GetServiceCaldaia(string matricola)
+        [HttpPost("modelloCaldaia")]
+        public async Task<IActionResult> GetServiceCaldaia([FromBody]CaldaiaDto caldaiaDto)
         {
             try
             {
                 _httpClient.BaseAddress = new Uri(_config["RestClientSettings:BaseAddress"]);
-                var response = await _httpClient.GetAsync($"/getProductById?ID={matricola}");
+                var response = await _httpClient.GetAsync(_config["RestClientSettings:UriModelloCaldaia"] + caldaiaDto.Matricola);
                 if (!response.IsSuccessStatusCode)
                     return NotFound();
 
                 _logger.Information("Info: {Action} {Object} {ObjectId} effettuato con successo", "GET", "Caldaia", "caldaiaId");
-                return Ok(response);
+                var responseDto = await response.Content.ReadFromJsonAsync<List<CaldaiaResponseDto>>();
+                var result = _mapper.Map(responseDto.First(), caldaiaDto);
+                return Ok(result);
             }
             catch (Exception ex)
             {

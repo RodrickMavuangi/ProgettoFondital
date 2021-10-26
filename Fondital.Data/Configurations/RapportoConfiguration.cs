@@ -32,7 +32,21 @@ namespace Fondital.Data.Configurations
                             caldaia =>
                             {
                                 caldaia.Property(m => m.Matricola).HasColumnName("MatricolaCaldaia");
-                                caldaia.Property(m => m.Modello).HasColumnName("ModelloCaldaia");
+                                caldaia.OwnsOne(m => m.Brand,
+                                    brand =>
+                                    {
+                                        brand.Property(b => b.Code).HasColumnName("BrandCode");
+                                        brand.Property(b => b.Desc).HasColumnName("BrandDesc");
+                                    });
+                                caldaia.OwnsOne(m => m.Group,
+                                    group =>
+                                    {
+                                        group.Property(g => g.Code).HasColumnName("GroupCode");
+                                        group.Property(g => g.Desc).HasColumnName("GroupDesc");
+                                    });
+                                caldaia.Property(m => m.Manufacturer).HasColumnName("Manufacturer");
+                                caldaia.Property(m => m.Model).HasColumnName("Model");
+                                caldaia.Property(m => m.ManufacturingDate).HasColumnName("ManufacturingDate");
                                 caldaia.Property(m => m.Versione).HasColumnName("VersioneCaldaia");
                                 caldaia.Property(m => m.DataVendita).HasColumnName("DataVenditaCaldaia");
                                 caldaia.Property(m => m.DataMontaggio).HasColumnName("DataMontaggioCaldaia");

@@ -157,7 +157,7 @@ namespace Fondital.Client.Utils
                     Editor.ReplaceText("$DataVendita$", Rapporto.Caldaia.DataVendita?.ToShortDateString());
                     Editor.ReplaceText("$MarcaCaldaia$", ""); //TODO
                     Editor.ReplaceText("$Venditore$", ""); //TODO
-                    Editor.ReplaceText("$ModelloCaldaia$", Rapporto.Caldaia.Modello);
+                    Editor.ReplaceText("$ModelloCaldaia$", Rapporto.Caldaia.Model);
                     Editor.ReplaceText("$DataInstallazione$", Rapporto.Caldaia.DataMontaggio?.ToShortDateString());
                     Editor.ReplaceText("$DataPrimaAccens$", Rapporto.Caldaia.DataAvvio?.ToShortDateString());
                     Editor.ReplaceText("$Produttore$", ""); //TODO

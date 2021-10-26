@@ -15,13 +15,13 @@ namespace Fondital.Client.Clients
             this.httpClient = httpClient;
         }
 
-        public async Task<string> ModelloCaldaiaService(string matricola)
+        public async Task<CaldaiaDto> ModelloCaldaiaService(CaldaiaDto caldaiaDto)
         {
             try
             {
-                var response = await httpClient.GetAsync($"externalServiceController/modelloCaldaia/{matricola}");
+                var response = await httpClient.PostAsJsonAsync($"externalServiceController/modelloCaldaia", caldaiaDto, JsonSerializerOpts.JsonOpts);
                 if (response.IsSuccessStatusCode)
-                    return await response.Content.ReadFromJsonAsync<string>(JsonSerializerOpts.JsonOpts);
+                    return await response.Content.ReadFromJsonAsync<CaldaiaDto>(JsonSerializerOpts.JsonOpts);
                 else if (response.StatusCode == System.Net.HttpStatusCode.NotFound)
                     throw new Exception("NotFound");
                 else
