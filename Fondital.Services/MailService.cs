@@ -15,7 +15,7 @@ namespace Fondital.Services
             _mailSettings = mailSettings.Value;
         }
 
-        public void SendEmailAsync(MailRequestDto mailRequest)
+        public void SendEmail(MailRequestDto mailRequest)
         {
             try
             {

@@ -9,14 +9,14 @@ namespace Fondital.Server
 {
     public class SeedData
     {
-        protected MailController _mailController { get; set; }
+        protected static MailController _mailController { get; set; }
 
         public SeedData(MailController mailController)
         {
             _mailController = mailController;
         }
 
-        public async Task Initialize(FonditalDbContext db)
+        public static async Task Initialize(FonditalDbContext db)
         {
             var configurazioni = new Configurazione[]
             {
