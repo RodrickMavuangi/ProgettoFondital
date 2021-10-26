@@ -12,6 +12,9 @@ namespace Fondital.Data.Configurations
 
             builder.Property(x => x.Quantita).IsRequired();
 
+            builder.HasOne(rvc => rvc.VoceCosto).WithMany(v => v.RapportiVociCosto).HasForeignKey(rvc => rvc.VoceCostoId);
+            builder.HasOne(rvc => rvc.Rapporto).WithMany(r => r.RapportiVociCosto).HasForeignKey(rvc => rvc.RapportoId);
+
             builder.ToTable("RapportiVociCosto");
         }
     }

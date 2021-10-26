@@ -28,14 +28,15 @@ namespace Fondital.Services
 
         public async Task UpdateRapporto(int rapportoId, Rapporto rapporto, Utente updatingUser)
         {
-            var RapportoToUpdate = await _unitOfWork.Rapporti.GetByIdAsync(rapportoId);
+            var RapportoToUpdate = await _unitOfWork.Rapporti.GetRapportoByIdAsync(rapportoId);
             StatoRapporto? NuovoStato = rapporto.Stato == RapportoToUpdate.Stato ? null : rapporto.Stato;
 
             _unitOfWork.Rapporti.AddAudit(RapportoToUpdate, updatingUser, NuovoStato);
+            _unitOfWork.Rapporti.EditRapportiVociCostoList(RapportoToUpdate.RapportiVociCosto, rapporto.RapportiVociCosto);
             _unitOfWork.Update(RapportoToUpdate, rapporto);
             _unitOfWork.Update(RapportoToUpdate.Cliente, rapporto.Cliente);
             _unitOfWork.Update(RapportoToUpdate.Caldaia, rapporto.Caldaia);
-            
+
             await _unitOfWork.CommitAsync();
         }
 

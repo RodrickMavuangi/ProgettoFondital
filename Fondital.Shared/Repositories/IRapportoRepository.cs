@@ -10,6 +10,7 @@ namespace Fondital.Shared.Repositories
     {
         Task<List<Rapporto>> GetAllRapporti();
         Task<Rapporto> GetRapportoByIdAsync(int Id);
+        void EditRapportiVociCostoList(List<RapportoVoceCosto> oldList, List<RapportoVoceCosto> newList);
         void AddRapporto(Rapporto rapporto);
         void AddAudit(Rapporto rapporto, Utente utente, StatoRapporto? stato = null, string note = null);
     }

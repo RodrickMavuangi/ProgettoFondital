@@ -17,8 +17,6 @@ namespace Fondital.Data.Configurations
             builder.HasIndex(m => m.NomeRusso).IsUnique();
             builder.Property(m => m.Tipologia).IsRequired();
 
-            builder.HasMany(m => m.VociCostoRapporti).WithOne(v => v.VoceCosto).HasForeignKey(m => m.VoceCostoId);
-
             builder.ToTable("VociCosto");
         }
     }

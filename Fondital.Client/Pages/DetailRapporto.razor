@@ -239,10 +239,10 @@
                     @if (Rapporto.RapportiVociCosto != null)
                     {
                         <div class="row-3 d-flex justify-content-between flex-wrap flex-md-nowrap  pt-0 pb-4 mb-4">
-                            <TelerikGrid Data="@Rapporto.RapportiVociCosto" Class="table table-striped">
+                            <TelerikGrid Data="@Rapporto.RapportiVociCosto.OrderBy(x =>x.VoceCostoId)" Class="table table-striped">
                                 <GridColumns>
                                     <GridColumn Field=@nameof(RapportoVoceCostoDto.VoceCostoId) Width="10%" Title="#" />
-                                    <GridColumn Field=VociDiCosto.VoceCosto.NomeItaliano Width="30%" Title="@Localizer["VociCosto"].Value.ToUpper()" Visible="@(CurrentCulture == "it-IT")" />
+                                    <GridColumn Field=VoceCosto.NomeItaliano Width="30%" Title="@Localizer["VociCosto"].Value.ToUpper()" Visible="@(CurrentCulture == "it-IT")" />
                                     <GridColumn Field=VoceCosto.NomeRusso Width="30%" Title="@Localizer["VociCosto"].Value.ToUpper()" Visible="@(CurrentCulture == "ru-RU")" />
                                     <GridColumn Field=VoceCosto.Tipologia Width="10%" Title="@Localizer["Tipologia"].Value.ToUpper()" />
                                     <GridColumn Field=Quantita Width="10%" Title="@Localizer["Quantita"].Value.ToUpper()" />
@@ -299,7 +299,7 @@
     </WindowActions>
     <WindowContent>
         <div class="dialogForm">
-            <AddRapportoVoceCostoDialog @bind-Rapporto="Rapporto" OnSave=@(async () => { IsEdited = true; await CloseAndRefresh(); }) OnClose="CloseAndRefresh" />
+            <AddRapportoVoceCostoDialog @bind-Rapporto="Rapporto" OnSave=@(() => { IsEdited = true; CloseAndRefresh(); }) OnClose="CloseAndRefresh" />
         </div>
     </WindowContent>
 </TelerikWindow>
@@ -309,7 +309,7 @@
     </WindowActions>
     <WindowContent>
         <div class="dialogForm">
-            <EditRapportoVoceCostoDialog @bind-RapportoVoceCosto="RapportoVoceCostoSelected" OnSave=@(async () => { IsEdited = true; await CloseAndRefresh(); }) OnClose="CloseAndRefresh" />
+            <EditRapportoVoceCostoDialog @bind-RapportoVoceCosto="RapportoVoceCostoSelected" OnSave=@(() => { IsEdited = true; CloseAndRefresh(); }) OnClose="CloseAndRefresh" />
         </div>
     </WindowContent>
 </TelerikWindow>

@@ -10,7 +10,7 @@ namespace Fondital.Shared.Models
         public string NomeRusso { get; set; }
         public TipologiaVoceCosto Tipologia { get; set; } = TipologiaVoceCosto.Forfettario;
         public bool IsAbilitato { get; set; } = true;
-        public List<Listino> Listini { get; set; } = new List<Listino>();
-        public List<RapportoVoceCosto> VociCostoRapporti { get; set; } = new List<RapportoVoceCosto>();
+        public List<Listino> Listini { get; set; } = new();
+        public List<RapportoVoceCosto> RapportiVociCosto { get; set; } = new();
     }
 }

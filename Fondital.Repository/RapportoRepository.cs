@@ -24,20 +24,41 @@ namespace Fondital.Repository
 
         public async Task<List<Rapporto>> GetAllRapporti()
         {
-            return await Db.Rapporti.Include(x => x.Utente).ThenInclude(x => x.ServicePartner).ToListAsync();
+            //workaround: Include per i RapportiVociCosto non funziona
+            var rapporti = await Db.Rapporti.Include(x => x.Utente).ThenInclude(x => x.ServicePartner).ToListAsync();
+            foreach (var rapporto in rapporti)
+            {
+                rapporto.RapportiVociCosto = await Db.RapportiVociCosto.Where(x => x.RapportoId == rapporto.Id).ToListAsync();
+                foreach (var rvc in rapporto.RapportiVociCosto)
+                {
+                    rvc.Rapporto = rapporto;
+                    rvc.VoceCosto = await Db.VociCosto.SingleAsync(x => x.Id == rvc.VoceCostoId);
+                }
+            }
+
+            return rapporti;
         }
 
         public async Task<Rapporto> GetRapportoByIdAsync(int Id)
         {
-            var rapporto = await Db.Rapporti.Include(x => x.Utente).ThenInclude(x => x.ServicePartner).SingleOrDefaultAsync(x => x.Id == Id);            
-            //.Include non si tira su i RapportiVociCosto, probabilmente perché nel model c'è sia l'oggetto che la chiave
-            //il codice seguente è un workaround
+            //workaround: Include per i RapportiVociCosto non funziona
+            var rapporto = await Db.Rapporti.Include(x => x.Utente).ThenInclude(x => x.ServicePartner).SingleOrDefaultAsync(x => x.Id == Id);
             rapporto.RapportiVociCosto = await Db.RapportiVociCosto.Where(x => x.RapportoId == rapporto.Id).ToListAsync();
-            List<VoceCosto> voci = await Db.VociCosto.Where(x => rapporto.RapportiVociCosto.Select(y => y.VoceCostoId).Contains(x.Id)).ToListAsync();
-            foreach (var rvc in rapporto.RapportiVociCosto)
-                rvc.VoceCosto = voci.Single(x => x.Id == rvc.VoceCostoId);
+            foreach(var rvc in rapporto.RapportiVociCosto)
+            {
+                rvc.Rapporto = rapporto;
+                rvc.VoceCosto = await Db.VociCosto.SingleAsync(x => x.Id == rvc.VoceCostoId);
+            }
 
             return rapporto;
+        }
+
+        public void EditRapportiVociCostoList(List<RapportoVoceCosto> oldList, List<RapportoVoceCosto> newList )
+        {
+            foreach (var rvc in oldList)
+                Db.Entry(rvc).State = EntityState.Deleted;
+            foreach (var rvc in newList)
+                Db.Entry(rvc).State = EntityState.Added;
         }
 
         public void AddRapporto(Rapporto rapporto)
