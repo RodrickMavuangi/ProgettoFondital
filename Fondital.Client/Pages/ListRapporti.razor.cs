@@ -18,8 +18,8 @@ namespace Fondital.Client.Pages
         private List<string> ListRagioneSociale { get; set; } = new();
         private static IEnumerable<string> ListStati { get => EnumExtensions.GetEnumNames<StatoRapporto>(); }
         private int PageSize { get; set; }
-        private string SearchBySp { get; set; } = "";
-        private string SearchByStato { get; set; } = "";
+        private string SearchBySp { get; set; }
+        private string SearchByStato { get; set; }
         private DateTime SearchByDataDa { get; set; } = DateTime.ParseExact("20211001", "yyyyMMdd", null);
         private DateTime SearchByDataA { get; set; } = DateTime.Now;
         private string SearchByCliente { get; set; } = "";
@@ -31,8 +31,8 @@ namespace Fondital.Client.Pages
         private bool IsSubmitting = false;
         private bool ShowAddDialog { get; set; } = false;
         public List<RapportoDto> ListaRapportiFiltered => ListaRapporti
-        .Where(x => x.Utente.ServicePartner.RagioneSociale.Contains(SearchBySp, StringComparison.InvariantCultureIgnoreCase)
-             && x.Stato.ToString().Contains(SearchByStato, StringComparison.InvariantCultureIgnoreCase)
+        .Where(x => x.Utente.ServicePartner.RagioneSociale.Contains(SearchBySp ?? "", StringComparison.InvariantCultureIgnoreCase)
+             && x.Stato.ToString().Contains(SearchByStato ?? "", StringComparison.InvariantCultureIgnoreCase)
              && x.DataRapporto.Date >= SearchByDataDa.Date
              && x.DataRapporto.Date <= SearchByDataA.Date
              && ((x.Cliente.Nome ?? "") + " " + (x.Cliente.Cognome ?? "")).Contains(SearchByCliente, StringComparison.InvariantCultureIgnoreCase)

@@ -15,7 +15,6 @@ namespace Fondital.Client.Pages
     {
         [CascadingParameter] DialogFactory Dialogs { get; set; }
         [Parameter] public string Id { get; set; }
-        private List<RapportoVoceCostoDto> RapportiVociCosto { get; set; } = new();
         private RicambioDto NewRicambio { get; set; } = new();
         public List<LavorazioneDto> ListaLavorazioni { get; set; } = new();
         public List<string> LavorazioniDescription { get; set; } = new();
@@ -35,7 +34,7 @@ namespace Fondital.Client.Pages
         public UtenteDto UtenteCorrente { get; set; }
         private static IEnumerable<string> ListStati { get => EnumExtensions.GetEnumNames<StatoRapporto>(); }
 
-        protected override async Task OnInitializedAsync()
+        protected override async Task OnParametersSetAsync()
         {
             UtenteCorrente = await StateProvider.GetCurrentUser();
             CurrentCulture = await StateProvider.GetCurrentCulture();
@@ -64,26 +63,26 @@ namespace Fondital.Client.Pages
             }
         }
 
-        protected async Task CloseAndRefresh()
+        protected void CloseAndRefresh()
         {
             ShowAddVoceCosto = false;
             ShowEditVoceCosto = false;
             ShowAddRicambio = false;
-            await InvokeAsync(StateHasChanged);
+            StateHasChanged();
         }
 
-        protected async Task RemoveVoceCosto(RapportoVoceCostoDto rapportoVoceCosto)
+        protected void RemoveVoceCosto(RapportoVoceCostoDto rapportoVoceCosto)
         {
-            RapportiVociCosto.Remove(rapportoVoceCosto);
+            Rapporto.RapportiVociCosto.Remove(rapportoVoceCosto);
             IsEdited = true;
-            await CloseAndRefresh();
+            StateHasChanged();
         }
 
-        protected async Task AggiungiRicambio()
+        protected void AggiungiRicambio()
         {
             Rapporto.Ricambi.Add(NewRicambio);
             IsEdited = true;
-            await CloseAndRefresh();
+            CloseAndRefresh();
         }
 
         protected void EditVoceCosto(RapportoVoceCostoDto rapportoVoceCosto)
