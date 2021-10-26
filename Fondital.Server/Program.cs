@@ -17,13 +17,12 @@ namespace Fondital.Server
 
             // Initialize the database
             var scopeFactory = host.Services.GetRequiredService<IServiceScopeFactory>();
-            using (var scope = scopeFactory.CreateScope())
+            using var scope = scopeFactory.CreateScope();
+
+            var db = scope.ServiceProvider.GetRequiredService<FonditalDbContext>();
+            if (db.Database.EnsureCreated())
             {
-                var db = scope.ServiceProvider.GetRequiredService<FonditalDbContext>();
-                if (db.Database.EnsureCreated())
-                {
-                    SeedData.Initialize(db);
-                }
+                SeedData.Initialize(db);
             }
 
             host.Run();
