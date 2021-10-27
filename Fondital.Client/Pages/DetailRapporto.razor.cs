@@ -19,7 +19,6 @@ namespace Fondital.Client.Pages
         public List<LavorazioneDto> ListaLavorazioni { get; set; } = new();
         public List<string> LavorazioniDescription { get; set; } = new();
         public RapportoVoceCostoDto RapportoVoceCostoSelected { get; set; } = new();
-        public string Modello { get; set; }
         protected List<string> CampiDaCompilare { get; set; } = new();
         private int CurrentStepIndex { get; set; }
         private string CurrentCulture { get; set; }
@@ -33,6 +32,7 @@ namespace Fondital.Client.Pages
         private RapportoDto Rapporto { get; set; } = new();
         public UtenteDto UtenteCorrente { get; set; }
         private static IEnumerable<string> ListStati { get => EnumExtensions.GetEnumNames<StatoRapporto>(); }
+        private string MatricolaPrecedente { get; set; } = "";
 
         protected override async Task OnParametersSetAsync()
         {
@@ -103,8 +103,21 @@ namespace Fondital.Client.Pages
                 CurrentStepIndex = newStep;
         }
 
-        //protected async void GetModelloCaldaia() =>
-        //    Modello = await RestClient.ModelloCaldaiaService(Rapporto.Caldaia.Matricola ?? "");
+        protected async Task CheckMatricola()
+        {
+            if (Rapporto.Caldaia.Matricola != "" && MatricolaPrecedente != Rapporto.Caldaia.Matricola)
+            {
+                GetModelloCaldaia();
+            }
+
+            MatricolaPrecedente = Rapporto.Caldaia.Matricola;
+            await InvokeAsync(() => StateHasChanged());
+        }
+
+        protected async void GetModelloCaldaia()
+        {
+            Rapporto.Caldaia = await RestClient.ModelloCaldaiaService(Rapporto.Caldaia);
+        }
 
         protected async Task Stampa()
         {

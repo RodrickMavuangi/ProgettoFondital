@@ -5,7 +5,11 @@ namespace Fondital.Shared.Models
     public class Caldaia
     {
         public string Matricola { get; set; }
-        public string Modello { get; set; }
+        public Brand Brand { get; set; }
+        public Group Group { get; set; }
+        public string Manufacturer { get; set; }
+        public string Model { get; set; }
+        public DateTime? ManufacturingDate { get; set; }
         public string Versione { get; set; }
         public DateTime? DataVendita { get; set; }
         public DateTime? DataMontaggio { get; set; }

@@ -2,6 +2,8 @@
 using Fondital.Shared.Dto;
 using Fondital.Shared.Models;
 using Fondital.Shared.Models.Auth;
+using System;
+using System.Globalization;
 
 namespace Fondital.Server.Automapper
 {
@@ -44,6 +46,19 @@ namespace Fondital.Server.Automapper
 
             CreateMap<RapportoVoceCosto, RapportoVoceCostoDto>();
             CreateMap<RapportoVoceCostoDto, RapportoVoceCosto>();
+
+            CreateMap<Brand, BrandDto>();
+            CreateMap<BrandDto, Brand>();
+
+            CreateMap<Group, GroupDto>();
+            CreateMap<GroupDto, Group>();
+
+            CreateMap<CaldaiaResponseDto, CaldaiaDto>()
+                .ForMember(dest => dest.Brand, src => src.MapFrom(s => s.Brand))
+                .ForMember(dest => dest.Group, src => src.MapFrom(s => s.Group))
+                .ForMember(dest => dest.Manufacturer, src => src.MapFrom(s => s.Manufacturer))
+                .ForMember(dest => dest.Model, src => src.MapFrom(s => s.Model))
+                .ForMember(dest => dest.ManufacturingDate, src => src.MapFrom(s => DateTime.ParseExact(s.ManufacturingDate, "yyyyMMdd", CultureInfo.InvariantCulture)));
         }
     }
 }
