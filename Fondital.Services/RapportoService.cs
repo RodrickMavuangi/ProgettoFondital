@@ -33,9 +33,12 @@ namespace Fondital.Services
 
             _unitOfWork.Rapporti.AddAudit(RapportoToUpdate, updatingUser, NuovoStato);
             _unitOfWork.Rapporti.EditRapportiVociCostoList(RapportoToUpdate.RapportiVociCosto, rapporto.RapportiVociCosto);
-            _unitOfWork.Update(RapportoToUpdate, rapporto);
+
             _unitOfWork.Update(RapportoToUpdate.Cliente, rapporto.Cliente);
             _unitOfWork.Update(RapportoToUpdate.Caldaia, rapporto.Caldaia);
+            _unitOfWork.Update(RapportoToUpdate.Caldaia.Brand, rapporto.Caldaia.Brand);
+            _unitOfWork.Update(RapportoToUpdate.Caldaia.Group, rapporto.Caldaia.Group);
+            _unitOfWork.Update(RapportoToUpdate, rapporto);
 
             await _unitOfWork.CommitAsync();
         }
