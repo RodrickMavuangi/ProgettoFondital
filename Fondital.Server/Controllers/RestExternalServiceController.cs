@@ -8,7 +8,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Json;
-using System.Text.Json;
 using System.Threading.Tasks;
 using RouteAttribute = Microsoft.AspNetCore.Mvc.RouteAttribute;
 
@@ -33,7 +32,7 @@ namespace Fondital.Server.Controllers
         }
 
         [HttpPost("modelloCaldaia")]
-        public async Task<IActionResult> GetServiceCaldaia([FromBody]CaldaiaDto caldaiaDto)
+        public async Task<IActionResult> GetServiceCaldaia([FromBody] CaldaiaDto caldaiaDto)
         {
             try
             {
@@ -42,14 +41,14 @@ namespace Fondital.Server.Controllers
                 if (!response.IsSuccessStatusCode)
                     return NotFound();
 
-                _logger.Information("Info: {Action} {Object} {ObjectId} effettuato con successo", "GET", "Caldaia", "caldaiaId");
+                _logger.Information("Info: {Action} {Object} {ObjectId} effettuato con successo", "GET", "Caldaia", caldaiaDto.Matricola);
                 var listaCaldaie = await response.Content.ReadFromJsonAsync<List<CaldaiaResponseDto>>();
                 var result = _mapper.Map(listaCaldaie.First(), caldaiaDto);
                 return Ok(result);
             }
             catch (Exception ex)
             {
-                _logger.Error(ex, "Eccezione {Action} {Object} {ObjectId}", "GET", "Caldaia", "caldaiaId");
+                _logger.Error(ex, "Eccezione {Action} {Object} {ObjectId}", "GET", "Caldaia", caldaiaDto.Matricola);
                 return BadRequest(ex.Message);
             }
         }
@@ -65,12 +64,12 @@ namespace Fondital.Server.Controllers
                 if (!response.IsSuccessStatusCode)
                     return NotFound();
 
-                _logger.Information("Info: {Action} {Object} {ObjectId} effettuato con successo", "GET", "Ricambio", "ricambioId");
+                _logger.Information("Info: {Action} {Object} {ObjectId} effettuato con successo", "GET", "Ricambio", ricambio.Id);
                 return Ok(response);
             }
             catch (Exception ex)
             {
-                _logger.Error(ex, "Eccezione {Action} {Object} {ObjectId}", "GET", "Ricambio", "ricambioId");
+                _logger.Error(ex, "Eccezione {Action} {Object} {ObjectId}", "GET", "Ricambio", ricambio.Id);
                 return BadRequest(ex.Message);
             }
         }

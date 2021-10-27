@@ -44,16 +44,27 @@ namespace Fondital.Repository
             //workaround: Include per i RapportiVociCosto non funziona
             var rapporto = await Db.Rapporti.Include(x => x.Utente).ThenInclude(x => x.ServicePartner).SingleOrDefaultAsync(x => x.Id == Id);
             rapporto.RapportiVociCosto = await Db.RapportiVociCosto.Where(x => x.RapportoId == rapporto.Id).ToListAsync();
-            foreach(var rvc in rapporto.RapportiVociCosto)
+
+            foreach (var rvc in rapporto.RapportiVociCosto)
             {
                 rvc.Rapporto = rapporto;
                 rvc.VoceCosto = await Db.VociCosto.SingleAsync(x => x.Id == rvc.VoceCostoId);
             }
 
+            try
+            {
+                Db.Attach(rapporto.Cliente).CurrentValues.SetValues(new Dictionary<string, object> { ["RapportoId"] = rapporto.Id });
+                Db.Attach(rapporto.Caldaia).CurrentValues.SetValues(new Dictionary<string, object> { ["RapportoId"] = rapporto.Id });
+                Db.Attach(rapporto.Caldaia.Brand).CurrentValues.SetValues(new Dictionary<string, object> { ["CaldaiaRapportoId"] = rapporto.Id });
+                Db.Attach(rapporto.Caldaia.Group).CurrentValues.SetValues(new Dictionary<string, object> { ["CaldaiaRapportoId"] = rapporto.Id });
+            }
+            catch
+            { }
+
             return rapporto;
         }
 
-        public void EditRapportiVociCostoList(List<RapportoVoceCosto> oldList, List<RapportoVoceCosto> newList )
+        public void EditRapportiVociCostoList(List<RapportoVoceCosto> oldList, List<RapportoVoceCosto> newList)
         {
             foreach (var rvc in oldList)
                 Db.Entry(rvc).State = EntityState.Deleted;

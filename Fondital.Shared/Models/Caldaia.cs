@@ -5,8 +5,8 @@ namespace Fondital.Shared.Models
     public class Caldaia
     {
         public string Matricola { get; set; }
-        public Brand Brand { get; set; }
-        public Group Group { get; set; }
+        public Brand Brand { get; set; } = new();
+        public Group Group { get; set; } = new();
         public string Manufacturer { get; set; }
         public string Model { get; set; }
         public DateTime? ManufacturingDate { get; set; }

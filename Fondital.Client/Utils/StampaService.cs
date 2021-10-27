@@ -153,14 +153,14 @@ namespace Fondital.Client.Utils
 
                     #region CALDAIA
                     Editor.ReplaceText("$MatricolaCaldaia$", Rapporto.Caldaia.Matricola);
-                    Editor.ReplaceText("$TipoCaldaia$", "installata a muro"); //TODO
+                    Editor.ReplaceText("$TipoCaldaia$", Rapporto.Caldaia.Versione); //??
                     Editor.ReplaceText("$DataVendita$", Rapporto.Caldaia.DataVendita?.ToShortDateString());
-                    Editor.ReplaceText("$MarcaCaldaia$", ""); //TODO
-                    Editor.ReplaceText("$Venditore$", ""); //TODO
+                    Editor.ReplaceText("$MarcaCaldaia$", Rapporto.Caldaia.Brand.Desc);
+                    Editor.ReplaceText("$Venditore$", Rapporto.Caldaia.Manufacturer); //??
                     Editor.ReplaceText("$ModelloCaldaia$", Rapporto.Caldaia.Model);
                     Editor.ReplaceText("$DataInstallazione$", Rapporto.Caldaia.DataMontaggio?.ToShortDateString());
                     Editor.ReplaceText("$DataPrimaAccens$", Rapporto.Caldaia.DataAvvio?.ToShortDateString());
-                    Editor.ReplaceText("$Produttore$", ""); //TODO
+                    Editor.ReplaceText("$Produttore$", Rapporto.Caldaia.Manufacturer);
                     Editor.ReplaceText("$TecnicoPrimaAccensione$", Rapporto.Caldaia.TecnicoPrimoAvvio);
                     Editor.ReplaceText("$NumCertificatoTecnico$", Rapporto.Caldaia.NumCertificatoTecnico.ToString());
                     Editor.ReplaceText("$DittaPrimaAccensione$", Rapporto.Caldaia.DittaPrimoAvvio);
