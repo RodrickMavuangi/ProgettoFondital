@@ -4,6 +4,6 @@ namespace Fondital.Shared.Services
 {
     public interface IMailService
     {
-        void SendEmailAsync(MailRequestDto mailRequest);
+        void SendEmail(MailRequestDto mailRequest);
     }
 }

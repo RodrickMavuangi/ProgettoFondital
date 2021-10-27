@@ -4,6 +4,7 @@ using Fondital.Shared.Extensions;
 using Microsoft.AspNetCore.Components;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
 using Telerik.Blazor;
@@ -20,7 +21,7 @@ namespace Fondital.Client.Pages
         private int PageSize { get; set; }
         private string SearchBySp { get; set; }
         private string SearchByStato { get; set; }
-        private DateTime SearchByDataDa { get; set; } = DateTime.ParseExact("20211001", "yyyyMMdd", null);
+        private DateTime SearchByDataDa { get; set; } = DateTime.ParseExact("20211001", "yyyyMMdd", CultureInfo.InvariantCulture);
         private DateTime SearchByDataA { get; set; } = DateTime.Now;
         private string SearchByCliente { get; set; } = "";
         private string SearchById { get; set; } = "";

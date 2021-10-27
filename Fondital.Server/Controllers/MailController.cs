@@ -47,7 +47,7 @@ namespace Fondital.Server.Controllers
                 code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
                 var urlConfirmation = $"{_jwtSettings.Audience}/account/resetpassword/{HttpUtility.UrlEncode(MailRequest.ToEmail)}/{HttpUtility.UrlEncode(code)}";
                 MailRequest.Body = $"Inserisci una Nuova Passord per confermare l'account cliccando <a href='{urlConfirmation}'>Account/Password</a>";
-                _mailService.SendEmailAsync(MailRequest);
+                _mailService.SendEmail(MailRequest);
 
                 _logger.Information("Info: {Action} {Object} {ObjectId} effettuato con successo", "SENDMAIL", "Utente", MailRequest.ToEmail);
                 return Ok();
@@ -84,7 +84,7 @@ namespace Fondital.Server.Controllers
                     Subject = "SETTARE LA PRIMA PASSWORD",
                     Body = $"Inserisci la prima Passord per confermare l'account cliccando <a href='{urlConfirmation}'>Account/Password</a>"
                 };
-                _mailService.SendEmailAsync(_mailRequest);
+                _mailService.SendEmail(_mailRequest);
 
                 _logger.Information("Info: {Action} {Object} {ObjectId} effettuato con successo", "CREATE", "Utente", utente.UserName);
                 return Ok();
