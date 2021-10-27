@@ -107,14 +107,14 @@ namespace Fondital.Client.Pages
         {
             if (Rapporto.Caldaia.Matricola != "" && MatricolaPrecedente != Rapporto.Caldaia.Matricola)
             {
-                GetModelloCaldaia();
+                await GetModelloCaldaia();
             }
 
             MatricolaPrecedente = Rapporto.Caldaia.Matricola;
             await InvokeAsync(() => StateHasChanged());
         }
 
-        protected async void GetModelloCaldaia()
+        protected async Task GetModelloCaldaia()
         {
             Rapporto.Caldaia = await RestClient.ModelloCaldaiaService(Rapporto.Caldaia);
         }

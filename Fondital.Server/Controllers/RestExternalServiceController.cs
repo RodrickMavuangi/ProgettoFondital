@@ -16,7 +16,7 @@ namespace Fondital.Server.Controllers
 {
     [ApiController]
     [Route("externalServiceController")]
-    //[Authorize(Roles = "Direzione,Service Partner")]
+    [Authorize(Roles = "Direzione,Service Partner")]
     public class RestExternalServiceController : ControllerBase
     {
         private readonly Serilog.ILogger _logger;
@@ -43,8 +43,8 @@ namespace Fondital.Server.Controllers
                     return NotFound();
 
                 _logger.Information("Info: {Action} {Object} {ObjectId} effettuato con successo", "GET", "Caldaia", "caldaiaId");
-                var responseDto = await response.Content.ReadFromJsonAsync<List<CaldaiaResponseDto>>();
-                var result = _mapper.Map(responseDto.First(), caldaiaDto);
+                var listaCaldaie = await response.Content.ReadFromJsonAsync<List<CaldaiaResponseDto>>();
+                var result = _mapper.Map(listaCaldaie.First(), caldaiaDto);
                 return Ok(result);
             }
             catch (Exception ex)
