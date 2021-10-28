@@ -387,6 +387,47 @@ span.link {
     margin: 8px 0 0 0 !important;
 }
 
+
+.loading.k-state-disabled {
+
+}
+    .loading.k-state-disabled .d-block {
+        display: none !important;
+    }
+    .loading.k-state-disabled .d-none {
+        display: inline-block !important;
+        display: flex!important;
+    }
+.centerContent {
+    margin: 0 auto !important;
+    width: 100% !important;
+    text-align: center;
+    
+    justify-content: center;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-content: space-between;
+}
+.spinner-border-sm {
+    position: relative;
+    top: 6px;
+}
+.sr-only {
+    position: relative !important;
+    height: 100% !important;
+    padding: 3px 0 0 12px !important;
+    text-align: left;
+}
+
+.stampa.sr-only {
+    width: auto !important;
+}
+.authpage.sr-only {
+    width: auto !important;
+}
+
+
+
 /*************** HEADER ******************/
 .logo img {
     min-height: 4rem;

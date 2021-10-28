@@ -49,7 +49,18 @@
                 <TelerikButton Class="btn btn-primary btn-lg mx-1" OnClick="(() => ShowAddVoceCosto = true)">@Localizer["Inserisci"] @Localizer["VoceCosto"] </TelerikButton><i class="bi bi-plus icoPlus"></i>
             }
 
-            <TelerikButton Class="btn btn-primary btn-blu btn-lg mx-1" OnClick=@(() => Stampa()) Enabled=@(!IsPrinting & !IsEdited)>@Localizer["Stampa"] <i class="bi bi-printer-fill right-16"></i></TelerikButton>
+        <TelerikButton Class="btn btn-primary btn-blu btn-lg mx-1 loading" OnClick=@(() => Stampa()) Enabled=@(!IsPrinting & !IsEdited)>
+            <span class="d-block">@Localizer["Stampa"] <i class="bi bi-printer-fill right-16"></i></span>
+            <div class="centerContent d-none">
+                <span class="spinner-border spinner-border-sm d-none" role="status" aria-hidden="true"></span>
+                <span class="authpage sr-only d-none">Loading...</span>
+            </div>
+
+
+        </TelerikButton>
+
+
+
             <AuthorizeView Roles="Direzione">
                 <Authorized>
                     <TelerikButton Class="btn btn-primary btn-verde btn-lg mx-1" OnClick=@(() => Salva()) Enabled=@(IsEdited)>@Localizer["Salva"] @Localizer["Modifiche"]</TelerikButton>
