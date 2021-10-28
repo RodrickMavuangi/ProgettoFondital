@@ -660,17 +660,29 @@ La nuova password deve essere lunga almeno 8 caratteri e contenere minuscole, ma
   </data>
   <data name="ErroreEmail" xml:space="preserve">
     <value>Inserire un'email valida.</value>
-  </data>  
+  </data>
   <data name="CodiceUtente" xml:space="preserve">
     <value>Codice Utente</value>
-  </data>  
+  </data>
   <data name="NumUtenti" xml:space="preserve">
     <value>N° Utenti</value>
-  </data>    
+  </data>
   <data name="Listini" xml:space="preserve">
     <value>Listini</value>
-  </data>   
+  </data>
   <data name="Raggruppamento" xml:space="preserve">
     <value>Raggruppamento</value>
-  </data>      
+  </data>
+  <data name="Authenticating" xml:space="preserve">
+    <value>Autenticazione in corso</value>
+  </data>
+  <data name="InvioEmail" xml:space="preserve">
+    <value>Invio email in corso</value>
+  </data>
+  <data name="Printing" xml:space="preserve">
+    <value>Stampa in corso</value>
+  </data>
+  <data name="Saving" xml:space="preserve">
+    <value>Salvataggio in corso</value>
+  </data>
 </root>

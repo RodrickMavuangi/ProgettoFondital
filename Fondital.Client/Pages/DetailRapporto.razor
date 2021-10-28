@@ -49,18 +49,22 @@
                 <TelerikButton Class="btn btn-primary btn-lg mx-1" OnClick="(() => ShowAddVoceCosto = true)">@Localizer["Inserisci"] @Localizer["VoceCosto"] </TelerikButton><i class="bi bi-plus icoPlus"></i>
             }
 
-        <TelerikButton Class="btn btn-primary btn-blu btn-lg mx-1 loading" OnClick=@(() => Stampa()) Enabled=@(!IsPrinting & !IsEdited)>
-            <span class="d-block">@Localizer["Stampa"] <i class="bi bi-printer-fill right-16"></i></span>
-            <div class="centerContent d-none">
-                <span class="spinner-border spinner-border-sm d-none" role="status" aria-hidden="true"></span>
-                <span class="authpage sr-only d-none">Loading...</span>
-            </div>
-
-
-        </TelerikButton>
-
-
-
+            <TelerikButton Class="btn btn-primary btn-blu btn-lg mx-1 loading" OnClick=@(() => Stampa()) Enabled=@(!IsPrinting & !IsEdited)>
+                <span class="d-block">@Localizer["Stampa"] <i class="bi bi-printer-fill right-16"></i></span>
+                @if (IsPrinting)
+                {
+                    <div class="centerContent d-none">
+                        <span class="spinner-border spinner-border-sm d-none" role="status" aria-hidden="true"></span>
+                        <span class="authpage sr-only d-none">@Localizer["Printing"]...</span>
+                    </div>
+                }
+                else
+                {
+                    <div class="centerContent d-none">
+                        <span class="authpage d-none d-block">@Localizer["Stampa"] <i class="bi bi-printer-fill right-16"></i></span>
+                    </div>
+                }
+            </TelerikButton>
             <AuthorizeView Roles="Direzione">
                 <Authorized>
                     <TelerikButton Class="btn btn-primary btn-verde btn-lg mx-1" OnClick=@(() => Salva()) Enabled=@(IsEdited)>@Localizer["Salva"] @Localizer["Modifiche"]</TelerikButton>
@@ -156,7 +160,7 @@
                     <div class="form-field my-4 d-flex justify-content-start w-100">
                         <span class="col-4">
                             <label>@Localizer["Matricola"]</label>
-                            <InputText Class="form-control form-control-lg w100 mb-3" @bind-Value="Rapporto.Caldaia.Matricola" @onblur=CheckMatricola/>
+                            <InputText Class="form-control form-control-lg w100 mb-3" @bind-Value="Rapporto.Caldaia.Matricola" @onblur=CheckMatricola />
                         </span>
                         <span class="col-4">
                             <label>@Localizer["Modello"]</label>
