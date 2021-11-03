@@ -42,13 +42,13 @@ namespace Fondital.Repository
         public async Task<Rapporto> GetRapportoByIdAsync(int Id)
         {
             //workaround: Include per i RapportiVociCosto non funziona
-            var rapporto = await Db.Rapporti.Include(x => x.Utente).ThenInclude(x => x.ServicePartner).SingleOrDefaultAsync(x => x.Id == Id);
+            var rapporto = await Db.Rapporti.Include(x => x.Utente).ThenInclude(x => x.ServicePartner).Include(x => x.Ricambi).SingleOrDefaultAsync(x => x.Id == Id);
             rapporto.RapportiVociCosto = await Db.RapportiVociCosto.Where(x => x.RapportoId == rapporto.Id).ToListAsync();
 
             foreach (var rvc in rapporto.RapportiVociCosto)
             {
                 rvc.Rapporto = rapporto;
-                rvc.VoceCosto = await Db.VociCosto.SingleAsync(x => x.Id == rvc.VoceCostoId);
+                rvc.VoceCosto = await Db.VociCosto.Include(x => x.Listini.Where(l => l.ServicePartner.Id == rapporto.Utente.ServicePartner.Id)).SingleAsync(x => x.Id == rvc.VoceCostoId);
             }
 
             try
@@ -64,12 +64,13 @@ namespace Fondital.Repository
             return rapporto;
         }
 
-        public void EditRapportiVociCostoList(List<RapportoVoceCosto> oldList, List<RapportoVoceCosto> newList)
+        public void EditRapportoList<T>(List<T> oldList, List<T> newList) where T : class
         {
-            foreach (var rvc in oldList)
-                Db.Entry(rvc).State = EntityState.Deleted;
-            foreach (var rvc in newList)
-                Db.Entry(rvc).State = EntityState.Added;
+            //svuota la lista esistente e inserisce i nuovi oggetti
+            foreach (var item in oldList)
+                Db.Entry(item).State = EntityState.Deleted;
+            foreach (var item in newList)
+                Db.Entry(item).State = EntityState.Added;
         }
 
         public void AddRapporto(Rapporto rapporto)

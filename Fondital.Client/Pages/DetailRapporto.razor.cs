@@ -106,14 +106,9 @@ namespace Fondital.Client.Pages
         protected async Task CheckMatricola()
         {
             if (!String.IsNullOrWhiteSpace(Rapporto.Caldaia.Matricola) && MatricolaPrecedente != Rapporto.Caldaia.Matricola)
-                await GetModelloCaldaia();
+                Rapporto.Caldaia = await RestClient.GetCaldaia(Rapporto.Caldaia);
 
             MatricolaPrecedente = Rapporto.Caldaia.Matricola;
-        }
-
-        protected async Task GetModelloCaldaia()
-        {
-            Rapporto.Caldaia = await RestClient.ModelloCaldaiaService(Rapporto.Caldaia);
         }
 
         protected async Task Stampa()
@@ -215,7 +210,7 @@ namespace Fondital.Client.Pages
             if (string.IsNullOrEmpty(Rapporto.MotivoIntervento)) CampiDaCompilare.Add(Localizer["RapportoMotivoIntervento"]);
             if (string.IsNullOrEmpty(Rapporto.TipoLavoro)) CampiDaCompilare.Add(Localizer["RapportoTipologiaLavoro"]);
             if (string.IsNullOrEmpty(Rapporto.NomeTecnico)) CampiDaCompilare.Add(Localizer["RapportoNomeTecnico"]);
-            //if (Rapporto.Ricambi.Count == 0) CampiDaCompilare.Add(Localizer["RapportoRicambi"]);                              commentato per effettuare test
+            if (Rapporto.Ricambi.Count == 0) CampiDaCompilare.Add(Localizer["RapportoRicambi"]);
             if (Rapporto.RapportiVociCosto.Count == 0) CampiDaCompilare.Add(Localizer["RapportoVociCosto"]);
 
             return CampiDaCompilare;

@@ -14,8 +14,8 @@ namespace Fondital.Client.Dialogs
 
         public async Task Done()
         {
-            //NewRicambio = await RestClient.PezzoRicambioService(RicambioRequest);
-            //await RicambioChanged.InvokeAsync(NewRicambio);
+            NewRicambio = await RestClient.GetPezzoRicambio(RicambioRequest);
+            await RicambioChanged.InvokeAsync(NewRicambio);
             await OnSave.InvokeAsync();
         }
     }

@@ -32,8 +32,9 @@ namespace Fondital.Services
             StatoRapporto? NuovoStato = rapporto.Stato == RapportoToUpdate.Stato ? null : rapporto.Stato;
 
             _unitOfWork.Rapporti.AddAudit(RapportoToUpdate, updatingUser, NuovoStato);
-            _unitOfWork.Rapporti.EditRapportiVociCostoList(RapportoToUpdate.RapportiVociCosto, rapporto.RapportiVociCosto);
-
+            _unitOfWork.Rapporti.EditRapportoList(RapportoToUpdate.RapportiVociCosto, rapporto.RapportiVociCosto);
+            _unitOfWork.Rapporti.EditRapportoList(RapportoToUpdate.Ricambi, rapporto.Ricambi);
+            RapportoToUpdate.Ricambi = rapporto.Ricambi;
             _unitOfWork.Update(RapportoToUpdate.Cliente, rapporto.Cliente);
             _unitOfWork.Update(RapportoToUpdate.Caldaia, rapporto.Caldaia);
             _unitOfWork.Update(RapportoToUpdate.Caldaia.Brand, rapporto.Caldaia.Brand);
