@@ -76,7 +76,7 @@ else
 
  <!--FINE BARRA FILTRI-->
 <div class="row-3 d-flex justify-content-between flex-wrap flex-md-nowrap pt-0 pb-4 mb-4">
-    <TelerikGrid Data="@ListaRapportiFiltered" Class="table table-striped" PageSize=@PageSize Pageable="true">
+    <TelerikGrid Data="@ListaRapportiFiltered" Class="table table-striped" PageSize=@PageSize Pageable="true" Sortable="true">
         <GridColumns>
             <GridColumn Field=Utente.ServicePartner.RagioneSociale Width="15%" Title=@Localizer["ServicePartner"].Value.ToUpper() />
             @{

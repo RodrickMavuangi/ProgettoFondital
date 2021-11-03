@@ -22,7 +22,8 @@ namespace Fondital.Client.Dialogs
 
             try
             {
-                await httpClient.CreateServicePartner(NuovoSP);
+                NuovoSP = await ExternalServiceClient.GetDettagliSP(NuovoSP);
+                await spClient.CreateServicePartner(NuovoSP);
                 isSubmitting = false;
                 await OnSave.InvokeAsync();
             }

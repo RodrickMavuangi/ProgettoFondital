@@ -80,6 +80,12 @@ namespace Fondital.Client.Utils
 
         private void PopolaCampi(string docName)
         {
+            var sp = Rapporto.Utente.ServicePartner;
+            decimal costoTotVoci = 0;
+            decimal costoTotRicambi = 0;
+            decimal costoVoce;
+            string indirizzo;
+
             switch (docName)
             {
                 case "BUH-IT":
@@ -88,19 +94,31 @@ namespace Fondital.Client.Utils
                     TrimRigheTabella(1, Rapporto.Ricambi.Count);
 
                     #region SERVICE PARTNER
-                    //ci vuole?
+                    Editor.ReplaceText("$SPRagioneSociale$", sp.RagioneSociale ?? "");
+                    indirizzo = $"{sp.PostalCode}, {sp.Region}, {sp.City}, {sp.Street}, {sp.HouseNr}";
+                    Editor.ReplaceText("$SPIndirizzo$", indirizzo);
+                    Editor.ReplaceText("$SPNrRegistraz$", sp.StateRegistrationNr ?? "");
+                    Editor.ReplaceText("$SPCF$", sp.INN ?? "");
+                    Editor.ReplaceText("$SPCausaleRegistraz$", sp.KPP ?? "");
+                    Editor.ReplaceText("$SPCC$", sp.CC ?? "");
+                    Editor.ReplaceText("$SPBanca$", sp.BankName ?? "");
+                    Editor.ReplaceText("$SPContoCorrisp$", sp.CCC ?? "");
+                    Editor.ReplaceText("$SPCodBanca$", sp.BankCode ?? "");
+                    Editor.ReplaceText("$SPTelefono$", sp.Phone ?? "");
+                    Editor.ReplaceText("$SPEmail$", sp.Email ?? "");
                     #endregion
 
                     #region CLIENTE
-                    Editor.ReplaceText("$ClienteRagioneSociale$", ""); //TODO
-                    Editor.ReplaceText("$ClienteIndirizzo$", "");       //TODO
-                    Editor.ReplaceText("$ClienteCF$", "");       //TODO
-                    Editor.ReplaceText("$ClienteCausaleRegistraz$", "");       //TODO
-                    Editor.ReplaceText("$ClienteCC$", "");       //TODO
-                    Editor.ReplaceText("$ClienteBanca$", "");       //TODO
-                    Editor.ReplaceText("$ClienteContoCorrisp$", "");       //TODO
-                    Editor.ReplaceText("$ClienteCodBanca$", "");       //TODO
-                    Editor.ReplaceText("$ClienteTelefono$", "");       //TODO
+                    Editor.ReplaceText("$ClienteRagioneSociale$", Rapporto.Cliente.FullName ?? "");
+                    indirizzo = $"{Rapporto.Cliente.Citta}, {Rapporto.Cliente.Via}, {Rapporto.Cliente.NumCivico}";
+                    Editor.ReplaceText("$ClienteIndirizzo$", indirizzo);
+                    Editor.ReplaceText("$ClienteCF$", ""); //TO DO 
+                    Editor.ReplaceText("$ClienteCausaleRegistraz$", ""); //TO DO
+                    Editor.ReplaceText("$ClienteCC$", ""); //TO DO
+                    Editor.ReplaceText("$ClienteBanca$", ""); //TO DO
+                    Editor.ReplaceText("$ClienteContoCorrisp$", ""); //TO DO
+                    Editor.ReplaceText("$ClienteCodBanca$", ""); //TO DO
+                    Editor.ReplaceText("$ClienteTelefono$", Rapporto.Cliente.NumTelefono ?? "");
                     #endregion
 
                     #region CALDAIA
@@ -110,57 +128,64 @@ namespace Fondital.Client.Utils
                     Editor.ReplaceText("$Tecnico$", Rapporto.NomeTecnico ?? "");
                     #endregion
 
-                    #region VOCI
-                    int costoTotVoci = 0;
-                    int costoVoce = 0;
-                    foreach (var (voce, i) in Rapporto.RapportiVociCosto.Select((value, index) => (value, index)))
+                    #region VOCI COSTO
+                    foreach (var (voce, i) in Rapporto.RapportiVociCosto.Select((value, index) => (value, index+1)))
                     {
                         Editor.ReplaceText($"$VoceDescr{i}$", docName == "BUH-IT" ? voce.VoceCosto.NomeItaliano ?? "" : voce.VoceCosto.NomeRusso ?? "");
                         Editor.ReplaceText($"$VoceData{i}$", Rapporto.DataIntervento?.ToShortDateString());
                         Editor.ReplaceText($"$VoceQuantita{i}$", voce.Quantita.ToString());
-                        costoVoce = (voce.Quantita * voce.VoceCosto.Listini.FirstOrDefault(x => x.ServicePartner == Rapporto.Utente.ServicePartner).Valore);
+                        costoVoce = voce.Quantita * voce.VoceCosto.Listini.SingleOrDefault()?.Valore ?? 0; //i listini sono già filtrati sul service partner
                         costoTotVoci += costoVoce;
-                        Editor.ReplaceText($"$VoceCosto{i}$", $"₽ {costoVoce}");
+                        Editor.ReplaceText($"$VoceCosto{i}$", $"₽ {costoVoce:0.##}");
                     }
                     Editor.ReplaceText("$VociNumTot$", Rapporto.RapportiVociCosto.Sum(x => x.Quantita).ToString());
-                    Editor.ReplaceText("$VociCostoTot$", $"₽ {costoTotVoci}");
+                    Editor.ReplaceText("$VociCostoTot$", $"₽ {costoTotVoci:0.##}");
                     #endregion
 
                     #region RICAMBI
-                    foreach (var (ricambio, i) in Rapporto.Ricambi.Select((value, index) => (value, index)))
+                    foreach (var (ricambio, i) in Rapporto.Ricambi.Select((value, index) => (value, index+1)))
                     {
-                        Editor.ReplaceText($"$RicambioCode{i}$", "");           //TODO introdurre codice ricambio
-                        Editor.ReplaceText($"$RicambioDescr{i}$", ricambio.Descrizione ?? "");
-                        Editor.ReplaceText($"$RicambioCosto{i}$", $"₽ {ricambio.Costo}");
+                        Editor.ReplaceText($"$RicambioCode{i}$", ricambio.Code);
+                        Editor.ReplaceText($"$RicambioDescr{i}$", docName == "BUH-IT" ? ricambio.ITDescription ?? "" : ricambio.RUDescription ?? "");
+                        Editor.ReplaceText($"$RicambioCosto{i}$", $"₽ {ricambio.Costo:0.##}");
                         Editor.ReplaceText($"$RicambioQta{i}$", ricambio.Quantita.ToString());
                         Editor.ReplaceText($"$RicambioTot{i}$", $"₽ {ricambio.Quantita * ricambio.Costo}");
                     }
                     Editor.ReplaceText("$RicambiNumTot$", Rapporto.Ricambi.Sum(x => x.Quantita).ToString());
-                    int costoTotRicambi = Rapporto.Ricambi.Sum(x => x.Quantita * x.Costo);
-                    Editor.ReplaceText("$RicambiCostoTot$", $"₽ {costoTotRicambi}");
+                    costoTotRicambi = Rapporto.Ricambi.Sum(x => x.Quantita * x.Costo);
+                    Editor.ReplaceText("$RicambiCostoTot$", $"₽ {costoTotRicambi:0.##}");
                     #endregion
 
                     #region FONDO PAGINA
-                    Editor.ReplaceText("$Totale$", $"₽ {costoTotVoci + costoTotRicambi}");
-                    Editor.ReplaceText("$NomeDitta$", "");                      //TODO
-                    Editor.ReplaceText("$NomeDirettore$", "");                  //TODO
+                    Editor.ReplaceText("$Totale$", $"₽ {costoTotVoci + costoTotRicambi:0.##}");
+                    Editor.ReplaceText("$NomeDitta$", sp.Name ?? "");
+                    Editor.ReplaceText("$NomeDirettore$", sp.ManagerName ?? "");
                     #endregion
 
                     break;
                 case "AKT-IT":
                 case "AKT-RU":
                     TrimRigheTabella(1, Rapporto.Ricambi.Count);
+                    TrimRigheTabella(2, Rapporto.RapportiVociCosto.Count);
+
+                    #region SERVICE PARTNER
+                    Editor.ReplaceText("$SPRagioneSociale$", sp.RagioneSociale ?? "");
+                    indirizzo = $"{sp.PostalCode}, {sp.Region}, {sp.City}, {sp.Street}, {sp.HouseNr}";
+                    Editor.ReplaceText("$SPIndirizzo$", indirizzo);
+                    Editor.ReplaceText("$SPTelefono$", sp.Phone ?? "");
+                    Editor.ReplaceText("$SPEmail$", sp.Email ?? "");
+                    #endregion
 
                     #region CALDAIA
                     Editor.ReplaceText("$MatricolaCaldaia$", Rapporto.Caldaia.Matricola ?? "");
-                    Editor.ReplaceText("$TipoCaldaia$", Rapporto.Caldaia.Versione ?? ""); //??
+                    Editor.ReplaceText("$TipoCaldaia$", Rapporto.Caldaia.Versione ?? "");
                     Editor.ReplaceText("$DataVendita$", Rapporto.Caldaia.DataVendita?.ToShortDateString());
-                    Editor.ReplaceText("$MarcaCaldaia$", Rapporto.Caldaia.Brand?.Desc ?? "");
-                    Editor.ReplaceText("$Venditore$", Rapporto.Caldaia.Manufacturer ?? ""); //??
+                    Editor.ReplaceText("$MarcaCaldaia$", Rapporto.Caldaia.Brand?.Desc ?? ""); //torna stringa vuota
+                    Editor.ReplaceText("$Venditore$", Rapporto.Caldaia.Manufacturer ?? ""); //torna stringa vuota
                     Editor.ReplaceText("$ModelloCaldaia$", Rapporto.Caldaia.Model ?? "");
                     Editor.ReplaceText("$DataInstallazione$", Rapporto.Caldaia.DataMontaggio?.ToShortDateString());
                     Editor.ReplaceText("$DataPrimaAccens$", Rapporto.Caldaia.DataAvvio?.ToShortDateString());
-                    Editor.ReplaceText("$Produttore$", Rapporto.Caldaia.Manufacturer ?? "");
+                    Editor.ReplaceText("$Produttore$", Rapporto.Caldaia.Manufacturer ?? ""); //torna stringa vuota
                     Editor.ReplaceText("$TecnicoPrimaAccensione$", Rapporto.Caldaia.TecnicoPrimoAvvio ?? "");
                     Editor.ReplaceText("$NumCertificatoTecnico$", Rapporto.Caldaia.NumCertificatoTecnico.ToString());
                     Editor.ReplaceText("$DittaPrimaAccensione$", Rapporto.Caldaia.DittaPrimoAvvio ?? "");
@@ -181,22 +206,31 @@ namespace Fondital.Client.Utils
                     #endregion
 
                     #region RICAMBI
-                    foreach (var (ricambio, i) in Rapporto.Ricambi.Select((value, index) => (value, index)))
+                    foreach (var (ricambio, i) in Rapporto.Ricambi.Select((value, index) => (value, index+1)))
                     {
-                        Editor.ReplaceText($"$RicambioCode{i}$", "");           //TODO introdurre codice ricambio
-                        Editor.ReplaceText($"$RicambioDescr{i}$", ricambio.Descrizione ?? "");
+                        Editor.ReplaceText($"$RicambioCode{i}$", ricambio.Code ?? "");
+                        Editor.ReplaceText($"$RicambioDescr{i}$", docName == "AKT-IT" ? ricambio.ITDescription ?? "" : ricambio.RUDescription ?? "");
                         Editor.ReplaceText($"$RicambioQta{i}$", ricambio.Quantita.ToString());
                     }
                     #endregion
 
-                    #region COSTI
-                    int costoRicambi = Rapporto.Ricambi.Sum(x => x.Quantita * x.Costo);
-                    int costoIntervento = 0;
-                    int costoTrasporto = 0;
-                    Editor.ReplaceText("$CostoRicambi$", costoRicambi.ToString());
-                    Editor.ReplaceText("$CostoIntervento$", ""); //TODO
-                    Editor.ReplaceText("$CostoTrasporto$", ""); //TODO
-                    Editor.ReplaceText("$CostoTotale$", (costoRicambi + costoIntervento + costoTrasporto).ToString());
+                    #region VOCI COSTO
+                    costoTotRicambi = Rapporto.Ricambi.Sum(x => x.Quantita * x.Costo);
+
+                    Editor.ReplaceText("$CostoRicambi$", $"₽ {costoTotRicambi:0.##}");
+                    foreach (var (voce, i) in Rapporto.RapportiVociCosto.Select((value, index) => (value, index + 1)))
+                    {
+                        Editor.ReplaceText($"$VoceDescr{i}$", docName == "AKT-IT" ? voce.VoceCosto.NomeItaliano ?? "" : voce.VoceCosto.NomeRusso ?? "");
+                        costoVoce = voce.Quantita * voce.VoceCosto.Listini.SingleOrDefault()?.Valore ?? 0;  //i listini sono già filtrati sul service partner
+                        costoTotVoci += costoVoce;
+                        Editor.ReplaceText($"$VoceCosto{i}$", $"₽ {costoVoce:0.##}");
+                    }
+                    Editor.ReplaceText("$CostoTotale$", $"₽ {costoTotRicambi + costoTotVoci:0.##}");
+                    #endregion
+
+                    #region FONDO PAGINA
+                    Editor.ReplaceText("$NomeDitta$", sp.Name ?? "");
+                    Editor.ReplaceText("$NomeDirettore$", sp.ManagerName ?? "");
                     #endregion
 
                     break;

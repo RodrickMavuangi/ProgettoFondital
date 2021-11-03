@@ -10,10 +10,7 @@ namespace Fondital.Data.Configurations
         {
             builder.HasKey(a => a.Id);
             builder.Property(m => m.Id).UseIdentityColumn();
-
-            builder.Property(m => m.Quantita);
-            builder.Property(m => m.Costo);
-            builder.Property(m => m.Descrizione);
+            builder.Property(r => r.Costo).HasPrecision(6,2);
 
             builder.HasOne(m => m.Rapporto).WithMany(s => s.Ricambi);
 

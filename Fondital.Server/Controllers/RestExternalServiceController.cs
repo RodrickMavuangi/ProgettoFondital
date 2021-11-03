@@ -32,44 +32,72 @@ namespace Fondital.Server.Controllers
         }
 
         [HttpPost("modelloCaldaia")]
-        public async Task<IActionResult> GetServiceCaldaia([FromBody] CaldaiaDto caldaiaDto)
+        public async Task<IActionResult> GetServiceCaldaia([FromBody] CaldaiaDto caldaia)
         {
             try
             {
-                _httpClient.BaseAddress = new Uri(_config["RestClientSettings:BaseAddress"]);
-                var response = await _httpClient.GetAsync(_config["RestClientSettings:UriModelloCaldaia"] + caldaiaDto.Matricola);
-                if (!response.IsSuccessStatusCode)
-                    return NotFound();
+                //metodo dummy, ma la parte commentata funziona
 
-                _logger.Information("Info: {Action} {Object} {ObjectId} effettuato con successo", "GET", "Caldaia", caldaiaDto.Matricola);
-                var listaCaldaie = await response.Content.ReadFromJsonAsync<List<CaldaiaResponseDto>>();
-                var result = _mapper.Map(listaCaldaie.First(), caldaiaDto);
+                //_httpClient.BaseAddress = new Uri(_config["RestClientSettings:BaseAddress"]);
+                //var response = await _httpClient.GetAsync(_config["RestClientSettings:UriModelloCaldaia"] + caldaia.Matricola);
+                //if (!response.IsSuccessStatusCode)
+                //    return NotFound();
+                //
+                //_logger.Information("Info: {Action} {Object} {ObjectId} effettuato con successo", "GET", "Caldaia", caldaia.Matricola);
+                //var listaCaldaie = await response.Content.ReadFromJsonAsync<List<CaldaiaResponseDto>>();
+                //var result = _mapper.Map(listaCaldaie.First(), caldaia);
+                caldaia.Model = "DRAGO";
+                var result = caldaia;
                 return Ok(result);
             }
             catch (Exception ex)
             {
-                _logger.Error(ex, "Eccezione {Action} {Object} {ObjectId}", "GET", "Caldaia", caldaiaDto.Matricola);
+                _logger.Error(ex, "Eccezione {Action} {Object} {ObjectId}", "GET", "Caldaia", caldaia.Matricola);
                 return BadRequest(ex.Message);
             }
         }
 
-        [HttpGet("pezzoRicambio/{idRicambio}/{idFornitore}/{quantita}")]
-        [AllowAnonymous]
-        public async Task<IActionResult> GetServiceRicambio(RicambioRequestDto ricambio)
+
+        [HttpPost("dettagliSP")]
+        public async Task<IActionResult> GetServiceSP([FromBody] ServicePartnerDto sp)
         {
             try
             {
-                _httpClient.BaseAddress = new Uri(_config["RestClientSettings:BaseAddress"]);
-                var response = await _httpClient.GetAsync($"/sparePart/{ricambio.Id}/{ricambio.SupplierId}/{ricambio.Quantity}");
-                if (!response.IsSuccessStatusCode)
-                    return NotFound();
+                //metodo dummy, la parte commentata è da implementare
 
-                _logger.Information("Info: {Action} {Object} {ObjectId} effettuato con successo", "GET", "Ricambio", ricambio.Id);
+                //_httpClient.BaseAddress = new Uri(_config["RestClientSettings:BaseAddress"]);
+                //var response = await _httpClient.GetAsync($"/sparePart/{ricambio.Id}/{ricambio.SupplierId}/{ricambio.Quantity}");
+                //if (!response.IsSuccessStatusCode)
+                //    return NotFound();
+                //
+                //_logger.Information("Info: {Action} {Object} {ObjectId} effettuato con successo", "GET", "Ricambio", ricambio.Id);
+                var result = sp;
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                _logger.Error(ex, "Eccezione {Action} {Object} {ObjectId}", "GET", "Service Partner", sp.Id);
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [HttpPost("pezzoRicambio")]
+        public async Task<IActionResult> GetServiceRicambio([FromBody] RicambioRequestDto request)
+        {
+            try
+            {
+                //_httpClient.BaseAddress = new Uri(_config["RestClientSettings:BaseAddress"]);
+                //var response = await _httpClient.GetAsync($"/sparePart/{request.Id}/{request.SupplierId}/{request.Quantity}");
+                //if (!response.IsSuccessStatusCode)
+                //    return NotFound();
+                //
+                //_logger.Information("Info: {Action} {Object} {ObjectId} effettuato con successo", "GET", "Ricambio", request.Id);
+                var response = new RicambioDto();
                 return Ok(response);
             }
             catch (Exception ex)
             {
-                _logger.Error(ex, "Eccezione {Action} {Object} {ObjectId}", "GET", "Ricambio", ricambio.Id);
+                _logger.Error(ex, "Eccezione {Action} {Object} {ObjectId}", "GET", "Ricambio", request.Id);
                 return BadRequest(ex.Message);
             }
         }

@@ -241,8 +241,8 @@
                             {
                                 <div class="col-12 mt-3 mb-3">
                                     <InputNumber Class="form-control inputQt d-inline mr-3" @bind-Value="Ricambio.Quantita" />
-                                    <InputNumber Class="form-control inputCosto d-inline mr-3" @bind-Value="Ricambio.Costo" />
-                                    <InputText Class="form-control inputDescr d-inline" @bind-Value="Ricambio.Descrizione" />
+                                    <label Class="form-control inputCosto d-inline mr-3">@Ricambio.Costo</label>
+                                    <label Class="form-control inputDescr d-inline">@(CurrentCulture == "it-IT" ? Ricambio.ITDescription : Ricambio.RUDescription) </label>
                                     <TelerikButton OnClick="(() => { IsEdited = true; Rapporto.Ricambi.Remove(Ricambio); })" Class="icoDelete d-inline rosso text-center" IconClass="" ImageUrl="/img/Icons/delete.svg" />
                                 </div>
                             }

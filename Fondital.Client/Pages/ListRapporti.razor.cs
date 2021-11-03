@@ -41,7 +41,7 @@ namespace Fondital.Client.Pages
              && (x.Caldaia.Matricola ?? "").Contains(SearchByMatricola, StringComparison.InvariantCultureIgnoreCase)
              && (x.Cliente.NumTelefono ?? "").Contains(SearchByTelefono, StringComparison.InvariantCultureIgnoreCase)
              && (x.Cliente.Email ?? "").Contains(SearchByEmail, StringComparison.InvariantCultureIgnoreCase)
-        ).ToList();
+        ).OrderByDescending(x => x.Id).ToList();
 
         protected override async Task OnInitializedAsync()
         {

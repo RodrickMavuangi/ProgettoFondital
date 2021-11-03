@@ -16,7 +16,7 @@ namespace Fondital.Client.Dialogs
         protected List<VoceCostoDto> ListaVociCosto { get; set; } = new();
         protected List<string> ListaSelezione { get; set; } = new();
         protected string VoceCostoName { get; set; } = "";
-        protected int Quantita { get; set; }
+        protected int Quantita { get; set; } = 1;
         protected string CurrentCulture { get; set; }
         protected VoceCostoDto VoceCostoToAdd =>
             ListaVociCosto.SingleOrDefault(x => (CurrentCulture == "it-IT" && x.NomeItaliano == VoceCostoName) || (CurrentCulture == "ru-RU" && x.NomeRusso == VoceCostoName));

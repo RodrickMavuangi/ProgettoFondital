@@ -1,4 +1,5 @@
-﻿@inject ServicePartnerClient httpClient
+﻿@inject ServicePartnerClient spClient
+@inject RestExternalServiceClient ExternalServiceClient
 @inject IStringLocalizer<App> localizer
 
 <EditForm Model="NuovoSP" OnValidSubmit="SalvaSP">

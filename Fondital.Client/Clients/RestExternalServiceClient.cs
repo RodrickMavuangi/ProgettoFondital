@@ -15,7 +15,7 @@ namespace Fondital.Client.Clients
             this.httpClient = httpClient;
         }
 
-        public async Task<CaldaiaDto> ModelloCaldaiaService(CaldaiaDto caldaiaDto)
+        public async Task<CaldaiaDto> GetCaldaia(CaldaiaDto caldaiaDto)
         {
             try
             {
@@ -33,11 +33,29 @@ namespace Fondital.Client.Clients
             }
         }
 
-        public async Task<RicambioDto> PezzoRicambioService(RicambioRequestDto ricambioRequest)
+        public async Task<ServicePartnerDto> GetDettagliSP(ServicePartnerDto sp)
         {
             try
             {
-                var response = await httpClient.GetAsync($"externalServiceController/pezzoRicambio/{ricambioRequest.Id}/{ricambioRequest.SupplierId}/{ricambioRequest.Quantity}");
+                var response = await httpClient.PostAsJsonAsync($"externalServiceController/dettagliSP", sp, JsonSerializerOpts.JsonOpts);
+                if (response.IsSuccessStatusCode)
+                    return await response.Content.ReadFromJsonAsync<ServicePartnerDto>(JsonSerializerOpts.JsonOpts);
+                else if (response.StatusCode == System.Net.HttpStatusCode.NotFound)
+                    throw new Exception("NotFound");
+                else
+                    throw new Exception("GenericError");
+            }
+            catch (Exception e)
+            {
+                throw;
+            }
+        }
+
+        public async Task<RicambioDto> GetPezzoRicambio(RicambioRequestDto ricambioRequest)
+        {
+            try
+            {
+                var response = await httpClient.PostAsJsonAsync($"externalServiceController/pezzoRicambio", ricambioRequest, JsonSerializerOpts.JsonOpts);
                 if (response.IsSuccessStatusCode)
                     return await response.Content.ReadFromJsonAsync<RicambioDto>(JsonSerializerOpts.JsonOpts);
                 else if (response.StatusCode == System.Net.HttpStatusCode.NotFound)

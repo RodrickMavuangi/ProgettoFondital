@@ -11,11 +11,6 @@ namespace Fondital.Data.Configurations
             builder.HasKey(a => a.Id);
             builder.Property(m => m.Id).UseIdentityColumn();
 
-            builder.Property(m => m.Stato);
-            builder.Property(m => m.DataIntervento);
-            builder.Property(m => m.MotivoIntervento);
-            builder.Property(m => m.TipoLavoro);
-
             builder.OwnsOne(m => m.Cliente,
                             cliente => 
                             {
