@@ -34,7 +34,7 @@ namespace Fondital.Client.Pages
         private static IEnumerable<string> ListStati { get => EnumExtensions.GetEnumNames<StatoRapporto>(); }
         private string MatricolaPrecedente { get; set; } = "";
 
-        protected override async Task OnParametersSetAsync()
+        protected override async Task OnInitializedAsync()
         {
             UtenteCorrente = await StateProvider.GetCurrentUser();
             CurrentCulture = await StateProvider.GetCurrentCulture();
