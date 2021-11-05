@@ -2,7 +2,7 @@
 Theme Name: Custom Telerik Blazor Child
 Description: This is a child theme for Telerik Blazor Library.
 Template: Telerik Blazor
-Version: 1.7
+Version: 1.8
 */
 
 
@@ -476,13 +476,17 @@ span.link {
     background-color: #ED0F0F !important;
 }
 
-[aria-hasopenmenu=true] > span {
-    background-color: #ED0F0F !important;
-}
-
-    [aria-hasopenmenu=true] > span:hover {
+    .bg_active .k-menu-link {
         background-color: #ED0F0F !important;
     }
+
+/*[aria-hasopenmenu=true] > span {
+    background-color: #ED0F0F !important;
+}*/
+
+/*    [aria-hasopenmenu=true] > span:hover {
+        background-color: #ED0F0F !important;
+    }*/
 
 a:not([href]):not([tabindex]) {
     color: #fff !important;
