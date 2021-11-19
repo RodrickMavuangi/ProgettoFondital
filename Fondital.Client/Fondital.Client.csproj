@@ -7,18 +7,6 @@
     <BlazorWebAssemblyPreserveCollationData>false</BlazorWebAssemblyPreserveCollationData>
     <PublishIISAssets>true</PublishIISAssets>
   </PropertyGroup>
-  
-  <ItemGroup>
-    <Compile Remove="Data\**" />
-    <Compile Remove="wwwroot\DocumentTemplates\**" />
-    <Content Remove="Data\**" />
-    <Content Remove="wwwroot\DocumentTemplates\**" />
-    <EmbeddedResource Remove="Data\**" />
-    <EmbeddedResource Remove="wwwroot\DocumentTemplates\**" />
-    <None Remove="Data\**" />
-    <None Remove="wwwroot\DocumentTemplates\**" />
-    <None Remove="Microsoft.Extensions.Logging.AzureAppServices" />
-  </ItemGroup>
 
   <ItemGroup>
     <None Include="wwwroot\appsettings.Development.json" />
