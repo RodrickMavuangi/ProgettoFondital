@@ -86,13 +86,13 @@ namespace Fondital.Server.Controllers
         {
             try
             {
-                //_httpClient.BaseAddress = new Uri(_config["RestClientSettings:BaseAddress"]);
-                //var response = await _httpClient.GetAsync($"/sparePart/{request.Id}/{request.SupplierId}/{request.Quantity}");
-                //if (!response.IsSuccessStatusCode)
-                //    return NotFound();
-                //
-                //_logger.Information("Info: {Action} {Object} {ObjectId} effettuato con successo", "GET", "Ricambio", request.Id);
-                var response = new RicambioDto();
+                _httpClient.BaseAddress = new Uri(_config["RestClientSettings:BaseAddress"]);
+                var response = await _httpClient.GetAsync($"zapi_rapportini/getSparePartById?FOR={request.Id}&MAT={request.SupplierId}&QTA={request.Quantity}");
+                if (!response.IsSuccessStatusCode)
+                    return NotFound();
+
+                _logger.Information("Info: {Action} {Object} {ObjectId} effettuato con successo", "GET", "Ricambio", request.Id);
+                //var response = new RicambioDto();
                 return Ok(response);
             }
             catch (Exception ex)
