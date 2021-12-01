@@ -59,24 +59,22 @@ namespace Fondital.Server.Controllers
 
 
         [HttpPost("dettagliSP")]
-        public async Task<IActionResult> GetServiceSP([FromBody] ServicePartnerDto sp)
+        public async Task<IActionResult> GetServiceSP([FromBody] ServicePartnerRequestDto sp)
         {
             try
             {
-                //metodo dummy, la parte commentata è da implementare
-
-                //_httpClient.BaseAddress = new Uri(_config["RestClientSettings:BaseAddress"]);
-                //var response = await _httpClient.GetAsync($"/sparePart/{ricambio.Id}/{ricambio.SupplierId}/{ricambio.Quantity}");
-                //if (!response.IsSuccessStatusCode)
-                //    return NotFound();
-                //
-                //_logger.Information("Info: {Action} {Object} {ObjectId} effettuato con successo", "GET", "Ricambio", ricambio.Id);
-                var result = sp;
-                return Ok(result);
+                _httpClient.BaseAddress = new Uri(_config["RestClientSettings:BaseAddress"]);
+                var response = await _httpClient.GetAsync($"zapi_rapportini/getSupplierById?ID={sp.CodiceFornitore}");
+                if (!response.IsSuccessStatusCode)
+                    return NotFound();
+                
+                _logger.Information("Info: {Action} {Object} {ObjectId} effettuato con successo", "GET", "Service Partner", sp.CodiceFornitore);
+            
+                return Ok(response);
             }
             catch (Exception ex)
             {
-                _logger.Error(ex, "Eccezione {Action} {Object} {ObjectId}", "GET", "Service Partner", sp.Id);
+                _logger.Error(ex, "Eccezione {Action} {Object} {ObjectId}", "GET", "Service Partner", sp.CodiceFornitore);
                 return BadRequest(ex.Message);
             }
         }
