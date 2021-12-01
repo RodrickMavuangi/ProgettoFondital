@@ -33,7 +33,7 @@ namespace Fondital.Client.Clients
             }
         }
 
-        public async Task<ServicePartnerDto> GetDettagliSP(ServicePartnerDto sp)
+        public async Task<ServicePartnerDto> GetDettagliSP(ServicePartnerRequestDto sp)
         {
             try
             {
@@ -57,7 +57,7 @@ namespace Fondital.Client.Clients
             {
                 var response = await httpClient.PostAsJsonAsync($"externalServiceController/pezzoRicambio", ricambioRequest, JsonSerializerOpts.JsonOpts);
                 if (response.IsSuccessStatusCode)
-                    return await response.Content.ReadFromJsonAsync<RicambioDto>(JsonSerializerOpts.JsonOpts);
+                      return await response.Content.ReadFromJsonAsync<RicambioDto>(JsonSerializerOpts.JsonOpts);
                 else if (response.StatusCode == System.Net.HttpStatusCode.NotFound)
                     throw new Exception("NotFound");
                 else

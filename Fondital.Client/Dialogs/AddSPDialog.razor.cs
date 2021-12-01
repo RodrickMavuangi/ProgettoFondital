@@ -11,6 +11,7 @@ namespace Fondital.Client.Dialogs
         [Parameter] public EventCallback OnSave { get; set; }
 
         protected ServicePartnerDto NuovoSP { get; set; } = new ServicePartnerDto();
+        protected ServicePartnerRequestDto servicePartnerRequestDto { get; set; } = new();
 
         protected bool isSubmitting = false;
         protected string ErrorMessage = "";
@@ -22,7 +23,8 @@ namespace Fondital.Client.Dialogs
 
             try
             {
-                NuovoSP = await ExternalServiceClient.GetDettagliSP(NuovoSP);
+                servicePartnerRequestDto = new ServicePartnerRequestDto() { CodiceFornitore = NuovoSP.CodiceFornitore };
+                NuovoSP = await ExternalServiceClient.GetDettagliSP(servicePartnerRequestDto);
                 await spClient.CreateServicePartner(NuovoSP);
                 isSubmitting = false;
                 await OnSave.InvokeAsync();
