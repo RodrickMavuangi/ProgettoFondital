@@ -38,16 +38,17 @@ namespace Fondital.Server.Controllers
             {
                 //metodo dummy, ma la parte commentata funziona
 
-                //_httpClient.BaseAddress = new Uri(_config["RestClientSettings:BaseAddress"]);
-                //var response = await _httpClient.GetAsync(_config["RestClientSettings:UriModelloCaldaia"] + caldaia.Matricola);
-                //if (!response.IsSuccessStatusCode)
-                //    return NotFound();
-                //
-                //_logger.Information("Info: {Action} {Object} {ObjectId} effettuato con successo", "GET", "Caldaia", caldaia.Matricola);
-                //var listaCaldaie = await response.Content.ReadFromJsonAsync<List<CaldaiaResponseDto>>();
-                //var result = _mapper.Map(listaCaldaie.First(), caldaia);
-                caldaia.Model = "DRAGO";
-                var result = caldaia;
+                _httpClient.BaseAddress = new Uri(_config["RestClientSettings:BaseAddress"]);
+                var response = await _httpClient.GetAsync(_config["RestClientSettings:UriModelloCaldaia"] + caldaia.Matricola);
+                if (!response.IsSuccessStatusCode)
+                    return NotFound();
+
+                _logger.Information("Info: {Action} {Object} {ObjectId} effettuato con successo", "GET", "Caldaia", caldaia.Matricola);
+                var listaCaldaie = await response.Content.ReadFromJsonAsync<List<CaldaiaResponseDto>>();
+                var result = _mapper.Map(listaCaldaie.First(), caldaia);
+
+                //caldaia.Model = "DRAGO";
+                //var result = caldaia;
                 return Ok(result);
             }
             catch (Exception ex)
@@ -67,10 +68,14 @@ namespace Fondital.Server.Controllers
                 var response = await _httpClient.GetAsync($"zapi_rapportini/getSupplierById?ID={sp.CodiceFornitore}");
                 if (!response.IsSuccessStatusCode)
                     return NotFound();
-                
+
                 _logger.Information("Info: {Action} {Object} {ObjectId} effettuato con successo", "GET", "Service Partner", sp.CodiceFornitore);
-            
-                return Ok(response);
+
+                var listaSp = await response.Content.ReadFromJsonAsync<List<ServicePartnerResponseDto>>();
+                var result = new ServicePartnerDto();
+                result = _mapper.Map(listaSp.First(), result);
+
+                return Ok(result);
             }
             catch (Exception ex)
             {
@@ -90,8 +95,12 @@ namespace Fondital.Server.Controllers
                     return NotFound();
 
                 _logger.Information("Info: {Action} {Object} {ObjectId} effettuato con successo", "GET", "Ricambio", request.Id);
-                //var response = new RicambioDto();
-                return Ok(response);
+
+                var listaRicambi = await response.Content.ReadFromJsonAsync<List<RicambioDto>>();
+                var result = new RicambioDto();
+                result = _mapper.Map(listaRicambi.First(), result);
+
+                return Ok(result);
             }
             catch (Exception ex)
             {

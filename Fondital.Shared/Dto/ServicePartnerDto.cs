@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Globalization;
 
 namespace Fondital.Shared.Dto
 {
@@ -11,15 +10,15 @@ namespace Fondital.Shared.Dto
 
         [Display(Name = "CodiceFornitore", ResourceType = typeof(Resources.Display))]
         [Required(ErrorMessageResourceName = "Required", ErrorMessageResourceType = typeof(Resources.Validation))]
-        public string CodiceFornitore { get; set; } /*= "";*/
+        public string CodiceFornitore { get; set; } = "";
 
         [Display(Name = "RagioneSociale", ResourceType = typeof(Resources.Display))]
         [Required(ErrorMessageResourceName = "Required", ErrorMessageResourceType = typeof(Resources.Validation))]
-        public string RagioneSociale { get; set; } /*= "";*/
+        public string RagioneSociale { get; set; } = "";
 
         [Display(Name = "CodiceCliente", ResourceType = typeof(Resources.Display))]
         [Required(ErrorMessageResourceName = "Required", ErrorMessageResourceType = typeof(Resources.Validation))]
-        public string CodiceCliente { get; set; } /*= "";*/
+        public string CodiceCliente { get; set; } = "";
 
         public string Name { get; set; } /*= "Fornitore SRL";*/
         public string Street { get; set; } /*= "Via Europa";*/
