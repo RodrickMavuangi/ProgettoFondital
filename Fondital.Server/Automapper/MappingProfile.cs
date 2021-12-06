@@ -59,6 +59,14 @@ namespace Fondital.Server.Automapper
                 .ForMember(dest => dest.Manufacturer, src => src.MapFrom(s => s.Manufacturer))
                 .ForMember(dest => dest.Model, src => src.MapFrom(s => s.Model))
                 .ForMember(dest => dest.ManufacturingDate, src => src.MapFrom(s => DateTime.ParseExact(s.ManufacturingDate, "yyyyMMdd", CultureInfo.InvariantCulture)));
+
+            CreateMap<ServicePartnerResponseDto, ServicePartnerDto>()
+                .ForMember(dest => dest.ContractDate, src => src.MapFrom(s => GetDateTime(s.ContractDate)));
+        }
+
+        private DateTime? GetDateTime(string contractDate)
+        {
+            return DateTime.TryParseExact(contractDate, "yyyyMMdd", CultureInfo.InvariantCulture, System.Globalization.DateTimeStyles.None, out var date) ? date : (DateTime?) null;
         }
     }
 }
