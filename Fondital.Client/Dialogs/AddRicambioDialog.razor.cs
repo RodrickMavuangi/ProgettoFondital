@@ -10,7 +10,7 @@ namespace Fondital.Client.Dialogs
         [Parameter] public EventCallback OnClose { get; set; }
         [Parameter] public EventCallback OnSave { get; set; }
         [Parameter] public EventCallback<RicambioDto> RicambioChanged { get; set; }
-        [Parameter] public RicambioDto NewRicambio { get; set; } = new();
+        [Parameter] public RicambioDto Ricambio { get; set; } = new();
         protected RicambioRequestDto RicambioRequest { get; set; } = new();
         private bool IsSubmitting = false;
         private string ErrorMessage = "";
@@ -20,8 +20,8 @@ namespace Fondital.Client.Dialogs
             IsSubmitting = true;
             try
             {
-                NewRicambio = await RestClient.GetPezzoRicambio(RicambioRequest);
-                await RicambioChanged.InvokeAsync(NewRicambio);
+                Ricambio = await RestClient.GetPezzoRicambio(RicambioRequest);
+                await RicambioChanged.InvokeAsync(Ricambio);
                 await OnSave.InvokeAsync();
             }
             catch (Exception ex)

@@ -38,8 +38,10 @@ namespace Fondital.Server.Automapper
             CreateMap<Cliente, ClienteDto>();
             CreateMap<ClienteDto, Cliente>();
 
-            CreateMap<Ricambio, RicambioDto>();
-            CreateMap<RicambioDto, Ricambio>();
+            CreateMap<Ricambio, RicambioDto>()
+                .ForMember(dest => dest.Amount, src => src.MapFrom(s => s.Costo));
+            CreateMap<RicambioDto, Ricambio>()
+                .ForMember(dest => dest.Costo, src => src.MapFrom(s => s.Amount));
 
             CreateMap<Caldaia, CaldaiaDto>();
             CreateMap<CaldaiaDto, Caldaia>();
