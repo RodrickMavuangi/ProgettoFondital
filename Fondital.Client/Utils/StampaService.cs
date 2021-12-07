@@ -147,12 +147,12 @@ namespace Fondital.Client.Utils
                     {
                         Editor.ReplaceText($"$RicambioCode{i}$", ricambio.Code);
                         Editor.ReplaceText($"$RicambioDescr{i}$", docName == "BUH-IT" ? ricambio.ITDescription ?? "" : ricambio.RUDescription ?? "");
-                        Editor.ReplaceText($"$RicambioCosto{i}$", $"₽ {ricambio.Costo:0.##}");
+                        Editor.ReplaceText($"$RicambioCosto{i}$", $"₽ {ricambio.Amount:0.##}");
                         Editor.ReplaceText($"$RicambioQta{i}$", ricambio.Quantita.ToString());
-                        Editor.ReplaceText($"$RicambioTot{i}$", $"₽ {ricambio.Quantita * ricambio.Costo}");
+                        Editor.ReplaceText($"$RicambioTot{i}$", $"₽ {ricambio.Quantita * ricambio.Amount}");
                     }
                     Editor.ReplaceText("$RicambiNumTot$", Rapporto.Ricambi.Sum(x => x.Quantita).ToString());
-                    costoTotRicambi = Rapporto.Ricambi.Sum(x => x.Quantita * x.Costo);
+                    costoTotRicambi = Rapporto.Ricambi.Sum(x => x.Quantita * x.Amount);
                     Editor.ReplaceText("$RicambiCostoTot$", $"₽ {costoTotRicambi:0.##}");
                     #endregion
 
@@ -215,7 +215,7 @@ namespace Fondital.Client.Utils
                     #endregion
 
                     #region VOCI COSTO
-                    costoTotRicambi = Rapporto.Ricambi.Sum(x => x.Quantita * x.Costo);
+                    costoTotRicambi = Rapporto.Ricambi.Sum(x => x.Quantita * x.Amount);
 
                     Editor.ReplaceText("$CostoRicambi$", $"₽ {costoTotRicambi:0.##}");
                     foreach (var (voce, i) in Rapporto.RapportiVociCosto.Select((value, index) => (value, index + 1)))

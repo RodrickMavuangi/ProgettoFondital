@@ -15,7 +15,7 @@ namespace Fondital.Server.Controllers
 {
     [ApiController]
     [Route("externalServiceController")]
-    [Authorize(Roles = "Direzione,Service Partner")]
+    //[Authorize(Roles = "Direzione,Service Partner")]
     public class RestExternalServiceController : ControllerBase
     {
         private readonly Serilog.ILogger _logger;
@@ -99,6 +99,7 @@ namespace Fondital.Server.Controllers
                 var listaRicambi = await response.Content.ReadFromJsonAsync<List<RicambioDto>>();
                 var result = new RicambioDto();
                 result = _mapper.Map(listaRicambi.First(), result);
+                result.Quantita = request.Quantity.Value;
 
                 return Ok(result);
             }
