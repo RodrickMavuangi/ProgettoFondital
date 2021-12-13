@@ -23,8 +23,15 @@ namespace Fondital.Client.Dialogs
 
             try
             {
+                var SPOfInput = new ServicePartnerDto() { CodiceCliente = NuovoSP.CodiceCliente, CodiceFornitore = NuovoSP.CodiceFornitore, RagioneSociale = NuovoSP.RagioneSociale };
                 servicePartnerRequestDto = new ServicePartnerRequestDto() { CodiceFornitore = NuovoSP.CodiceFornitore };
                 NuovoSP = await ExternalServiceClient.GetDettagliSP(servicePartnerRequestDto);
+                
+                // Si aggiungono i campi mancanti nella chiamata del external service.
+                NuovoSP.CodiceCliente = SPOfInput.CodiceCliente;
+                NuovoSP.CodiceFornitore = SPOfInput.CodiceFornitore;
+                NuovoSP.RagioneSociale = SPOfInput.RagioneSociale;
+
                 await spClient.CreateServicePartner(NuovoSP);
                 isSubmitting = false;
                 await OnSave.InvokeAsync();

@@ -23,7 +23,7 @@ namespace Fondital.Client.Clients
         }
         public async Task CreateServicePartner(ServicePartnerDto servicePartner)
         {
-            var response = await httpClient.PostAsJsonAsync($"servicePartnersControl", servicePartner, JsonSerializerOpts.JsonOpts);
+            var response = await httpClient.PostAsJsonAsync("servicePartnersControl/create", servicePartner, JsonSerializerOpts.JsonOpts);
             response.EnsureSuccessStatusCode();
         }
 
