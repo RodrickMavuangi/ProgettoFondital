@@ -64,7 +64,7 @@ namespace Fondital.Server.Controllers
             }
         }
 
-        [HttpPost]
+        [HttpPost("create")]
         [Authorize(Roles = "Direzione")]
         public async Task<IActionResult> CreateServicePartner([FromBody] ServicePartnerDto servicePartnerDto)
         {
