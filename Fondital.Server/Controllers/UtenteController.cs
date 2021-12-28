@@ -1,33 +1,70 @@
-﻿using Fondital.Shared;
+﻿using AutoMapper;
+using Fondital.Shared.Dto;
+using Fondital.Shared.Models.Auth;
+using Fondital.Shared.Services;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using RouteAttribute = Microsoft.AspNetCore.Mvc.RouteAttribute;
 
 namespace Fondital.Server.Controllers
 {
     [ApiController]
-    [Route("utenti")]
+    [Route("utentiControl")]
+    [Authorize(Roles = "Direzione,Service Partner")]
     public class UtenteController : ControllerBase
     {
-        private readonly ILogger<UtenteController> _logger;
-        private readonly FonditalDBContext _db;
+        private readonly Serilog.ILogger _logger;
+        private readonly IUtenteService _ut;
+        private readonly IMapper _mapper;
 
-        public UtenteController(ILogger<UtenteController> logger, FonditalDBContext db)
+        public UtenteController(Serilog.ILogger logger, IUtenteService ut, IMapper mapper)
         {
+            _ut = ut;
             _logger = logger;
-            _db = db;
+            _mapper = mapper;
         }
 
         [HttpGet]
-        public IEnumerable<Utente> Get()
+        [Authorize(Roles = "Direzione")]
+        public IEnumerable<UtenteDto> GetUtenti([FromQuery]bool? isDirezione)
         {
-            return _db.Utenti;
+            return _mapper.Map<IEnumerable<UtenteDto>>(_ut.GetAllUtenti(isDirezione).Result);
+        }
+
+        [HttpGet("getsingle/{username}")]
+        public UtenteDto GetUtenteByUsername(string username)
+        {
+            try
+            {
+                return _mapper.Map<UtenteDto>(_ut.GetUtenteByUsername(username).Result);
+            }
+            catch (Exception ex)
+            {
+                _logger.Error(ex, "Eccezione {Action} {Object} {ObjectId}", "GET", "Utente", username);
+                throw;
+            }
+        }
+
+        [HttpPut("update")]
+        [Authorize(Roles = "Direzione")]
+        public async Task<IActionResult> UpdateUtente([FromBody] UtenteDto utenteDtoToUpdate)
+        {
+            Utente utenteToUpdate = _mapper.Map<Utente>(utenteDtoToUpdate);
+
+            try
+            {
+                await _ut.UpdateUtente(utenteToUpdate.UserName, utenteToUpdate);
+                _logger.Information("Info: {Action} {Object} {ObjectId} effettuato con successo", "UPDATE", "Utente", utenteToUpdate.UserName);
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                _logger.Error(ex, "Eccezione {Action} {Object} {ObjectId}", "UPDATE", "Utente", utenteDtoToUpdate.UserName);
+                return BadRequest($"{ex.Message} - {ex.InnerException?.Message}");
+            }
         }
     }
 }

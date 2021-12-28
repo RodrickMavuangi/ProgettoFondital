@@ -1,6 +1,31 @@
 ﻿@page "/"
-@using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 
-<h1>Hello, world!</h1>
+@inject FonditalAuthStateProvider authStateProvider
+@inject CurrentStateProvider StateProvider
+@inject IStringLocalizer<App> localizer
+@attribute [Authorize]
 
-<SurveyPrompt Title="How is Blazor working for you?" />
+<AuthorizeView>
+    <Authorized>
+        <div class="row-1 d-flex justify-content-between flex-wrap flex-md-nowrap  pt-0 mb-64 border-bottom">
+            <!--TITOLO PAGINA-->
+            <div class="col-md-5  text-left pb-4">
+                <div class="col  text-left d-inline-block ">
+                    <div class="page-header">
+                        @if (UtenteCorrente != null)
+                        {
+                            <h3>@localizer["Benvenuto"] <b>@UtenteCorrente?.Nome.</b></h3>
+                        }
+                        else
+                        {
+                            <p>Caricamento dell'utente in corso...</p>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </Authorized>
+    <NotAuthorized>
+        <a href="Login">Log in</a>
+    </NotAuthorized>
+</AuthorizeView>

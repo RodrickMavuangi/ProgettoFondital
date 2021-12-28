@@ -1,0 +1,110 @@
+﻿@page "/costItems"
+
+@inject VoceCostoClient httpClient
+@inject CurrentStateProvider StateProvider
+@inject IStringLocalizer<App> localizer
+@inject IConfiguration config
+@attribute [Authorize(Roles = "Direzione")]
+
+<div class="row-1 d-flex justify-content-between flex-wrap flex-md-nowrap  pt-0">
+    <!--TITOLO PAGINA-->
+    <div class="col-md-5  text-left pb-4 border-bottom">
+        <div class="col  text-left d-inline-block ">
+            <div class="page-header">
+                <h1 class="h1"><b>@localizer["Anagrafiche"]</b> @localizer["VociCosto"]</h1>
+            </div>
+        </div>
+    </div>
+    <!--FINE TITLE PAGE-->
+    <!--ROW BOTTONI-->
+    <div class="col-md-7 pb-4 border-bottom pr-0">
+        <div class="col  text-left d-none barraStrumenti "> </div>
+        <div class="col  text-right d-inline-block float-lg-right p-0">
+            <TelerikButton Class="btn btn-primary btn-verde btn-lg mx-1" @onclick="(() => ShowAddDialog = true)">@localizer["Nuova"] @localizer["VoceCosto"]</TelerikButton>
+        </div>
+    </div>
+    <!--FINE BUTTON TOP DX-->
+</div>
+<!--FINE ROW 1 . TITOLI + BUTTON DX-->
+
+@if (ListaVociCosto == null)
+{
+    @*<p><em>@localizer["Caricamento"]...</em></p>*@
+    <!--CARICO IL LOADER-->
+    <div class="k-loader-container k-loader-container-md k-loader-top " style="" data-id="7d13dd9e-e016-4aec-8e1b-5253cd5131d5">
+        <div class="k-loader-container-overlay k-overlay-light"></div>
+        <div class="k-loader-container-inner ">
+            <div class="k-loader k-loader-spinner-3 k-loader-lg k-loader-primary">
+                <div class="k-loader-canvas">
+                    <span class="k-loader-segment"></span>
+                    <span class="k-loader-segment"></span>
+                    <span class="k-loader-segment"></span>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+else
+{
+    <div class="row-2 d-inline w-100 mb-4  pt-0 pb-4 pt-4 border-bottom barraFiltri">
+        <div class="form-group rowFiltri">
+            @*<img src="../img/Icons/search.svg" class="bi bi-search float-lg-right icoSearch blu" />*@
+            <i class="bi bi-search float-lg-right icoSearch blu"></i>
+            <input class="form-control float-lg-right filtriInput mx-1" @bind-value="SearchText" @bind-value:event="oninput" placeholder=@localizer["CercaVociCosto"] />
+        </div>
+    </div><!--FINE BARRA FILTRI-->
+    <div class="row-3 d-flex justify-content-between flex-wrap flex-md-nowrap  pt-0 pb-4 mb-4">
+        <TelerikGrid Data=@ListaVociCostoFiltered Pageable="true" PageSize="@PageSize" Sortable="true" Class="table table-striped">
+            <!--<GridToolBar>
+                <span class="k-toolbar-spacer"></span>-->
+            @* add this spacer to keep the searchbox on the right *@
+            <!--<GridSearchBox />
+            </GridToolBar>-->
+            <GridColumns>
+                <GridColumn Field=@nameof(VoceCostoDto.Id) Title="#" Width="10%" />
+                <GridColumn Field=@nameof(VoceCostoDto.NomeItaliano) Width="34%" Title=@localizer["Descrizione"].Value.ToUpper() Visible="@(CurrentCulture == "it-IT")" />
+                <GridColumn Field=@nameof(VoceCostoDto.NomeRusso) Width="34%" Title=@localizer["Descrizione"].Value.ToUpper() Visible="@(CurrentCulture == "ru-RU")" />
+                <GridColumn Title=@localizer["Tipologia"].Value.ToUpper() Width="40%" Context="vc">
+                    <Template>
+                        @{
+                            var voceCosto = vc as VoceCostoDto;
+                            var traduzioneTipologia = localizer[voceCosto.Tipologia.ToString()];
+                            <div>@traduzioneTipologia</div>
+                        }
+                    </Template>
+                </GridColumn>
+                <GridCommandColumn Context="vc" Width="3%">
+                    @{
+                        var voceCosto = vc as VoceCostoDto;
+                        <GridCommandButton Class=" btnIcon bgBianco white" Command="EditVoceCosto" Icon="" ImageUrl="/img/Icons/edit.svg" OnClick="@(() => EditVoceCosto(voceCosto.Id))" />
+                    }
+                </GridCommandColumn>
+                <GridCommandColumn Context="vc" Width="3%">
+                    @{
+                        var voceCosto = vc as VoceCostoDto;
+                        <TelerikSwitch OffLabel=" " OnLabel=" " OnChange="@(() => UpdateEnableVoceCosto(voceCosto.Id))" @bind-Value="@voceCosto.IsAbilitato"></TelerikSwitch>
+                    }
+                </GridCommandColumn>
+            </GridColumns>
+        </TelerikGrid>
+    </div>
+}
+
+<!--DIALOGS-->
+<TelerikWindow Class="modal-app dialogBox" Width="500px" Height="auto" Centered="true" Modal="true" @bind-Visible="ShowAddDialog">
+    <WindowActions>
+        <WindowAction Name="Close" IconClass="k-icon k-i-close text-dark" />
+    </WindowActions>
+    <WindowContent>
+        <div class="dialogForm"><AddVoceCostoDialog OnClose="CloseAndRefresh" OnSave="CloseAndRefresh" /></div>
+    </WindowContent>
+</TelerikWindow>
+
+<TelerikWindow Class="modal-app dialogBox" Width="500px" Height="auto" Centered="true" Modal="true" @bind-Visible="ShowEditDialog">
+    <WindowActions>
+        <WindowAction Name="Close" IconClass="k-icon k-i-close text-dark" />
+    </WindowActions>
+    <WindowContent>
+        <div class="dialogForm"><EditVoceCostoDialog VoceCostoToUpdate="VoceCostoSelected" OnClose="CloseAndRefresh" OnSave="CloseAndRefresh" /></div>
+    </WindowContent>
+</TelerikWindow>

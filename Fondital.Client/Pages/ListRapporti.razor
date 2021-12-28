@@ -1,0 +1,131 @@
+﻿@page "/reports"
+
+@inject IStringLocalizer<App> Localizer
+@inject IConfiguration Config
+@inject RapportoClient HttpClient
+@inject NavigationManager NavigationManager
+@inject CurrentStateProvider StateProvider
+@attribute [Authorize(Roles = "Direzione,Service Partner")]
+
+<div class="row-1 d-flex justify-content-between flex-wrap flex-md-nowrap  pt-0">
+    <!--TITOLO PAGINA-->
+    <div class="col-md-5  text-left pb-32 ">
+        <div class="col  text-left d-inline-block ">
+            <div class="page-header">
+                <h1 class="h1"><b>@Localizer["Gestione"]</b> @Localizer["Rapporti"]</h1>
+            </div>
+        </div>
+    </div>
+    <!--FINE TITLE PAGE-->
+    <!--ROW BOTTONI-->
+    <AuthorizeView Roles="Service Partner">
+        <Authorized>
+            <div class="col-md-7 pb-4  pr-0">
+                <div class="col text-left d-none barraStrumenti" />
+                <div class="col text-right d-inline-block float-lg-right p-0">
+                    <TelerikButton Class="btn btn-primary btn-verde btn-lg mx-1" OnClick=@(() => NavigationManager.NavigateTo("/reportDetail"))>@Localizer["Inserisci"] @Localizer["Rapporto"]</TelerikButton>
+                </div>
+            </div>
+        </Authorized>
+    </AuthorizeView>
+    <!--FINE BUTTON TOP DX-->
+</div>
+<!--FINE ROW 1 . TITOLI + BUTTON DX-->
+
+@if (ListaRapporti == null)
+{
+<div class="k-loader-container k-loader-container-md k-loader-top">
+    <div class="k-loader-container-overlay k-overlay-light"></div>
+    <div class="k-loader-container-inner ">
+        <div class="k-loader k-loader-spinner-3 k-loader-lg k-loader-primary">
+            <div class="k-loader-canvas">
+                <span class="k-loader-segment"></span>
+                <span class="k-loader-segment"></span>
+                <span class="k-loader-segment"></span>
+            </div>
+        </div>
+    </div>
+</div>
+}
+else
+{
+    <!--BARRA FILTRI-->
+    <div class="row-2 d-inline w-100 mb-4  pt-0 pb-4 pt-4 border-top border-bottom barraFiltri">
+        <div class="form-group rowFiltri rowFiltriRapportini ">
+            <TelerikDropDownList Data="@ListRagioneSociale"
+                                 Class=" float-lg-right filtriInput mx-1 select"
+                                 PopupClass="dropdown-ite"
+                                 @bind-Value="SearchBySp"
+                                 DefaultText=@Localizer["AllSP"] />
+
+            <TelerikDropDownList Data=@ListStati.Select(x => Localizer[x])
+                                 Class=" float-lg-right filtriInput mx-1 select"
+                                 PopupClass="dropdown-ite"
+                                 @bind-Value="SearchByStato"
+                                 DefaultText=@Localizer["AllStati"] />
+            <TelerikDatePicker @bind-Value="SearchByDataDa" Min="@(DateTime.ParseExact("20211001", "yyyyMMdd", CultureInfo.InvariantCulture))" Max="SearchByDataA" Class="float-lg-right filtriInput mx-1" />
+            <TelerikDatePicker @bind-Value="SearchByDataA" Min="SearchByDataDa" Max="DateTime.Now" Class="float-lg-right filtriInput mx-1" />
+            <input class="form-control float-lg-right filtriInput mx-1" @bind-value="SearchByCliente" @bind-value:event="oninput" placeholder=@Localizer["Cliente"] />
+            <input class="form-control float-lg-right filtriInput mx-1" @bind-value="SearchById" @bind-value:event="oninput" placeholder=@Localizer["NumRapporto"] />
+            <input class="form-control float-lg-right filtriInput mx-1" @bind-value="SearchByMatricola" @bind-value:event="oninput" placeholder=@Localizer["Matricola"] />
+            <input class="form-control float-lg-right filtriInput mx-1" @bind-value="SearchByTelefono" @bind-value:event="oninput" placeholder=@Localizer["Telefono"] />
+            <input class="form-control float-lg-right filtriInput mx-1" @bind-value="SearchByEmail" @bind-value:event="oninput" placeholder=@Localizer["Email"] />
+            <i class="bi bi-search float-lg-right icoSearch blu"></i>
+    </div>
+</div>
+
+ <!--FINE BARRA FILTRI-->
+<div class="row-3 d-flex justify-content-between flex-wrap flex-md-nowrap pt-0 pb-4 mb-4">
+    <TelerikGrid Data="@ListaRapportiFiltered" Class="table table-striped" PageSize=@PageSize Pageable="true" Sortable="true">
+        <GridColumns>
+            <GridColumn Field=Utente.ServicePartner.RagioneSociale Width="15%" Title=@Localizer["ServicePartner"].Value.ToUpper() />
+            @{
+                if (UtenteCorrente.ServicePartner == null)
+                {
+                    <GridCommandColumn Context="context" Width="15%" Title=@Localizer["Stato"].Value.ToUpper()>
+                    @{
+                        var rapporto = context as RapportoDto;
+                        string statoSelezionato = Localizer[rapporto.Stato.ToString()];
+                        <div class="barrastato stato dr @(rapporto.Stato.ToString().ToLower())">
+                        <TelerikDropDownList Data=@ListStati.Select(x => Localizer[x])
+                                             Width="100%"
+                                             Class="selectStato"
+                                             Value="statoSelezionato"
+                                             ValueChanged=@(async (string v) => { statoSelezionato = v; await CambiaStato(rapporto, v); }) 
+                                             Enabled="@(!IsSubmitting)" />
+                          </div>
+                    }
+                    </GridCommandColumn>
+                }
+                else
+                {
+                        <GridColumn Field="Stato" Width="10%" Title="Stato">
+                            <Template>
+                                @{
+                                    RapportoDto rapporto = (RapportoDto)context;
+                                   
+                                    <div class="stato barrastato sp @(rapporto.Stato)">
+                                    <span class="position">@(rapporto.Stato)</span>
+                                    </div>
+                                }
+                            </Template>
+                        </GridColumn>
+                }
+            }
+            <GridColumn Field=@nameof(RapportoDto.DataRapporto) DisplayFormat="{0:dd/MM/yyyy}" Width="10%" Title=@Localizer["Data"].Value.ToUpper() />
+            <GridColumn Field=Cliente.FullName Width="15%" Title=@Localizer["Cliente"].Value.ToUpper() />
+            <GridColumn Field=@nameof(RapportoDto.Id) Width="10%" Title=@Localizer["NumRapporto"].Value.ToUpper() />
+            <GridColumn Field=Caldaia.Matricola Width="10%" Title=@Localizer["Matricola"].Value.ToUpper() />
+            <GridColumn Field=Cliente.NumTelefono Width="10%" Title=@Localizer["Telefono"].Value.ToUpper() />
+            <GridColumn Field=Cliente.Email Width="15%" Title=@Localizer["Email"].Value.ToUpper() />
+
+            <GridCommandColumn Context="rep" Width="4.5%">
+                @{
+                    var rapportoDto = rep as RapportoDto;
+                    <GridCommandButton Class="btnIcon bgBianco white" Command="ViewRapporto" ImageUrl="/img/Icons/eye-fill.svg" OnClick="@(() => ViewRapporto(rapportoDto.Id))" />
+                }
+            </GridCommandColumn>
+        </GridColumns>
+    </TelerikGrid>
+</div>
+}

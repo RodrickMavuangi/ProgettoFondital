@@ -1,0 +1,54 @@
+﻿@inject ListinoClient listinoClient
+@inject ServicePartnerClient spClient
+@inject VoceCostoClient vcClient  
+@inject IStringLocalizer<App> localizer
+@inject CurrentStateProvider StateProvider 
+@inject IJSRuntime JSRuntime
+
+<EditForm Model="NuovoListino" OnValidSubmit="SalvaListino">
+    <DataAnnotationsValidator />
+
+    <div>@ErrorMessage</div>
+    <div class="form-field">
+        <label class="text-capitalize">@localizer["ServicePartner"]</label>
+        <div>
+            <InputSelect Class="form-control form-control-lg w100" @bind-Value="SpIdSelected" >
+                @foreach (ServicePartnerDto sp in ServicePartners)
+                {
+                    <option value="@sp.Id">@sp.RagioneSociale</option>
+                }
+            </InputSelect>
+            <ValidationMessage For="() => NuovoListino.ServicePartner" />
+        </div>
+    </div>
+    <div class="form-field">
+        <label class="text-capitalize">@localizer["VoceCosto"]</label>
+        <div>
+            <InputSelect Class="form-control form-control-lg w100" @bind-Value="VcIdSelected" >
+                @foreach (VoceCostoDto vc in VociCosto)
+                {
+                    <option value="@vc.Id">@(CurrentCulture == "it-IT" ? vc.NomeItaliano : vc.NomeRusso)</option>
+                }
+            </InputSelect>
+            <ValidationMessage For="() => NuovoListino.VoceCosto" />
+        </div>
+    </div>
+    <div class="form-field">
+        <label class="text-capitalize">@localizer["Raggruppamento"]</label>
+        <div>
+            <InputText Class="form-control form-control-lg w100" @bind-Value="NuovoListino.Raggruppamento"></InputText>
+            <ValidationMessage For="() => NuovoListino.Raggruppamento" />
+        </div>
+    </div>
+    <div class="form-field mt-4">
+        <label class="text-capitalize">@localizer["Valore"]</label>
+        <div>
+            <TelerikNumericTextBox Arrows=false Class="w100" Format="₽ #" @bind-Value="NuovoListino.Valore" ></TelerikNumericTextBox>
+            @*<InputNumber Class="form-control form-control-lg w100" @bind-Value="NuovoListino.Valore"></InputNumber>*@
+            <ValidationMessage For="() => NuovoListino.Valore" />
+        </div>
+    </div>
+    <div class="form-field">
+        <button type="submit" class="btn btn-primary ml-auto w-100 mt-5" disabled="@isSubmitting">@localizer["Salva"]</button>
+    </div>
+</EditForm>

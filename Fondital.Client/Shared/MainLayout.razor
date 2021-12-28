@@ -1,14 +1,15 @@
 ﻿@layout TelerikLayout
 @inherits LayoutComponentBase
+@inject IJSRuntime JS
+@inject NavigationManager FonditalNavigationManager
 
-    <div class="page">
-        <div class="main">
-            <div class="top-row d-flex" style="background-color: dodgerblue; width: 100%; height: 64px; padding-left: 0 !important; border: none">
-                <Header></Header>
-            </div>
+
+<Header @ref="Header" />
+
+<CascadingValue Value="Header" IsFixed="true">
+    <div class="main">
+        <div class="content px-4">
+            @Body
         </div>
     </div>
-
-    <div class="content px-4">
-        @Body
-    </div>
+</CascadingValue>
