@@ -24,12 +24,12 @@ namespace Fondital.Server
                 new Configurazione()
                 {
                     Chiave = "DurataGaranzia",
-                    Valore = DurataValiditaConfigurazione.DueMesi.ToString(),
+                    Valore = DurataValiditaConfigurazione.DueMesi.ToString()
                 },
                 new Configurazione()
                 {
                     Chiave = "DurataPassword",
-                    Valore = DurataValiditaConfigurazione.DueMesi.ToString(),
+                    Valore = DurataValiditaConfigurazione.DueMesi.ToString()
                 }
             };
 
@@ -37,11 +37,15 @@ namespace Fondital.Server
             {
                 new Ruolo()
                 {
-                    Name = "Direzione"
+                    Name = "Direzione",
+                    NormalizedName = "DIREZIONE",
+                    ConcurrencyStamp = "582833df-078e-4064-b5b1-9b0a3795e2a6"
                 },
                 new Ruolo()
                 {
-                    Name = "Service Partner"
+                    Name = "Service Partner",
+                    NormalizedName = "SERVICE PARTNER",
+                    ConcurrencyStamp = "4e00be6e-ac07-4033-ab11-cf2dd098526d"
                 }
             };
 
