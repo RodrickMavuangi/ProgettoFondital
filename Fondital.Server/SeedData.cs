@@ -3,6 +3,7 @@ using Fondital.Server.Controllers;
 using Fondital.Shared.Dto;
 using Fondital.Shared.Enums;
 using Fondital.Shared.Models;
+using Fondital.Shared.Models.Auth;
 using System.Threading.Tasks;
 
 namespace Fondital.Server
@@ -32,6 +33,18 @@ namespace Fondital.Server
                 }
             };
 
+            var ruoli = new Ruolo[]
+            {
+                new Ruolo()
+                {
+                    Name = "Direzione"
+                },
+                new Ruolo()
+                {
+                    Name = "Service Partner"
+                }
+            };
+
             var utente = new UtenteDto()
             {
                 //dati della prima utenza
@@ -42,9 +55,10 @@ namespace Fondital.Server
             };
 
             db.Configurazioni.AddRange(configurazioni);
+            db.Ruoli.AddRange(ruoli);
             db.SaveChanges();
 
-            await _mailController.SendMailForNewUser(utente);
+            //await _mailController.SendMailForNewUser(utente);
         }
     }
 }
