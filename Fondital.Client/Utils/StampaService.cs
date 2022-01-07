@@ -45,31 +45,49 @@ namespace Fondital.Client.Utils
             try
             {
                 //REGISTRA FONTS
+                Console.WriteLine($"registra fonts - {DateTime.Now.ToLongTimeString()}");
                 List<string> fontList = new() { "Arial_.ttf", "Arial_b.ttf", "Arial_b_i.ttf", "Calibri_.ttf", "Cambria_.ttc", "Cambria_b.ttf", "Micross_.ttf" };
                 await ImportFonts(fontList);
 
                 //CREAZIONE ZIP
+                Console.WriteLine($"crea<ioone zip - {DateTime.Now.ToLongTimeString()}");
                 using MemoryStream zipStream = new();
                 using ZipArchive archive = new(zipStream, ZipArchiveMode.Create, true);
 
-                foreach (var docName in new List<string> { "BUH-IT", "BUH-RU", "AKT-IT", "AKT-RU" })
+                //CREAZIONE DOCS
+                Console.WriteLine($"creazione docs - {DateTime.Now.ToLongTimeString()}");
+                List<string> docList = new List<string> { "BUH-IT", "BUH-RU", "AKT-IT", "AKT-RU" };
+                Dictionary<string, RadFlowDocument> documents = new();
+                List<Task> readDocsTasks = new();
+                
+                foreach(var docName in docList)
+                {
+                    readDocsTasks.Add(OpenDocument($"{docName}.docx", documents));
+                }
+                Console.WriteLine($"whenall - {DateTime.Now.ToLongTimeString()}");
+                await Task.WhenAll(readDocsTasks);
+
+                //ELABORAZIONE DOCS
+                Console.WriteLine($"elaborazione docs - {DateTime.Now.ToLongTimeString()}");
+                Parallel.ForEach(documents, doc =>
                 {
                     //APERTURA DOCUMENTO
-                    RadFlowDocument document = await ReadDocument($"{docName}.docx");
-                    Editor = new(document);
+                    Editor = new(doc.Value);
 
                     //POPOLAMENTO
-                    PopolaCampi(docName);
+                    PopolaCampi(doc.Key);
 
                     //CONVERSIONE IN PDF E AGGIUNTA ALLO ZIP
                     PdfFormatProvider pdfProvider = new();
-                    using Stream pdfStream = archive.CreateEntry($"{docName}.pdf", CompressionLevel.Optimal).Open();
-                    pdfProvider.Export(document, pdfStream);
-                }
+                    using Stream pdfStream = archive.CreateEntry($"{doc.Key}.pdf", CompressionLevel.Optimal).Open();
+                    pdfProvider.Export(doc.Value, pdfStream);
+                });
 
                 //CHIUSURA ZIP E DOWNLOAD
+                Console.WriteLine($"chiusura zip - {DateTime.Now.ToLongTimeString()}");
                 archive.Dispose();
                 var js = (IJSInProcessRuntime)_jsRuntime;
+                Console.WriteLine($"download zip - {DateTime.Now.ToLongTimeString()}");
                 await js.InvokeVoidAsync("saveFile", Convert.ToBase64String(zipStream.ToArray()), "application/zip", $"docs_{rapporto.Id}.zip");
             }
             catch (Exception ex)
@@ -257,13 +275,15 @@ namespace Fondital.Client.Utils
             }
         }
 
-        private async Task<RadFlowDocument> ReadDocument(string docName)
+        private async Task<Dictionary<string, RadFlowDocument>> OpenDocument(string docName, Dictionary<string, RadFlowDocument> docList)
         {
             var response = await _httpClient.GetAsync(Path.Combine(_navManager.BaseUri, "Documents/Templates", docName));
 
             IFormatProvider<RadFlowDocument> fileFormatProvider = new DocxFormatProvider();
             Stream stream = response.Content.ReadAsStream();
-            return fileFormatProvider.Import(stream);
+            docList.Add(docName, fileFormatProvider.Import(stream));
+            
+            return docList;
         }
     }
 }
