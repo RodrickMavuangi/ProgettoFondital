@@ -655,4 +655,10 @@
   <data name="Saving" xml:space="preserve">
     <value>Salvataggio in corso RU</value>
   </data>
+  <data name="NuovoListino" xml:space="preserve">
+    <value>NuovoListino RU</value>
+  </data>
+  <data name="NuovoSP" xml:space="preserve">
+    <value>NuovoSP RU</value>
+  </data>
 </root>

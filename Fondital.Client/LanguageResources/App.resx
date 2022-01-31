@@ -292,7 +292,7 @@
     <value>Anagrafica</value>
   </data>
   <data name="CercaSP" xml:space="preserve">
-    <value>Cerca SP </value>
+    <value>Cerca Service Partner</value>
   </data>
   <data name="CercaUtenti" xml:space="preserve">
     <value>Cerca Utenti</value>
@@ -684,5 +684,20 @@ La nuova password deve essere lunga almeno 8 caratteri e contenere minuscole, ma
   </data>
   <data name="Saving" xml:space="preserve">
     <value>Salvataggio in corso</value>
+  </data>
+  <data name="CercaDifetti" xml:space="preserve">
+    <value>Cerca Difetti</value>
+  </data>
+  <data name="CercaLavorazioni" xml:space="preserve">
+    <value>Cerca Lavorazioni</value>
+  </data>
+  <data name="CercaVociCosto" xml:space="preserve">
+    <value>Cerca Voci di Costo</value>
+  </data>
+  <data name="NuovoListino" xml:space="preserve">
+    <value>Nuovo Listino</value>
+  </data>
+  <data name="NuovoSP" xml:space="preserve">
+    <value>Nuovo Service Partner</value>
   </data>
 </root>
