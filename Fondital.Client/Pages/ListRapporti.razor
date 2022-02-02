@@ -3,6 +3,7 @@
 @inject IStringLocalizer<App> Localizer
 @inject IConfiguration Config
 @inject RapportoClient HttpClient
+@inject ServicePartnerClient SpClient
 @inject NavigationManager NavigationManager
 @inject CurrentStateProvider StateProvider
 @attribute [Authorize(Roles = "Direzione,Service Partner")]
