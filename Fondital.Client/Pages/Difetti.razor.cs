@@ -19,6 +19,7 @@ namespace Fondital.Client.Pages
         protected bool ShowAddDialog { get; set; } = false;
         protected bool ShowEditDialog { get; set; } = false;
         protected DifettoDto DifettoSelected { get; set; }
+        protected DifettoDto DifettoDellaLista { get; set; }
         public string SearchText = "";
 
         protected override async Task OnInitializedAsync()
@@ -48,7 +49,14 @@ namespace Fondital.Client.Pages
 
         protected void EditDifetto(int difettoId)
         {
-            DifettoSelected = ListaDifetti.Single(x => x.Id == difettoId);
+            DifettoDellaLista = ListaDifetti.Single(x => x.Id == difettoId);
+            DifettoSelected = new DifettoDto() 
+            { 
+                NomeRusso = DifettoDellaLista.NomeRusso, 
+                Id = DifettoDellaLista.Id, 
+                NomeItaliano = DifettoDellaLista.NomeItaliano,
+                IsAbilitato = DifettoDellaLista.IsAbilitato
+            };
             ShowEditDialog = true;
         }
 

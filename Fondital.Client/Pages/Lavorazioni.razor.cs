@@ -19,6 +19,8 @@ namespace Fondital.Client.Pages
         protected bool ShowAddDialog { get; set; } = false;
         protected bool ShowEditDialog { get; set; } = false;
         protected LavorazioneDto LavorazioneSelected { get; set; }
+        protected LavorazioneDto LavorazioneDellaLista { get; set; }
+
         public string SearchText = "";
 
         protected override async Task OnInitializedAsync()
@@ -48,7 +50,14 @@ namespace Fondital.Client.Pages
 
         protected void EditLavorazione(int lavorazioneId)
         {
-            LavorazioneSelected = ListaLavorazioni.Single(x => x.Id == lavorazioneId);
+            LavorazioneDellaLista = ListaLavorazioni.Single(x => x.Id == lavorazioneId);
+            LavorazioneSelected = new LavorazioneDto() 
+            {
+                Id = LavorazioneDellaLista.Id, 
+                IsAbilitato = LavorazioneDellaLista.IsAbilitato, 
+                NomeItaliano = LavorazioneDellaLista.NomeItaliano, 
+                NomeRusso = LavorazioneDellaLista.NomeRusso 
+            };
             ShowEditDialog = true;
         }
 
