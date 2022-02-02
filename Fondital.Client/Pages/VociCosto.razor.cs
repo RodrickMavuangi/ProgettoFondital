@@ -18,6 +18,7 @@ namespace Fondital.Client.Pages
         protected bool ShowAddDialog { get; set; } = false;
         protected bool ShowEditDialog { get; set; } = false;
         protected VoceCostoDto VoceCostoSelected { get; set; }
+        protected VoceCostoDto VoceCostoDellaLista { get; set; }
         public string SearchText = "";
 
         protected override async Task OnInitializedAsync()
@@ -46,7 +47,17 @@ namespace Fondital.Client.Pages
 
         protected void EditVoceCosto(int voceCostoId)
         {
-            VoceCostoSelected = ListaVociCosto.Single(x => x.Id == voceCostoId);
+            VoceCostoDellaLista = ListaVociCosto.Single(x => x.Id == voceCostoId);
+            VoceCostoSelected = new VoceCostoDto()
+            {
+                Id = VoceCostoDellaLista.Id, 
+                NomeRusso = VoceCostoDellaLista.NomeRusso,
+                NomeItaliano = VoceCostoDellaLista.NomeItaliano,
+                RapportiVociCosto = VoceCostoDellaLista.RapportiVociCosto,
+                IsAbilitato = VoceCostoDellaLista.IsAbilitato,
+                Listini = VoceCostoDellaLista.Listini,
+                Tipologia = VoceCostoDellaLista.Tipologia
+            };
             ShowEditDialog = true;
         }
 
