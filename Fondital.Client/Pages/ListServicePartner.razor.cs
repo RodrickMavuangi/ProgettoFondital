@@ -11,6 +11,8 @@ namespace Fondital.Client.Pages
         public List<ServicePartnerDto> ServicePartners;
         public string SearchText = "";
         protected ServicePartnerDto SpSelected { get; set; } = new();
+        protected ServicePartnerDto SpDellaLista { get; set; } = new();
+
         private int PageSize { get; set; }
         protected bool ShowAddDialog { get; set; } = false;
         protected bool ShowEditDialog { get; set; } = false;
@@ -38,7 +40,34 @@ namespace Fondital.Client.Pages
 
         protected void EditSp(int SpId)
         {
-            SpSelected = ServicePartners.Single(x => x.Id == SpId);
+            SpDellaLista = ServicePartners.Single(x => x.Id == SpId);
+            SpSelected = new ServicePartnerDto()
+            {
+                BankCode = SpDellaLista.BankCode,
+                Id = SpDellaLista.Id,
+                CC = SpDellaLista.CC,
+                KPP = SpDellaLista.KPP,
+                Listini = SpDellaLista.Listini,
+                CCC = SpDellaLista.CCC,
+                City = SpDellaLista.City,
+                CodiceCliente = SpDellaLista.CodiceCliente,
+                Name = SpDellaLista.Name,
+                BankName = SpDellaLista.BankName,
+                CodiceFornitore = SpDellaLista.CodiceFornitore,
+                ContractDate = SpDellaLista.ContractDate,
+                ContractNr = SpDellaLista.ContractNr,
+                Email = SpDellaLista.Email,
+                HouseNr = SpDellaLista.HouseNr,
+                INN = SpDellaLista.INN,
+                ManagerName = SpDellaLista.ManagerName,
+                Phone = SpDellaLista.Phone,
+                PostalCode = SpDellaLista.PostalCode,
+                RagioneSociale = SpDellaLista.RagioneSociale,
+                Region = SpDellaLista.Region,
+                StateRegistrationNr = SpDellaLista.StateRegistrationNr,
+                Street = SpDellaLista.Street,
+                Utenti = SpDellaLista.Utenti
+            };
             ShowEditDialog = true;
         }
     }

@@ -33,7 +33,7 @@ namespace Fondital.Client.Pages
         public UtenteDto UtenteCorrente { get; set; }
         private static IEnumerable<string> ListStati { get => EnumExtensions.GetEnumNames<StatoRapporto>(); }
         private string MatricolaPrecedente { get; set; } = "";
-
+        protected bool AddVoceCosto = false;
         protected override async Task OnInitializedAsync()
         {
             UtenteCorrente = await StateProvider.GetCurrentUser();
@@ -56,6 +56,8 @@ namespace Fondital.Client.Pages
                     LavorazioniDescription = ListaLavorazioni.Select(x => x.NomeItaliano).ToList();
                 else
                     LavorazioniDescription = ListaLavorazioni.Select(x => x.NomeRusso).ToList();
+
+                AddVoceCosto = UtenteCorrente.ServicePartner != null && Rapporto.Stato != StatoRapporto.Aperto;
             }
             catch
             {
