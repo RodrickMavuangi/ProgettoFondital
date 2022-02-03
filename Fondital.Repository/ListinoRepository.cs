@@ -33,6 +33,8 @@ namespace Fondital.Repository
             await Db.Listini.AddAsync(listino);
             Db.Entry(listino.ServicePartner).State = EntityState.Unchanged;
             Db.Entry(listino.VoceCosto).State = EntityState.Unchanged;
+            foreach (var utente in listino.ServicePartner.Utenti)
+                Db.Entry(utente).State = EntityState.Unchanged;
         }
     }
 }
