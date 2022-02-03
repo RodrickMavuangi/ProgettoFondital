@@ -46,7 +46,7 @@
 
             @if (CurrentStepIndex == 3)
             {
-                <TelerikButton Class="btn btn-primary btn-lg mx-1" OnClick="(() => ShowAddVoceCosto = true)">@Localizer["Inserisci"] @Localizer["VoceCosto"] </TelerikButton><i class="bi bi-plus icoPlus"></i>
+                <TelerikButton Class="btn btn-primary btn-lg mx-1" OnClick="(() => ShowAddVoceCosto = true)" Enabled="@(!AddVoceCosto)">@Localizer["Inserisci"] @Localizer["VoceCosto"] </TelerikButton><i class="bi bi-plus icoPlus"></i>
             }
 
             <TelerikButton Class="btn btn-primary btn-blu btn-lg mx-1 loading" OnClick=@(() => Stampa()) Enabled=@(!IsPrinting & !IsEdited)>
