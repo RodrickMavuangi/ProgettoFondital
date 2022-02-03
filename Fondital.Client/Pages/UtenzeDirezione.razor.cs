@@ -22,6 +22,8 @@ namespace Fondital.Client.Pages
         protected bool ShowEditDialog { get; set; } = false;
         private List<UtenteDto> UtentiDirezione = new();
         protected UtenteDto UtenteSelected { get; set; }
+        protected UtenteDto UtenteDellaLista { get; set; }
+
         public List<UtenteDto> ListaUtDirezioneFiltered => StatusFilter == ListaScelta[0] ? UtentiDirezione.Where(x => x.UserName.Contains(SearchText, StringComparison.CurrentCultureIgnoreCase) && x.IsAbilitato == true).ToList() :
                                                            StatusFilter == ListaScelta[1] ? UtentiDirezione.Where(x => x.UserName.Contains(SearchText, StringComparison.CurrentCultureIgnoreCase) && x.IsAbilitato == false).ToList() :
                                                            UtentiDirezione.Where(x => x.UserName.Contains(SearchText, StringComparison.CurrentCultureIgnoreCase)).ToList();
@@ -49,7 +51,33 @@ namespace Fondital.Client.Pages
 
         protected void EditUtente(string username)
         {
-            UtenteSelected = UtentiDirezione.Single(x => x.UserName == username);
+            UtenteDellaLista = UtentiDirezione.Single(x => x.UserName == username);
+            UtenteSelected = new UtenteDto()
+            {
+                Cognome = UtenteDellaLista.Cognome,
+                Nome = UtenteDellaLista.Nome,
+                Email = UtenteDellaLista.Email,
+                UserName = UtenteDellaLista.UserName,
+                Id = UtenteDellaLista.Id,
+                Rapporti = UtenteDellaLista.Rapporti,
+                Ruoli = UtenteDellaLista.Ruoli,
+                AccessFailedCount = UtenteDellaLista.AccessFailedCount,
+                TwoFactorEnabled = UtenteDellaLista.TwoFactorEnabled,
+                PasswordHash = UtenteDellaLista.PasswordHash,
+                ConcurrencyStamp = UtenteDellaLista.ConcurrencyStamp,
+                EmailConfirmed = UtenteDellaLista.EmailConfirmed,
+                IsAbilitato = UtenteDellaLista.IsAbilitato,
+                LockoutEnabled = UtenteDellaLista.LockoutEnabled,
+                LockoutEnd = UtenteDellaLista.LockoutEnd,
+                NormalizedEmail = UtenteDellaLista.NormalizedEmail,
+                NormalizedUserName = UtenteDellaLista.NormalizedUserName,
+                PhoneNumber = UtenteDellaLista.PhoneNumber,
+                PhoneNumberConfirmed = UtenteDellaLista.PhoneNumberConfirmed,
+                Pw_LastChanged = UtenteDellaLista.Pw_LastChanged,
+                Pw_MustChange = UtenteDellaLista.Pw_MustChange,
+                SecurityStamp = UtenteDellaLista.SecurityStamp,
+                ServicePartner = UtenteDellaLista.ServicePartner
+            };
             ShowEditDialog = true;
         }
 
