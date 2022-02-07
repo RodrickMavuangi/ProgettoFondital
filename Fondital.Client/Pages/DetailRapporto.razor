@@ -80,7 +80,7 @@
                         }
                         else
                         {
-                            <TelerikButton Class="btn btn-primary btn-verde btn-lg mx-1" OnClick=@(() => Salva(StatoRapporto.Registrato)) Enabled=@(IsEdited)>@Localizer["Invia"]</TelerikButton>
+                            <TelerikButton Class="btn btn-primary btn-verde btn-lg mx-1" OnClick=@(() => Salva(StatoRapporto.Registrato)) Enabled=@(IsEdited || IsActive)>@Localizer["Invia"]</TelerikButton>
                         }
                     }
                 </Authorized>

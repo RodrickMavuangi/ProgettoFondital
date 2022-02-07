@@ -33,7 +33,8 @@ namespace Fondital.Client.Pages
         public UtenteDto UtenteCorrente { get; set; }
         private static IEnumerable<string> ListStati { get => EnumExtensions.GetEnumNames<StatoRapporto>(); }
         private string MatricolaPrecedente { get; set; } = "";
-        protected bool AddVoceCosto = false;
+        protected bool AddVoceCosto { get; set; } = false;
+        protected bool IsActive { get; set; } = false;
         protected override async Task OnInitializedAsync()
         {
             UtenteCorrente = await StateProvider.GetCurrentUser();
@@ -58,6 +59,7 @@ namespace Fondital.Client.Pages
                     LavorazioniDescription = ListaLavorazioni.Select(x => x.NomeRusso).ToList();
 
                 AddVoceCosto = UtenteCorrente.ServicePartner != null && Rapporto.Stato != StatoRapporto.Aperto;
+                IsActive = UtenteCorrente.ServicePartner != null && Rapporto.Stato == StatoRapporto.Aperto;
             }
             catch
             {
@@ -131,6 +133,7 @@ namespace Fondital.Client.Pages
 
         protected async Task<bool> Salva(StatoRapporto? newStatus = null)
         {
+            if (IsActive && newStatus != null) IsActive = false; // Una volta che vengono salvate nel DB tutte le modifiche il tasto INVIA si disattiva 
             if (IsEdited)
             {
                 try
@@ -145,6 +148,7 @@ namespace Fondital.Client.Pages
                     {   //il rapporto va aggiornato
                         if (Rapporto.Stato == StatoRapporto.Aperto || Rapporto.Stato == StatoRapporto.Rifiutato)
                         {
+                            IsActive = true; // Caso mai il tasto INVIA fosse disattivato e si effettua nuovamente una modifica (aggiornamento) il tasto INVIA si riattiva. 
                             await RapportoClient.UpdateRapporto(Rapporto.Id, Rapporto);
                         }
                         else
