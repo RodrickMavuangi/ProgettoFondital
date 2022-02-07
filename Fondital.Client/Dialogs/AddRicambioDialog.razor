@@ -8,15 +8,15 @@
     <div class="form-field">
         <label>@localizer["Id"]</label>
         <div>
-            <InputNumber Class="form-control form-control-lg w100" @bind-Value="RicambioRequest.Id" />
+            <InputNumber Class="form-control form-control-lg w100" @onblur="ResetError" @bind-Value="RicambioRequest.Id" />
             <ValidationMessage For="() => RicambioRequest.Id" />
         </div>
     </div>
 
     <div class="form-field">
-        <label>@localizer["IdFornitore"]</label>
+        <label>@localizer["CodiceRicambio"]</label>
         <div>
-            <InputText Class="form-control form-control-lg w100" @bind-Value="RicambioRequest.SupplierId" />
+            <InputText Class="form-control form-control-lg w100" @onblur="ResetError" @bind-Value="RicambioRequest.SupplierId" />
             <ValidationMessage For="() => RicambioRequest.SupplierId" />
         </div>
     </div>
@@ -24,7 +24,7 @@
     <div class="form-field">
         <label>@localizer["Quantita"]</label>
         <div>
-            <InputNumber Class="form-control form-control-lg w100" @bind-Value="RicambioRequest.Quantity" />
+            <InputNumber Class="form-control form-control-lg w100" @onblur="ResetError" @bind-Value="RicambioRequest.Quantity" />
             <ValidationMessage For="() => RicambioRequest.Quantity" />
         </div>
     </div>

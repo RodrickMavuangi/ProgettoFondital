@@ -661,4 +661,13 @@
   <data name="NuovoSP" xml:space="preserve">
     <value>NuovoSP RU</value>
   </data>
+  <data name="CodiceRicambio" xml:space="preserve">
+    <value>CodiceRicambio RU</value>
+  </data>
+  <data name="ErroreRicambio" xml:space="preserve">
+    <value>ErroreRicambio RU</value>
+  </data>
+  <data name="Codice" xml:space="preserve">
+    <value>CodiceRU</value>
+  </data>
 </root>
