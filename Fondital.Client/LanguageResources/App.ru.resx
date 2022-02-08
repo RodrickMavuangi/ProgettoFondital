@@ -663,5 +663,10 @@
   </data>
   <data name="Produttore" xml:space="preserve">
     <value>Produttore RU</value>
+  <data name="NuovoListino" xml:space="preserve">
+    <value>NuovoListino RU</value>
+  </data>
+  <data name="NuovoSP" xml:space="preserve">
+    <value>NuovoSP RU</value>
   </data>
 </root>

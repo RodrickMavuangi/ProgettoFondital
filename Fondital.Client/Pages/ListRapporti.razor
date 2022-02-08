@@ -3,6 +3,7 @@
 @inject IStringLocalizer<App> Localizer
 @inject IConfiguration Config
 @inject RapportoClient HttpClient
+@inject ServicePartnerClient SpClient
 @inject NavigationManager NavigationManager
 @inject CurrentStateProvider StateProvider
 @attribute [Authorize(Roles = "Direzione,Service Partner")]
@@ -49,28 +50,41 @@
 }
 else
 {
-    <!--BARRA FILTRI-->
-    <div class="row-2 d-inline w-100 mb-4  pt-0 pb-4 pt-4 border-top border-bottom barraFiltri">
-        <div class="form-group rowFiltri rowFiltriRapportini ">
+
+
+<!--BARRA FILTRI-->
+
+<div class="row-2 d-inline w-100 mb-4  pt-0 pb-4 pt-4 border-top border-bottom barraFiltri">
+    <div class="form-group rowFiltri rowFiltriRapportini ">
+        @if (UtenteCorrente.ServicePartner != null)
+        {
+            <TelerikDropDownList Data="@ListRagioneSociale"
+                                 Class=" float-lg-right filtriInput mx-1 select"
+                                 PopupClass="dropdown-ite"
+                                 @bind-Value="SearchBySp" />
+        }
+        else
+        {
             <TelerikDropDownList Data="@ListRagioneSociale"
                                  Class=" float-lg-right filtriInput mx-1 select"
                                  PopupClass="dropdown-ite"
                                  @bind-Value="SearchBySp"
                                  DefaultText=@Localizer["AllSP"] />
+        }
 
-            <TelerikDropDownList Data=@ListStati.Select(x => Localizer[x])
-                                 Class=" float-lg-right filtriInput mx-1 select"
-                                 PopupClass="dropdown-ite"
-                                 @bind-Value="SearchByStato"
-                                 DefaultText=@Localizer["AllStati"] />
-            <TelerikDatePicker @bind-Value="SearchByDataDa" Min="@(DateTime.ParseExact("20211001", "yyyyMMdd", CultureInfo.InvariantCulture))" Max="SearchByDataA" Class="float-lg-right filtriInput mx-1" />
-            <TelerikDatePicker @bind-Value="SearchByDataA" Min="SearchByDataDa" Max="DateTime.Now" Class="float-lg-right filtriInput mx-1" />
-            <input class="form-control float-lg-right filtriInput mx-1" @bind-value="SearchByCliente" @bind-value:event="oninput" placeholder=@Localizer["Cliente"] />
-            <input class="form-control float-lg-right filtriInput mx-1" @bind-value="SearchById" @bind-value:event="oninput" placeholder=@Localizer["NumRapporto"] />
-            <input class="form-control float-lg-right filtriInput mx-1" @bind-value="SearchByMatricola" @bind-value:event="oninput" placeholder=@Localizer["Matricola"] />
-            <input class="form-control float-lg-right filtriInput mx-1" @bind-value="SearchByTelefono" @bind-value:event="oninput" placeholder=@Localizer["Telefono"] />
-            <input class="form-control float-lg-right filtriInput mx-1" @bind-value="SearchByEmail" @bind-value:event="oninput" placeholder=@Localizer["Email"] />
-            <i class="bi bi-search float-lg-right icoSearch blu"></i>
+        <TelerikDropDownList Data=@ListStati.Select(x => Localizer[x])
+                             Class=" float-lg-right filtriInput mx-1 select"
+                             PopupClass="dropdown-ite"
+                             @bind-Value="SearchByStato"
+                             DefaultText=@Localizer["AllStati"] />
+        <TelerikDatePicker @bind-Value="SearchByDataDa" Min="@(DateTime.ParseExact("20211001", "yyyyMMdd", CultureInfo.InvariantCulture))" Max="SearchByDataA" Class="float-lg-right filtriInput mx-1" />
+        <TelerikDatePicker @bind-Value="SearchByDataA" Min="SearchByDataDa" Max="DateTime.Now" Class="float-lg-right filtriInput mx-1" />
+        <input class="form-control float-lg-right filtriInput mx-1" @bind-value="SearchByCliente" @bind-value:event="oninput" placeholder=@Localizer["Cliente"] />
+        <input class="form-control float-lg-right filtriInput mx-1" @bind-value="SearchById" @bind-value:event="oninput" placeholder=@Localizer["NumRapporto"] />
+        <input class="form-control float-lg-right filtriInput mx-1" @bind-value="SearchByMatricola" @bind-value:event="oninput" placeholder=@Localizer["Matricola"] />
+        <input class="form-control float-lg-right filtriInput mx-1" @bind-value="SearchByTelefono" @bind-value:event="oninput" placeholder=@Localizer["Telefono"] />
+        <input class="form-control float-lg-right filtriInput mx-1" @bind-value="SearchByEmail" @bind-value:event="oninput" placeholder=@Localizer["Email"] />
+        <i class="bi bi-search float-lg-right icoSearch blu"></i>
     </div>
 </div>
 
