@@ -708,4 +708,13 @@ La nuova password deve essere lunga almeno 8 caratteri e contenere minuscole, ma
   <data name="NuovoSP" xml:space="preserve">
     <value>Nuovo Service Partner</value>
   </data>
+  <data name="CodiceRicambio" xml:space="preserve">
+    <value>Codice Ricambio</value>
+  </data>
+  <data name="ErroreRicambio" xml:space="preserve">
+    <value>Nessun ricambio corrisponde ai dati inseriti</value>
+  </data>
+  <data name="Codice" xml:space="preserve">
+    <value>Codice</value>
+  </data>
 </root>

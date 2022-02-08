@@ -30,6 +30,7 @@ function OnClickHandler(item) {
     });
 
     var linkAttivo = document.querySelector('.active');
+
     var nodoSpan = linkAttivo.closest(".k-menu-link");
     var nodoLI = linkAttivo.closest(".k-menu-item");
     
