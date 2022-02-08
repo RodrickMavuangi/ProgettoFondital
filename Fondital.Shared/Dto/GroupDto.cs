@@ -2,7 +2,7 @@
 {
     public class GroupDto
     {
-        public string Code { get; set; } = "030";
-        public string Desc { get; set; } = "CALDAIE";
+        public string Code { get; set; } /*= "030";*/
+        public string Desc { get; set; } /*= "CALDAIE";*/
     }
 }

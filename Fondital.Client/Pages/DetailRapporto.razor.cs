@@ -34,7 +34,7 @@ namespace Fondital.Client.Pages
         private static IEnumerable<string> ListStati { get => EnumExtensions.GetEnumNames<StatoRapporto>(); }
         private string MatricolaPrecedente { get; set; } = "";
         protected bool AddVoceCosto { get; set; } = false;
-        protected bool IsActive { get; set; } = false;
+        protected bool IsActive { get; set; } = true;
         protected override async Task OnInitializedAsync()
         {
             UtenteCorrente = await StateProvider.GetCurrentUser();
@@ -133,7 +133,7 @@ namespace Fondital.Client.Pages
 
         protected async Task<bool> Salva(StatoRapporto? newStatus = null)
         {
-            if (IsActive && newStatus != null) IsActive = false; // Una volta che vengono salvate nel DB tutte le modifiche il tasto INVIA si disattiva 
+            if (IsActive && newStatus != null) IsEdited = true;  
             if (IsEdited)
             {
                 try
@@ -171,6 +171,7 @@ namespace Fondital.Client.Pages
                         {
                             Rapporto.Stato = newStatus.Value;
                             await RapportoClient.UpdateRapporto(Rapporto.Id, Rapporto);
+                            await OnInitializedAsync();
                             //NavigationManager.NavigateTo("/reports"); //non mi piace
                         }
                         else
