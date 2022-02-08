@@ -685,6 +685,14 @@ La nuova password deve essere lunga almeno 8 caratteri e contenere minuscole, ma
   <data name="Saving" xml:space="preserve">
     <value>Salvataggio in corso</value>
   </data>
+  <data name="DataProduzione" xml:space="preserve">
+    <value>Data Produzione</value>
+  </data>
+  <data name="Marchio" xml:space="preserve">
+    <value>Marchio</value>
+  </data>
+  <data name="Produttore" xml:space="preserve">
+    <value>Produttore</value>
   <data name="CercaDifetti" xml:space="preserve">
     <value>Cerca Difetti</value>
   </data>

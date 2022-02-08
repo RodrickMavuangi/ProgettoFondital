@@ -80,7 +80,7 @@
                         }
                         else
                         {
-                            <TelerikButton Class="btn btn-primary btn-verde btn-lg mx-1" OnClick=@(() => Salva(StatoRapporto.Registrato)) Enabled=@(IsEdited)>@Localizer["Invia"]</TelerikButton>
+                            <TelerikButton Class="btn btn-primary btn-verde btn-lg mx-1" OnClick=@(() => Salva(StatoRapporto.Registrato)) Enabled=@(IsEdited || IsActive)>@Localizer["Invia"]</TelerikButton>
                         }
                     }
                 </Authorized>
@@ -169,6 +169,21 @@
                         <span class="col-4">
                             <label>@Localizer["Versione"]</label>
                             <InputText Class="form-control form-control-lg w100 mb-3" @bind-Value="Rapporto.Caldaia.Versione" disabled="@(Rapporto.Caldaia.Model==null)" />
+                        </span>
+                    </div>
+                    <div class="form-field my-4 d-flex justify-content-start w-100">
+                        <span class="col-4">
+                            <label>@Localizer["Marchio"]</label>
+                            <label class="form-control form-control-lg w100 mb-3">@Rapporto.Caldaia.Brand.Desc</label>
+                        </span>
+                        <span class="col-4">
+                            <label>@Localizer["Produttore"]</label>
+                            <label class="form-control form-control-lg w100 mb-3">@Rapporto.Caldaia.Manufacturer</label>
+                        </span>
+                        <span class="col-4">
+                            <label>@Localizer["DataProduzione"]</label>
+                            @*<TelerikDatePicker Class="w100 mb-3 datePickerEp" @bind-Value="Rapporto.Caldaia.ManufacturingDate" Enabled="@(AbilitaModifica && Rapporto.Caldaia.Model!=null)" OnChange=@(() => IsEdited = true) />*@
+                            <label class="form-control form-control-lg w100 mb-3">@Rapporto.Caldaia.ManufacturingDate</label>
                         </span>
                     </div>
                     <div class="form-field my-4 d-flex justify-content-start w-100">
