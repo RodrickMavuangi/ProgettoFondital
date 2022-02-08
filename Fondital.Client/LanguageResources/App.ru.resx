@@ -655,4 +655,13 @@
   <data name="Saving" xml:space="preserve">
     <value>Salvataggio in corso RU</value>
   </data>
+  <data name="DataProduzione" xml:space="preserve">
+    <value>Data Produzione RU</value>
+  </data>
+  <data name="Marchio" xml:space="preserve">
+    <value>Marchio RU</value>
+  </data>
+  <data name="Produttore" xml:space="preserve">
+    <value>Produttore RU</value>
+  </data>
 </root>
