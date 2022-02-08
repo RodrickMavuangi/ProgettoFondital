@@ -693,6 +693,7 @@ La nuova password deve essere lunga almeno 8 caratteri e contenere minuscole, ma
   </data>
   <data name="Produttore" xml:space="preserve">
     <value>Produttore</value>
+  </data>
   <data name="CercaDifetti" xml:space="preserve">
     <value>Cerca Difetti</value>
   </data>
