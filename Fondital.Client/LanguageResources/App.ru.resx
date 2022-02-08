@@ -679,4 +679,7 @@
   <data name="Codice" xml:space="preserve">
     <value>CodiceRU</value>
   </data>
+  <data name="ErroreListino" xml:space="preserve">
+    <value>ErroreListinoRU</value>
+  </data>
 </root>

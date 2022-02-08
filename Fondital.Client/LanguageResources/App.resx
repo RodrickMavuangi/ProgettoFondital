@@ -718,4 +718,7 @@ La nuova password deve essere lunga almeno 8 caratteri e contenere minuscole, ma
   <data name="Codice" xml:space="preserve">
     <value>Codice</value>
   </data>
+  <data name="ErroreListino" xml:space="preserve">
+    <value>Esiste già un listino con questi dati</value>
+  </data>
 </root>
