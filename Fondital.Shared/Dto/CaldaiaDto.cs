@@ -16,8 +16,8 @@ namespace Fondital.Shared.Dto
 
         public BrandDto Brand { get; set; } = new();
         public GroupDto Group { get; set; } = new();
-        public string Manufacturer { get; set; } = "Fondital OOO";
+        public string Manufacturer { get; set; } /*= "Fondital OOO";*/
         public string Model { get; set; }
-        public DateTime? ManufacturingDate { get; set; } = DateTime.ParseExact("20191231", "yyyyMMdd", CultureInfo.InvariantCulture);       
+        public DateTime? ManufacturingDate { get; set; } /*= DateTime.ParseExact("20191231", "yyyyMMdd", CultureInfo.InvariantCulture); */      
     }
 }
