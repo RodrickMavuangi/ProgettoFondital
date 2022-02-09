@@ -15,6 +15,7 @@ namespace Fondital.Client.Dialogs
         protected ListinoDto NuovoListino { get; set; } = new();
         protected List<ServicePartnerDto> ServicePartners = new();
         protected List<VoceCostoDto> VociCosto = new();
+        protected List<ListinoDto> Listini = new();
         protected int SpIdSelected { get => NuovoListino.ServicePartner?.Id ?? 0; set { UpdateSelectedSp(value); } }
         protected int VcIdSelected { get => NuovoListino.VoceCosto?.Id ?? 0; set { UpdateSelectedVc(value); } }
         private string CurrentCulture { get; set; }
@@ -26,6 +27,7 @@ namespace Fondital.Client.Dialogs
             CurrentCulture = await StateProvider.GetCurrentCulture();
             ServicePartners = (List<ServicePartnerDto>)await spClient.GetAllServicePartners();
             VociCosto = (List<VoceCostoDto>)await vcClient.GetAllVociCosto();
+            Listini = (List<ListinoDto>)await listinoClient.GetAllListini();
 
             NuovoListino.ServicePartner = ServicePartners.First();
             NuovoListino.VoceCosto = VociCosto.First();
@@ -38,6 +40,8 @@ namespace Fondital.Client.Dialogs
 
             try
             {
+                if (Listini.Exists(x => x.Raggruppamento == NuovoListino.Raggruppamento && x.ServicePartner.Id == NuovoListino.ServicePartner.Id && x.VoceCosto.Id == NuovoListino.VoceCosto.Id))
+                    throw new Exception("ErroreListino");
                 await listinoClient.CreateListino(NuovoListino);
                 isSubmitting = false;
                 await OnSave.InvokeAsync();
