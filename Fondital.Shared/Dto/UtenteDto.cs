@@ -11,6 +11,10 @@ namespace Fondital.Shared.Dto
         public ServicePartnerDto ServicePartner { get; set; }
         public bool IsAbilitato { get; set; } = true;
 
+        [Display(Name = "Email", ResourceType = typeof(Resources.Display))]
+        [Required(ErrorMessageResourceName = "Required", ErrorMessageResourceType = typeof(Resources.Validation))]
+        public string UserName { get; set; }
+
         [Display(Name = "Nome", ResourceType = typeof(Resources.Display))]
         [Required(ErrorMessageResourceName = "Required", ErrorMessageResourceType = typeof(Resources.Validation))]
         public string Nome { get; set; }

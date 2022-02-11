@@ -27,7 +27,7 @@
             <ItemTemplate Context="item">
                 <NavLink href="@item.Url"
                          target="@(IsInternalPage(item.Url) ? "" : "_blank")"
-                         class="navLink"
+                         class="navLink active"
                          ActiveClass="active"
                          Match="@(item.Url == "/" ? NavLinkMatch.All : NavLinkMatch.Prefix)">
                     @item.Text

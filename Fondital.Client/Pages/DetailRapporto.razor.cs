@@ -18,6 +18,8 @@ namespace Fondital.Client.Pages
         private RicambioDto NewRicambio { get; set; } = new();
         public List<LavorazioneDto> ListaLavorazioni { get; set; } = new();
         public List<string> LavorazioniDescription { get; set; } = new();
+        public List<DifettoDto> ListaDifetti { get; set; } = new();
+        public List<string> DifettiDescription { get; set; } = new();
         public RapportoVoceCostoDto RapportoVoceCostoSelected { get; set; } = new();
         protected List<string> CampiDaCompilare { get; set; } = new();
         private int CurrentStepIndex { get; set; }
@@ -52,11 +54,18 @@ namespace Fondital.Client.Pages
                     AbilitaModifica = false;
 
                 ListaLavorazioni = (List<LavorazioneDto>)await LavorazioneClient.GetAllLavorazioni(true);
+                ListaDifetti = (List<DifettoDto>)await DifettoClient.GetAllDifetti(true);
 
                 if (CurrentCulture == "it-IT")
+                {
                     LavorazioniDescription = ListaLavorazioni.Select(x => x.NomeItaliano).ToList();
+                    DifettiDescription = ListaDifetti.Select(x => x.NomeItaliano).ToList();
+                }
                 else
+                {
                     LavorazioniDescription = ListaLavorazioni.Select(x => x.NomeRusso).ToList();
+                    DifettiDescription = ListaDifetti.Select(x => x.NomeRusso).ToList();
+                }
 
                 AddVoceCosto = UtenteCorrente.ServicePartner != null && Rapporto.Stato != StatoRapporto.Aperto;
                 IsActive = UtenteCorrente.ServicePartner != null && Rapporto.Stato == StatoRapporto.Aperto;

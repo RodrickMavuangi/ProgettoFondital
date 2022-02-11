@@ -61,7 +61,7 @@ namespace Fondital.Client.Pages
             }
             else
             {
-                ListRagioneSociale = ListaRapporti.Select(x => x.Utente.ServicePartner.RagioneSociale).Distinct().ToList();
+                ListRagioneSociale = (await SpClient.GetAllServicePartners()).Select(x => x.RagioneSociale).ToList();
             }
             StateHasChanged();
         }

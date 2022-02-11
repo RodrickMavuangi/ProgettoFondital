@@ -6,6 +6,7 @@
 @inject StampaService StampaService
 @inject RapportoClient RapportoClient
 @inject LavorazioneClient LavorazioneClient
+@inject DifettoClient DifettoClient
 @inject RestExternalServiceClient RestClient
 @inject NavigationManager NavigationManager
 @attribute [Authorize(Roles = "Direzione,Service Partner")]
@@ -225,7 +226,12 @@
                         </span>
                         <span class="col-8">
                             <label>@Localizer["MotivoIntervento"]</label>
-                            <InputText Class="form-control form-control-lg w100 mb-3" @bind-Value="Rapporto.MotivoIntervento" />
+                            @*<InputText Class="form-control form-control-lg w100 mb-3" @bind-Value="Rapporto.MotivoIntervento" />*@
+                            <TelerikDropDownList Data="@DifettiDescription"
+                                                 Class="form-control form-control-lg w100 mb-3"
+                                                 @bind-Value="Rapporto.MotivoIntervento"
+                                                 Enabled="@(AbilitaModifica)"
+                                                 OnChange=@(() => IsEdited = true) />
                         </span>
                     </div>
                     <div class="form-field my-4 d-flex justify-content-start w-100">
@@ -242,11 +248,12 @@
                             <InputText Class="form-control form-control-lg w100" @bind-Value="Rapporto.NomeTecnico" />
                         </span>
                     </div>
-                    <div class="form-field my-4 w-100 mt-160">
+                    <div class="form-field mt-5 w-100">
                         <div cass="col-12">
                             <span class="col-8 headerFormRicambiEp">
                                 <label class="d-inline labelQt text-center">N°</label>
                                 <label class="d-inline labelCosto">@Localizer["Costo"]</label>
+                                <label class="d-inline labelCosto">@Localizer["Codice"]</label>
                                 <label class="d-inline labelDescr">@Localizer["Descrizione"]</label>
                             </span>
                             <TelerikButton Class="btn btn-primary btn-lg mx-1" OnClick="() => ShowAddRicambio = true">@Localizer["AddRicambio"]</TelerikButton><i class="bi bi-plus icoPlus"></i>
@@ -254,12 +261,13 @@
                         <div class="form-field my-4 w-100">
                             @foreach (RicambioDto Ricambio in Rapporto.Ricambi)
                             {
-                                <div class="col-12 mt-3 mb-3">
-                                    <InputNumber Class="form-control inputQt d-inline mr-3" @bind-Value="Ricambio.Quantita" />
-                                    <label Class="form-control inputCosto d-inline mr-3">@Ricambio.Amount</label>
-                                    <label Class="form-control inputDescr d-inline">@(CurrentCulture == "it-IT" ? Ricambio.ITDescription : Ricambio.RUDescription) </label>
-                                    <TelerikButton OnClick="(() => { IsEdited = true; Rapporto.Ricambi.Remove(Ricambio); })" Class="icoDelete d-inline rosso text-center" IconClass="" ImageUrl="/img/Icons/delete.svg" />
-                                </div>
+                            <div class="col-12 mt-3 mb-3 d-flex flex-row justify-content-between">
+                                <label Class="form-control inputQt inputEP">@Ricambio.Quantita</label>
+                                <label Class="form-control inputCosto inputEP">@Ricambio.Amount</label>
+                                <label Class="form-control inputCosto inputEP">@Ricambio.Code</label>
+                                <label Class="form-control inputDescr inputEP">@(CurrentCulture == "it-IT" ? Ricambio.ITDescription : Ricambio.RUDescription) </label>
+                                <TelerikButton OnClick="(() => { IsEdited = true; Rapporto.Ricambi.Remove(Ricambio); })" Class="icoDelete rosso text-center my-auto" IconClass="" ImageUrl="/img/Icons/delete.svg" />
+                            </div>
                             }
                         </div>
                     </div>
