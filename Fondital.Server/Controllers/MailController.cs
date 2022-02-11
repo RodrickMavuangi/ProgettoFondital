@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Fondital.Services;
 using Fondital.Shared.Dto;
 using Fondital.Shared.Models.Auth;
 using Fondital.Shared.Services;
@@ -88,6 +89,13 @@ namespace Fondital.Server.Controllers
 
                 _logger.Information("Info: {Action} {Object} {ObjectId} effettuato con successo", "CREATE", "Utente", utente.UserName);
                 return Ok();
+            }
+            catch (InviaMailException e)
+            {
+                var user = await _userManager.FindByEmailAsync(utente.Email);
+                await _userManager.DeleteAsync(user);
+                _logger.Error(e, "Eccezione {Action} {Object} {ObjectId}", "INVIA MAIL", "Utente", utente.UserName);
+                throw;
             }
             catch (Exception ex)
             {
