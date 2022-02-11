@@ -682,4 +682,10 @@
   <data name="ErroreListino" xml:space="preserve">
     <value>ErroreListinoRU</value>
   </data>
+  <data name="Direzione" xml:space="preserve">
+    <value>Direzione RU</value>
+  </data>
+  <data name="Esci" xml:space="preserve">
+    <value>Esci RU</value>
+  </data>
 </root>
