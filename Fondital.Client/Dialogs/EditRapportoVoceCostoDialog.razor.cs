@@ -11,17 +11,20 @@ namespace Fondital.Client.Dialogs
         [Parameter] public EventCallback OnSave { get; set; }
         [Parameter] public EventCallback<RapportoVoceCostoDto> RapportoVoceCostoChanged { get; set; }
         [Parameter] public RapportoVoceCostoDto RapportoVoceCosto { get; set; }
+        protected int QuantitaToEdit { get; set; }
         protected string CurrentCulture { get; set; }
         protected bool IsButtonEnabled =>
-            (RapportoVoceCosto.VoceCosto.Tipologia == TipologiaVoceCosto.Quantita && RapportoVoceCosto.Quantita > 0) || RapportoVoceCosto.VoceCosto.Tipologia == TipologiaVoceCosto.Forfettario;
+            (RapportoVoceCosto.VoceCosto.Tipologia == TipologiaVoceCosto.Quantita && QuantitaToEdit > 0) || RapportoVoceCosto.VoceCosto.Tipologia == TipologiaVoceCosto.Forfettario;
 
         protected override async Task OnInitializedAsync()
         {
             CurrentCulture = await StateProvider.GetCurrentCulture();
+            QuantitaToEdit = RapportoVoceCosto.Quantita;
         }
 
         public async Task Done()
         {
+            RapportoVoceCosto.Quantita = QuantitaToEdit;
             await RapportoVoceCostoChanged.InvokeAsync(RapportoVoceCosto);
             await OnSave.InvokeAsync();
         }
