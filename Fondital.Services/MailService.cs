@@ -38,8 +38,13 @@ namespace Fondital.Services
             }
             catch (Exception e)
             {
-                throw;
+                throw new InviaMailException ();
             }
         }
+    }
+
+    public class InviaMailException : Exception
+    {
+
     }
 }

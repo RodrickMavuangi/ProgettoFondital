@@ -655,10 +655,37 @@
   <data name="Saving" xml:space="preserve">
     <value>Salvataggio in corso RU</value>
   </data>
+  <data name="DataProduzione" xml:space="preserve">
+    <value>Data Produzione RU</value>
+  </data>
+  <data name="Marchio" xml:space="preserve">
+    <value>Marchio RU</value>
+  </data>
+  <data name="Produttore" xml:space="preserve">
+    <value>Produttore RU</value>
+  </data>
   <data name="NuovoListino" xml:space="preserve">
     <value>NuovoListino RU</value>
   </data>
   <data name="NuovoSP" xml:space="preserve">
     <value>NuovoSP RU</value>
+  </data>
+  <data name="CodiceRicambio" xml:space="preserve">
+    <value>CodiceRicambio RU</value>
+  </data>
+  <data name="ErroreRicambio" xml:space="preserve">
+    <value>ErroreRicambio RU</value>
+  </data>
+  <data name="Codice" xml:space="preserve">
+    <value>CodiceRU</value>
+  </data>
+  <data name="ErroreListino" xml:space="preserve">
+    <value>ErroreListinoRU</value>
+  </data>
+  <data name="Direzione" xml:space="preserve">
+    <value>Direzione RU</value>
+  </data>
+  <data name="Esci" xml:space="preserve">
+    <value>Esci RU</value>
   </data>
 </root>

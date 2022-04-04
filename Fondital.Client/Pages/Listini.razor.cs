@@ -19,6 +19,8 @@ namespace Fondital.Client.Pages
         protected bool ShowAddDialog { get; set; } = false;
         protected bool ShowEditDialog { get; set; } = false;
         protected ListinoDto ListinoSelected { get; set; }
+        protected ListinoDto ListinoDellaLista { get; set; }
+
         public string SearchSPText = "";
         public string SearchVoceCostoText = "";
         public string SearchRaggruppamentoText = "";
@@ -55,7 +57,15 @@ namespace Fondital.Client.Pages
 
         protected void EditListino(int listinoId)
         {
-            ListinoSelected = ListaListini.Single(x => x.Id == listinoId);
+            ListinoDellaLista = ListaListini.Single(x => x.Id == listinoId);
+            ListinoSelected = new ListinoDto
+            {
+                Id = ListinoDellaLista.Id,
+                Valore = ListinoDellaLista.Valore,
+                ServicePartner = ListinoDellaLista.ServicePartner,
+                Raggruppamento = ListinoDellaLista.Raggruppamento,
+                VoceCosto = ListinoDellaLista.VoceCosto
+            };
             ShowEditDialog = true;
         }
     }

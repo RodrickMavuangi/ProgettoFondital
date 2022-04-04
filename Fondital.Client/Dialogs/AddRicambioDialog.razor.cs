@@ -21,6 +21,10 @@ namespace Fondital.Client.Dialogs
             try
             {
                 Ricambio = await RestClient.GetPezzoRicambio(RicambioRequest);
+
+                if (Ricambio.Amount == 0 && Ricambio.ITDescription == "" && Ricambio.RUDescription == "")
+                    throw new Exception("ErroreRicambio");
+
                 await RicambioChanged.InvokeAsync(Ricambio);
                 await OnSave.InvokeAsync();
             }
@@ -29,6 +33,11 @@ namespace Fondital.Client.Dialogs
                 IsSubmitting = false;
                 ErrorMessage = localizer[ex.Message];
             }
+        }
+
+        public void ResetError()
+        {
+            ErrorMessage = "";
         }
     }
 }

@@ -18,6 +18,8 @@ namespace Fondital.Client.Pages
         private RicambioDto NewRicambio { get; set; } = new();
         public List<LavorazioneDto> ListaLavorazioni { get; set; } = new();
         public List<string> LavorazioniDescription { get; set; } = new();
+        public List<DifettoDto> ListaDifetti { get; set; } = new();
+        public List<string> DifettiDescription { get; set; } = new();
         public RapportoVoceCostoDto RapportoVoceCostoSelected { get; set; } = new();
         protected List<string> CampiDaCompilare { get; set; } = new();
         private int CurrentStepIndex { get; set; }
@@ -33,7 +35,8 @@ namespace Fondital.Client.Pages
         public UtenteDto UtenteCorrente { get; set; }
         private static IEnumerable<string> ListStati { get => EnumExtensions.GetEnumNames<StatoRapporto>(); }
         private string MatricolaPrecedente { get; set; } = "";
-        protected bool AddVoceCosto = false;
+        protected bool AddVoceCosto { get; set; } = false;
+        protected bool IsActive { get; set; } = true;
         protected override async Task OnInitializedAsync()
         {
             UtenteCorrente = await StateProvider.GetCurrentUser();
@@ -51,13 +54,21 @@ namespace Fondital.Client.Pages
                     AbilitaModifica = false;
 
                 ListaLavorazioni = (List<LavorazioneDto>)await LavorazioneClient.GetAllLavorazioni(true);
+                ListaDifetti = (List<DifettoDto>)await DifettoClient.GetAllDifetti(true);
 
                 if (CurrentCulture == "it-IT")
+                {
                     LavorazioniDescription = ListaLavorazioni.Select(x => x.NomeItaliano).ToList();
+                    DifettiDescription = ListaDifetti.Select(x => x.NomeItaliano).ToList();
+                }
                 else
+                {
                     LavorazioniDescription = ListaLavorazioni.Select(x => x.NomeRusso).ToList();
+                    DifettiDescription = ListaDifetti.Select(x => x.NomeRusso).ToList();
+                }
 
                 AddVoceCosto = UtenteCorrente.ServicePartner != null && Rapporto.Stato != StatoRapporto.Aperto;
+                IsActive = UtenteCorrente.ServicePartner != null && Rapporto.Stato == StatoRapporto.Aperto;
             }
             catch
             {
@@ -131,6 +142,7 @@ namespace Fondital.Client.Pages
 
         protected async Task<bool> Salva(StatoRapporto? newStatus = null)
         {
+            if (IsActive && newStatus != null) IsEdited = true;  
             if (IsEdited)
             {
                 try
@@ -145,6 +157,7 @@ namespace Fondital.Client.Pages
                     {   //il rapporto va aggiornato
                         if (Rapporto.Stato == StatoRapporto.Aperto || Rapporto.Stato == StatoRapporto.Rifiutato)
                         {
+                            IsActive = true; // Caso mai il tasto INVIA fosse disattivato e si effettua nuovamente una modifica (aggiornamento) il tasto INVIA si riattiva. 
                             await RapportoClient.UpdateRapporto(Rapporto.Id, Rapporto);
                         }
                         else
@@ -167,6 +180,7 @@ namespace Fondital.Client.Pages
                         {
                             Rapporto.Stato = newStatus.Value;
                             await RapportoClient.UpdateRapporto(Rapporto.Id, Rapporto);
+                            await OnInitializedAsync();
                             //NavigationManager.NavigateTo("/reports"); //non mi piace
                         }
                         else
