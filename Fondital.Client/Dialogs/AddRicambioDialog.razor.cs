@@ -27,7 +27,7 @@ namespace Fondital.Client.Dialogs
             catch (Exception ex)
             {
                 IsSubmitting = false;
-                ErrorMessage = localizer[ex.Message]; throw;
+                ErrorMessage = localizer[ex.Message];
             }
         }
     }
