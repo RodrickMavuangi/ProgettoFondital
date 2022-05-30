@@ -20,7 +20,7 @@ namespace Fondital.Server
             using var scope = scopeFactory.CreateScope();
 
             var db = scope.ServiceProvider.GetRequiredService<FonditalDbContext>();
-            if (db.Database.EnsureCreated())
+             if (db.Database.EnsureCreated())
             {
                 SeedData.Initialize(db);
             }
