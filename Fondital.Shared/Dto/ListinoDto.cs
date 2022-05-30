@@ -26,6 +26,7 @@ namespace Fondital.Shared.Dto
         //[DisplayFormat(DataFormatString = "{0:₽ 0.##}", ApplyFormatInEditMode = true)]
         //[DisplayFormat(DataFormatString = "{0:C0}")]
         //[DisplayFormat(DataFormatString = "{0:₽ 0.##}")]
-        public int Valore { get; set; } = 0;
+
+        public decimal Valore { get; set; } = 0;
     }
 }

@@ -93,7 +93,12 @@ namespace Fondital.Client.Pages
 
         protected void AggiungiRicambio()
         {
-            Rapporto.Ricambi.Add(NewRicambio);
+            
+            if(Rapporto.Ricambi.Where(x => x.Code == NewRicambio.Code).FirstOrDefault() != null)
+                Rapporto.Ricambi.Where(x => x.Code == NewRicambio.Code).FirstOrDefault().Quantita = NewRicambio.Quantita;
+            else
+                Rapporto.Ricambi.Add(NewRicambio);
+
             IsEdited = true;
             CloseAndRefresh();
         }

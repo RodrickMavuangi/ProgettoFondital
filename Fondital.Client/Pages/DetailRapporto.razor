@@ -169,7 +169,7 @@
                         </span>
                         <span class="col-4">
                             <label>@Localizer["Versione"]</label>
-                            <InputText Class="form-control form-control-lg w100 mb-3" @bind-Value="Rapporto.Caldaia.Versione" disabled="@(Rapporto.Caldaia.Model==null)" />
+                            <InputText Class="form-control form-control-lg w100 mb-3" @bind-Value="Rapporto.Caldaia.Versione" disabled="@(Rapporto.Caldaia.Model!=null)" />
                         </span>
                     </div>
                     <div class="form-field my-4 d-flex justify-content-start w-100">

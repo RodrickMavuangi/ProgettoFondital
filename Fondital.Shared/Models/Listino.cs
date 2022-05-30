@@ -6,6 +6,6 @@
         public ServicePartner ServicePartner { get; set; }
         public VoceCosto VoceCosto { get; set; }
         public string Raggruppamento { get; set; }
-        public int Valore { get; set; } = 0;
+        public decimal Valore { get; set; } = 0;
     }
 }
