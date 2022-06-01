@@ -208,7 +208,8 @@
                         </span>
                         <span class="col-4">
                             <label>@Localizer["NumeroCertTecnico"]</label>
-                            <InputNumber Class="form-control form-control-lg w100 mb-3" @bind-Value="Rapporto.Caldaia.NumCertificatoTecnico" disabled="@(Rapporto.Caldaia.Model==null)" />
+                            @*<InputNumber Class="form-control form-control-lg w100 mb-3" @bind-Value="Rapporto.Caldaia.NumCertificatoTecnico" disabled="@(Rapporto.Caldaia.Model==null)" />*@
+                            <input class="form-control form-control-lg w100" type="number" min="1" max="@Int32.MaxValue" @bind-value="@Rapporto.Caldaia.NumCertificatoTecnico" />
                         </span>
                         <span class="col-4">
                             <label>@Localizer["DittaPrimoAvvio"]</label>
@@ -351,3 +352,14 @@
         </div>
     </WindowContent>
 </TelerikWindow>
+
+<style>
+    input[type=number]::-webkit-inner-spin-button,
+    input[type=number]::-webkit-outer-spin-button {
+        -webkit-appearance: none;
+    }
+
+    input[type=number] {
+        -moz-appearance: textfield;
+    }
+</style>
