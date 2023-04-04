@@ -33,7 +33,7 @@
                 <AuthorizeView Roles="Service Partner">
                     <Authorized>
                         @{
-                            <div class="spDett"><span class="d-inline w-100 text-right position">@Rapporto.Stato.Description().ToString()</span></div>
+                            <div class="spDett"><span class="d-inline w-100 text-right position">@Localizer[Rapporto.Stato.Description().ToString()]</span></div>
                         }
                     </Authorized>
                 </AuthorizeView>

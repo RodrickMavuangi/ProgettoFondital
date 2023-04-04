@@ -14,7 +14,7 @@ namespace Fondital.Server.ChainOfResponsability
             return handler;
         }
 
-        // Assegna la responsabilità della gestione della richiesta al nodo successivo
+        // Assegna la responsabilità della gestione della richiesta al nodo successivo ...
         public virtual object HandleRequest(Rapporto rapporto)
         {
             if (this._nextHandler != null)
